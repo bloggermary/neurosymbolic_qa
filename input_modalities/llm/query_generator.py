@@ -1,17 +1,22 @@
-from openai import OpenAI
-
-client = OpenAI()
+from llm.client import client
 
 def generate_query(question: str) -> str:
-
     prompt = f"""
-Convert the medical question into a Prolog query.
+    Convert the medical question into ONE of these Prolog goals ONLY:
 
-Question:
-{question}
+    - diabetes
+    - prediabetes
+    - low_risk
+    - diagnose
 
-Output ONLY the query.
-"""
+    IMPORTANT:
+    - DO NOT use variables like Patient
+    - DO NOT use predicates with arguments
+    - Output ONLY a single word
+
+    Question:
+    {question}
+    """
 
     response = client.chat.completions.create(
         model="gpt-5-mini",

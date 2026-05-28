@@ -30,8 +30,7 @@ Question: <question>
         model=MODEL_NAME,
         messages=[
             {"role": "user", "content": prompt}
-        ],
-        temperature=0.3
+        ]
     )
 
     text = response.choices[0].message.content.strip()
