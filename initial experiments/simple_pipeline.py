@@ -17,13 +17,13 @@ def extract_knowledge(file_path):
 
             disease, symptoms = line.split("causes")
 
-            disease = disease.strip().replace(" ", "_")
+            disease = disease.strip().replace(" ", "_").replace(".", "")
             symptoms = symptoms.replace(",", " and ").split("and")
 
             facts.append(f"disease({disease}).")
 
             for s in symptoms:
-                symptom = s.strip().replace(" ", "_")
+                symptom = s.strip().replace(" ", "_").replace(".", "")
                 facts.append(f"symptom({disease}, {symptom}).")
 
     return facts
@@ -58,28 +58,38 @@ def question_to_query(question):
 
 
 # execute prolog simulated with python
-
 def run_query(facts, query):
 
     predicate = query.split("(")[0]
     args = query.split("(")[1].replace(")", "").split(",")
 
+    arg0 = args[0].strip()
+    arg1 = args[1].strip()
+
     results = set()
 
     for fact in facts:
 
-        if fact.startswith(predicate):
+        fact = fact.strip().replace(".", "")
 
-            inside = fact[len(predicate)+1:-2]
-            a, b = [x.strip() for x in inside.split(",")]  # FIX: strip spaces
+        if not fact.startswith(predicate):
+            continue
 
-            # Query: symptom(X, fever)
-            if args[1].strip() == b:
-                results.add(a)
+        inside = fact[len(predicate)+1:-1]
+        parts = [x.strip() for x in inside.split(",")]
 
-            # Query: symptom(flu, X)
-            if args[0].strip() == a:
-                results.add(b)
+        if len(parts) != 2:
+            continue
+
+        a, b = parts
+
+        # CASE 1: symptom(X, sweating)
+        if arg1 != "X" and arg1 == b:
+            results.add(a)
+
+        # CASE 2: symptom(flu, X)
+        if arg0 != "X" and arg0 == a:
+            results.add(b)
 
     return list(results)
 
@@ -127,7 +137,8 @@ def main():
 
         # output natural language answer
         response = answer(question, results)
-
+        print("FACTS:", facts)
+        print("QUERY:", query)
         print("Answer:", response)
         print()
 

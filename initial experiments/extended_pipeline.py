@@ -19,7 +19,10 @@ def extract_knowledge(file_path):
         "often presents with",
         "typically leads to",
         "is characterized by",
-        "is linked to"
+        "is linked to",
+        "is commonly associated with",
+        "may indicate",
+        "can be a sign of"
     ]
 
     with open(file_path, "r") as f:
@@ -45,7 +48,7 @@ def extract_knowledge(file_path):
             facts.append(f"disease({disease}).")
 
             for s in symptoms:
-                symptom = s.strip().replace(" ", "_")
+                symptom = s.strip().replace(" ", "_").replace("?", "").replace(";", "")
 
                 if symptom:
                     facts.append(f"symptom({disease}, {symptom}).")
@@ -84,32 +87,24 @@ def parse_question(question):
 
     q = question.lower().strip()
 
-    # convert from disease to symptom(s)
-    if ("symptoms" in q) and ("malaria" in q or "of" in q):
-        disease = q.split("of")[-1].strip().replace(" ", "_")
-        return ("disease_to_symptoms", disease)
-
-    if "what symptoms" in q:
+    # disease → symptoms
+    if "symptom" in q or "associated" in q:
         if "of" in q:
             disease = q.split("of")[-1].strip().replace(" ", "_")
             return ("disease_to_symptoms", disease)
-        if "linked to" in q:
-            disease = q.split("linked to")[-1].strip().replace(" ", "_")
-            return ("disease_to_symptoms", disease)
 
-    # convert from symptom to disease(s)
-    if ("which disease" in q or "which diseases" in q):
+    # symptom → disease
+    if "which disease" in q or "which diseases" in q:
 
         if "cause" in q:
             symptom = q.split("cause")[-1].strip().replace(" ", "_")
             return ("symptom_to_diseases", symptom)
 
-        if "linked to" in q:
-            symptom = q.split("linked to")[-1].strip().replace(" ", "_")
+        if "associated with" in q:
+            symptom = q.split("associated with")[-1].strip().replace(" ", "_")
             return ("symptom_to_diseases", symptom)
 
     return (None, None)
-
 # execute query through a structured lookup
 
 def run_query(parsed, d2s, s2d):
@@ -132,10 +127,12 @@ def format_answer(question, results):
     if not results:
         return "No medical knowledge found for this query."
 
-    if "symptoms" in question:
+    q = question.lower()
+
+    if "symptom" in q:
         return "The symptoms are: " + ", ".join(results)
 
-    if "disease" in question:
+    if "disease" in q:
         return "Possible diseases are: " + ", ".join(results)
 
     return ", ".join(results)

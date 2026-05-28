@@ -1,0 +1,6 @@
+Convert medical text into Prolog rules.
+
+Rules:
+- Use simple predicates
+- Use ask(modality, question)
+- Output ONLY Prolog code

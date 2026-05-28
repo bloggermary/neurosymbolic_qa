@@ -39,7 +39,7 @@ Medical text:
 """
 
     response = client.chat.completions.create(
-        model="gpt-4.1-mini",
+        model="gpt-5-mini",
         messages=[
             {
                 "role": "system",
@@ -91,7 +91,7 @@ Question:
 """
 
     response = client.chat.completions.create(
-        model="gpt-4.1-mini",
+        model="gpt-5-mini",
         messages=[
             {
                 "role": "system",
@@ -133,7 +133,7 @@ Explain the result naturally and clearly for the user.
 """
 
     response = client.chat.completions.create(
-        model="gpt-4.1-mini",
+        model="gpt-5-mini",
         messages=[
             {
                 "role": "system",

@@ -1,4 +1,4 @@
- disease(flu).
+disease(flu).
 symptom(flu, fever).
 symptom(flu, cough).
 disease(flu).
@@ -8,7 +8,8 @@ disease(flu).
 symptom(flu, body_aches).
 symptom(flu, chills).
 disease(covid19).
-symptom(covid19, fever__cough).
+symptom(covid19, fever).
+symptom(covid19, cough).
 symptom(covid19, loss_of_taste).
 disease(covid19).
 symptom(covid19, shortness_of_breath).

@@ -1,0 +1,6 @@
+Classify input into:
+- boolean
+- numeric
+- string
+- multiple_choice
+- categorical

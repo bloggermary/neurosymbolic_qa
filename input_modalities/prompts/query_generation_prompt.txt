@@ -1,0 +1,3 @@
+Convert the user question into a Prolog query.
+
+Return only the query.

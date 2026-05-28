@@ -1,0 +1,1 @@
+Convert Prolog result into natural language medical explanation.
