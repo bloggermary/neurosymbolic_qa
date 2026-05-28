@@ -49,6 +49,14 @@ Requirements:
 - Create diagnose/1.
 - Return ONLY Prolog code.
 - No markdown.
+- Ask ALL diagnostic questions before making a diagnosis.
+- Never stop after the first positive answer.
+- First collect all answers.
+- Do NOT structure the diagnosis as:
+    (condition1 ; condition2 ; condition3), !
+  because this skips remaining questions.
+- Store intermediate answers in predicates or variables if necessary.
+- The generated program should support future extension with follow-up questions.
 
 #medical_diabetes.txt LLM
 Medical text:
@@ -155,6 +163,7 @@ Rules:
 
 
 if __name__ == "__main__":
+    # generiert prolog query von medical text (jedes mal überschrieben)
     #generate_diabetes_diagnosis_pl()
 
     prolog_code = Path("test_diabetes_diagnosis.pl").read_text(encoding="utf-8")
