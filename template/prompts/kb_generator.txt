@@ -1,0 +1,27 @@
+Generate a SWI-Prolog medical diagnosis program from this text.
+
+Requirements:
+- Use:
+  :- use_module(library(janus)).
+
+- Define:
+  ask(Question) :-
+      py_call(diabetes_diagnosis:ask(Question), yes).
+
+- The program must use only yes/no questions.
+- Create diabetes diagnosis rules.
+- Create diagnose/1.
+- Return ONLY Prolog code.
+- No markdown.
+- Ask ALL diagnostic questions before making a diagnosis.
+- Never stop after the first positive answer.
+- First collect all answers.
+- Do NOT structure the diagnosis as:
+    (condition1 ; condition2 ; condition3), !
+  because this skips remaining questions.
+- Store intermediate answers in predicates or variables if necessary.
+- The generated program should support future extension with follow-up questions.
+
+#medical_diabetes.txt LLM
+Medical text:
+{medical_text} 

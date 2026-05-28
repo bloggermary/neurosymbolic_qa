@@ -4,6 +4,9 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+def read_prompt(filename: str) -> str:
+    return Path("prompts", filename).read_text(encoding="utf-8")
+
 # The user interaction method that is being called from Prolog in `diabetes_diagnosis.pl`
 def ask(question: str) -> str:
     """Called from Prolog via py_call(diabetes_diagnosis:ask(Question), "yes")."""
@@ -29,39 +32,12 @@ def generate_diabetes_diagnosis_pl() -> None:
 
 # generate prolog from medical text
 def medicaltext_to_prolog(medical_text: str) -> str:
-    load_dotenv()
-    client = OpenAI(
-        api_key=os.getenv("OPENAI_API_KEY")
+    client = get_openai_client()
+
+    prompt = read_prompt("kb_generator.txt").format(
+        medical_text=medical_text
     )
-    prompt = f"""
-Generate a SWI-Prolog medical diagnosis program from this text.
 
-Requirements:
-- Use:
-  :- use_module(library(janus)).
-
-- Define:
-  ask(Question) :-
-      py_call(diabetes_diagnosis:ask(Question), yes).
-
-- The program must use only yes/no questions.
-- Create diabetes diagnosis rules.
-- Create diagnose/1.
-- Return ONLY Prolog code.
-- No markdown.
-- Ask ALL diagnostic questions before making a diagnosis.
-- Never stop after the first positive answer.
-- First collect all answers.
-- Do NOT structure the diagnosis as:
-    (condition1 ; condition2 ; condition3), !
-  because this skips remaining questions.
-- Store intermediate answers in predicates or variables if necessary.
-- The generated program should support future extension with follow-up questions.
-
-#medical_diabetes.txt LLM
-Medical text:
-{medical_text} 
-"""
     response = client.chat.completions.create(
         model="gpt-5-mini",
         messages=[
@@ -82,35 +58,11 @@ Medical text:
 def userqa_to_prolog_query(question: str, prolog_code: str) -> str:
     client = get_openai_client()
 
-    prompt = f"""
-You are a Prolog query generator. From natural language to Prolog query.
+    prompt = read_prompt("qa_to_query.txt").format(
+        question=question,
+        prolog_code=prolog_code
+    )
 
-Given this Prolog knowledge base:
-
-{prolog_code}
-
-Convert the user question into exactly one valid Prolog query.
-
-Rules:
-- Return only the Prolog query.
-- Do not explain.
-- Do not use ?-.
-- Do not add markdown.
-- The user can only ask yes/no medical questions.
-- Return only a predicate that already exists in the Prolog knowledge base.
-- Do not invent new predicates.
-- Do not use ?-.
-- Do not add markdown.
-- If the question asks whether diabetes is present in general, use diagnose(diabetes).
-- If the question asks about HbA1c, use hba1c.
-- If the question asks about random plasma glucose / Gelegenheits-Plasmaglukose, use random_plasma_glucose.
-- If the question asks about fasting plasma glucose / Nüchtern-Plasmaglukose, use fasting_plasma_glucose.
-- If the question asks about oral glucose tolerance test / OGTT, use ogtt_2h.
-- If no matching predicate exists, return fail.
-
-User question:
-{question}
-"""
 
     response = client.responses.create(
         model="gpt-5-mini",
@@ -132,27 +84,11 @@ def prolog_result_to_final_answer(
 ) -> str:
     client = get_openai_client()
 
-    prompt = f"""
-You are a medical QA assistant.
-
-User question:
-{question}
-
-Executed Prolog query:
-{query}
-
-Raw Prolog result:
-{result}
-
-Write a short final answer for the user.
-
-Rules:
-- Answer in natural language.
-- Do not print raw Python dictionaries.
-- Say that the answer is based only on the generated Prolog knowledge base.
-- Do not claim this is a real medical diagnosis.
-- If the result is false, None, or empty, say that no matching diagnosis was found.
-"""
+    prompt = read_prompt("response_generator.txt").format(
+        question=question,
+        query=query,
+        result=result
+    )
 
     response = client.responses.create(
         model="gpt-5-mini",
