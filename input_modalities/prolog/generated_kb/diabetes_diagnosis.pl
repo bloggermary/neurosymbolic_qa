@@ -1,84 +1,55 @@
-:- dynamic known/2.
-
-% Ask for numeric HbA1c value (percent)
-ask(hba1c(Value)) :-
-    (   known(hba1c, V)
-    ->  Value = V
-    ;   format('Enter HbA1c (%) as a number (e.g. 7.2). End with a period: '),
-        read(R),
-        (   number(R)
-        ->  assertz(known(hba1c, R)),
-            Value = R
-        ;   write('Invalid input, please enter a number (e.g. 6.8).'), nl,
-            ask(hba1c(Value))
-        )
-    ).
-
-% Ask for numeric fasting glucose value (mg/dL)
-ask(fasting_glucose(Value)) :-
-    (   known(fasting_glucose, V)
-    ->  Value = V
-    ;   format('Enter fasting blood glucose (mg/dL) as a number (e.g. 110). End with a period: '),
-        read(R),
-        (   number(R)
-        ->  assertz(known(fasting_glucose, R)),
-            Value = R
-        ;   write('Invalid input, please enter a number (e.g. 105).'), nl,
-            ask(fasting_glucose(Value))
-        )
-    ).
-
-% Ask about symptoms; succeeds if the user answers 'yes.'
-ask(has_symptom(Symptom)) :-
-    (   known(has_symptom(Symptom), Ans)
-    ->  Ans == yes
-    ;   format('Does the patient have ~w? (yes/no). End with a period: ', [Symptom]),
-        read(Raw),
-        (   Raw == yes
-        ->  assertz(known(has_symptom(Symptom), yes))
-        ;   Raw == no
-        ->  assertz(known(has_symptom(Symptom), no)), fail
-        ;   write('Please answer yes. or no.'), nl,
-            ask(has_symptom(Symptom))
-        )
-    ).
+:- multifile ask/1.
 
 % Common diabetes symptoms
-possible_symptom(excessive_thirst).
-possible_symptom(excessive_urination).
-possible_symptom(fatigue).
-possible_symptom(blurred_vision).
+common_symptom(excessive_thirst).
+common_symptom(excessive_urination).
+common_symptom(fatigue).
+common_symptom(blurred_vision).
+
+% Input wrappers (use ask/1 to obtain information from the user/system)
+hba1c(Patient, Value) :-
+    ask(hba1c(Patient, Value)).
+
+fasting_glucose(Patient, Value) :-
+    ask(fasting_glucose(Patient, Value)).
+
+has_symptom(Patient, Symptom) :-
+    ask(symptom(Patient, Symptom)).
 
 % Diagnosis rules
 
-% Patients with HbA1c above 6.5% may have diabetes.
-diabetes :-
-    ask(hba1c(H)),
-    number(H),
-    H > 6.5.
+% Patients with HbA1c above 6.5% may have diabetes
+diagnosis(Patient, diabetes) :-
+    hba1c(Patient, V),
+    number(V),
+    V > 6.5.
+
+% Prediabetes when fasting blood glucose is between 100 and 125 mg/dL
+diagnosis(Patient, prediabetes) :-
+    fasting_glucose(Patient, V),
+    number(V),
+    V >= 100,
+    V =< 125.
 
 % Patients with diabetes often experience both excessive thirst and excessive urination.
-diabetes :-
-    ask(has_symptom(excessive_thirst)),
-    ask(has_symptom(excessive_urination)).
+diagnosis(Patient, diabetes) :-
+    has_symptom(Patient, excessive_thirst),
+    has_symptom(Patient, excessive_urination).
 
-% Prediabetes: fasting blood glucose between 100 and 125 mg/dL.
-prediabetes :-
-    ask(fasting_glucose(G)),
-    number(G),
-    G >= 100,
-    G =< 125.
+% Supportive rule: possible diabetes when at least two common symptoms are present
+possible_diabetes(Patient) :-
+    findall(S, (common_symptom(S), has_symptom(Patient, S)), Symptoms),
+    sort(Symptoms, Unique),
+    length(Unique, N),
+    N >= 2.
 
-% Utility: clear stored answers
-clear_answers :-
-    retractall(known(_, _)).
-
-% A simple interactive diagnosis that queries and reports
-diagnose :-
-    clear_answers,
-    (   diabetes
-    ->  write('Result: Patient may have diabetes.'), nl
-    ;   prediabetes
-    ->  write('Result: Patient may have prediabetes.'), nl
-    ;   write('Result: No diabetes or prediabetes identified from provided information.'), nl
-    ).
+    diagnose(Result) :-
+        ( diagnosis(_, diabetes) ->
+            Result = diabetes
+        ; diagnosis(_, prediabetes) ->
+            Result = prediabetes
+        ; possible_diabetes(_) ->
+            Result = possible_diabetes
+        ;   Result = no_diabetes
+        ).
+    

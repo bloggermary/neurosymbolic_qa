@@ -2,17 +2,22 @@ from llm.client import client
 
 def generate_query(question: str) -> str:
     prompt = f"""
-    Convert the medical question into ONE of these Prolog goals ONLY:
+    Convert the medical question into a valid Prolog query.
 
-    - diabetes
-    - prediabetes
-    - low_risk
-    - diagnose
+    RULES:
+    - Output ONLY this format:
+        diagnose(Result).
+    - DO NOT output "diabetes"
+    - DO NOT output "prediabetes"
+    - DO NOT output plain words
+    - ALWAYS use: diagnose(Result)
 
-    IMPORTANT:
-    - DO NOT use variables like Patient
-    - DO NOT use predicates with arguments
-    - Output ONLY a single word
+    Examples:
+    Question: Is the patient diabetic?
+    Answer: diagnose(Result).
+
+    Question: What is the diagnosis?
+    Answer: diagnose(Result).
 
     Question:
     {question}

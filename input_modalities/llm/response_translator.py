@@ -1,14 +1,25 @@
-from openai import OpenAI
+from llm.client import client
 
-client = OpenAI()
-
-def translate_result(result) -> str:
+def translate_result(result):
+    """
+    Convert Prolog output into a clean medical answer.
+    """
 
     prompt = f"""
-Translate this Prolog result into a medical explanation.
+You are a medical reasoning assistant.
 
-Result:
+Convert the following Prolog result into a short, clear medical explanation.
+
+Rules:
+- Be concise (1–3 sentences)
+- Do NOT explain Prolog
+- Do NOT mention "true/false"
+- Use medical language only
+
+Prolog result:
 {result}
+
+Output:
 """
 
     response = client.chat.completions.create(
@@ -18,4 +29,4 @@ Result:
         ]
     )
 
-    return response.choices[0].message.content
+    return response.choices[0].message.content.strip()
