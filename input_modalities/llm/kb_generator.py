@@ -2,18 +2,27 @@ from openai import OpenAI
 
 client = OpenAI()
 
+
 def generate_prolog_kb(text: str) -> str:
 
     prompt = f"""
-Convert this medical guideline into valid SWI-Prolog.
+You are an expert SWI-Prolog knowledge engineer.
 
-Requirements:
-- Use predicates
-- Use ask(...) for user information
-- Generate diagnosis rules
-- Generate only Prolog code
+Convert the following medical text into a VALID SWI-Prolog knowledge base.
 
-Text:
+STRICT REQUIREMENTS:
+- Output ONLY Prolog code (no explanations)
+- NO markdown (no ``` blocks)
+- Must include ask(Question) usage for user interaction
+- Must define:
+    - diagnose/0
+    - diabetes/0
+    - prediabetes/0
+- Use logical predicates only
+- Ensure rules are consistent and executable in SWI-Prolog
+- Must be compatible with SWI-Prolog + Janus
+
+Medical Text:
 {text}
 """
 
@@ -24,4 +33,4 @@ Text:
         ]
     )
 
-    return response.choices[0].message.content
+    return response.choices[0].message.content.strip()

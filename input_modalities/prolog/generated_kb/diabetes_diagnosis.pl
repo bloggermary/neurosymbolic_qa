@@ -1,55 +1,72 @@
-:- multifile ask/1.
+% ask/1: ask a yes/no question, accept yes/y/true and no/n/false (case-insensitive)
+ask(Question) :-
+    format('~w (yes/no): ', [Question]),
+    read_line_to_string(user_input, Raw),
+    ( Raw = "" ->
+        write('Please answer yes or no.'), nl,
+        ask(Question)
+    ;
+        string_lower(Raw, Lower),
+        normalize_space(string(Input), Lower),
+        ( member(Input, ["yes","y","true"]) -> true
+        ; member(Input, ["no","n","false"]) -> fail
+        ; write('Please answer yes or no.'), nl,
+          ask(Question)
+        )
+    ).
 
-% Common diabetes symptoms
-common_symptom(excessive_thirst).
-common_symptom(excessive_urination).
-common_symptom(fatigue).
-common_symptom(blurred_vision).
+% Symptom predicates that query the user
+symptom(excessive_thirst) :-
+    ask('Do you have excessive thirst').
 
-% Input wrappers (use ask/1 to obtain information from the user/system)
-hba1c(Patient, Value) :-
-    ask(hba1c(Patient, Value)).
+symptom(excessive_urination) :-
+    ask('Do you have excessive urination').
 
-fasting_glucose(Patient, Value) :-
-    ask(fasting_glucose(Patient, Value)).
+symptom(fatigue) :-
+    ask('Do you have fatigue').
 
-has_symptom(Patient, Symptom) :-
-    ask(symptom(Patient, Symptom)).
+symptom(blurred_vision) :-
+    ask('Do you have blurred vision').
 
-% Diagnosis rules
+% Laboratory-based checks
+hbA1c_above_65 :-
+    ask('Is your HbA1c above 6.5%').
 
-% Patients with HbA1c above 6.5% may have diabetes
-diagnosis(Patient, diabetes) :-
-    hba1c(Patient, V),
-    number(V),
-    V > 6.5.
+fasting_100_125 :-
+    ask('Is your fasting blood glucose between 100 and 125 mg/dL').
 
-% Prediabetes when fasting blood glucose is between 100 and 125 mg/dL
-diagnosis(Patient, prediabetes) :-
-    fasting_glucose(Patient, V),
-    number(V),
-    V >= 100,
-    V =< 125.
+% Diagnostic rules (logical)
+diabetes_condition :-
+    hbA1c_above_65.
 
-% Patients with diabetes often experience both excessive thirst and excessive urination.
-diagnosis(Patient, diabetes) :-
-    has_symptom(Patient, excessive_thirst),
-    has_symptom(Patient, excessive_urination).
+diabetes_condition :-
+    symptom(excessive_thirst),
+    symptom(excessive_urination).
 
-% Supportive rule: possible diabetes when at least two common symptoms are present
-possible_diabetes(Patient) :-
-    findall(S, (common_symptom(S), has_symptom(Patient, S)), Symptoms),
-    sort(Symptoms, Unique),
-    length(Unique, N),
-    N >= 2.
+prediabetes_condition :-
+    fasting_100_125.
 
-    diagnose(Result) :-
-        ( diagnosis(_, diabetes) ->
-            Result = diabetes
-        ; diagnosis(_, prediabetes) ->
-            Result = prediabetes
-        ; possible_diabetes(_) ->
-            Result = possible_diabetes
-        ;   Result = no_diabetes
-        ).
-    
+% Public predicates required by the specification
+
+% diabetes/0: run the diabetes check and report result (uses ask/1)
+diabetes :-
+    ( diabetes_condition ->
+        write('Diagnosis: Diabetes suspected.'), nl
+    ;
+        write('Diagnosis: Diabetes not indicated.'), nl
+    ).
+
+% prediabetes/0: run the prediabetes check and report result (uses ask/1)
+prediabetes :-
+    ( prediabetes_condition ->
+        write('Diagnosis: Prediabetes suspected.'), nl
+    ;
+        write('Diagnosis: Prediabetes not indicated.'), nl
+    ).
+
+% diagnose/0: perform a full interview for diabetes and prediabetes
+diagnose :-
+    write('Beginning diagnostic interview.'), nl,
+    diabetes,
+    prediabetes,
+    write('Diagnostic interview complete.'), nl.
