@@ -1,6 +1,14 @@
-from openai import OpenAI
+from llm.client import client
 
-client = OpenAI()
+# FEEDBACK: This does not actually result in the Python ask method being called through Janus.
+# This results in the internal Prolog input mechanism being triggered.
+# Please look closely at the template I provided you.
+# You must instruct the LLM how it can trigger the Python function.
+# Exampel prompt:
+# -----------------
+# Add and use the following Prolog predicate to ask a yes/no question to the user through the Janus integration.
+# ask(Question) :-
+#    py_call(main:ask(Question), yes).
 
 
 def generate_prolog_kb(text: str) -> str:
@@ -27,10 +35,7 @@ Medical Text:
 """
 
     response = client.chat.completions.create(
-        model="gpt-5-mini",
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
+        model="gpt-5-mini", messages=[{"role": "user", "content": prompt}]
     )
 
     return response.choices[0].message.content.strip()
