@@ -29,19 +29,38 @@ STRICT REQUIREMENTS:
 - Use logical predicates only
 - Ensure rules are consistent and executable in SWI-Prolog
 - Must be compatible with SWI-Prolog + Janus
-- Add and use exactly this predicate for user interaction:
+- for user interaction:
     ask(Question) :-
         py_call(main:ask(Question), yes)
 - The predicate diagnose/0 must ask all available diagnostic criteria before producing a result.
 - Do not stop after the first positive criterion.
 - Collect all answers first, then evaluate the diagnosis.
 - If the user asks for an overall diagnosis, screening result, or asks generally whether the patient is diabetic, use the main entry predicate diagnose if it exists.
-- If the user asks specifically whether diabetes is logically true, use diabetes if it exists.
-- If the user asks specifically about prediabetes, use prediabetes if it exists.
-- If the user asks specifically about low risk, use low_risk if it exists.
-- If the user asks about a concrete criterion and a matching predicate exists, use that predicate.
-- Prefer the most specific predicate that answers the question.
-- Prefer diagnose only for overall diagnostic workflows, because diagnose may ask all required user questions.
+- If the user asks specifically whether diabetes is logically true, use diabetes if it exists
+- If the user asks specifically about prediabetes, use prediabetes if it exists
+- If the user asks specifically about low risk, use low_risk if it exists
+- If the user asks about a concrete criterion and a matching predicate exists, use that predicate
+- Prefer the most specific predicate that answers the question
+- Prefer diagnose only for overall diagnostic workflows, because diagnose may ask all required user questions
+- Generate Prolog predicates for:
+
+    diagnosis rules
+    symptoms
+    diagnostic criteria
+    diseases mentioned in the text
+
+Example:
+
+symptom(diabetes, excessive_thirst).
+symptom(diabetes, excessive_urination).
+
+symptoms(Disease, Symptoms) :-
+    findall(S, symptom(Disease,S), Symptoms).
+
+criterion(diabetes, random_glucose).
+
+criteria(Disease, Criteria) :-
+    findall(C, criterion(Disease,C), Criteria).
 
 Medical Text:
 {text}

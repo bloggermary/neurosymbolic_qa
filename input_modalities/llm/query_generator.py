@@ -8,9 +8,6 @@ Convert the user question into a valid Prolog query.
 
 IMPORTANT RULES:
 - Use ONLY predicates that exist in the provided Prolog knowledge base
-- Do NOT use variables (no Result, X, etc.)
-- Do NOT use parentheses
-- Return ONLY a predicate name
 - Return only the Prolog query
 - Do not use ?-.
 - If no matching predicate exists, return fail
@@ -22,6 +19,24 @@ Output: diagnose
 
 Question: Does the patient have diabetes?
 Output: diabetes
+
+User asks if the patient has diabetes:
+diagnose(diabetes)
+
+User asks what the symptoms of diabetes are:
+symptoms(diabetes, Symptoms)
+
+User asks what the criteria for diabetes are:
+criteria(diabetes, Criteria)
+
+User asks what diseases can be diagnosed:
+possible_diagnoses(Diagnoses)
+
+User asks about prediabetes:
+diagnose(prediabetes)
+
+User asks for prediabetes criteria:
+criteria(prediabetes, Criteria)
 
     Available Prolog knowledge base:
     {prolog_code}
