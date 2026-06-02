@@ -1,5 +1,10 @@
-Patients with HbA1c above 6.5% may have diabetes.
-
+Ein Diabetes mellitus liegt vor, wenn bestimmte Grenzwerte der Blutzuckermessung
+überschritten werden. Dazu gehört eine Gelegenheits-Plasmaglukose von mindestens
+11,1 mmol/l beziehungsweise 200 mg/dl. Ebenso spricht eine Nüchtern-Plasmaglukose von
+mindestens 7,0 mmol/l (126 mg/dl) nach 8 bis 12 Stunden Fasten für Diabetes.
+Auch ein erhöhter Wert im oralen Glukosetoleranztest mit mindestens
+11,1 mmol/l nach zwei Stunden erfüllt die Diagnosekriterien. Zusätzlich kann Diabetes
+über einen HbA1c-Wert von mindestens 48 mmol/mol beziehungsweise 6,5 % diagnostiziert werden.
 Common symptoms of diabetes include:
 - excessive thirst
 - excessive urination

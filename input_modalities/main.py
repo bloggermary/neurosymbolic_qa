@@ -63,16 +63,20 @@ if __name__ == "__main__":
     # STEP 2 — load Prolog engine
     load_prolog()
 
-    # STEP 3 — user input
+    # STEP 3 — read generated KB code
+    with open(KB_PATH, "r", encoding="utf-8") as f:
+        prolog_code = f.read()
+
+    # STEP 4 — user input
     user_question = input("Ask a medical question: ").strip()
 
-    # STEP 4 — NL → Prolog query (LLM)
-    query = generate_query(user_question).strip()
-    query = query.split("(")[0].strip()
+    # STEP 5 — NL → Prolog query (LLM)
+    query = generate_query(
+        user_question, prolog_code).strip()
 
     print("\n[Generated Prolog Query]:", query)
 
-    # STEP 5 — symbolic reasoning
+    # STEP 6 — symbolic reasoning
     try:
         result = run_reasoning(query)
     except Exception as e:
@@ -81,7 +85,7 @@ if __name__ == "__main__":
 
     print("\n[Raw Prolog Result]:", result)
 
-    # STEP 6 — Prolog → natural language
+    # STEP 7 — Prolog → natural language
     try:
         final_answer = translate_result(
             user_question,
@@ -92,6 +96,6 @@ if __name__ == "__main__":
         print("\nTranslation fallback triggered:", e)
         final_answer = str(result)
 
-    # STEP 7 — output
+    # STEP 8 — output
     print("\nFinal Answer:")
     print(final_answer)

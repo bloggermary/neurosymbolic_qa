@@ -1,23 +1,19 @@
 from llm.client import client
 
 
-# FEEDBACK: The query generation must be done for a concrete Prolog knowledge base such that the LLM knows the available predicates!
-# def generate_query(question: str, prolog_code: str) -> str:
 # Later version must not limit the query to predefined set of allowed predicates.
-def generate_query(question: str) -> str:
+def generate_query(question: str,prolog_code: str) -> str:
     PROMPT = """
 Convert the user question into a valid Prolog query.
 
 IMPORTANT RULES:
+- Use ONLY predicates that exist in the provided Prolog knowledge base
 - Do NOT use variables (no Result, X, etc.)
 - Do NOT use parentheses
 - Return ONLY a predicate name
-
-Allowed predicates:
-diagnose
-diabetes
-prediabetes
-low_risk
+- Return only the Prolog query
+- Do not use ?-.
+- If no matching predicate exists, return fail
 
 Examples:
 
@@ -27,10 +23,14 @@ Output: diagnose
 Question: Does the patient have diabetes?
 Output: diabetes
 
-Return ONLY ONE WORD.
+    Available Prolog knowledge base:
+    {prolog_code}
+
+    User question:
+    {question}
+
 """
-    # Here is the available Prolog knowledge base the Prolog query must be executable on:
-    # {prolog_code}
+
 
     response = client.chat.completions.create(
         model="gpt-5-mini",
