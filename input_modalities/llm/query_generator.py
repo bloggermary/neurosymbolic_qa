@@ -12,13 +12,7 @@ IMPORTANT RULES:
 - Do not use ?-.
 - If no matching predicate exists, return fail
 
-Examples:
-
-Question: Diagnose the patient
-Output: diagnose
-
-Question: Does the patient have diabetes?
-Output: diabetes
+Query selection rules:
 
 User asks if the patient has diabetes:
 diagnose(diabetes)
