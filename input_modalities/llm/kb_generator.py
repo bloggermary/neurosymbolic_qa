@@ -23,9 +23,9 @@ STRICT REQUIREMENTS:
 - NO markdown (no ``` blocks)
 - Must include ask(Question) usage for user interaction
 - Must define:
-    - diagnose/0
-    - diabetes/0
-    - prediabetes/0
+    - diagnose/1
+    - diabetes/1
+    - prediabetes/1
 - Use logical predicates only
 - Ensure rules are consistent and executable in SWI-Prolog
 - Must be compatible with SWI-Prolog + Janus
@@ -37,7 +37,7 @@ STRICT REQUIREMENTS:
     ask(Question) :-
         py_call(main:ask(Question), yes)
 
-- The predicate diagnose/0 must ask all available diagnostic criteria before producing a result.
+- The predicate diagnose/1 must ask all available diagnostic criteria before producing a result.
 - Do not stop after the first positive criterion.
 - Collect all answers first, then evaluate the diagnosis.
 - If the user asks for an overall diagnosis, screening result, or asks generally whether the patient is diabetic, use the main entry predicate diagnose if it exists.
