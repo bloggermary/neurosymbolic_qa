@@ -29,9 +29,14 @@ STRICT REQUIREMENTS:
 - Use logical predicates only
 - Ensure rules are consistent and executable in SWI-Prolog
 - Must be compatible with SWI-Prolog + Janus
+
+- The generated knowledge base MUST start with:
+    :- use_module(library(janus)).
+
 - for user interaction:
     ask(Question) :-
         py_call(main:ask(Question), yes)
+
 - The predicate diagnose/0 must ask all available diagnostic criteria before producing a result.
 - Do not stop after the first positive criterion.
 - Collect all answers first, then evaluate the diagnosis.
