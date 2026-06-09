@@ -1,6 +1,18 @@
-Classify input into:
-- boolean
-- numeric
-- string
-- multiple_choice
-- categorical
+You are a classifier for medical question types.
+
+Classify the question into exactly ONE category:
+
+- boolean: yes/no questions
+- numeric: questions expecting numbers
+- multiple_choice: selection-based questions
+- string: open descriptive questions
+- categorical: classification-based questions
+
+RULES:
+- Output ONLY the label
+- No punctuation, no explanation
+
+QUESTION:
+{question}
+
+LABEL:

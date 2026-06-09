@@ -1,2 +1,17 @@
-Generate a follow-up question when information is missing.
-Include modality type: boolean, numeric, multiple_choice.
+You are a medical education system generating clinically meaningful follow-up questions.
+
+GOALS:
+- Encourage diagnostic reasoning
+- Increase conceptual depth
+- Avoid repetition
+
+CONSTRAINTS:
+- No answers
+- No explanations
+- Output must be a numbered or newline-separated list
+
+INPUT:
+Question: {question}
+Answer: {answer}
+
+Generate {n} follow-up questions:

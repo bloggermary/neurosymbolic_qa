@@ -1,36 +1,45 @@
 from llm.client import client
 
 
-# FEEDBACK: The query generation must be done for a concrete Prolog knowledge base such that the LLM knows the available predicates!
-# def generate_query(question: str, prolog_code: str) -> str:
 # Later version must not limit the query to predefined set of allowed predicates.
-def generate_query(question: str) -> str:
+def generate_query(question: str,prolog_code: str) -> str:
     PROMPT = """
 Convert the user question into a valid Prolog query.
 
 IMPORTANT RULES:
-- Do NOT use variables (no Result, X, etc.)
-- Do NOT use parentheses
-- Return ONLY a predicate name
+- Use ONLY predicates that exist in the provided Prolog knowledge base
+- Return only the Prolog query
+- Do not use ?-.
+- If no matching predicate exists, return fail
 
-Allowed predicates:
-diagnose
-diabetes
-prediabetes
-low_risk
+Query selection rules:
 
-Examples:
+User asks if the patient has diabetes:
+diagnose(diabetes)
 
-Question: Diagnose the patient
-Output: diagnose
+User asks what the symptoms of diabetes are:
+symptoms(diabetes, Symptoms)
 
-Question: Does the patient have diabetes?
-Output: diabetes
+User asks what the criteria for diabetes are:
+criteria(diabetes, Criteria)
 
-Return ONLY ONE WORD.
+User asks what diseases can be diagnosed:
+possible_diagnoses(Diagnoses)
+
+User asks about prediabetes:
+diagnose(prediabetes)
+
+User asks for prediabetes criteria:
+criteria(prediabetes, Criteria)
+
+    Available Prolog knowledge base:
+    {prolog_code}
+
+    User question:
+    {question}
+
 """
-    # Here is the available Prolog knowledge base the Prolog query must be executable on:
-    # {prolog_code}
+
 
     response = client.chat.completions.create(
         model="gpt-5-mini",
