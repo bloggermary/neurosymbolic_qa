@@ -4,11 +4,8 @@ from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
 
-from modalities.router import (
-    route_boolean,
-    route_numeric,
-    route_string
-)
+from modalities.router import route_boolean, route_numeric, route_string
+
 
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 

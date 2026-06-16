@@ -1,43 +1,46 @@
-# prolog query validation
-def validate_query(query: str) -> str:
-    query = query.strip()
+# modalities/validation.py
 
-    if query.startswith("?-"):
-        query = query[2:].strip()
+from typing import Any, Optional
 
-    if query.endswith("."):
-        query = query[:-1].strip()
 
-    if not query:
-        raise ValueError("Generated query is empty.")
-
-    return query
-
-def normalize_text(value: str) -> str:
+class ModalityValidator:
     """
-    Normalizes simple user input.
+    Validates and normalizes user input for different modalities.
     """
-    return value.strip().lower()
 
+    @staticmethod
+    def is_boolean(value: Any) -> bool:
+        return isinstance(value, bool)
 
-def normalize_yes_no(value: str):
-    value = value.strip().lower()
+    @staticmethod
+    def is_numeric(value: Any) -> bool:
+        return isinstance(value, (int, float))
 
-    if value in {"yes", "y", "ja", "j"}:
-        return "yes"
+    @staticmethod
+    def is_string(value: Any) -> bool:
+        return isinstance(value, str)
 
-    if value in {"no", "n", "nein"}:
-        return "no"
+    @staticmethod
+    def normalize_yes_no(value: str) -> Optional[bool]:
+        value = value.strip().lower()
 
-    return None
+        if value in {"yes", "ja", "true", "1"}:
+            return True
 
+        if value in {"no", "nein", "false", "0"}:
+            return False
 
-def parse_float(value: str):
-    try:
-        return float(value.replace(",", "."))
-    except ValueError:
         return None
 
+    @staticmethod
+    def parse_float(value: str) -> Optional[float]:
+        value = value.strip().replace(",", ".")
 
-def normalize_text(value: str):
-    return value.strip().lower()
+        try:
+            return float(value)
+        except ValueError:
+            return None
+
+    @staticmethod
+    def normalize_string(value: str) -> str:
+        return value.strip().strip("'").strip('"')

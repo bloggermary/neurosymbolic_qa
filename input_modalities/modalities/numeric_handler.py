@@ -1,11 +1,18 @@
-from modalities.validation import parse_float
+from modalities.validation import ModalityValidator
 
-def handle_numeric(question: str) -> float:
-    while True:
-        answer = input(f"{question} Enter numeric value: ").strip()
 
-        value = parse_float(answer)
-        if value is not None:
-            return value
+class NumericHandler:
+    """
+    Handles numeric user input during Prolog reasoning.
+    """
 
-        print("Please enter a numeric value, for example 126, 6.5 or 11,1.")
+    def handle(self, question: str) -> float:
+        while True:
+            answer = input(f"{question} Enter numeric value: ")
+
+            result = ModalityValidator.parse_float(answer)
+
+            if result is not None:
+                return result
+
+            print("Please enter a numeric value, for example 126, 6.5 or 11,1.")

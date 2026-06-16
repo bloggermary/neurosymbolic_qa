@@ -1,12 +1,17 @@
-from modalities.validation import normalize_yes_no
+from modalities.validation import ModalityValidator
 
-def handle_boolean(question: str) -> bool:
-    while True:
-        answer = input(f"{question} [yes/no]: ").strip().lower()
+class BooleanHandler:
+    """
+    Handles boolean (Yes/No) outputs from Prolog.
+    """
 
-        normalized = normalize_yes_no(answer)
+    def handle(self, question: str) -> bool:
+        while True:
+            answer = input(f"{question} [yes/no]: ")
 
-        if normalized is not None:
-            return normalized
+            result = ModalityValidator.normalize_yes_no(answer)
 
-        print("Please answer with yes or no.")
+            if result is not None:
+                return result
+
+            print("Please answer with yes/no")
