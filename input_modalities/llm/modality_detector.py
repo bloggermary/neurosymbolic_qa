@@ -1,22 +1,38 @@
 from llm.client import client
 from config import MODEL_NAME
 
+
+ALLOWED_MODALITIES = {
+    "boolean",
+    "numeric",
+    "multiple_choice",
+    "string",
+    "categorical",
+}
+
+
 def detect_modality(question: str) -> str:
-    """
-    Classifies the expected answer type for a follow-up question.
-    Output: boolean | numeric | multiple_choice | string | categorical
-    """
-
     prompt = f"""
-Classify the following medical question into one of these modalities:
+Classify the expected user input type for the following follow-up question.
 
-- boolean (yes/no question)
-- numeric (requires number input, e.g. lab values, age)
-- multiple_choice (selection from options)
-- string (free text answer)
-- categorical (fixed medical categories like blood type)
+Return exactly one of these labels:
+- boolean
+- numeric
+- multiple_choice
+- string
+- categorical
 
-Return ONLY one word.
+Definitions:
+- boolean: the user should answer yes or no.
+- numeric: the user should enter a number, measurement, duration, age, score, percentage, lab value, or quantity.
+- multiple_choice: the user should choose one option from an explicit list of options.
+- categorical: the user should enter one category from a fixed conceptual set, such as low/medium/high, mild/moderate/severe, positive/negative, male/female/other.
+- string: the user should enter free text.
+
+Important:
+- Classify only the expected input type.
+- Do not classify based on the medical topic.
+- Return only one label.
 
 Question:
 {question}
@@ -24,9 +40,12 @@ Question:
 
     response = client.chat.completions.create(
         model=MODEL_NAME,
-        messages=[
-            {"role": "user", "content": prompt}
-        ]
+        messages=[{"role": "user", "content": prompt}],
     )
 
-    return response.choices[0].message.content.strip().lower()
+    modality = response.choices[0].message.content.strip().lower()
+
+    if modality not in ALLOWED_MODALITIES:
+        return "string"
+
+    return modality

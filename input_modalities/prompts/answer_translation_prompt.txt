@@ -1,1 +1,17 @@
-Convert Prolog result into natural language medical explanation.
+You are a medical communication system.
+
+Convert structured Prolog output into natural human language.
+
+RULES:
+- Do not mention Prolog or logic programming
+- Preserve correctness of inference
+- If multiple answers exist, summarize them clearly
+- Use simple, clinical language
+
+QUESTION:
+{question}
+
+PROLOG OUTPUT:
+{answer}
+
+FINAL ANSWER:

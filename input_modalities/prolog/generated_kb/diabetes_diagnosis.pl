@@ -1,128 +1,90 @@
-ask(Question) :-
-    py_call(main:ask(Question), yes).
+:- use_module(library(janus)).
 
-% Diagnostic criteria identifiers
-diag_criterion(random_glucose).
-diag_criterion(fasting_glucose_diag).
-diag_criterion(ogtt_2h).
-diag_criterion(hba1c).
+ask_boolean(Question) :-
+    py_call(main:ask_boolean(Question), true).
 
-% Prediabetes specific criterion
-prediabetes_criterion(fasting_glucose_prediabetes).
+ask_numeric(Question, Value) :-
+    py_call(main:ask_numeric(Question), Value).
 
-% Human-readable question texts for each criterion
-criterion_text(random_glucose, 'Is random (casual) plasma glucose >= 200 mg/dL (11.1 mmol/L)?').
-criterion_text(fasting_glucose_diag, 'Is fasting plasma glucose >= 126 mg/dL (7.0 mmol/L) after 8-12 hours of fasting?').
-criterion_text(ogtt_2h, 'Is 2-hour plasma glucose in an oral glucose tolerance test >= 200 mg/dL (11.1 mmol/L)?').
-criterion_text(hba1c, 'Is HbA1c >= 6.5% (48 mmol/mol)?').
-criterion_text(fasting_glucose_prediabetes, 'Is fasting plasma glucose between 100 and 125 mg/dL (5.6-6.9 mmol/L)?').
+ask_string(Question, Value) :-
+    py_call(main:ask_string(Question), Value).
 
-% Symptoms mentioned in the text
-symptom(diabetes, excessive_thirst).
-symptom(diabetes, excessive_urination).
-symptom(diabetes, fatigue).
-symptom(diabetes, blurred_vision).
+% --- Numeric measurement predicates (asking values from the user) ---
+% All glucose measurements are requested in mg/dL (unit chosen from the text).
+gelegenheits_plasmaglukose_mgdl(Value) :-
+    ask_numeric('Gelegenheits-Plasmaglukose in mg/dL?', Value).
 
-% Human-readable symptom questions
-symptom_text(excessive_thirst, 'Does the patient have excessive thirst?').
-symptom_text(excessive_urination, 'Does the patient have excessive urination?').
-symptom_text(fatigue, 'Does the patient experience fatigue?').
-symptom_text(blurred_vision, 'Does the patient have blurred vision?').
+fasten_plasmaglukose_mgdl(Value) :-
+    ask_numeric('Nüchtern-Plasmaglukose nach 8-12 Stunden Fasten in mg/dL?', Value).
 
-% Convenience collections
-criteria(Disease, Criteria) :-
-    findall(C, criterion(Disease, C), Criteria).
+ogtt_2h_plasmaglukose_mgdl(Value) :-
+    ask_numeric('2-Stunden-Plasmaglukose (oraler Glukosetoleranztest) in mg/dL?', Value).
 
-criterion(diabetes, random_glucose).
-criterion(diabetes, fasting_glucose_diag).
-criterion(diabetes, ogtt_2h).
-criterion(diabetes, hba1c).
-criterion(prediabetes, fasting_glucose_prediabetes).
+% HbA1c is requested in percent (%%), as given in the text (6.5% threshold).
+hba1c_percent(Value) :-
+    ask_numeric('HbA1c in Prozent (%)?', Value).
 
-symptoms(Disease, Symptoms) :-
-    findall(S, symptom(Disease, S), Symptoms).
+% --- Criteria predicates derived from the medical text ---
+% Casual (Gelegenheits-) plasma glucose >= 200 mg/dL indicates diabetes.
+gelegenheits_plasmaglukose_diabetes :-
+    gelegenheits_plasmaglukose_mgdl(V),
+    V >= 200.
 
-% Map any question id to its text (criterion or symptom)
-question_text(Id, Text) :-
-    criterion_text(Id, Text).
-question_text(Id, Text) :-
-    symptom_text(Id, Text).
+% Fasting plasma glucose >= 126 mg/dL after 8-12 h fasting indicates diabetes.
+fasten_plasmaglukose_diabetes :-
+    fasten_plasmaglukose_mgdl(V),
+    V >= 126.
 
-% Ask a yes/no question and return yes/no
-ask_yesno(Id, Answer) :-
-    question_text(Id, Text),
-    ( ask(Text) -> Answer = yes ; Answer = no ).
+% 2-hour OGTT plasma glucose >= 200 mg/dL indicates diabetes.
+ogtt_2h_diabetes :-
+    ogtt_2h_plasmaglukose_mgdl(V),
+    V >= 200.
 
-% Ask a list of question ids, collecting Id-Answer pairs (asks all before evaluating)
-ask_all([], []).
-ask_all([Id|Rest], [Id-Ans|Pairs]) :-
-    ask_yesno(Id, Ans),
-    ask_all(Rest, Pairs).
+% HbA1c >= 6.5% (48 mmol/mol) indicates diabetes.
+hba1c_diabetes :-
+    hba1c_percent(V),
+    V >= 6.5.
 
-% Evaluate diabetes presence from collected answers:
-has_diabetes(Pairs) :-
-    member(random_glucose-yes, Pairs);
-    member(fasting_glucose_diag-yes, Pairs);
-    member(ogtt_2h-yes, Pairs);
-    member(hba1c-yes, Pairs).
+% Prediabetes fasting: fasting glucose between 100 and 125 mg/dL (inclusive).
+prediabetes_fasting :-
+    fasten_plasmaglukose_mgdl(V),
+    V >= 100,
+    V =< 125.
 
-% Evaluate prediabetes from collected answers:
-% Prediabetes: fasting glucose between 100-125 mg/dL and no diabetes criterion met
-has_prediabetes(Pairs) :-
-    member(fasting_glucose_prediabetes-yes, Pairs),
-    \+ has_diabetes(Pairs).
+% --- Symptom collection ---
+% Collect all common diabetes symptoms first before evaluating symptom patterns.
+collect_symptoms(ExcessiveThirst, ExcessiveUrination, Fatigue, BlurredVision) :-
+    ( ask_boolean('Haben Sie übermäßigen Durst (excessive thirst)?') -> ExcessiveThirst = true ; ExcessiveThirst = false ),
+    ( ask_boolean('Haben Sie vermehrtes Wasserlassen (excessive urination)?') -> ExcessiveUrination = true ; ExcessiveUrination = false ),
+    ( ask_boolean('Leiden Sie unter Müdigkeit/Fatigue (fatigue)?') -> Fatigue = true ; Fatigue = false ),
+    ( ask_boolean('Haben Sie unscharfes Sehen (blurred vision)?') -> BlurredVision = true ; BlurredVision = false ).
 
-% low_risk: no diabetes criteria and no prediabetes
-has_low_risk(Pairs) :-
-    \+ has_diabetes(Pairs),
-    \+ has_prediabetes(Pairs).
+% Supportive symptom pattern: both excessive thirst and excessive urination often occur in diabetes.
+supportive_symptoms_thirst_and_urination :-
+    collect_symptoms(Thirst, Urination, _Fatigue, _Blurred),
+    Thirst == true,
+    Urination == true.
 
-% Main entry: diagnose/0
-% Ask all available diagnostic criteria (diabetes criteria + prediabetes criterion),
-% collect all answers first, then evaluate and report. Do not stop after first positive.
-diagnose :-
-    findall(Id, diag_criterion(Id), DiagIds),
-    findall(Pid, prediabetes_criterion(Pid), PredIds),
-    append(DiagIds, PredIds, AllIds),
-    ask_all(AllIds, Pairs),
-    % After collecting answers, evaluate
-    ( has_diabetes(Pairs) ->
-        write('Diagnosis: Diabetes mellitus is present according to at least one diagnostic criterion.'), nl
-    ; has_prediabetes(Pairs) ->
-        write('Diagnosis: Prediabetes (impaired fasting glucose) is present.'), nl
-    ; write('Diagnosis: No diabetes or prediabetes criteria were met (low risk based on these criteria).'), nl
-    ),
-    % Also report which criteria were positive for transparency
-    write('Collected criterion answers: '), write(Pairs), nl.
+% --- Final diagnostic rules ---
+% Diabetes mellitus is present if any of the laboratory criteria are met.
+diabetes_mellitus_laboratory :-
+    gelegenheits_plasmaglukose_diabetes
+    ;
+    fasten_plasmaglukose_diabetes
+    ;
+    ogtt_2h_diabetes
+    ;
+    hba1c_diabetes.
 
-% Specific predicate for asking only diabetes diagnostic criteria
-diabetes :-
-    findall(Id, diag_criterion(Id), DiagIds),
-    ask_all(DiagIds, Pairs),
-    ( has_diabetes(Pairs) ->
-        write('Diabetes: YES (one or more diagnostic criteria met).'), nl
-    ; write('Diabetes: NO (no diabetes diagnostic criteria met).'), nl
-    ),
-    write('Collected diabetes criterion answers: '), write(Pairs), nl.
+% High-level diagnosis predicate that returns a concise reason atom.
+% It checks laboratory criteria first; if not met, it can still report supportive symptoms.
+diabetes_mellitus(laboratory_criteria_met) :-
+    diabetes_mellitus_laboratory.
 
-% Specific predicate for prediabetes
-prediabetes :-
-    findall(Id, prediabetes_criterion(Id), PredIds),
-    ask_all(PredIds, Pairs),
-    ( has_prediabetes(Pairs) ->
-        write('Prediabetes: YES (fasting glucose in 100-125 mg/dL and no diabetes criteria present).'), nl
-    ; write('Prediabetes: NO.'), nl
-    ),
-    write('Collected prediabetes criterion answers: '), write(Pairs), nl.
+diabetes_mellitus(supportive_symptoms_thirst_and_urination) :-
+    \+ diabetes_mellitus_laboratory,
+    supportive_symptoms_thirst_and_urination.
 
-% Optional: low_risk predicate if user asks specifically about low risk
-low_risk :-
-    findall(Id, diag_criterion(Id), DiagIds),
-    findall(Pid, prediabetes_criterion(Pid), PredIds),
-    append(DiagIds, PredIds, AllIds),
-    ask_all(AllIds, Pairs),
-    ( has_low_risk(Pairs) ->
-        write('Low risk: YES (no diabetes or prediabetes criteria met).'), nl
-    ; write('Low risk: NO (some criterion suggests diabetes or prediabetes).'), nl
-    ),
-    write('Collected answers for risk assessment: '), write(Pairs), nl.
+% Prediabetes detection predicate (returns an atom when criteria met).
+prediabetes(prediabetes_fasting) :-
+    prediabetes_fasting.

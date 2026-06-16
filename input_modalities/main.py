@@ -4,6 +4,11 @@ from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
 
+from modalities.router import (
+    route_boolean,
+    route_numeric,
+    route_string
+)
 
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
@@ -11,12 +16,16 @@ KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 # -------------------------
 # User interaction bridge
 # -------------------------
-def ask(question: str) -> str:
-    """
-    Called from Prolog via Janus (py_call).
-    This is the symbolic ↔ neural interaction point.
-    """
-    return input(question + " ").strip().lower()
+def ask_boolean(question: str) -> bool:
+    return route_boolean(question)
+
+
+def ask_numeric(question: str) -> float:
+    return route_numeric(question)
+
+
+def ask_string(question: str) -> str:
+    return route_string(question)
 
 
 # -------------------------
@@ -30,6 +39,8 @@ def build_knowledge_base():
 
     with open(KB_PATH, "w", encoding="utf-8") as f:
         f.write(kb_code)
+    
+    return kb_code
 
 
 # -------------------------
@@ -58,14 +69,10 @@ def run_reasoning(query: str):
 if __name__ == "__main__":
 
     # STEP 1 — build symbolic KB using LLM
-    build_knowledge_base()
+    prolog_code = build_knowledge_base()
 
     # STEP 2 — load Prolog engine
     load_prolog()
-
-    # STEP 3 — read generated KB code
-    with open(KB_PATH, "r", encoding="utf-8") as f:
-        prolog_code = f.read()
 
     # STEP 4 — user input
     user_question = input("Ask a medical question: ").strip()
