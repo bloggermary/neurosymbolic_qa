@@ -9,6 +9,14 @@ ask(Question) :-
 %   py_call(file_name:function_name(argument_value), return_value)
     py_call(diabetes_diagnosis:ask(Question), yes).
 
+% Ask a categorical question via the Python function defined in diabetes_diagnosis.py
+ask_category(Question, Categories, Answer) :-
+    py_call(diabetes_diagnosis:ask_category(Question, Categories), Answer).
+
+% Example categorical check
+thirst_severity(Severity) :-
+    ask_category("How severe is the patient's thirst?", [none, mild, moderate, severe], Severity).
+
 % Symptom checks
 has_polyuria       :- ask("Does the patient have polyuria (excessive urination)? (yes/no): ").
 has_polydipsia     :- ask("Does the patient have polydipsia (excessive thirst)? (yes/no): ").
