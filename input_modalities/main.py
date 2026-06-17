@@ -24,6 +24,21 @@ def ask_string(question: str) -> str:
     return route_string(question)
 
 
+# values from a category => answer with one
+def ask_category(question: str, categrories: str):
+    pass
+
+
+# values in a give nange
+def ask_range(question, start: int, stop: int):
+    pass
+
+
+# values from a category => answer with multile
+def ask_category_multiple(question: str, categrories: str, num_answers: int):
+    pass
+
+
 # -------------------------
 # PIPELINE STEP 1: Build KB
 # -------------------------
@@ -76,8 +91,7 @@ if __name__ == "__main__":
     user_question = input("Ask a medical question: ").strip()
 
     # STEP 5 — NL → Prolog query (LLM)
-    query = generate_query(
-        user_question, prolog_code).strip()
+    query = generate_query(user_question, prolog_code).strip()
 
     print("\n[Generated Prolog Query]:", query)
 
@@ -92,11 +106,7 @@ if __name__ == "__main__":
 
     # STEP 7 — Prolog → natural language
     try:
-        final_answer = translate_result(
-            user_question,
-            query,
-            result
-        )
+        final_answer = translate_result(user_question, query, result)
     except Exception as e:
         print("\nTranslation fallback triggered:", e)
         final_answer = str(result)
