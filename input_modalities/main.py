@@ -6,7 +6,6 @@ from llm.response_translator import translate_result
 
 from modalities.router import route_boolean, route_numeric, route_string
 
-
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
 
@@ -25,6 +24,21 @@ def ask_string(question: str) -> str:
     return route_string(question)
 
 
+# values from a category => answer with one
+def ask_category(question: str, categrories: str):
+    pass
+
+
+# values in a give nange
+def ask_range(question, start: int, stop: int):
+    pass
+
+
+# values from a category => answer with multile
+def ask_category_multiple(question: str, categrories: str, num_answers: int):
+    pass
+
+
 # -------------------------
 # PIPELINE STEP 1: Build KB
 # -------------------------
@@ -36,8 +50,6 @@ def build_knowledge_base():
 
     with open(KB_PATH, "w", encoding="utf-8") as f:
         f.write(kb_code)
-    
-    return kb_code
 
 
 # -------------------------
@@ -66,17 +78,20 @@ def run_reasoning(query: str):
 if __name__ == "__main__":
 
     # STEP 1 — build symbolic KB using LLM
-    prolog_code = build_knowledge_base()
+    build_knowledge_base()
 
     # STEP 2 — load Prolog engine
     load_prolog()
+
+    # STEP 3 — read generated KB code
+    with open(KB_PATH, "r", encoding="utf-8") as f:
+        prolog_code = f.read()
 
     # STEP 4 — user input
     user_question = input("Ask a medical question: ").strip()
 
     # STEP 5 — NL → Prolog query (LLM)
-    query = generate_query(
-        user_question, prolog_code).strip()
+    query = generate_query(user_question, prolog_code).strip()
 
     print("\n[Generated Prolog Query]:", query)
 
@@ -91,11 +106,7 @@ if __name__ == "__main__":
 
     # STEP 7 — Prolog → natural language
     try:
-        final_answer = translate_result(
-            user_question,
-            query,
-            result
-        )
+        final_answer = translate_result(user_question, query, result)
     except Exception as e:
         print("\nTranslation fallback triggered:", e)
         final_answer = str(result)

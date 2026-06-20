@@ -54,4 +54,4 @@ class FollowupPipeline:
 
         self.manager.store(question, followups)
 
-        return followups
+        return followupskm
