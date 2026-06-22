@@ -30,20 +30,106 @@ ask_string(Question, Value) :-
     py_call(main:ask_string(Question), Value).
 
 
-ask_scale(Question, ScaleMin, ScaleMax, Value) :-
-    py_call(main:ask_scale(Question, ScaleMin, ScaleMax), Value).
-
-ask_frequency(Question, Options, Value) :-
-    py_call(main:ask_frequency(Question, Options), Value).
-
-ask_medication(Question, Options, Value) :-
-    py_call(main:ask_medication(Question, Options), Value).
-
-ask_medical_history(Question, Value) :-
-    py_call(main:ask_medical_history(Question), Value).
+def ask_scale(question: str, min_value: int = 1, max_value: int = 10) -> int:
+    ""Ask a numeric rating scale (e.g. symptom severity from 1 to 10).
+    Called from Prolog via py_call(main:ask_scale(Question, ScaleMin, ScaleMax), Value).""
     
-ask_family_history(Question, Value) :-
-    py_call(main:ask_family_history(Question), Value).
+    prompt = f"{question} ({min_value}-{max_value}): "
+    answer = input(prompt).strip().lower()
+
+    if not answer.isdigit():
+        print("Invalid input. Please enter a number.")
+        return ask_scale(question, min_value, max_value)
+    value = int(answer)
+    if min_value <= value <= max_value:
+        return value
+
+print(f"Value must be between {min_value} and {max_value}.")
+return ask_scale(question, min_value, max_value)
+
+
+def ask_frequency(question: str, options: list[str]) -> str:
+    options = ["never", "rarely", "sometimes", "often", "daily"]  # Example options
+    ""Ask a frequency question (e.g. how often do you experience X?).
+    Called from Prolog via py_call(main:ask_frequency(Question, Options), Value).""
+    
+    prompt = f"{question} ({', '.join(options)}): "
+    answer = input(prompt).strip().lower()
+
+    if answer not in options:
+        print("Invalid input. Please choose from the given options.")
+        return ask_frequency(question, options)
+    else:
+        return answer
+
+print(f"Please answer with one of the following: {', '.join(options)}.")
+return ask_frequency(question, options)
+
+
+def ask_medication(question: str) -> list[str]:
+    ""Free-text list input for medications.
+    Ask about current medications.
+    Called from Prolog via py_call(main:ask_medication(Question), Value).""
+    
+    prompt = f"{question} (separate multiple medications with commas): "
+    answer = input(prompt).strip()
+    medications = [med.strip() for med in answer.split(",") if med.strip()]
+    return medications
+
+print("Please enter at least one medication, or 'none' if not taking any.")
+return ask_medication(question)
+
+
+def ask_medical_history(question:str, options: list[str]) -> str:
+    ""Ask for medical history in a natural choice format.
+    Return a list of selected conditions.
+    Called from Prolog via py_call(main:ask_medical_history(Question, Options), Answer).""
+    
+    print("Have you ever been diagnosed with any of the following conditions?")  
+    for opt in options:
+        print(f"- {opt}")
+    
+    print("\nPlease answer as a comma-separated list of conditions you have been diagnosed with, or 'none' if not.")
+    answer = input("> ").strip().lower()
+
+    if answer in ["none", "no", "n/a", "never"]:
+        return []
+    selected = [a.strip() for a in answer.split(",") if a.strip()]
+    valid = [s for s in selected if s in [o.lower() for o in options]]
+
+    if not valid:
+        print("Invalid input. Please select from the provided options or answer 'none'.")
+return ask_medical_history(question, options)
+return valid
+
+
+def ask_family_history(question:str, options: list[str]) -> dict:
+    ""Ask for family medical history in a natural choice format.
+    Return a dictionary mapping conditions to family members.
+    Called from Prolog via py_call(main:ask_family_history(Question, Options), Answer).""
+    
+    print(f"{question}"\n")
+
+    results dict = {}
+    for condition in options:
+        answer = input(f"{condition} (yes / no / I don't know): ").strip().lower()
+
+        if answer not in ["yes", "no", "I don't know"]:
+            print("Please answer with 'yes', 'no', or 'I don't know'.")
+            return ask_family_history(question, options)
+
+        result = {
+            "condition": condition,
+            "has_family_history": answer == "yes",
+        }
+
+        if answer == "yes":
+            family_member = input(f"Which family member(s) have {condition}? (e.g. mother, father, sibling): ").strip().lower()
+            result["family_member"] = family_member
+        
+    return result
+return results
+
 
 
 - The predicate diagnose/1 must ask all available diagnostic criteria before producing a result.

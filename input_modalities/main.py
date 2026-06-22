@@ -36,12 +36,12 @@ def ask_medication(question:str, options: list[str]) -> str:
     return route_medication(question, options)
 
 
-def ask_medical_history(question:str) -> str:
-    return route_medical_history(question)  
+def ask_medical_history(question:str, options: list[str]) -> str:
+    return route_medical_history(question, options)
 
 
-def ask_family_history(question:str) -> str:
-    return route_family_history(question)
+def ask_family_history(question:str, options: list[str]) -> str:
+    return route_family_history(question, options)
 
 
 # -------------------------
