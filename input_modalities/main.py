@@ -32,15 +32,15 @@ def ask_frequency(question:str, options: list[str]) -> str:
     return route_frequency(question, options)
 
 
-def ask_medication(question:str, options: list[str]) -> str:
+def ask_medication(question:str, options: list[str]) -> list[str]:
     return route_medication(question, options)
 
 
-def ask_medical_history(question:str, options: list[str]) -> str:
+def ask_medical_history(question:str, options: list[str]) -> list[str]:
     return route_medical_history(question, options)
 
 
-def ask_family_history(question:str, options: list[str]) -> str:
+def ask_family_history(question:str, options: list[str]) -> dict: 
     return route_family_history(question, options)
 
 
