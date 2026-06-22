@@ -4,7 +4,7 @@ from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
 
-from modalities.router import route_boolean, route_numeric, route_string
+from modalities.router import route_boolean, route_numeric, route_string, route_range, route_duration
 
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
@@ -25,18 +25,21 @@ def ask_string(question: str) -> str:
 
 
 # values from a category => answer with one
-def ask_category(question: str, categrories: str):
+def ask_category(question: str, categories: str):
     pass
 
 
-# values in a give nange
+# values in a given range
 def ask_range(question, start: int, stop: int):
-    pass
+    return route_range(question, start, stop)
 
 
-# values from a category => answer with multile
-def ask_category_multiple(question: str, categrories: str, num_answers: int):
+# values from a category => answer with multiple
+def ask_category_multiple(question: str, categories: str, num_answers: int):
     pass
+
+def ask_duration(question: str) -> int:
+    return route_duration(question)
 
 
 # -------------------------
@@ -78,7 +81,7 @@ def run_reasoning(query: str):
 if __name__ == "__main__":
 
     # STEP 1 — build symbolic KB using LLM
-    build_knowledge_base()
+    #build_knowledge_base()
 
     # STEP 2 — load Prolog engine
     load_prolog()

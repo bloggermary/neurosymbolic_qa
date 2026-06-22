@@ -1,5 +1,6 @@
+[
 {
-  "id": "boolean_yes_valid",
+  "id": "boolean_thirst",
   "question": "Do I have Diabetes symptoms?",
   "expected_followups": [
     {
@@ -7,10 +8,9 @@
       "modality": "boolean"
     }
   ]
-}
-
+},
 {
-  "id": "boolean_yes_valid",
+  "id": "numeric_blood_sugar",
   "question": "Do I have elevated blood sugar?",
   "expected_followups": [
     {
@@ -18,156 +18,46 @@
       "modality": "numeric"
     }
   ]
+},
+{
+  "id": "symptom_boolean",
+  "question": "Do I have diabetes symptoms?",
+  "expected_followups": [
+    {
+      "question": "excessive_thirst",
+      "modality": "boolean"
+    },
+    {
+      "question": "frequent_urination",
+      "modality": "boolean"
+    }
+  ]
+},
+{
+  "id": "duration_question",
+  "question": "How long have the symptoms been present?",
+  "expected_query_contains": [
+    "duration"
+  ],
+  "must_not_contain": [
+    "ask_boolean",
+    "ask_numeric",
+    "ask_range"
+  ]
+},
+{
+  "id": "range_question",
+  "question": "Rate your fatigue from 1 to 10.",
+  "expected_query_contains": [
+    "ask_range",
+    "1",
+    "10",
+    "fatigue"
+  ],
+  "must_not_contain": [
+    "ask_boolean",
+    "ask_numeric",
+    "ask_duration"
+  ]
 }
-
-
-[
-  {
-    "id": "boolean_yes_valid",
-    "modality": "boolean",
-    "question": "Does the patient have excessive thirst?",
-    "inputs": [
-      "yes"
-    ],
-    "expected_answer": true,
-    "expected_valid": true
-  },
-  {
-    "id": "boolean_no_valid",
-    "modality": "boolean",
-    "question": "Does the patient have excessive thirst?",
-    "inputs": [
-      "no"
-    ],
-    "expected_answer": false,
-    "expected_valid": true
-  },
-  {
-    "id": "boolean_invalid_then_no",
-    "modality": "boolean",
-    "question": "Does the patient have excessive thirst?",
-    "inputs": [
-      "abc",
-      "no"
-    ],
-    "expected_answer": false,
-    "expected_valid": true,
-    "expected_retries": 1
-  },
-  {
-    "id": "boolean_only_invalid",
-    "modality": "boolean",
-    "question": "Does the patient have excessive thirst?",
-    "inputs": [
-      "abc"
-    ],
-    "expected_valid": false,
-    "expected_error": "No valid input provided"
-  },
-  {
-    "id": "numeric_valid_integer",
-    "modality": "numeric",
-    "question": "Enter fasting plasma glucose (mg/dL)",
-    "inputs": [
-      "126"
-    ],
-    "expected_answer": 126.0,
-    "expected_valid": true
-  },
-  {
-    "id": "numeric_valid_decimal",
-    "modality": "numeric",
-    "question": "Enter HbA1c (%)",
-    "inputs": [
-      "6.5"
-    ],
-    "expected_answer": 6.5,
-    "expected_valid": true
-  },
-  {
-    "id": "numeric_valid_comma",
-    "modality": "numeric",
-    "question": "Enter random plasma glucose (mmol/L)",
-    "inputs": [
-      "11,1"
-    ],
-    "expected_answer": 11.1,
-    "expected_valid": true
-  },
-  {
-    "id": "numeric_invalid_then_valid",
-    "modality": "numeric",
-    "question": "Enter HbA1c (%)",
-    "inputs": [
-      "abc",
-      "6.8"
-    ],
-    "expected_answer": 6.8,
-    "expected_valid": true,
-    "expected_retries": 1
-  },
-  {
-    "id": "numeric_only_invalid",
-    "modality": "numeric",
-    "question": "Enter HbA1c (%)",
-    "inputs": [
-      "abc"
-    ],
-    "expected_valid": false,
-    "expected_error": "No valid input provided"
-  },
-  {
-    "id": "string_valid",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": [
-      "type 2"
-    ],
-    "expected_answer": "type 2",
-    "expected_valid": true
-  },
-  {
-    "id": "string_valid_spaces",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": [
-      "   type 1   "
-    ],
-    "expected_answer": "type 1",
-    "expected_valid": true
-  },
-  {
-    "id": "string_empty_then_valid",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": [
-      "",
-      "type 2"
-    ],
-    "expected_answer": "type 2",
-    "expected_valid": true,
-    "expected_retries": 1
-  },
-  {
-    "id": "string_blank_then_valid",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": [
-      "   ",
-      "type 1"
-    ],
-    "expected_answer": "type 1",
-    "expected_valid": true,
-    "expected_retries": 1
-  },
-  {
-    "id": "string_only_invalid",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": [
-      ""
-    ],
-    "expected_valid": false,
-    "expected_error": "No valid input provided"
-  }
 ]

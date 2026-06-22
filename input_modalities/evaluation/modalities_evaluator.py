@@ -1,64 +1,54 @@
-import json
 import sys
 from pathlib import Path
-from unittest.mock import patch
+import json
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from modalities.router import route_boolean, route_numeric, route_string
+from llm.query_generator import generate_query
 
 
-TEST_PATH = "evaluation/test_modalities.json"
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+KB_PATH = BASE_DIR / "prolog" / "generated_kb" / "diabetes_diagnosis.pl"
+TEST_PATH = BASE_DIR / "evaluation" / "test_modalities.json"
 
 
-def run_case(case):
-    inputs = iter(case["inputs"])
-
-    def fake_input(prompt):
-        try:
-            return next(inputs)
-        except StopIteration:
-            raise RuntimeError("No valid input provided")
-
-    try:
-        with patch("builtins.input", fake_input):
-            if case["modality"] == "boolean":
-                answer = route_boolean(case["question"])
-            elif case["modality"] == "numeric":
-                answer = route_numeric(case["question"])
-            elif case["modality"] == "string":
-                answer = route_string(case["question"])
-            else:
-                raise ValueError(f"Unknown modality: {case['modality']}")
-
-        if case.get("expected_valid") is False:
-            return False, f"Expected invalid, but got valid answer: {answer}"
-
-        expected = case.get("expected_answer")
-        return answer == expected, answer
-
-    except Exception as e:
-        if case.get("expected_valid") is False:
-            expected_error = case.get("expected_error", "")
-            return expected_error in str(e), str(e)
-
-        return False, str(e)
+def load_text(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return f.read()
 
 
-def main():
-    with open(TEST_PATH, "r", encoding="utf-8") as f:
-        test_cases = json.load(f)
+def load_json(path):
+    with open(path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def evaluate():
+    prolog_code = load_text(KB_PATH)
+    test_cases = load_json(TEST_PATH)
 
     passed = 0
+    total = len(test_cases)
 
     for case in test_cases:
-        success, result = run_case(case)
+        success = True
+
+        question = case["question"]
+        query = generate_query(question, prolog_code)
 
         print(f"\nTest: {case['id']}")
-        print(f"Modality: {case['modality']}")
-        print(f"Inputs: {case['inputs']}")
-        print(f"Expected: {case.get('expected_answer', case.get('expected_error'))}")
-        print(f"Actual: {result}")
+        print(f"Question: {question}")
+        print(f"Generated query: {query}")
+
+        for text in case.get("expected_query_contains", []):
+            if text not in query:
+                print(f"Missing expected text: {text}")
+                success = False
+
+        for text in case.get("must_not_contain", []):
+            if text in query:
+                print(f"Forbidden text found: {text}")
+                success = False
 
         if success:
             print("PASS")
@@ -67,10 +57,10 @@ def main():
             print("FAIL")
 
     print("\n==========================")
-    print(f"Passed: {passed}/{len(test_cases)}")
-    print(f"Accuracy: {passed / len(test_cases) * 100:.1f}%")
+    print(f"Passed: {passed}/{total}")
+    print(f"Accuracy: {passed / total * 100:.1f}%")
     print("==========================")
 
 
 if __name__ == "__main__":
-    main()
+    evaluate()

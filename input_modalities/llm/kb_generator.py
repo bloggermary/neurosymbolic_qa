@@ -15,6 +15,10 @@ GENERAL REQUIREMENTS:
 - Use logical predicates only
 - Ensure rules are consistent and executable in SWI-Prolog
 - Must be compatible with SWI-Prolog + Janus
+- Do not generate clauses with singleton variables. If a question's answer is not needed
+  for the result, do not ask it at all.
+- Do not stop after the first positive criterion.
+- Collect all answers first, then evaluate the diagnosis.
 
 JANUS USER INTERACTION:
 - The generated knowledge base MUST start with:
@@ -29,10 +33,14 @@ ask_numeric(Question, Value) :-
 ask_string(Question, Value) :-
     py_call(main:ask_string(Question), Value).
 
+ask_range(Question, Start, Stop, Value) :-
+    py_call(main:ask_range(Question, Start, Stop), Value).
+
+ask_duration(Question, Value) :-
+    py_call(main:ask_duration(Question), Value).    
+
 
 - The predicate diagnose/1 must ask all available diagnostic criteria before producing a result.
-- Do not stop after the first positive criterion.
-- Collect all answers first, then evaluate the diagnosis.
 - If the user asks for an overall diagnosis, screening result, or asks generally whether the patient is diabetic, use the main entry predicate diagnose if it exists.
 - If the user asks specifically whether diabetes is logically true, use diabetes if it exists
 - If the user asks specifically about prediabetes, use prediabetes if it exists
