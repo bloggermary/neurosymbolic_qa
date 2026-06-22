@@ -4,7 +4,7 @@ from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
 
-from modalities.router import route_boolean, route_numeric, route_string
+from modalities.router import route_boolean, route_numeric, route_string, route_scale, route_frequency, route_medication, route_medical_history, route_family_history
 
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
@@ -22,6 +22,26 @@ def ask_numeric(question: str) -> float:
 
 def ask_string(question: str) -> str:
     return route_string(question)
+
+
+def ask_scale(question:str, scale_min: int, scale_max: int) -> int:
+    return route_scale(question, scale_min, scale_max)
+
+
+def ask_frequency(question:str, options: list[str]) -> str:
+    return route_frequency(question, options)
+
+
+def ask_medication(question:str, options: list[str]) -> str:
+    return route_medication(question, options)
+
+
+def ask_medical_history(question:str) -> str:
+    return route_medical_history(question)  
+
+
+def ask_family_history(question:str) -> str:
+    return route_family_history(question)
 
 
 # -------------------------
