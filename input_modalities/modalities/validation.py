@@ -19,6 +19,39 @@ class ModalityValidator:
     @staticmethod
     def is_string(value: Any) -> bool:
         return isinstance(value, str)
+    
+    @staticmethod
+    def is_scale(value: Any) -> bool:
+        return isinstance(value, int)
+    
+    @staticmethod
+    def parse_category_multiple(answer: str, options: list[str]):
+        """
+        Validates multiple categorical inputs.
+        Returns a list of valid selections or None.
+        """
+
+        try: 
+            selected = [
+                item.strip().lower()
+                for item in answer.split(",")
+                if item.strip
+            ] 
+        except AttributeError:
+            return None
+        
+        valid_options = [option.lower() for option in options]
+
+        valid = []
+
+        for item in selected:
+            if item in valid_options or item in ["other", "none"]:
+                valid.append(item)
+            else:
+                return None
+            
+        return valid
+    
 
     @staticmethod
     def normalize_yes_no(value: str) -> Optional[bool]:

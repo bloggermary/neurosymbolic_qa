@@ -2,46 +2,55 @@ from modalities.validation import ModalityValidator
 
 class MedicationHandler:
     """
-    Multiple-choice medication input with "other" follow-up.
+    Handles multiple-choice input e.g. for medication, with "other" follow-up.
     """
 
     def handle(self, question: str, options: list[str]) -> list[str]:
-        options = [o.lower() for o in options]
+        
+        valid_options = [option.lower() for option in options]
 
         while True:
-            print(f"\n{question}\nAre you taking any of the following medications?") 
+            print(f"\n{question}") # e.g. Are you taking any of the following medications?
 
-            for i, opt in enumerate(options, start=1):
-                print(f"{i}) {opt}")
+            for option in options:
+                print(f"-{option}")
+            
+            print("- other")
+            print("- none")
 
-            print(f"{len(options)+1} other")
-            print(f"{len(options)+2} none")
+            answer = input(f"\nPlease enter one or more options or 'none' (comma-separated): ").strip().lower() # e.g. options = medication
 
-            answer = input(f"\n{question}\nPlease enter one or more medications or 'none' if not taking any (comma-separated): ").strip(),lower()
+            selected = ModalityValidator.parse_category_multiple(
+                answer,
+                options
+            )
 
-            try: 
-                choices = [int(x.strip()) for x in answer.split(",")]
-            except ValueError:
-                print(f"Please enter one of the options only.")
+            if selected is None:
+                print("Please choose only from the listed options.")
                 continue
 
             result = []
 
-            for c in choices:
+            for item in selected:
 
                 # normal options
-                if 1 <= c <= len(options):
-                    result.append(options[c - 1])
+                if item in valid_options:
+                    result.append(item) 
 
                 # OTHER - follow up question
-                elif c == len(options) + 1:
-                    other = input(f"Please specify other medications (comma-separated): ").strip().lower()
+                elif item == "other":
+                    other = input(f"Please specify the other e.g. medication(s) (comma-separated): ").strip().lower()
 
                     if other:
                         result.extend([m.strip() for m in other.split(",") if m.strip()])
 
                 # NONE - return immediately
-                elif c == len(options) + 2:
+                elif item == "none":
                     return []
+                
+                else:
+                    print(f"'{item}' is not a valid option.")
+                    break
             
-            return list(set(result)) 
+            else:
+                return result
