@@ -4,7 +4,7 @@ from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
 
-from modalities.router import route_boolean, route_numeric, route_string, route_range, route_duration
+from modalities.router import route_boolean, route_numeric, route_string, route_category, route_range, route_duration
 
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
@@ -25,8 +25,8 @@ def ask_string(question: str) -> str:
 
 
 # values from a category => answer with one
-def ask_category(question: str, categories: str):
-    pass
+def ask_category(question: str, categories: list[str]) -> str:
+    return route_category(question, categories)
 
 
 # values in a given range

@@ -1,6 +1,7 @@
 from modalities.boolean_handler import BooleanHandler
 from modalities.numeric_handler import NumericHandler
 from modalities.string_handler import StringHandler
+from modalities.category_handler import CategoryHandler
 from modalities.range_handler import RangeHandler
 from modalities.duration_handler import DurationHandler
 
@@ -15,6 +16,7 @@ class ModalityRouter:
         self.string_handler = StringHandler()
         self.range_handler = RangeHandler()
         self.duration_handler = DurationHandler()
+        self.category_handler = CategoryHandler()
 
     def route_boolean(self, question: str) -> bool:
         return self.boolean_handler.handle(question)
@@ -24,6 +26,9 @@ class ModalityRouter:
 
     def route_string(self, question: str) -> str:
         return self.string_handler.handle(question)
+
+    def route_category(self, question: str, categories: list[str]) -> str:
+        return self.category_handler.handle(question, categories)
 
     def route_range(self, question: str, start: int, stop: int) -> int:
         return self.range_handler.handle(question, start, stop)    
@@ -43,6 +48,9 @@ def route_numeric(question: str) -> float:
 
 def route_string(question: str) -> str:
     return router.route_string(question)
+
+def route_category(question: str, categories: list[str]) -> str:
+    return router.route_category(question, categories)
 
 def route_range(question: str, start: int, stop: int) -> int:
     return router.route_range(question, start, stop)

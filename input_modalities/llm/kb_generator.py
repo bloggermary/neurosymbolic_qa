@@ -33,6 +33,9 @@ ask_numeric(Question, Value) :-
 ask_string(Question, Value) :-
     py_call(main:ask_string(Question), Value).
 
+ask_category(Question, Categories, Answer) :-
+    py_call(main:ask_category(Question, Categories), Answer).
+
 ask_range(Question, Start, Stop, Value) :-
     py_call(main:ask_range(Question, Start, Stop), Value).
 

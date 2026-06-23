@@ -59,5 +59,16 @@
     "ask_numeric",
     "ask_duration"
   ]
+},
+{
+  "id": "category_thirst_severity",
+  "question": "How severe is the patient's thirst?",
+  "expected_followups": [
+    {
+      "question": "thirst",
+      "modality": "category",
+      "categories": ["none", "mild", "moderate", "severe"]
+    }
+  ]
 }
 ]

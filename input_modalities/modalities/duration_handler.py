@@ -10,7 +10,7 @@ class DurationHandler:
         while True:
             answer = input(f"{question} Enter duration in {unit}: ")
 
-            result = ModalityValidator.parse_positive_int(answer)
+            result = ModalityValidator.parse_int_duration(answer)
 
             if result is not None:
                 return result
