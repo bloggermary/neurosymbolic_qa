@@ -8,52 +8,57 @@ class FamilyHistoryHandler:
 
     def handle(self, question: str, options list[str]) -> dict:
 
+        valid_options = [option.lower() for option in options]
+
         while True:
-            print(f"\n{question}\n")
+            print(f"\n{question}")
 
-            for i, options in enumerate(options, start=1):
-                print(f"{i}) {options}")
+            for option in options:
+                print(f"-{option}")
+            
+            print("- other")
+            print("- none")
 
-            print(f"{len(options)+1} other")
-            print(f"{len(options)+1} none")
+            answer = input(f"\nPlease enter one or more conditions or 'none' (comma-separated): ").strip().lower()
 
-            answer = input("\nSelect one or more options (comma-separated numbers): ").strip()
+            if not answer:
+                print(f"Please choose only from the listed options.")
+                continue
 
-            try: 
-                selections = [int(x.strip()) for x in answer.split(",")]
-            except ValueError:
-                print("Please enter valid numbers.")
+            selected = ModalityValidator.parse_category_multiple(
+                answer,
+                options
+            )
 
-            results = {}
+            result = []
 
-            for choice in selections:
+            for item in selected:
 
-                # predefined conditions
-                if 1 <= choice <= len(options):
+                # normal options
+                if item in valid_options:
+                    family_member = input(f"Who in your family has {item}? " "(e.g. mother, father, sibling): ").strip().lower()
+                    result [item] = family_member
 
-                    condition = options[choice -1]
+                # OTHER - follow up question
+                elif item == "other":
+                    other = input(f"Please specify the other condition(s) (comma-separated): ").strip().lower()
 
-                    member = input(f"Who in your family has {condition}? " "(e.g. mother, father, sibling): ").strip()
+                    for condition in other.split(","):
+                        condition = condition.strip()
 
-                    results[condition] = member
-                
-                # other 
-                elif choice == len(options) + 1:
+                        if not condition:
+                            continue
 
-                    other = input("Please specify the other condition: ").strip()
+                        family_member = input(f"Who in your family has {condition}? ""(e.g. mother, father, sibling): ").strip().lower()
+                        result[condition] = family_member
 
-                    if other:
-                        member = input(f"Who in your family has {other}? " "(e.g. mother, father, sibling): ").strip()
-
-                        results[other] = member
-
-                # none
-                elif choice == len(options) + 2:
-                    return {}
+                # NONE - return immediately
+                elif item == "none":
+                    return []
                 
                 else:
-                    print("Invalid selection.")
+                    print(f"'{item}' is not a valid option.")
                     break
             
             else:
-                return results
+                return result
