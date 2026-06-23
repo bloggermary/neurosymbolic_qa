@@ -5,7 +5,7 @@ class MultipleChoiceHandler:
     Generic handler for any multiple-choice input (e.g. medication, medical history, symptoms) with optional "other" follow-up.
     """
 
-    def handle(self, question: str, options: list[str]) -> list[str]:
+    def handle(self, question: str, options: list[str], allow_other: bool = True) -> list[str]:
         
         valid_options = [option.lower() for option in options]
 
