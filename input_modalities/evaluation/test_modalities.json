@@ -22,16 +22,20 @@
 {
   "id": "symptom_boolean",
   "question": "Do I have diabetes symptoms?",
+  "source_text": "medizinische leitlinien",
   "expected_followups": [
     {
       "question": "excessive_thirst",
-      "modality": "boolean"
+      "modality": "boolean",
+      "answer": "yes"
     },
     {
       "question": "frequent_urination",
-      "modality": "boolean"
+      "modality": "boolean",
+      "answer": "yes"
     }
-  ]
+  ],
+  "correct_answer": "yes"
 },
 {
   "id": "duration_question",
