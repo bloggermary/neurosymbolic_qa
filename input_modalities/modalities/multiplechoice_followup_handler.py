@@ -1,12 +1,13 @@
 from modalities.validation import ModalityValidator
 
-class FamilyHistoryHandler:
+class MultipleChoiceFollowUpHandler:
     """
-    Handles family history input using a multipl-choice interface.
-    If a condition is selected, a follow-up question asks which family member is affected.
+    Generic handler for: 
+    - multi-selection questions
+    - follow-up question per selected item
     """
 
-    def handle(self, question: str, options list[str]) -> dict:
+    def handle(self, question: str, options: list[str], follow_) -> dict:
 
         valid_options = [option.lower() for option in options]
 
@@ -30,7 +31,7 @@ class FamilyHistoryHandler:
                 options
             )
 
-            result = []
+            result = {}
 
             for item in selected:
 
