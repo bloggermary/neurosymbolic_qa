@@ -5,6 +5,8 @@ class MultiStructuredInputHandler:
 
     def handle(self, question: str, mode: str):
 
+        self.question = question 
+
         print(f"\n{question}")
 
         if mode == "sequence":
@@ -13,11 +15,9 @@ class MultiStructuredInputHandler:
         elif mode == "ranking":
             return self._handle_ranking()
         
-        elif mode == "graph":
-            return self._handle_graph()
+        elif mode == "grouping":
+            return self._handle_grouping()
         
-        elif mode == "entity":
-            return self._handle_entity()
         
         else:
             raise ValueError(f"Unknown mode: {mode}") 
@@ -26,7 +26,8 @@ class MultiStructuredInputHandler:
 
     def handle_sequence(self):
 
-        print(f"{question}\nEnter events in chronological order.\nType 'done' when finished.\n")
+        print("Enter events in chronological order.") 
+        print("Type 'done' when finished.\n")
 
         result = []
 
@@ -43,7 +44,8 @@ class MultiStructuredInputHandler:
 
     def handle_ranking(self):
 
-        print(f"{question}\nEnter the items from most important to least important.\nType 'done' when finished.\n")
+        print("Enter the items from most important to least important.")
+        print("Type 'done' when finished.\n")
 
         result = []
 
@@ -65,58 +67,34 @@ class MultiStructuredInputHandler:
         return result
     
 
-    def handle_graph(self):
+    def handle_grouping(self):
 
-        print(f"{question}\nEnter relationships.\nFormat: cause -> effect\nType 'done' when finished.\n")
-
-        result = []
-
-        while True:
-            answer = input("> ").strip()
-
-            if answer.lower() == "done":
-                break
-
-            if "->" not in answer:
-                print(f"Please use the format: 'cause -> effect'.")
-                continue
-
-            cause, effect = answer.split("->", 1)
-
-            result.append[{
-                "from": cause.strip()
-                "to": effect.strip()
-            }]
-
-        return result
-    
-
-    def handle_entity(self):
-
-        print(f"{question}\nEnter the entity and its attributes.\nType 'done' when finished.\n")
+        print("Type 'done' when finished.\n")
 
         result = {}
 
-        # Entity name
         while True:
-            entity = input(f"Name: ").strip()
+            group = input("Group: ").strip()
+            if group.lower() == "done":
+                break
 
-            if entity == "":
-                print(f"Please enter an entity.")
-                continue
+            items = []
 
-            result["entity"] = entity 
-            break
+            # rule: empty group still exists
+            print(f"{group}:")
 
-        # Entity attributes:
-        for attribute in attributes:
-            value = input(f"{attribute}: ").strip()
-            result[attribute] = value
-        
-        return result 
+            while True:
+                item = input().strip()
 
+                if item.lower() == "done":
+                    break
 
+                # allow empty meaning "none"
+                if item.lower() == "none":
+                    continue
 
+                items.append(item)
 
+            result[group.lower()] = items
 
-    
+        return result

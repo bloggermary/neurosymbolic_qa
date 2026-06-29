@@ -15,8 +15,6 @@ class MultipleChoiceHandler:
             for option in options:
                 print(f"-{option}")
             
-            if allow_other:
-                print("- other")
             
             print("- none")
 
@@ -43,12 +41,7 @@ class MultipleChoiceHandler:
                 if item in valid_options:
                     result.append(item) 
 
-                # OTHER - follow up question
-                if item == "other":
-                    other = input(f"Please specify (comma-separated): ").strip().lower()
-
-                    result.extend([x.strip() for x in other.split(",") if x.strip()])
-                    continue 
+               
                         
             else:
                 return result
