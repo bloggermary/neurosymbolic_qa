@@ -31,6 +31,9 @@ ask_string(Question, Value) :-
 
 ask_category_multiple(Question, Categories, Answers) :-
     py_call(main:ask_category_multiple(Question, Categories), Answers).
+
+ask_multi_attribute_entity(Question, Entity, Fields, Result) :-
+    py_call(main:ask_multi_attribute_entity(Question, Entity, Fields), Result).
     
 
 - The predicate diagnose/1 must ask all available diagnostic criteria before producing a result.
@@ -41,6 +44,7 @@ ask_category_multiple(Question, Categories, Answers) :-
 - If the user asks specifically about prediabetes, use prediabetes if it exists
 - If the user asks specifically about low risk, use low_risk if it exists
 - If the user asks about a concrete criterion and a matching predicate exists, use that predicate
+- If several attributes of the same entity (e.g. medication, allergy, implanted device) need to be collected together, use ask_multi_attribute_entity/4. 
 - Prefer the most specific predicate that answers the question
 - Prefer diagnose only for overall diagnostic workflows, because diagnose may ask all required user questions
 

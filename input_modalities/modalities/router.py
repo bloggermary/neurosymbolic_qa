@@ -2,6 +2,7 @@ from modalities.boolean_handler import BooleanHandler
 from modalities.numeric_handler import NumericHandler
 from modalities.string_handler import StringHandler
 from modalities.multiple_category_handler import MultipleCategoryHandler
+from modalities.multi_attribute_entity_handler import MultiAttributeEntityHandler
 
 class ModalityRouter:
     """
@@ -13,6 +14,8 @@ class ModalityRouter:
         self.numeric_handler = NumericHandler()
         self.string_handler = StringHandler()
         self.multiple_category_handler = MultipleCategoryHandler()
+        self.multi_attribute_entity_handler = MultiAttributeEntityHandler()
+
 
     def route_boolean(self, question: str) -> bool:
         return self.boolean_handler.handle(question)
@@ -25,6 +28,9 @@ class ModalityRouter:
 
     def route_category_multiple(self, question: str, categories: list[str]) -> list [str]:
         return self.multiple_category_handler.handle(question, categories)
+    
+    def route_multiple_attribute_entity(self, question: str, entity: str, fields: list[tuple[str, str, str]]) -> dict:
+        return self.multi_attribute_entity_handler.handle(question, entity, fields)
 
 router = ModalityRouter()
 
@@ -43,3 +49,7 @@ def route_string(question: str) -> str:
 
 def route_category_multiple(question: str, categories: list[str]) -> list[str]:
     return router.route_category_multiple(question, categories) 
+
+def route_multi_attribute_entity(question: str, entity: str, fields: list[tuple[str, str, str]]) -> dict:
+    return router.route_multi_attribute_entity(question, entity, fields)
+

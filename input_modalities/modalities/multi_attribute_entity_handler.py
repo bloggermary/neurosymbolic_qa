@@ -6,7 +6,7 @@ class MultiAttributeEntityHandler:
     Example: medication, allergy, diagnosis
     """
 
-    def handle(self, schema: dict) -> dict:
+    def handle(self, question: str, entity: str, fields: list[tuple[str, str, str]]) -> dict:
         """
         schema = {
             "entity": str,
@@ -14,35 +14,34 @@ class MultiAttributeEntityHandler:
         }
         """
         
-        print(f"\nDescribe your {schema['entity']}.\n")
+        print(f"\n{question}\n")
 
         result = {}
 
-        for field in schema["fields"]:
-
-            key, prompt, field_type = field
-
-            value = self._ask_field(key, prompt, field_type)
+        for key, prompt, field_type in fields:
+            
+            value = self._ask_field(prompt, field_type)
 
             result[key] = value
 
         return {
-            "entity": schema["entity"],
+            "entity": entity,
             "data": result
         }
     
     def _ask_field(self, prompt: str, field_type: str):
 
         while True:
+            
             answer = input(f"{prompt}: ").strip()
 
-            if answer.lower() in {"none", ""}:
+            if answer.lower() == "none" or answer == "":
                 return None
             
-            validated = self._validate(field_type, answer)
+            value = self._validate(field_type, answer)
 
-            if validated is not None:
-                return validated
+            if value is not None:
+                return value
             
             print("Invalid input. Please try again.")
 
@@ -65,18 +64,3 @@ class MultiAttributeEntityHandler:
             return value.lower()
         
         return value 
-            
-
-
-
-
-
-           # answer = input(f"{attribute}: ").strip()
-
-            # allow empty input 
-           # if answer.lower() == "none" or answer == "":
-          #      result[attribute] = None
-            #else: 
-             #   result[attribute] = answer
-
-        #return result 
