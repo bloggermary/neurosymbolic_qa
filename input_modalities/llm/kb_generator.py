@@ -29,20 +29,8 @@ ask_numeric(Question, Value) :-
 ask_string(Question, Value) :-
     py_call(main:ask_string(Question), Value). 
 
-ask_scale(Question, ScaleMin, ScaleMax, Value) :-
-    py_call(main:ask_scale(Question, ScaleMin, ScaleMax), Value).
-
-ask_frequency(Question, Options, Value) :-
-    py_call(main:ask_frequency(Question, Options), Value).
-
-ask_medication(Question, Options, Value) :-
-    py_call(main:ask_medication(Question, Options), Value).
-
-ask_medical_history(Question, Options, Value) :-
-    py_call(main:ask_medical_history(Question, Options), Value).
-
-ask_family_history(Question, Options, Value) :-
-    py_call(main:ask_family_history(Question, Options), Value).
+ask_category_multiple(Question, Categories, Answers) :-
+    py_call(main:ask_category_multiple(Question, Categories), Answers).
     
 
 - The predicate diagnose/1 must ask all available diagnostic criteria before producing a result.

@@ -20,38 +20,6 @@ class ModalityValidator:
     def is_string(value: Any) -> bool:
         return isinstance(value, str)
     
-    @staticmethod
-    def is_scale(value: Any) -> bool:
-        return isinstance(value, int)
-    
-    @staticmethod
-    def parse_category_multiple(answer: str, options: list[str]):
-        """
-        Validates multiple categorical inputs.
-        Returns a list of valid selections or None.
-        """
-
-        try: 
-            selected = [
-                item.strip().lower()
-                for item in answer.split(",")
-                if item.strip
-            ] 
-        except AttributeError:
-            return None
-        
-        valid_options = [option.lower() for option in options]
-
-        valid = []
-
-        for item in selected:
-            if item in valid_options or item in ["other", "none"]:
-                valid.append(item)
-            else:
-                return None
-            
-        return valid
-    
 
     @staticmethod
     def normalize_yes_no(value: str) -> Optional[bool]:
@@ -77,3 +45,51 @@ class ModalityValidator:
     @staticmethod
     def normalize_string(value: str) -> str:
         return value.strip().strip("'").strip('"')
+    
+
+    @staticmethod
+    def parse_multiple_categories(answer: str, categories: list[str]) -> tuple[list[str] | None, str | None]:
+        """
+        Parses and validates a comma-separated list of categories.
+        
+        - Only predefined categories are allowed.
+        - "none" is always a valid option.
+        - "none" cannot be combined with other options.
+        
+        Returns:
+            (result, None) if valid
+            (None, error_message) otherwise
+        """
+
+        categories = [c.strip().lower() for c in categories]
+
+        if "none" not in categories:
+            categories.append("none")
+         
+        selected = [
+            item.strip().lower()
+            for item in answer.split(",")
+            if item.strip
+        ] 
+        
+        if not selected:
+            return None, "Please select at least one option."
+        
+        invalid = [item for item in selected if item not in categories]
+
+        # invalid options
+        if invalid:
+            return(
+                None,
+                f"Invalid option(S): {', '.join(invalid)}.\n"
+                "Please choose only from the listed options."
+                )
+        
+        # "none" cannot be combined
+        if "none" in selected and len(selected) > 1:
+            return(
+                None,
+                "'none' cannot be combined with other options."
+            )
+        
+        return selected, None
