@@ -81,7 +81,7 @@ def run_reasoning(query: str):
 if __name__ == "__main__":
 
     # STEP 1 — build symbolic KB using LLM
-    #build_knowledge_base()
+    build_knowledge_base()
 
     # STEP 2 — load Prolog engine
     load_prolog()

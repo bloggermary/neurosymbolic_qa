@@ -17,8 +17,10 @@ GENERAL REQUIREMENTS:
 - Must be compatible with SWI-Prolog + Janus
 - Do not generate clauses with singleton variables. If a question's answer is not needed
   for the result, do not ask it at all.
-- Do not stop after the first positive criterion.
-- Collect all answers first, then evaluate the diagnosis.
+- Ask only the minimum information necessary to reach a conclusion.
+- After each answer, check whether the source text already provides sufficient evidence.
+- Stop asking follow-up questions as soon as a diagnosis, exclusion, or classification is justified.
+- Ask additional criteria only when the current evidence is insufficient.
 
 JANUS USER INTERACTION:
 - The generated knowledge base MUST start with:

@@ -22,7 +22,7 @@
 {
   "id": "symptom_boolean",
   "question": "Do I have diabetes symptoms?",
-  "source_text": "medizinische leitlinien",
+  "source_text": "data/snippets/diabetes.txt",
   "expected_followups": [
     {
       "question": "excessive_thirst",
