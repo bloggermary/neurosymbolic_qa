@@ -1,119 +1,151 @@
 [
-  {
-    "id": "boolean_yes_valid",
-    "modality": "boolean",
-    "question": "Does the patient have excessive thirst?",
-    "inputs": ["yes"],
-    "expected_answer": true,
-    "expected_valid": true
-  },
-  {
-    "id": "boolean_no_valid",
-    "modality": "boolean",
-    "question": "Does the patient have excessive thirst?",
-    "inputs": ["no"],
-    "expected_answer": false,
-    "expected_valid": true
-  },
-  {
-    "id": "boolean_invalid_then_no",
-    "modality": "boolean",
-    "question": "Does the patient have excessive thirst?",
-    "inputs": ["abc", "no"],
-    "expected_answer": false,
-    "expected_valid": true,
-    "expected_retries": 1
-  },
-  {
-    "id": "boolean_only_invalid",
-    "modality": "boolean",
-    "question": "Does the patient have excessive thirst?",
-    "inputs": ["abc"],
-    "expected_valid": false,
-    "expected_error": "No valid input provided"
-  },
 
   {
-    "id": "numeric_valid_integer",
-    "modality": "numeric",
-    "question": "Enter fasting plasma glucose (mg/dL)",
-    "inputs": ["126"],
-    "expected_answer": 126.0,
-    "expected_valid": true
+    "id": "multiple_medications",
+    "question": "Which medications are you currently taking?",
+    "expected_followups": [
+      {
+        "question": "current_medications",
+        "modality": "multiple_category",
+        "categories": ["metformin", "insulin", "aspirin", "none"],
+        "expected_behavior": [
+          "multi_select_allowed",
+          "none_is_exclusive",
+          "reject_invalid_values"
+        ],
+        "expected_output_type": "list"
+      }
+    ]
   },
   {
-    "id": "numeric_valid_decimal",
-    "modality": "numeric",
-    "question": "Enter HbA1c (%)",
-    "inputs": ["6.5"],
-    "expected_answer": 6.5,
-    "expected_valid": true
+    "id": "multiple_allergies",
+    "question": "Which allergies do you have?",
+    "expected_followups": [
+      {
+        "question": "allergies",
+        "modality": "multiple_category",
+        "categories": ["peanuts", "milk", "shellfish", "pollen", "none"],
+        "expected_behavior": [
+          "multi_select_allowed",
+          "none_is_exclusive",
+          "reject_invalid_values"
+        ],
+        "expected_output_type": "list"
+      }
+    ]
   },
   {
-    "id": "numeric_valid_comma",
-    "modality": "numeric",
-    "question": "Enter random plasma glucose (mmol/L)",
-    "inputs": ["11,1"],
-    "expected_answer": 11.1,
-    "expected_valid": true
+    "id": "symptom_sequence",
+    "question": "Describe your symptoms over time.",
+    "expected_followups": [
+      {
+        "modality": "multi_structured_input",
+        "mode": "sequence",
+        "expected_behavior": [
+          "ordered_input",
+          "increment_index",
+          "stop_on_done"
+        ],
+        "expected_output_type": "list"
+      }
+    ]
   },
   {
-    "id": "numeric_invalid_then_valid",
-    "modality": "numeric",
-    "question": "Enter HbA1c (%)",
-    "inputs": ["abc", "6.8"],
-    "expected_answer": 6.8,
-    "expected_valid": true,
-    "expected_retries": 1
+    "id": "symptom_ranking",
+    "question": "Rank your symptoms from most to least severe.",
+    "expected_followups": [
+      {
+        "modality": "multi_structured_input",
+        "mode": "ranking",
+        "expected_behavior": [
+          "rank_assigned",
+          "monotonic_rank_increase",
+          "ordered_input"
+        ],
+        "expected_output_type": "list_of_dicts"
+      }
+    ]
   },
   {
-    "id": "numeric_only_invalid",
-    "modality": "numeric",
-    "question": "Enter HbA1c (%)",
-    "inputs": ["abc"],
-    "expected_valid": false,
-    "expected_error": "No valid input provided"
-  },
-   {
-    "id": "string_valid",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": ["type 2"],
-    "expected_answer": "type 2",
-    "expected_valid": true
-  },
-  {
-    "id": "string_valid_spaces",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": ["   type 1   "],
-    "expected_answer": "type 1",
-    "expected_valid": true
+    "id": "medication_grouping",
+    "question": "Group your medications by time of day.",
+    "expected_followups": [
+      {
+        "modality": "multi_structured_input",
+        "mode": "grouping",
+        "groups": ["Morning", "Afternoon", "Evening"],
+        "expected_behavior": [
+          "iterates_over_all_groups",
+          "allows_multiple_inputs_per_group",
+          "accepts_none_as_empty_group",
+          "separates_groups_correctly"
+        ],
+        "expected_output_type": "dict" 
+      }
+    ]
   },
   {
-    "id": "string_empty_then_valid",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": ["", "type 2"],
-    "expected_answer": "type 2",
-    "expected_valid": true,
-    "expected_retries": 1
+    "id": "test_grouping",
+    "question": "Group the following medical tests.",
+    "expected_followups": [
+      {
+        "modality": "multi_structured_input",
+        "mode": "grouping",
+        "groups": ["Already completed", "Scheduled", "Not yet discussed"],
+        "expected_behavior": [
+          "iterates_over_all_groups",
+          "allows_multiple_inputs_per_group",
+          "accepts_none_as_empty_group",
+          "separates_groups_correctly"
+        ],
+        "expected_output_type": "dict" 
+      }
+    ]
   },
   {
-    "id": "string_blank_then_valid",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": ["   ", "type 1"],
-    "expected_answer": "type 1",
-    "expected_valid": true,
-    "expected_retries": 1
-  },
+    "id": "medication_entity",
+    "question": "Describe your medication.",
+    "expected_followups": [
+      {
+        "modality": "multi_attribute_entity",
+        "entity": "medication",
+        "fields": [
+          { "key": "name", "type": "string", "required": true },
+          { "key": "dose", "type": "string", "required": true },
+          { "key": "frequency", "type": "string", "required": true },
+          { "key": "duration", "type": "int", "required": false }
+        ],
+        "expected_output_type": "dict",
+        "expected_behavior": [
+          "structured_entity_creation",
+          "type_validation",
+          "optional_fields_allowed",
+          "none_allowed_for_optional_fields"
+        ]
+      }
+    ]
+  }, 
   {
-    "id": "string_only_invalid",
-    "modality": "string",
-    "question": "Enter diabetes type",
-    "inputs": [""],
-    "expected_valid": false,
-    "expected_error": "No valid input provided"
+    "id": "allergy_entity",
+    "question": "Describe your allergy.",
+    "expected_followups": [
+      {
+        "modality": "multi_attribute_entity",
+        "entity": "allergy",
+        "fields": [
+          { "key": "allergen", "type": "string", "required": true },
+          { "key": "reaction", "type": "string", "required": true },
+          { "key": "severity", "type": "category", "required": false, "categories": ["mild", "moderate", "severe"] } 
+        ],
+        "expected_output_type": "dict",
+        "expected_behavior": [
+          "structured_entity_creation",
+          "type_validation",
+          "optional_fields_allowed",
+          "none_allowed_for_optional_fields"
+        ]
+      }
+    ]
   }
+
 ]
