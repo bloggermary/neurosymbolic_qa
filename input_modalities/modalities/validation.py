@@ -34,8 +34,9 @@ class ModalityValidator:
         return None
 
     @staticmethod
-    def parse_float(value: str) -> Optional[float]:
-        value = value.strip().replace(",", ".")
+    def parse_float(value: str) -> float:
+        value = value.strip()
+        value = value.replace(",", ".")
 
         try:
             return float(value)
@@ -46,6 +47,29 @@ class ModalityValidator:
     def normalize_string(value: str) -> str:
         return value.strip().strip("'").strip('"')
     
+    @staticmethod
+    def parse_int_range(answer: str, start: int, stop: int):
+        try:
+            value = int(answer.strip())
+        except (ValueError, AttributeError):
+            return None
+        
+        if start <= value <= stop:
+            return value
+
+        return None
+    
+    @staticmethod
+    def parse_int_duration(value: str) -> int:
+        try:
+            number = int(value.strip())
+        except ValueError:
+            return None
+
+        if number >= 0:
+            return number
+
+        return None
 
     @staticmethod
     def parse_multiple_categories(answer: str, categories: list[str]) -> tuple[list[str] | None, str | None]:

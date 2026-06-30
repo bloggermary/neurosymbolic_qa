@@ -1,151 +1,225 @@
 [
-
-  {
-    "id": "multiple_medications",
-    "question": "Which medications are you currently taking?",
-    "expected_followups": [
-      {
-        "question": "current_medications",
-        "modality": "multiple_category",
-        "categories": ["metformin", "insulin", "aspirin", "none"],
-        "expected_behavior": [
-          "multi_select_allowed",
-          "none_is_exclusive",
-          "reject_invalid_values"
-        ],
-        "expected_output_type": "list"
-      }
-    ]
-  },
-  {
-    "id": "multiple_allergies",
-    "question": "Which allergies do you have?",
-    "expected_followups": [
-      {
-        "question": "allergies",
-        "modality": "multiple_category",
-        "categories": ["peanuts", "milk", "shellfish", "pollen", "none"],
-        "expected_behavior": [
-          "multi_select_allowed",
-          "none_is_exclusive",
-          "reject_invalid_values"
-        ],
-        "expected_output_type": "list"
-      }
-    ]
-  },
-  {
-    "id": "symptom_sequence",
-    "question": "Describe your symptoms over time.",
-    "expected_followups": [
-      {
-        "modality": "multi_structured_input",
-        "mode": "sequence",
-        "expected_behavior": [
-          "ordered_input",
-          "increment_index",
-          "stop_on_done"
-        ],
-        "expected_output_type": "list"
-      }
-    ]
-  },
-  {
-    "id": "symptom_ranking",
-    "question": "Rank your symptoms from most to least severe.",
-    "expected_followups": [
-      {
-        "modality": "multi_structured_input",
-        "mode": "ranking",
-        "expected_behavior": [
-          "rank_assigned",
-          "monotonic_rank_increase",
-          "ordered_input"
-        ],
-        "expected_output_type": "list_of_dicts"
-      }
-    ]
-  },
-  {
-    "id": "medication_grouping",
-    "question": "Group your medications by time of day.",
-    "expected_followups": [
-      {
-        "modality": "multi_structured_input",
-        "mode": "grouping",
-        "groups": ["Morning", "Afternoon", "Evening"],
-        "expected_behavior": [
-          "iterates_over_all_groups",
-          "allows_multiple_inputs_per_group",
-          "accepts_none_as_empty_group",
-          "separates_groups_correctly"
-        ],
-        "expected_output_type": "dict" 
-      }
-    ]
-  },
-  {
-    "id": "test_grouping",
-    "question": "Group the following medical tests.",
-    "expected_followups": [
-      {
-        "modality": "multi_structured_input",
-        "mode": "grouping",
-        "groups": ["Already completed", "Scheduled", "Not yet discussed"],
-        "expected_behavior": [
-          "iterates_over_all_groups",
-          "allows_multiple_inputs_per_group",
-          "accepts_none_as_empty_group",
-          "separates_groups_correctly"
-        ],
-        "expected_output_type": "dict" 
-      }
-    ]
-  },
-  {
-    "id": "medication_entity",
-    "question": "Describe your medication.",
-    "expected_followups": [
-      {
-        "modality": "multi_attribute_entity",
-        "entity": "medication",
-        "fields": [
-          { "key": "name", "type": "string", "required": true },
-          { "key": "dose", "type": "string", "required": true },
-          { "key": "frequency", "type": "string", "required": true },
-          { "key": "duration", "type": "int", "required": false }
-        ],
-        "expected_output_type": "dict",
-        "expected_behavior": [
-          "structured_entity_creation",
-          "type_validation",
-          "optional_fields_allowed",
-          "none_allowed_for_optional_fields"
-        ]
-      }
-    ]
-  }, 
-  {
-    "id": "allergy_entity",
-    "question": "Describe your allergy.",
-    "expected_followups": [
-      {
-        "modality": "multi_attribute_entity",
-        "entity": "allergy",
-        "fields": [
-          { "key": "allergen", "type": "string", "required": true },
-          { "key": "reaction", "type": "string", "required": true },
-          { "key": "severity", "type": "category", "required": false, "categories": ["mild", "moderate", "severe"] } 
-        ],
-        "expected_output_type": "dict",
-        "expected_behavior": [
-          "structured_entity_creation",
-          "type_validation",
-          "optional_fields_allowed",
-          "none_allowed_for_optional_fields"
-        ]
-      }
-    ]
-  }
-
+{
+  "id": "boolean_thirst",
+  "question": "Do I have Diabetes symptoms?",
+  "expected_followups": [
+    {
+      "question": "exessive_thirst",
+      "modality": "boolean"
+    }
+  ]
+},
+{
+  "id": "numeric_blood_sugar",
+  "question": "Do I have elevated blood sugar?",
+  "expected_followups": [
+    {
+      "question": "blood_sugar_level",
+      "modality": "numeric"
+    }
+  ]
+},
+{
+  "id": "symptom_boolean",
+  "question": "Do I have diabetes symptoms?",
+  "source_text": "data/snippets/diabetes.txt",
+  "expected_followups": [
+    {
+      "question": "excessive_thirst",
+      "modality": "boolean",
+      "answer": "yes"
+    },
+    {
+      "question": "frequent_urination",
+      "modality": "boolean",
+      "answer": "yes"
+    }
+  ],
+  "correct_answer": "yes"
+},
+{
+  "id": "duration_question",
+  "question": "How long have the symptoms been present?",
+  "expected_query_contains": [
+    "duration"
+  ],
+  "must_not_contain": [
+    "ask_boolean",
+    "ask_numeric",
+    "ask_range"
+  ]
+},
+{
+  "id": "range_question",
+  "question": "Rate your fatigue from 1 to 10.",
+  "expected_query_contains": [
+    "ask_range",
+    "1",
+    "10",
+    "fatigue"
+  ],
+  "must_not_contain": [
+    "ask_boolean",
+    "ask_numeric",
+    "ask_duration"
+  ]
+},
+{
+  "id": "category_thirst_severity",
+  "question": "How severe is the patient's thirst?",
+  "expected_followups": [
+    {
+      "question": "thirst",
+      "modality": "category",
+      "categories": ["none", "mild", "moderate", "severe"]
+    }
+  ]
+},
+{
+  "id": "multiple_medications",
+  "question": "Which medications are you currently taking?",
+  "expected_followups": [
+    {
+      "question": "current_medications",
+      "modality": "multiple_category",
+      "categories": ["metformin", "insulin", "aspirin", "none"],
+      "expected_behavior": [
+        "multi_select_allowed",
+        "none_is_exclusive",
+        "reject_invalid_values"
+      ],
+      "expected_output_type": "list"
+    }
+  ]
+},
+{
+  "id": "multiple_allergies",
+  "question": "Which allergies do you have?",
+  "expected_followups": [
+    {
+      "question": "allergies",
+      "modality": "multiple_category",
+      "categories": ["peanuts", "milk", "shellfish", "pollen", "none"],
+      "expected_behavior": [
+        "multi_select_allowed",
+        "none_is_exclusive",
+        "reject_invalid_values"
+      ],
+      "expected_output_type": "list"
+    }
+  ]
+},
+{
+  "id": "symptom_sequence",
+  "question": "Describe your symptoms over time.",
+  "expected_followups": [
+    {
+      "modality": "multi_structured_input",
+      "mode": "sequence",
+      "expected_behavior": [
+        "ordered_input",
+        "increment_index",
+        "stop_on_done"
+      ],
+      "expected_output_type": "list"
+    }
+  ]
+},
+{
+  "id": "symptom_ranking",
+  "question": "Rank your symptoms from most to least severe.",
+  "expected_followups": [
+    {
+      "modality": "multi_structured_input",
+      "mode": "ranking",
+      "expected_behavior": [
+        "rank_assigned",
+        "monotonic_rank_increase",
+        "ordered_input"
+      ],
+      "expected_output_type": "list_of_dicts"
+    }
+  ]
+},
+{
+  "id": "medication_grouping",
+  "question": "Group your medications by time of day.",
+  "expected_followups": [
+    {
+      "modality": "multi_structured_input",
+      "mode": "grouping",
+      "groups": ["Morning", "Afternoon", "Evening"],
+      "expected_behavior": [
+        "iterates_over_all_groups",
+        "allows_multiple_inputs_per_group",
+        "accepts_none_as_empty_group",
+        "separates_groups_correctly"
+      ],
+      "expected_output_type": "dict" 
+    }
+  ]
+},
+{
+  "id": "test_grouping",
+  "question": "Group the following medical tests.",
+  "expected_followups": [
+    {
+      "modality": "multi_structured_input",
+      "mode": "grouping",
+      "groups": ["Already completed", "Scheduled", "Not yet discussed"],
+      "expected_behavior": [
+        "iterates_over_all_groups",
+        "allows_multiple_inputs_per_group",
+        "accepts_none_as_empty_group",
+        "separates_groups_correctly"
+      ],
+      "expected_output_type": "dict" 
+    }
+  ]
+},
+{
+  "id": "medication_entity",
+  "question": "Describe your medication.",
+  "expected_followups": [
+    {
+      "modality": "multi_attribute_entity",
+      "entity": "medication",
+      "fields": [
+        { "key": "name", "type": "string", "required": true },
+        { "key": "dose", "type": "string", "required": true },
+        { "key": "frequency", "type": "string", "required": true },
+        { "key": "duration", "type": "int", "required": false }
+      ],
+      "expected_output_type": "dict",
+      "expected_behavior": [
+        "structured_entity_creation",
+        "type_validation",
+        "optional_fields_allowed",
+        "none_allowed_for_optional_fields"
+      ]
+    }
+  ]
+}, 
+{
+  "id": "allergy_entity",
+  "question": "Describe your allergy.",
+  "expected_followups": [
+    {
+      "modality": "multi_attribute_entity",
+      "entity": "allergy",
+      "fields": [
+        { "key": "allergen", "type": "string", "required": true },
+        { "key": "reaction", "type": "string", "required": true },
+        { "key": "severity", "type": "category", "required": false, "categories": ["mild", "moderate", "severe"] } 
+      ],
+      "expected_output_type": "dict",
+      "expected_behavior": [
+        "structured_entity_creation",
+        "type_validation",
+        "optional_fields_allowed",
+        "none_allowed_for_optional_fields"
+      ]
+    }
+  ]
+}
 ]

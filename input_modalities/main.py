@@ -4,7 +4,7 @@ from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
 
-from modalities.router import route_boolean, route_numeric, route_string, route_category_multiple, route_multi_attribute_entity, route_multi_structured_input
+from modalities.router import route_boolean, route_numeric, route_string, route_category, route_range, route_duration, route_category_multiple, route_multi_attribute_entity, route_multi_structured_input
 
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
@@ -24,16 +24,35 @@ def ask_string(question: str) -> str:
     return route_string(question)
 
 
+# values from a category => answer with one
+def ask_category(question: str, categories: list[str]) -> str:
+    return route_category(question, categories)
+
+
+# values in a given range
+def ask_range(question, start: int, stop: int):
+    return route_range(question, start, stop)
+
+
+def ask_duration(question: str) -> int:
+    return route_duration(question)
+
+
+# values from a category => answer with multiple
+# def ask_category_multiple(question: str, categories: str, num_answers: int):
+#    pass
+
+
 def ask_category_multiple(question: str, categories: list[str]) -> list[str]:
     return route_category_multiple(question, categories) 
+
 
 def ask_multi_attribute_entity(question: str, entity: str, fields: list[tuple[str, str, str]]) -> dict:
     return route_multi_attribute_entity(question, entity, fields)
 
+
 def ask_multi_structured_input(question: str, mode: str, groups: list[str] | None = None):
     return route_multi_structured_input(question, mode, groups)
-
-
 
 
 
@@ -89,8 +108,7 @@ if __name__ == "__main__":
     user_question = input("Ask a medical question: ").strip()
 
     # STEP 5 — NL → Prolog query (LLM)
-    query = generate_query(
-        user_question, prolog_code).strip()
+    query = generate_query(user_question, prolog_code).strip()
 
     print("\n[Generated Prolog Query]:", query)
 
@@ -105,11 +123,7 @@ if __name__ == "__main__":
 
     # STEP 7 — Prolog → natural language
     try:
-        final_answer = translate_result(
-            user_question,
-            query,
-            result
-        )
+        final_answer = translate_result(user_question, query, result)
     except Exception as e:
         print("\nTranslation fallback triggered:", e)
         final_answer = str(result)
