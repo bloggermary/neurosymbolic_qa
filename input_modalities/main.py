@@ -4,7 +4,7 @@ from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
 
-from modalities.router import route_boolean, route_numeric, route_string, route_category_multiple, route_multi_attribute_entity
+from modalities.router import route_boolean, route_numeric, route_string, route_category_multiple, route_multi_attribute_entity, route_multi_structured_input
 
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
@@ -30,6 +30,8 @@ def ask_category_multiple(question: str, categories: list[str]) -> list[str]:
 def ask_multi_attribute_entity(question: str, entity: str, fields: list[tuple[str, str, str]]) -> dict:
     return route_multi_attribute_entity(question, entity, fields)
 
+def ask_multi_structured_input(question: str, mode: str, groups: list[str] | None = None):
+    return route_multi_structured_input(question, mode, groups)
 
 
 

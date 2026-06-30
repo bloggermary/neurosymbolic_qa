@@ -3,6 +3,7 @@ from modalities.numeric_handler import NumericHandler
 from modalities.string_handler import StringHandler
 from modalities.multiple_category_handler import MultipleCategoryHandler
 from modalities.multi_attribute_entity_handler import MultiAttributeEntityHandler
+from modalities.multi_structured_input_handler import MultiStructuredInputHandler
 
 class ModalityRouter:
     """
@@ -15,6 +16,7 @@ class ModalityRouter:
         self.string_handler = StringHandler()
         self.multiple_category_handler = MultipleCategoryHandler()
         self.multi_attribute_entity_handler = MultiAttributeEntityHandler()
+        self.multi_structured_input_handler = MultiStructuredInputHandler()
 
 
     def route_boolean(self, question: str) -> bool:
@@ -31,6 +33,9 @@ class ModalityRouter:
     
     def route_multiple_attribute_entity(self, question: str, entity: str, fields: list[tuple[str, str, str]]) -> dict:
         return self.multi_attribute_entity_handler.handle(question, entity, fields)
+    
+    def route_multi_structured_input(self, question: str, mode: str, groups: list[str] | None = None):
+        return self.multi_structured_input_handler(question, mode, groups)
 
 router = ModalityRouter()
 
@@ -52,4 +57,7 @@ def route_category_multiple(question: str, categories: list[str]) -> list[str]:
 
 def route_multi_attribute_entity(question: str, entity: str, fields: list[tuple[str, str, str]]) -> dict:
     return router.route_multi_attribute_entity(question, entity, fields)
+
+def route_multi_structured_input(question: str, mode: str, groups: list[str] | None = None):
+    return router.route_multi_structured_input(question, mode, groups)
 
