@@ -13,9 +13,9 @@ from modalities.router import (
     route_duration
 )
 
-# -------------------------
+
 # Dialogue Layer (NEW)
-# -------------------------
+
 from dialogue.session_handler import SessionMemory
 from dialogue.state_manager import StateManager
 from dialogue.context_tracker import ContextTracker
@@ -26,9 +26,9 @@ from dialogue.modality_handler import DialogueModalityHandler
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
 
-# -------------------------
+
 # Dialogue Initialization
-# -------------------------
+
 session_memory = SessionMemory()
 state_manager = StateManager()
 context_tracker = ContextTracker(session_memory)
@@ -36,9 +36,9 @@ followup_manager = FollowupManager()
 modality_handler = DialogueModalityHandler()
 
 
-# -------------------------
+
 # User interaction bridge
-# -------------------------
+
 def ask_boolean(question: str) -> bool:
     return route_boolean(question)
 
