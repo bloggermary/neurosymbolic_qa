@@ -1,15 +1,13 @@
-Ein Diabetes mellitus liegt vor, wenn bestimmte Grenzwerte der Blutzuckermessung
-überschritten werden. Dazu gehört eine Gelegenheits-Plasmaglukose von mindestens
-11,1 mmol/l beziehungsweise 200 mg/dl. Ebenso spricht eine Nüchtern-Plasmaglukose von
-mindestens 7,0 mmol/l (126 mg/dl) nach 8 bis 12 Stunden Fasten für Diabetes.
-Auch ein erhöhter Wert im oralen Glukosetoleranztest mit mindestens
-11,1 mmol/l nach zwei Stunden erfüllt die Diagnosekriterien. Zusätzlich kann Diabetes
-über einen HbA1c-Wert von mindestens 48 mmol/mol beziehungsweise 6,5 % diagnostiziert werden.
-Common symptoms of diabetes include:
-- excessive thirst
-- excessive urination
-- fatigue
-- blurred vision
+Diabetes mellitus is a chronic metabolic disorder characterized by persistently elevated blood glucose levels due to impaired insulin secretion, insulin action, or both. In a neurosymbolic system, its diagnosis is represented using multiple modalities, including numeric, boolean, range, categorical, frequency, and temporal structures to enable precise rule-based reasoning in Prolog.
 
-Prediabetes may occur when fasting blood glucose is between 100 and 125 mg/dL.
-Patients with diabetes often experience both excessive thirst and excessive urination.
+A diagnosis of diabetes is established if at least one of the following numerical thresholds is met: a random plasma glucose ≥ 11.1 mmol/L (200 mg/dL), a fasting plasma glucose ≥ 7.0 mmol/L (126 mg/dL) after 8–12 hours of fasting, or a 2-hour value in an oral glucose tolerance test ≥ 11.1 mmol/L. Additionally, an HbA1c value ≥ 6.5% (48 mmol/mol) indicates long-term hyperglycemia. These conditions are modeled primarily using numeric and scale-based modalities, often combined with duration constraints for fasting and testing procedures.
+
+Prediabetes is defined using a range-based modality, where fasting plasma glucose lies between 100 and 125 mg/dL. This intermediate state represents elevated metabolic risk without fulfilling full diagnostic criteria for diabetes.
+
+Clinical symptoms such as excessive thirst, excessive urination, fatigue, and blurred vision are represented as boolean modalities, indicating presence or absence. Some symptoms, such as nocturia or recurrent infections, may additionally use frequency-based modalities to capture how often they occur.
+
+Medical history is encoded using categorical and boolean modalities, including conditions such as obesity, hypertension, cardiovascular disease, and gestational diabetes. Family history is represented relationally, distinguishing between affected first-degree and second-degree relatives, which contributes to genetic risk estimation.
+
+Medication status is modeled as a categorical modality, including insulin therapy, oral antidiabetics, corticosteroid use, or no medication, as these significantly influence glucose interpretation. Lifestyle factors such as diet and physical activity are also represented categorically and contribute to overall risk assessment.
+
+In a Prolog-based neurosymbolic knowledge system, all these modalities are transformed into structured predicates. Numeric values represent measurable clinical data, boolean values represent symptom presence, range constraints capture threshold-based conditions, and categorical and frequency modalities encode contextual patient information. This multi-modal representation enables interpretable logical inference while supporting flexible dialogue-driven data collection.

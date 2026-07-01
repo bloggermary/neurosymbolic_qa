@@ -4,9 +4,36 @@ from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
 
-from modalities.router import route_boolean, route_numeric, route_string, route_category, route_range, route_duration
+from modalities.router import (
+    route_boolean,
+    route_numeric,
+    route_string,
+    route_category,
+    route_range,
+    route_duration
+)
+
+# -------------------------
+# Dialogue Layer (NEW)
+# -------------------------
+from dialogue.session_handler import SessionMemory
+from dialogue.state_manager import StateManager
+from dialogue.context_tracker import ContextTracker
+from dialogue.followup_manager import FollowupManager
+from dialogue.modality_handler import DialogueModalityHandler
+
 
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
+
+
+# -------------------------
+# Dialogue Initialization
+# -------------------------
+session_memory = SessionMemory()
+state_manager = StateManager()
+context_tracker = ContextTracker(session_memory)
+followup_manager = FollowupManager()
+modality_handler = DialogueModalityHandler()
 
 
 # -------------------------
@@ -24,27 +51,25 @@ def ask_string(question: str) -> str:
     return route_string(question)
 
 
-# values from a category => answer with one
 def ask_category(question: str, categories: list[str]) -> str:
     return route_category(question, categories)
 
 
-# values in a given range
 def ask_range(question, start: int, stop: int):
     return route_range(question, start, stop)
 
 
-# values from a category => answer with multiple
 def ask_category_multiple(question: str, categories: str, num_answers: int):
     pass
+
 
 def ask_duration(question: str) -> int:
     return route_duration(question)
 
 
-# -------------------------
+
 # PIPELINE STEP 1: Build KB
-# -------------------------
+
 def build_knowledge_base():
     with open("data/snippets/diabetes.txt", "r", encoding="utf-8") as f:
         medical_text = f.read()
@@ -55,50 +80,54 @@ def build_knowledge_base():
         f.write(kb_code)
 
 
-# -------------------------
+
 # PIPELINE STEP 2: Load Prolog
-# -------------------------
+
 def load_prolog():
     janus.consult(KB_PATH)
 
 
-# -------------------------
+
 # PIPELINE STEP 3: Query execution
-# -------------------------
+
 def run_reasoning(query: str):
     if not query:
         raise ValueError("Empty Prolog query generated")
 
-    # ensure clean Prolog call
     query = query.rstrip(".").strip()
-
     return janus.query_once(query)
 
 
-# -------------------------
+
 # MAIN PIPELINE
-# -------------------------
+
 if __name__ == "__main__":
 
-    # STEP 1 — build symbolic KB using LLM
-    #build_knowledge_base()
+    # step 1 — build symbolic KB using LLM
+    # build_knowledge_base()
 
-    # STEP 2 — load Prolog engine
+    # step 2 — load Prolog engine
     load_prolog()
 
-    # STEP 3 — read generated KB code
+    # step 3 — read generated KB code
     with open(KB_PATH, "r", encoding="utf-8") as f:
         prolog_code = f.read()
 
-    # STEP 4 — user input
+    # step 4 — user input
     user_question = input("Ask a medical question: ").strip()
 
-    # STEP 5 — NL → Prolog query (LLM)
-    query = generate_query(user_question, prolog_code).strip()
+
+    #  Dialogue Layer: Context Resolution
+
+    resolved = context_tracker.resolve_context(user_question)
+    enhanced_question = resolved["question"]
+
+    # step 5 — NL → Prolog query (LLM)
+    query = generate_query(enhanced_question, prolog_code).strip()
 
     print("\n[Generated Prolog Query]:", query)
 
-    # STEP 6 — symbolic reasoning
+    # step 6 — symbolic reasoning
     try:
         result = run_reasoning(query)
     except Exception as e:
@@ -107,13 +136,47 @@ if __name__ == "__main__":
 
     print("\n[Raw Prolog Result]:", result)
 
-    # STEP 7 — Prolog → natural language
+    # step 7 — Prolog → natural language
     try:
-        final_answer = translate_result(user_question, query, result)
+        final_answer = translate_result(enhanced_question, query, result)
     except Exception as e:
         print("\nTranslation fallback triggered:", e)
         final_answer = str(result)
 
-    # STEP 8 — output
+
+    #  Dialogue Layer: State + Memory Update
+
+
+    state_manager.update(
+        question=user_question,
+        answer=final_answer,
+        modality=None,
+        prolog_query=query
+    )
+
+    session_memory.add({
+        "question": user_question,
+        "answer": final_answer,
+        "modality": None,
+        "prolog_query": query
+    })
+
+    # follow-up generation hook (stored externally if you add LLM later)
+    followup_manager.store(user_question, [])
+
+
+    # step 8 — Output
+
+    response = {
+        "answer": final_answer,
+        "style": "default"
+    }
+
+    # adjust response based on modality (future extension)
+    response = modality_handler.adjust_response_behavior(
+        modality=None,
+        response=response
+    )
+
     print("\nFinal Answer:")
-    print(final_answer)
+    print(response["answer"])
