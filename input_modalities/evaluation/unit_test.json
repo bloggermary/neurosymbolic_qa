@@ -1,0 +1,65 @@
+[
+  {
+    "id": "boolean_yes",
+    "handler": "boolean",
+    "question": "Do you have excessive thirst?",
+    "user_input": "yes",
+    "expected_output": true
+  },
+
+  {
+    "id": "boolean_no",
+    "handler": "boolean",
+    "question": "Do you have blurred vision?",
+    "user_input": "no",
+    "expected_output": false
+  },
+
+  {
+    "id": "numeric_hba1c",
+    "handler": "numeric",
+    "question": "HbA1c (%)?",
+    "user_input": "6.5",
+    "expected_output": 6.5
+  },
+
+  {
+    "id": "category_thirst",
+    "handler": "category",
+    "question": "How severe is the patient's thirst?",
+    "categories": [
+      "none",
+      "mild",
+      "moderate",
+      "severe"
+    ],
+    "user_input": "moderate",
+    "expected_output": "moderate"
+  },
+
+  {
+    "id": "range_fatigue",
+    "handler": "range",
+    "question": "Rate your fatigue",
+    "start": 1,
+    "stop": 10,
+    "user_input": "8",
+    "expected_output": 8
+  },
+
+  {
+    "id": "duration_days",
+    "handler": "duration",
+    "question": "How many days?",
+    "user_input": "14",
+    "expected_output": 14
+  },
+
+  {
+    "id": "string_name",
+    "handler": "string",
+    "question": "Medication name",
+    "user_input": "Metformin",
+    "expected_output": "Metformin"
+  }
+]

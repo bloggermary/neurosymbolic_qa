@@ -18,36 +18,59 @@ GENERAL REQUIREMENTS:
 - Do not generate clauses with singleton variables. If a question's answer is not needed
   for the result, do not ask it at all.
 - Ask only the minimum information necessary to reach a conclusion.
-- After each answer, check whether the source text already provides sufficient evidence.
 - Stop asking follow-up questions as soon as a diagnosis, exclusion, or classification is justified.
 - Ask additional criteria only when the current evidence is insufficient.
+
+KEY-BASED FOLLOW-UP REQUIREMENT:
+- Every user interaction predicate MUST include a stable semantic key.
+- The key MUST be a lowercase snake_case Prolog atom.
+- The key MUST describe the medical criterion, not the wording of the question.
+- Do NOT use vague keys like key, question_1, followup_1, value, answer, symptom, criterion.
+- Do NOT use an unbound variable named Key in py_call.
+- The Key argument must always be passed into the ask_* predicate and then forwarded to Python.
+
+When the source criterion requires a yes/no condition,
+use ask_boolean.
+
+When the source criterion requires a measured number,
+use ask_numeric.
+
+When the source criterion explicitly defines lower and upper
+integer bounds for a rating or score, use ask_range.
+
+When the source criterion concerns elapsed time in days,
+weeks, months, or years, use ask_duration.
+
+When the source defines a fixed set of named alternatives,
+use ask_category.
+
+When unrestricted text is required, use ask_string.
 
 JANUS USER INTERACTION:
 - The generated knowledge base MUST start with:
     :- use_module(library(janus)).
 
-ask_boolean(Question) :-
-    py_call(main:ask_boolean(Question), true).
+ask_boolean(Key, Question) :-
+    py_call(main:ask_boolean(Key, Question), true).
 
-ask_numeric(Question, Value) :-
-    py_call(main:ask_numeric(Question), Value).
+ask_numeric(Key, Question, Value) :-
+    py_call(main:ask_numeric(Key, Question), Value).
 
-ask_string(Question, Value) :-
-    py_call(main:ask_string(Question), Value).
+ask_string(Key, Question, Value) :-
+    py_call(main:ask_string(Key, Question), Value).
 
-ask_category(Question, Categories, Answer) :-
-    py_call(main:ask_category(Question, Categories), Answer).
+ask_category(Key, Question, Categories, Answer) :-
+    py_call(main:ask_category(Key, Question, Categories), Answer).
 
-ask_range(Question, Start, Stop, Value) :-
-    py_call(main:ask_range(Question, Start, Stop), Value).
+ask_range(Key, Question, Start, Stop, Value) :-
+    py_call(main:ask_range(Key, Question, Start, Stop), Value).
 
-ask_duration(Question, Value) :-
-    py_call(main:ask_duration(Question), Value).    
+ask_duration(Key, Question, Value) :-
+    py_call(main:ask_duration(Key, Question), Value).    
 
 
-- The predicate diagnose/1 must ask all available diagnostic criteria before producing a result.
-- If the user asks for an overall diagnosis, screening result, or asks generally whether the patient is diabetic, use the main entry predicate diagnose if it exists.
-- If the user asks specifically whether diabetes is logically true, use diabetes if it exists
+- If one criterion is sufficient according to the source text, the rule may stop after that criterion succeeds.
+- Availability of a test result is not a medical criterion. The measured numeric value is the criterion.
 - If the user asks specifically about prediabetes, use prediabetes if it exists
 - If the user asks specifically about low risk, use low_risk if it exists
 - If the user asks about a concrete criterion and a matching predicate exists, use that predicate

@@ -1,0 +1,203 @@
+[
+  {
+    "id": "diabetes_random_positive",
+    "question": "Do I have diabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "random_plasma_glucose_mmol",
+        "question": "What is the random plasma glucose (mmol/L)?",
+        "modality": "numeric",
+        "answer": "11.2"
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_fasting_positive",
+    "question": "Do I have diabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "random_plasma_glucose_mmol",
+        "question": "What is the random plasma glucose (mmol/L)?",
+        "modality": "numeric",
+        "answer": "5.0"
+      },
+      {
+        "key": "fasting_plasma_glucose_mmol",
+        "question": "What is the fasting plasma glucose (mmol/L)?",
+        "modality": "numeric",
+        "answer": "7.0"
+      },
+      {
+        "key": "fasting_duration_hours",
+        "question": "How many hours have you been fasting?",
+        "modality": "numeric",
+        "answer": "8"
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_ogtt_positive",
+    "question": "Do I have diabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "random_plasma_glucose_mmol",
+        "question": "What is the random plasma glucose (mmol/L)?",
+        "modality": "numeric",
+        "answer": "6.0"
+      },
+      {
+        "key": "fasting_plasma_glucose_mmol",
+        "question": "What is the fasting plasma glucose (mmol/L)?",
+        "modality": "numeric",
+        "answer": "6.5"
+      },
+      {
+        "key": "fasting_duration_hours",
+        "question": "How many hours have you been fasting?",
+        "modality": "numeric",
+        "answer": "10"
+      },
+      {
+        "key": "ogtt_2hr_plasma_glucose_mmol",
+        "question": "What is the 2-hour plasma glucose during OGTT (mmol/L)?",
+        "modality": "numeric",
+        "answer": "11.5"
+      }
+    ],
+    "max_followups": 4,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_hba1c_positive",
+    "question": "Do I have diabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "random_plasma_glucose_mmol",
+        "question": "What is the random plasma glucose (mmol/L)?",
+        "modality": "numeric",
+        "answer": "6.0"
+      },
+      {
+        "key": "fasting_plasma_glucose_mmol",
+        "question": "What is the fasting plasma glucose (mmol/L)?",
+        "modality": "numeric",
+        "answer": "6.5"
+      },
+      {
+        "key": "fasting_duration_hours",
+        "question": "How many hours have you been fasting?",
+        "modality": "numeric",
+        "answer": "10"
+      },
+      {
+        "key": "ogtt_2hr_plasma_glucose_mmol",
+        "question": "What is the 2-hour plasma glucose during OGTT (mmol/L)?",
+        "modality": "numeric",
+        "answer": "9.0"
+      },
+      {
+        "key": "hba1c_percent",
+        "question": "What is the HbA1c (%)?",
+        "modality": "numeric",
+        "answer": "6.7"
+      }
+    ],
+    "max_followups": 5,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "prediabetes_assessment",
+    "question": "Do I have prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "fasting_plasma_glucose_mgdl",
+        "question": "What is the fasting plasma glucose (mg/dL)?",
+        "modality": "numeric",
+        "answer": "110"
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "prediabetes"
+  },
+  {
+    "id": "supportive_symptoms_strong",
+    "question": "Do my symptoms strongly support diabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "excessive_thirst",
+        "question": "Do you have excessive thirst (polydipsia)?",
+        "modality": "boolean",
+        "answer": "true"
+      },
+      {
+        "key": "frequent_urination",
+        "question": "Do you have frequent urination (polyuria)?",
+        "modality": "boolean",
+        "answer": "true"
+      }
+    ],
+    "max_followups": 2,
+    "correct_answer": "supportive_symptoms_strong"
+  },
+  {
+    "id": "symptom_duration_persistent",
+    "question": "Are my symptoms recent, persistent, or long-term?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "symptom_duration_days",
+        "question": "For how many days have the symptoms been present?",
+        "modality": "duration",
+        "answer": "10"
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "symptom_duration_persistent"
+  },
+  {
+    "id": "fatigue_severity_severe",
+    "question": "How severe is your fatigue?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "fatigue_presence",
+        "question": "Do you have fatigue?",
+        "modality": "boolean",
+        "answer": "true"
+      },
+      {
+        "key": "fatigue_severity_score",
+        "question": "On a scale of 1-10, what is the fatigue severity?",
+        "modality": "range",
+        "answer": "8"
+      }
+    ],
+    "max_followups": 2,
+    "correct_answer": "fatigue_severity_severe"
+  },
+  {
+    "id": "thirst_severity_moderate",
+    "question": "How would you describe your thirst?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "thirst_severity",
+        "question": "How would you describe your thirst severity?",
+        "modality": "category",
+        "answer": "moderate"
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "thirst_severity_moderate"
+  }
+]

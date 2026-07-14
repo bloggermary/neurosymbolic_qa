@@ -1,138 +1,82 @@
 :- use_module(library(janus)).
 
-ask_boolean(Question) :-
-    py_call(main:ask_boolean(Question), true).
+ask_boolean(Key, Question) :-
+    py_call(main:ask_boolean(Key, Question), true).
 
-ask_numeric(Question, Value) :-
-    py_call(main:ask_numeric(Question), Value).
+ask_numeric(Key, Question, Value) :-
+    py_call(main:ask_numeric(Key, Question), Value).
 
-ask_string(Question, Value) :-
-    py_call(main:ask_string(Question), Value).
+ask_string(Key, Question, Value) :-
+    py_call(main:ask_string(Key, Question), Value).
 
-ask_category(Question, Categories, Answer) :-
-    py_call(main:ask_category(Question, Categories), Answer).
+ask_category(Key, Question, Categories, Answer) :-
+    py_call(main:ask_category(Key, Question, Categories), Answer).
 
-ask_range(Question, Start, Stop, Value) :-
-    py_call(main:ask_range(Question, Start, Stop), Value).
+ask_range(Key, Question, Start, Stop, Value) :-
+    py_call(main:ask_range(Key, Question, Start, Stop), Value).
 
-ask_duration(Question, Value) :-
-    py_call(main:ask_duration(Question), Value).    
+ask_duration(Key, Question, Value) :-
+    py_call(main:ask_duration(Key, Question), Value).
 
-% Collect all inputs (all diagnostic criteria and common symptoms).
-collect_all_answers(answers(RandomMgdl, FastingMgdl, FastingHours, OGTT2hMmol, Hba1cPercent, Hba1cMmol, Thirst, Polyuria, Fatigue, Blurred)) :-
-    ask_numeric('Random (casual) plasma glucose in mg/dL? (enter -1 if unknown)', RandomMgdl),
-    ask_numeric('Fasting plasma glucose in mg/dL? (enter -1 if unknown)', FastingMgdl),
-    ask_numeric('Hours fasting before the fasting glucose measurement? (enter 0 if not fasting)', FastingHours),
-    ask_numeric('2-hour OGTT plasma glucose in mmol/L? (enter -1 if unknown)', OGTT2hMmol),
-    ask_numeric('HbA1c in percent? (enter -1 if unknown)', Hba1cPercent),
-    ask_numeric('HbA1c in mmol/mol? (enter -1 if unknown)', Hba1cMmol),
-    ( ask_boolean('Excessive thirst? ') -> Thirst = true ; Thirst = false ),
-    ( ask_boolean('Excessive urination (polyuria)? (yes/no)') -> Polyuria = true ; Polyuria = false ),
-    ( ask_boolean('Fatigue?') -> Fatigue = true ; Fatigue = false ),
-    ( ask_boolean('Blurred vision? ') -> Blurred = true ; Blurred = false ).
+% Simple ask/1 wrapper that uses predefined question texts for boolean items.
+question_text(excessive_thirst, "Does the patient have excessive thirst?").
+question_text(excessive_urination, "Does the patient have excessive urination?").
+question_text(fatigue, "Does the patient have fatigue?").
+question_text(blurred_vision, "Does the patient have blurred vision?").
 
-% Criterion predicates that can be asked individually.
+ask(Key) :-
+    question_text(Key, Q),
+    ask_boolean(Key, Q).
 
-% Random (casual) plasma glucose >= 200 mg/dL.
-random_plasma_glucose_high :-
-    ask_numeric('Random (casual) plasma glucose in mg/dL?', V),
-    V >= 200.
+% Diagnostic criteria for diabetes mellitus.
+% Any one criterion is sufficient.
 
-% Fasting plasma glucose diagnostic for diabetes: >=126 mg/dL after 8-12 hours fasting.
+% Random plasma glucose criterion (mg/dL). Threshold >= 200 mg/dL.
+random_plasma_glucose_diabetes :-
+    ask_numeric(random_plasma_glucose_mg_dl, "Enter random plasma glucose (mg/dL):", Value),
+    Value >= 200.
+
+% Fasting plasma glucose criterion (mg/dL) after 8-12 h fast. Threshold >= 126 mg/dL.
 fasting_plasma_glucose_diabetes :-
-    ask_numeric('Fasting plasma glucose in mg/dL?', F),
-    ask_numeric('Hours fasting before the fasting glucose measurement?', H),
-    H >= 8, H =< 12,
-    F >= 126.
+    ask_numeric(fasting_plasma_glucose_mg_dl, "Enter fasting plasma glucose after 8-12 h fast (mg/dL):", Value),
+    Value >= 126.
 
-% Fasting plasma glucose in the prediabetes range: 100-125 mg/dL after 8-12 hours fasting.
-fasting_plasma_glucose_prediabetes :-
-    ask_numeric('Fasting plasma glucose in mg/dL?', F),
-    ask_numeric('Hours fasting before the fasting glucose measurement?', H),
-    H >= 8, H =< 12,
-    F >= 100, F =< 125.
+% 2-hour OGTT plasma glucose criterion (mg/dL). Threshold >= 200 mg/dL.
+ogtt_2h_plasma_glucose_diabetes :-
+    ask_numeric(ogtt_2h_plasma_glucose_mg_dl, "Enter 2-hour OGTT plasma glucose (mg/dL):", Value),
+    Value >= 200.
 
-% 2-hour OGTT plasma glucose >= 11.1 mmol/L.
-ogtt_2h_high :-
-    ask_numeric('2-hour OGTT plasma glucose in mmol/L?', V),
-    V >= 11.1.
+% HbA1c criterion (%). Threshold >= 6.5%.
+hba1c_diabetes :-
+    ask_numeric(hba1c_percent, "Enter HbA1c (%) : (e.g. 6.5)", Value),
+    Value >= 6.5.
 
-% HbA1c diagnostic for diabetes: >= 6.5% (or >= 48 mmol/mol).
-hba1c_high_percent :-
-    ask_numeric('HbA1c in percent (%)?', P),
-    P >= 6.5.
-
-hba1c_high_mmolmol :-
-    ask_numeric('HbA1c in mmol/mol?', M),
-    M >= 48.
-
-% Symptom predicates (succeed if the symptom is present).
-symptom_thirst :-
-    ask_boolean('Excessive thirst?').
-
-symptom_polyuria :-
-    ask_boolean('Excessive urination (polyuria)?').
-
-symptom_fatigue :-
-    ask_boolean('Fatigue?').
-
-symptom_blurred_vision :-
-    ask_boolean('Blurred vision?').
-
-% Evaluate diabetes from collected answers.
-diabetes_from_answers(answers(RandomMgdl, FastingMgdl, FastingHours, OGTT2hMmol, Hba1cPercent, Hba1cMmol, _Thirst, _Polyuria, _Fatigue, _Blurred)) :-
-    ( number(RandomMgdl), RandomMgdl >= 200 )
-    ;
-    ( number(FastingMgdl), number(FastingHours), FastingHours >= 8, FastingHours =< 12, FastingMgdl >= 126 )
-    ;
-    ( number(OGTT2hMmol), OGTT2hMmol >= 11.1 )
-    ;
-    ( number(Hba1cPercent), Hba1cPercent >= 6.5 )
-    ;
-    ( number(Hba1cMmol), Hba1cMmol >= 48 ).
-
-% Evaluate prediabetes from collected answers (fasting 100-125 mg/dL after 8-12 h),
-% only true if diabetes criteria are not met.
-prediabetes_from_answers(Answers) :-
-    Answers = answers(_RandomMgdl, FastingMgdl, FastingHours, _OGTT2hMmol, _Hba1cPercent, _Hba1cMmol, _Thirst, _Polyuria, _Fatigue, _Blurred),
-    number(FastingMgdl), number(FastingHours),
-    FastingHours >= 8, FastingHours =< 12,
-    FastingMgdl >= 100, FastingMgdl =< 125,
-    \+ diabetes_from_answers(Answers).
-
-% Symptom combination commonly seen in diabetes: thirst and polyuria together.
-diabetes_symptoms_from_answers(answers(_RandomMgdl, _FastingMgdl, _FastingHours, _OGTT2hMmol, _Hba1cPercent, _Hba1cMmol, Thirst, Polyuria, _Fatigue, _Blurred)) :-
-    Thirst == true,
-    Polyuria == true.
-
-% Public predicates that evaluate diagnosis by asking the necessary inputs.
-
-% diagnose/1 asks all available diagnostic criteria (and symptoms) before producing a result.
-% Result is one of: diabetes, prediabetes, low_risk.
+% Top-level diagnosis predicate for diabetes mellitus.
+% Succeeds if any one of the diagnostic criteria is met.
 diagnose(diabetes) :-
-    collect_all_answers(Answers),
-    diabetes_from_answers(Answers), !.
+    random_plasma_glucose_diabetes.
+diagnose(diabetes) :-
+    fasting_plasma_glucose_diabetes.
+diagnose(diabetes) :-
+    ogtt_2h_plasma_glucose_diabetes.
+diagnose(diabetes) :-
+    hba1c_diabetes.
 
-diagnose(prediabetes) :-
-    collect_all_answers(Answers),
-    prediabetes_from_answers(Answers), !.
-
-diagnose(low_risk) :-
-    collect_all_answers(Answers),
-    \+ diabetes_from_answers(Answers),
-    \+ prediabetes_from_answers(Answers).
-
-% Specific predicates for user queries about overall conditions.
-% If someone queries diabetes directly, these will ask the full set of inputs as required.
-diabetes :-
-    collect_all_answers(Answers),
-    diabetes_from_answers(Answers).
-
+% Prediabetes: fasting plasma glucose 100-125 mg/dL.
+% This classification can be concluded from the fasting value alone.
 prediabetes :-
-    collect_all_answers(Answers),
-    prediabetes_from_answers(Answers).
+    ask_numeric(fasting_plasma_glucose_mg_dl, "Enter fasting plasma glucose after 8-12 h fast (mg/dL):", Value),
+    Value >= 100,
+    Value =< 125.
 
-low_risk :-
-    collect_all_answers(Answers),
-    \+ diabetes_from_answers(Answers),
-    \+ prediabetes_from_answers(Answers).
+% Symptom-based suggestion (not diagnostic): both excessive thirst and urination often occur.
+symptoms_suggest_diabetes :-
+    ask(excessive_thirst),
+    ask(excessive_urination).
+
+% Additional symptom queries available individually.
+has_fatigue :-
+    ask(fatigue).
+
+has_blurred_vision :-
+    ask(blurred_vision).

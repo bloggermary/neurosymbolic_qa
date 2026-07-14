@@ -13,6 +13,7 @@ IMPORTANT RULES:
 - Return only the Prolog query
 - Do not use ?-.
 - If no matching predicate exists, return fail
+- If the user asks a general diabetes diagnosis question, always use assess_diabetes(Result).
 
 
     Available Prolog knowledge base:

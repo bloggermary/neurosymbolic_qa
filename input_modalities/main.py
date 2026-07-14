@@ -26,7 +26,6 @@ from dialogue.modality_handler import DialogueModalityHandler
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
 
-
 # Dialogue Initialization
 
 session_memory = SessionMemory()
@@ -35,37 +34,33 @@ context_tracker = ContextTracker(session_memory)
 followup_manager = FollowupManager()
 modality_handler = DialogueModalityHandler()
 
-
-
 # User interaction bridge
-
-def ask_boolean(question: str) -> bool:
+def ask_boolean(key: str, question: str) -> bool:
     return route_boolean(question)
 
 
-def ask_numeric(question: str) -> float:
+def ask_numeric(key: str, question: str) -> float:
     return route_numeric(question)
 
 
-def ask_string(question: str) -> str:
+def ask_string(key: str, question: str) -> str:
     return route_string(question)
 
 
-def ask_category(question: str, categories: list[str]) -> str:
+def ask_category(key: str, question: str, categories: list[str]) -> str:
     return route_category(question, categories)
 
 
-def ask_range(question, start: int, stop: int):
+def ask_range(key: str, question: str, start: int, stop: int) -> int:
     return route_range(question, start, stop)
 
 
-def ask_category_multiple(question: str, categories: str, num_answers: int):
-    pass
-
-
-def ask_duration(question: str) -> int:
+def ask_duration(key: str, question: str) -> int:
     return route_duration(question)
 
+
+def ask_category_multiple(key: str, question: str, categories: list[str], num_answers: int):
+    raise NotImplementedError("ask_category_multiple is not implemented yet.")
 
 
 # PIPELINE STEP 1: Build KB
@@ -80,12 +75,10 @@ def build_knowledge_base():
         f.write(kb_code)
 
 
-
 # PIPELINE STEP 2: Load Prolog
 
 def load_prolog():
     janus.consult(KB_PATH)
-
 
 
 # PIPELINE STEP 3: Query execution
@@ -95,9 +88,10 @@ def run_reasoning(query: str):
         raise ValueError("Empty Prolog query generated")
 
     query = query.rstrip(".").strip()
+    if query == "fail":
+        return {"truth": False}
+
     return janus.query_once(query)
-
-
 
 # MAIN PIPELINE
 
@@ -105,7 +99,6 @@ if __name__ == "__main__":
 
     # STEP 1 — build symbolic KB using LLM
     build_knowledge_base()
-
 
     # step 2 — load Prolog engine
     load_prolog()
@@ -116,7 +109,6 @@ if __name__ == "__main__":
 
     # step 4 — user input
     user_question = input("Ask a medical question: ").strip()
-
 
     #  Dialogue Layer: Context Resolution
 
@@ -144,9 +136,7 @@ if __name__ == "__main__":
         print("\nTranslation fallback triggered:", e)
         final_answer = str(result)
 
-
     #  Dialogue Layer: State + Memory Update
-
 
     state_manager.update(
         question=user_question,

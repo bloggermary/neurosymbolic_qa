@@ -21,6 +21,18 @@ class ModalityValidator:
         return isinstance(value, str)
 
     @staticmethod
+    def normalize_string(value: str):
+        if not isinstance(value, str):
+            return None
+
+        normalized = value.strip()
+
+        if not normalized:
+            return None
+
+        return normalized
+
+    @staticmethod
     def normalize_yes_no(value: str) -> Optional[bool]:
         value = value.strip().lower()
 
