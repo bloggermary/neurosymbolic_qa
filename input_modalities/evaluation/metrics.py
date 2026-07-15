@@ -1,127 +1,386 @@
 import json
-from collections import Counter
+import os
+from collections import Counter, defaultdict
 
+
+# =========================================================
+# File handling
+# =========================================================
 
 def save_json(path, data):
+    """
+    Saves JSON and creates missing directories automatically.
+    """
+
+    directory = os.path.dirname(path)
+
+    if directory:
+        os.makedirs(directory, exist_ok=True)
+
     with open(path, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2)
+        json.dump(
+            data,
+            f,
+            indent=2,
+            ensure_ascii=False
+        )
 
 
 def load_json(path):
+
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
+
+# =========================================================
+# General Accuracy
+# =========================================================
+
 def compute_accuracy(correct, total):
+
     if total == 0:
         return 0.0
+
     return correct / total
 
 
-def aggregate_modality_distribution(results):
-    counter = Counter()
+
+# =========================================================
+# 1. Modality Detection Metrics
+# =========================================================
+
+def compute_modality_accuracy(results):
+
+    correct = 0
+
     for r in results:
-        counter[r["predicted"]] += 1
+
+        if (
+            r.get("expected")
+            ==
+            r.get("predicted")
+        ):
+            correct += 1
+
+    return compute_accuracy(
+        correct,
+        len(results)
+    )
+
+
+
+def aggregate_modality_distribution(results):
+
+    counter = Counter()
+
+    for r in results:
+
+        predicted = r.get(
+            "predicted",
+            "unknown"
+        )
+
+        counter[predicted] += 1
+
     return dict(counter)
 
+
+
+def modality_confusion_matrix(results):
+
+    matrix = defaultdict(
+        lambda: defaultdict(int)
+    )
+
+    for r in results:
+
+        expected = r.get(
+            "expected",
+            "unknown"
+        )
+
+        predicted = r.get(
+            "predicted",
+            "unknown"
+        )
+
+        matrix[expected][predicted] += 1
+
+
+    return {
+        k: dict(v)
+        for k, v in matrix.items()
+    }
+
+
+
+# =========================================================
+# 2. Query Generation Metrics
+# =========================================================
+
 def predicate_recall(expected, query):
+
     if not expected:
         return 0
 
-    found = sum(1 for p in expected if p in query)
-    return found / len(expected)
+
+    query = query.lower()
+
+    matched = 0
+
+    for predicate in expected:
+
+        if predicate.lower() in query:
+            matched += 1
 
 
-# -----------------------------
+    return matched / len(expected)
 
-# Query Complexity
 
-# -----------------------------
 
-def compute_query_complexity(query: str) -> int:
+def query_accuracy(results):
+
+    correct = sum(
+        1
+        for r in results
+        if r.get("correct", False)
+    )
+
+
+    return compute_accuracy(
+        correct,
+        len(results)
+    )
+
+
+
+def query_predicate_scores(results):
 
     """
-
-    Complexity = number of predicates (rough approximation)
-
+    Returns individual recall values
+    so graphs can plot every question.
     """
 
-    if not query:
+    scores = []
 
-        return 0
+    for r in results:
 
-    return query.count(",") + 1
+        score = predicate_recall(
+            r.get(
+                "expected_predicates",
+                []
+            ),
+            r.get(
+                "query",
+                ""
+            )
+        )
 
-def average_complexity(results):
+        scores.append(score)
 
-    if not results:
+    return scores
 
-        return 0
 
-    return sum(r["complexity"] for r in results) / len(results)
 
-# -----------------------------
+# =========================================================
+# 3. Pipeline Metrics
+# =========================================================
 
-# Follow-up Count
+def pipeline_success_rate(results):
 
-# -----------------------------
+    success = sum(
+        1
+        for r in results
+        if r.get("success", False)
+    )
+
+
+    return compute_accuracy(
+        success,
+        len(results)
+    )
+
+
+
+def pipeline_execution_times(results):
+
+    return [
+        r.get(
+            "time",
+            0
+        )
+        for r in results
+    ]
+
+
+
+def pipeline_error_distribution(results):
+
+    errors = Counter()
+
+    for r in results:
+
+        if not r.get(
+            "success",
+            False
+        ):
+
+            error = r.get(
+                "error",
+                "unknown"
+            )
+
+            errors[error] += 1
+
+
+    return dict(errors)
+
+
+
+# =========================================================
+# 4. KB Generation Metrics
+# =========================================================
+
+def kb_generation_success(results):
+
+    success = sum(
+        1
+        for r in results
+        if r.get(
+            "success",
+            False
+        )
+    )
+
+
+    return compute_accuracy(
+        success,
+        len(results)
+    )
+
+
+
+# =========================================================
+# 5. Follow-up Metrics
+# =========================================================
 
 def average_followups(results):
 
     if not results:
-
         return 0
 
-    return sum(len(r.get("followups", [])) for r in results) / len(results)
 
-# -----------------------------
+    total = sum(
+        len(
+            r.get(
+                "followups",
+                []
+            )
+        )
+        for r in results
+    )
 
-# Error Rate
 
-# -----------------------------
+    return total / len(results)
 
-def compute_error_rate(results):
 
-    if not results:
 
-        return 0
+def followup_accuracy(results):
 
-    errors = sum(1 for r in results if not r.get("success", False))
+    correct = 0
+    total = 0
 
-    return errors / len(results)
-
-# -----------------------------
-
-# Intent Accuracy
-
-# -----------------------------
-
-def compute_intent_accuracy(results):
-
-    correct = sum(1 for r in results if r.get("intent_correct", False))
-
-    return compute_accuracy(correct, len(results))
-
-# -----------------------------
-
-# Modality Confusion Matrix
-
-# -----------------------------
-
-def build_confusion_matrix(results):
-
-    matrix = defaultdict(lambda: defaultdict(int))
 
     for r in results:
 
-        expected = r["expected"]
+        expected = r.get(
+            "expected_followups",
+            []
+        )
 
-        predicted = r["predicted"]
+        predicted = r.get(
+            "followups",
+            []
+        )
+
+
+        total += len(expected)
+
+
+        for item in expected:
+
+            if item in predicted:
+                correct += 1
+
+
+    return compute_accuracy(
+        correct,
+        total
+    )
+
+
+
+# =========================================================
+# Error Metrics
+# =========================================================
+
+def compute_error_rate(results):
+
+    errors = sum(
+        1
+        for r in results
+        if not r.get(
+            "success",
+            False
+        )
+    )
+
+
+    return compute_accuracy(
+        errors,
+        len(results)
+    )
+
+
+
+# =========================================================
+# Confusion Matrix Utility
+# =========================================================
+
+def build_confusion_matrix(results):
+
+    matrix = defaultdict(
+        lambda: defaultdict(int)
+    )
+
+
+    for r in results:
+
+        expected = r.get(
+            "expected",
+            "unknown"
+        )
+
+        predicted = r.get(
+            "predicted",
+            "unknown"
+        )
+
 
         matrix[expected][predicted] += 1
 
-    return matrix
+
+    return {
+        key: dict(value)
+        for key, value in matrix.items()
+    }
+
+
 
 def save_confusion_matrix(matrix, path):
 
-    save_json(path, matrix)
+    save_json(
+        path,
+        matrix
+    )

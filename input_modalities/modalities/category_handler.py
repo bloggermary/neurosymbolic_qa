@@ -1,17 +1,16 @@
-from modalities.validation import ModalityValidator
-
 class CategoryHandler:
+    """
+    Creates a category selection request.
+    """
 
-    def handle(self,
-               question: str,
-               permissible_categories: list[str]) -> str:
+    def handle(
+        self,
+        question: str,
+        permissible_categories: list[str]
+    ):
 
-        categories = [c.strip().lower() for c in permissible_categories]
-
-        while True:
-
-            prompt = f"{question} ({'/'.join(categories)}) "
-            answer = input(prompt).strip().lower()
-            if answer in categories:
-                return answer
-            print(f"Please answer with one of: {', '.join(categories)}")
+        return {
+            "type": "category",
+            "question": question,
+            "options": permissible_categories
+        }

@@ -1,9 +1,9 @@
-from input_modalities.llm.followup_generator import generate_followup
-from input_modalities.evaluation.metrics  import load_json, save_json, compute_accuracy
+from llm.followup_generator import generate_followup
+from evaluation.metrics  import load_json, save_json, compute_accuracy
 
 
 def run():
-    data = load_json("tests/test_modalities.json")
+    data = load_json("evaluation/tests/json_entries/test_modalities.json")
 
     results = []
     correct = 0
@@ -28,9 +28,9 @@ def run():
             "followups": predicted
         })
 
-    save_json("tests/results/followup_results.json", results)
+    save_json("evaluation/results/followup_results.json", results)
 
-    save_json("tests/results/followup_accuracy.json", {
+    save_json("evaluation/results/followup_accuracy.json", {
         "accuracy": compute_accuracy(correct, len(data))
     })
 

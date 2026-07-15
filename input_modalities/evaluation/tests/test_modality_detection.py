@@ -1,10 +1,10 @@
 import time
-from input_modalities.llm.modality_detector import detect_modality  # adjust if needed
-from input_modalities.evaluation.metrics import load_json, save_json, compute_accuracy
+from llm.modality_detector import detect_modality  # adjust if needed
+from evaluation.metrics import load_json, save_json, compute_accuracy
 
 
 def run():
-    data = load_json("evaluation/test_modalities.json")
+    data = load_json("evaluation/tests/json_entries/test_modalities.json")
 
     results = []
     correct = 0

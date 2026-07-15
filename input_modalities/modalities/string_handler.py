@@ -1,18 +1,12 @@
-from modalities.validation import ModalityValidator
-
-
 class StringHandler:
     """
-    Handles textual user input during Prolog reasoning.
+    Creates a text input request
+    for Streamlit.
     """
 
-    def handle(self, question: str) -> str:
-        while True:
-            answer = input(f"{question} Enter text value: ")
+    def handle(self, question: str):
 
-            result = ModalityValidator.normalize_string(answer)
-
-            if result:
-                return result
-
-            print("Please enter a non-empty text value.")
+        return {
+            "type": "string",
+            "question": question
+        }

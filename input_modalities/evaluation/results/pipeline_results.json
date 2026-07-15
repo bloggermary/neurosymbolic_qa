@@ -1,0 +1,526 @@
+[
+  {
+    "question": "Is the patient diabetic?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Does the patient have diabetes mellitus?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "A patient has fasting glucose of 135 mg/dL. Is this diagnostic for diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: diagnostic_for/2",
+    "success": false
+  },
+  {
+    "question": "HbA1c is 6.9%. Can diabetes be confirmed?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "The patient has fasting glucose 128 mg/dL and HbA1c 6.6%. Is diabetes diagnosed even without symptoms?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Is a random glucose of 210 mg/dL sufficient for diagnosis?",
+    "error": "janus:py_call/4: Unknown procedure: random_glucose/1",
+    "success": false
+  },
+  {
+    "question": "Does a 2-hour OGTT result of 12 mmol/L indicate diabetes?",
+    "query": "12 >= 11.1",
+    "result": "{'truth': True}",
+    "answer": "Yes \u2014 a 2\u2011hour OGTT plasma glucose of 12 mmol/L exceeds the diagnostic threshold (\u226511.1 mmol/L) for diabetes. If the patient has no clear hyperglycemia symptoms, confirm the diagnosis with a repeat OGTT or an alternative test such as HbA1c.",
+    "time": 9.041819375008345,
+    "success": true
+  },
+  {
+    "question": "Patient has elevated HbA1c but normal fasting glucose. Can diabetes still be diagnosed?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Is fasting glucose 90 mg/dL diabetic?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Can HbA1c alone diagnose diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: can_diagnose/2",
+    "success": false
+  },
+  {
+    "question": "Does the patient have excessive thirst?",
+    "error": "janus:py_call/4: Unknown procedure: has_symptom/1",
+    "success": false
+  },
+  {
+    "question": "Is frequent urination present?",
+    "error": "janus:py_call/4: Unknown procedure: present/1",
+    "success": false
+  },
+  {
+    "question": "Patient reports fatigue and blurred vision. Are these diabetes symptoms?",
+    "error": "'<meta-call>'/1: Unknown procedure: symptom/2",
+    "success": false
+  },
+  {
+    "question": "Is constant thirst combined with urination indicative of diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "A patient experiences fatigue, blurred vision, and excessive thirst. What symptoms are relevant?",
+    "error": "janus:py_call/4: Unknown procedure: relevant_symptom/1",
+    "success": false
+  },
+  {
+    "question": "Is fasting glucose of 115 mg/dL normal?",
+    "query": "115 >= 70, 115 =< 99",
+    "result": "{'truth': False}",
+    "answer": "A fasting plasma glucose of 115 mg/dL is above the normal fasting range (70\u201399 mg/dL) and falls in the impaired fasting glucose (prediabetes) category (100\u2013125 mg/dL). Repeat fasting glucose or obtain an HbA1c to confirm, and assess for cardiovascular risk factors while initiating lifestyle interventions (diet, exercise, weight loss).",
+    "time": 10.339916332974099,
+    "success": true
+  },
+  {
+    "question": "HbA1c is 6.3%. What does this indicate?",
+    "error": "janus:py_call/4: Unknown procedure: interpret_hba1c/2",
+    "success": false
+  },
+  {
+    "question": "Random glucose is 180 mg/dL. Is this concerning?",
+    "query": "180 >= 200",
+    "result": "{'truth': False}",
+    "answer": "A random glucose of 180 mg/dL is below the diagnostic cutoff of \u2265200 mg/dL for diabetes, but it is above the normal range and represents hyperglycemia; repeat testing (fasting glucose or HbA1c) and clinical assessment for symptoms and risk factors are indicated.",
+    "time": 10.289739375002682,
+    "success": true
+  },
+  {
+    "question": "Fasting glucose is normal but HbA1c is elevated. How is this interpreted?",
+    "error": "janus:py_call/4: Unknown procedure: interpretation/3",
+    "success": false
+  },
+  {
+    "question": "Patient has borderline fasting glucose of 124 mg/dL. Is this prediabetes?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Is fasting glucose 110 mg/dL prediabetes?",
+    "error": "janus:py_call/4: Unknown procedure: prediabetes/1",
+    "success": false
+  },
+  {
+    "question": "Does fasting glucose 102 mg/dL require monitoring?",
+    "error": "janus:py_call/4: Unknown procedure: requires_monitoring/3",
+    "success": false
+  },
+  {
+    "question": "Can impaired fasting glucose be considered prediabetes?",
+    "error": "janus:py_call/4: Unknown procedure: prediabetes/1",
+    "success": false
+  },
+  {
+    "question": "Patient has fasting glucose 122 mg/dL but normal HbA1c. Is this diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Should lifestyle changes be recommended for fasting glucose 120 mg/dL?",
+    "error": "janus:py_call/4: Unknown procedure: recommend_lifestyle_change/1",
+    "success": false
+  },
+  {
+    "question": "The patient reports waking up several times at night to urinate. Is this related to diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: symptom_of/2",
+    "success": false
+  },
+  {
+    "question": "There is persistent dry mouth and increased thirst over several weeks. What does this suggest?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "A patient presents with fatigue, nocturia, and blurred vision but has not been tested yet. What conditions should be considered?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Is increased hunger along with weight loss associated with diabetes?",
+    "error": "'<meta-call>'/1: Unknown procedure: symptom/2",
+    "success": false
+  },
+  {
+    "question": "A patient has intermittent blurred vision and frequent urination but normal glucose readings. How should this be interpreted?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "What does a fasting glucose of 99 mg/dL indicate?",
+    "error": "janus:py_call/4: Unknown procedure: fasting_glucose_indication/2",
+    "success": false
+  },
+  {
+    "question": "Is HbA1c of 5.4% normal?",
+    "error": "janus:py_call/4: Unknown procedure: hba1c_normal/1",
+    "success": false
+  },
+  {
+    "question": "HbA1c is slightly elevated at 6.1%. Should this be monitored?",
+    "error": "janus:py_call/4: Unknown procedure: should_monitor/1",
+    "success": false
+  },
+  {
+    "question": "A fasting glucose test shows 130 mg/dL after 8 hours fasting. Is this diagnostic?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "A patient has conflicting results: normal HbA1c but elevated fasting glucose. What does this indicate?",
+    "error": "janus:py_call/4: Unknown procedure: indicates/3",
+    "success": false
+  },
+  {
+    "question": "Is fasting glucose of 105 mg/dL concerning?",
+    "query": "105 >= 100, 105 < 126",
+    "result": "{'truth': True}",
+    "answer": "A fasting glucose of 105 mg/dL is above the normal range and falls within the impaired fasting glucose (prediabetes) range (100\u2013125 mg/dL). Repeat testing and evaluation (e.g., HbA1c, assessment of cardiometabolic risk) and counseling on lifestyle modification are recommended.",
+    "time": 8.419773292029276,
+    "success": true
+  },
+  {
+    "question": "Does a fasting glucose of 118 mg/dL indicate prediabetes?",
+    "error": "janus:py_call/4: Unknown procedure: indicates_prediabetes/1",
+    "success": false
+  },
+  {
+    "question": "A patient has borderline glucose levels but no symptoms. Should this be classified as prediabetes?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "HbA1c is 6.4% and fasting glucose is 119 mg/dL. Is this diabetes or prediabetes?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Should a patient with slightly elevated glucose but no symptoms undergo lifestyle intervention?",
+    "error": "janus:py_call/4: Unknown procedure: recommend_lifestyle_intervention/2",
+    "success": false
+  },
+  {
+    "question": "Is the patient taking insulin?",
+    "error": "janus:py_call/4: Unknown procedure: taking/1",
+    "success": false
+  },
+  {
+    "question": "Does metformin help control blood glucose levels?",
+    "error": "janus:py_call/4: Unknown procedure: helps/2",
+    "success": false
+  },
+  {
+    "question": "A patient is on insulin therapy but still has high HbA1c. What does this suggest?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Should medication be adjusted if fasting glucose remains above 130 mg/dL despite treatment?",
+    "error": "janus:py_call/4: Unknown procedure: adjust_medication_if_fasting_glucose_above/1",
+    "success": false
+  },
+  {
+    "question": "Is insulin required for type 2 diabetes management?",
+    "error": "janus:py_call/4: Unknown procedure: requires_insulin/1",
+    "success": false
+  },
+  {
+    "question": "Does the patient have a family history of diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: family_history/1",
+    "success": false
+  },
+  {
+    "question": "Is diabetes more likely if parents have the disease?",
+    "error": "janus:py_call/4: Unknown procedure: more_likely_if_parents_have/1",
+    "success": false
+  },
+  {
+    "question": "Should family history be considered in diabetes risk assessment?",
+    "error": "janus:py_call/4: Unknown procedure: risk_factor/2",
+    "success": false
+  },
+  {
+    "question": "A patient has no symptoms but strong family history of diabetes. What is the risk implication?",
+    "error": "janus:py_call/4: Unknown procedure: assess_diabetes_risk/3",
+    "success": false
+  },
+  {
+    "question": "Does genetic predisposition alone justify preventive screening?",
+    "error": "janus:py_call/4: Unknown procedure: justifies_preventive_screening/1",
+    "success": false
+  },
+  {
+    "question": "Does the patient follow a healthy diet?",
+    "error": "janus:py_call/4: Unknown procedure: follows_healthy_diet/1",
+    "success": false
+  },
+  {
+    "question": "Is physical inactivity a risk factor for diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: risk_factor/2",
+    "success": false
+  },
+  {
+    "question": "The patient has poor diet and low exercise levels. How does this affect diabetes risk?",
+    "query": "true",
+    "result": "{'truth': True}",
+    "answer": "A poor diet (high-calorie, refined carbohydrates and saturated fats) combined with low physical activity promotes weight gain\u2014especially visceral adiposity\u2014and increases insulin resistance. Persistent insulin resistance stresses pancreatic \u03b2-cells, leading to impaired glucose tolerance and progressive hyperglycemia, substantially raising the risk of developing type 2 diabetes and related cardiometabolic complications.",
+    "time": 11.989407333079726,
+    "success": true
+  },
+  {
+    "question": "A sedentary lifestyle combined with high sugar intake increases which metabolic risks?",
+    "error": "janus:py_call/4: Unknown procedure: increases_risk/1",
+    "success": false
+  },
+  {
+    "question": "Does regular exercise reduce the risk of type 2 diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: reduces_risk/2",
+    "success": false
+  },
+  {
+    "question": "Is the patient at risk of diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: at_risk/2",
+    "success": false
+  },
+  {
+    "question": "Does obesity increase the risk of diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: increases_risk/2",
+    "success": false
+  },
+  {
+    "question": "A patient has obesity and family history of diabetes. What is the risk level?",
+    "error": "janus:py_call/4: Unknown procedure: risk_level/2",
+    "success": false
+  },
+  {
+    "question": "Even without symptoms, can obesity alone justify diabetes screening?",
+    "error": "janus:py_call/4: Unknown procedure: screening_justified/2",
+    "success": false
+  },
+  {
+    "question": "A patient has normal glucose but strong metabolic risk factors. Should preventive measures be considered?",
+    "error": "janus:py_call/4: Unknown procedure: consider_preventive_measures/2",
+    "success": false
+  },
+  {
+    "question": "Does the patient feel tired frequently?",
+    "error": "janus:py_call/4: Unknown procedure: feels_tired/1",
+    "success": false
+  },
+  {
+    "question": "Is blurred vision associated with uncontrolled diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: associated_with/2",
+    "success": false
+  },
+  {
+    "question": "Patient experiences fatigue after meals. Could this indicate glucose imbalance?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Intermittent blurred vision and thirst occur without abnormal lab results. What should be investigated?",
+    "error": "janus:py_call/4: Unknown procedure: investigate/1",
+    "success": false
+  },
+  {
+    "question": "A patient shows classic diabetic symptoms but normal HbA1c. How should this contradiction be interpreted?",
+    "error": "janus:py_call/4: Unknown procedure: interpret_contradiction/3",
+    "success": false
+  },
+  {
+    "question": "Can diabetes be diagnosed without lab tests?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose_without_lab/1",
+    "success": false
+  },
+  {
+    "question": "Are symptoms alone sufficient for diabetes diagnosis?",
+    "error": "janus:py_call/4: Unknown procedure: sufficient/2",
+    "success": false
+  },
+  {
+    "question": "A patient has both elevated HbA1c and fasting glucose. Does this confirm diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "If one diagnostic test is positive and another is borderline, how is diabetes classification handled?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "A patient has inconsistent lab results over time. Can diabetes still be diagnosed?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Does diet affect blood glucose levels?",
+    "error": "janus:py_call/4: Unknown procedure: affects/2",
+    "success": false
+  },
+  {
+    "question": "Can reducing sugar intake improve diabetes control?",
+    "error": "janus:py_call/4: Unknown procedure: improves/2",
+    "success": false
+  },
+  {
+    "question": "How does sleep quality influence diabetes risk?",
+    "error": "janus:py_call/4: Unknown procedure: influence/2",
+    "success": false
+  },
+  {
+    "question": "A patient has poor sleep, high stress, and sedentary lifestyle. What is the metabolic implication?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Can lifestyle modification reverse prediabetes without medication?",
+    "error": "janus:py_call/4: Unknown procedure: reverses_prediabetes/2",
+    "success": false
+  },
+  {
+    "question": "A patient has normal fasting glucose but elevated HbA1c over time. Can diabetes still be diagnosed?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "If symptoms strongly suggest diabetes but laboratory values are borderline, how should the case be classified?",
+    "error": "janus:py_call/4: Unknown procedure: classify_case/4",
+    "success": false
+  },
+  {
+    "question": "A patient has HbA1c of 6.4% and fasting glucose of 125 mg/dL. Is this prediabetes or diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Repeated glucose measurements fluctuate between normal and diabetic ranges. How should this be interpreted?",
+    "error": "janus:py_call/4: Unknown procedure: interpret_fluctuating_glucose/1",
+    "success": false
+  },
+  {
+    "question": "Can a single abnormal HbA1c value be sufficient for diagnosis if symptoms are absent?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "A patient has obesity, sedentary lifestyle, and family history but normal labs. What is the long-term risk?",
+    "error": "janus:py_call/4: Unknown procedure: long_term_risk/1",
+    "success": false
+  },
+  {
+    "question": "Does combining multiple risk factors significantly increase diabetes probability?",
+    "error": "janus:py_call/4: Unknown procedure: increases_diabetes_probability/1",
+    "success": false
+  },
+  {
+    "question": "A patient with no symptoms but multiple metabolic risk factors should undergo what type of screening?",
+    "error": "janus:py_call/4: Unknown procedure: screening/1",
+    "success": false
+  },
+  {
+    "question": "Can early intervention prevent progression from prediabetes to diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: prevents_progression/3",
+    "success": false
+  },
+  {
+    "question": "Is metabolic syndrome a precursor to diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: precursor/2",
+    "success": false
+  },
+  {
+    "question": "A patient reports blurred vision after meals. Could this be glucose-related?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Symptoms are present but laboratory tests are inconsistent. What should be prioritized?",
+    "error": "janus:py_call/4: Unknown procedure: prioritize/1",
+    "success": false
+  },
+  {
+    "question": "A patient reports classical diabetic symptoms but denies polyuria. Does this weaken diagnosis?",
+    "error": "janus:py_call/4: Unknown procedure: diagnose/1",
+    "success": false
+  },
+  {
+    "question": "Are fatigue and thirst sufficient indicators of diabetes?",
+    "error": "janus:py_call/4: Unknown procedure: sufficient_indicators/2",
+    "success": false
+  },
+  {
+    "question": "A patient has intermittent symptoms without lab confirmation. How should follow-up be structured?",
+    "error": "janus:py_call/4: Unknown procedure: follow_up/3",
+    "success": false
+  },
+  {
+    "question": "How does long-term high sugar intake affect insulin resistance?",
+    "query": "write('Long-term high sugar intake contributes to insulin resistance by promoting weight gain, ectopic fat accumulation, chronic inflammation, and impaired insulin signaling.')",
+    "result": "{'truth': True}",
+    "answer": "Chronic excessive sugar intake increases caloric load and promotes weight gain with preferential accumulation of visceral and ectopic fat (hepatic and intramuscular), causing lipotoxicity and low\u2011grade chronic inflammation. These processes disrupt insulin receptor signaling and glucose uptake in target tissues, leading to reduced insulin sensitivity and systemic insulin resistance.",
+    "time": 11.993177958996966,
+    "success": true
+  },
+  {
+    "question": "A patient has poor diet, no exercise, and high stress levels. What metabolic outcomes are expected?",
+    "error": "janus:py_call/4: Unknown procedure: metabolic_outcome/1",
+    "success": false
+  },
+  {
+    "question": "Does improving sleep quality reduce diabetes risk?",
+    "error": "janus:py_call/4: Unknown procedure: reduces_risk/2",
+    "success": false
+  },
+  {
+    "question": "Can combined lifestyle changes reverse early metabolic dysfunction?",
+    "error": "janus:py_call/4: Unknown procedure: reverses_with/2",
+    "success": false
+  },
+  {
+    "question": "A patient improves diet but remains sedentary. What is the net effect on diabetes risk?",
+    "error": "janus:py_call/4: Unknown procedure: diabetes_risk_change/3",
+    "success": false
+  },
+  {
+    "question": "Is diabetes a chronic disease?",
+    "error": "janus:py_call/4: Unknown procedure: chronic_disease/1",
+    "success": false
+  },
+  {
+    "question": "Can diabetes develop without symptoms initially?",
+    "query": "true",
+    "result": "{'truth': True}",
+    "answer": "Yes \u2014 diabetes, especially type 2, often has an insidious onset and can be asymptomatic for months to years while hyperglycemia and related metabolic abnormalities are present. Because complications (microvascular and macrovascular) can develop before symptoms, screening with fasting glucose, HbA1c, or oral glucose tolerance testing is recommended for patients with risk factors.",
+    "time": 12.632267624954693,
+    "success": true
+  },
+  {
+    "question": "A patient has fluctuating HbA1c over multiple tests. Is diagnosis stable?",
+    "error": "janus:py_call/4: Unknown procedure: stable_diagnosis/1",
+    "success": false
+  },
+  {
+    "question": "Can conflicting clinical and laboratory evidence delay diagnosis?",
+    "error": "janus:py_call/4: Unknown procedure: delays_diagnosis/1",
+    "success": false
+  },
+  {
+    "question": "In ambiguous cases with partial evidence, how should diabetes classification be decided?",
+    "query": "true",
+    "result": "{'truth': True}",
+    "answer": "Integrate clinical features (age, BMI, ketosis), laboratory data (glucose, HbA1c), autoimmune markers (GAD65/IA\u20112) and C\u2011peptide to determine the most likely diabetes subtype and guide immediate therapy. If uncertainty persists, assign a provisional diagnosis, treat based on current metabolic needs (for example, insulin for ketosis or severe hyperglycemia), and plan repeat testing and longitudinal reassessment to refine classification.",
+    "time": 9.816621250007302,
+    "success": true
+  }
+]

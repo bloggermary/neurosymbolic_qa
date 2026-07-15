@@ -1,11 +1,8 @@
 
-from input_modalities.evaluation.tests.test_modality_detection import run as run_modality
-from input_modalities.evaluation.tests.test_query_generation import run as run_query
-from input_modalities.evaluation.tests.test_pipeline import run as run_pipeline
-from input_modalities.evaluation.tests.test_followups import run as run_followups
-from input_modalities.evaluation.tests.test_complexity_and_metrics import run as run_metrics
-
-
+from tests.test_modality_detection import run as run_modality
+from tests.test_query_generation import run as run_query
+from tests.test_pipeline import run as run_pipeline
+from tests.test_followups import run as run_followups
 
 
 def main():
@@ -27,8 +24,6 @@ def main():
     run_followups()
 
     print("\n[5] Extended metrics")
-
-    run_metrics()
 
     print("\nALL EVALUATIONS COMPLETED")
 

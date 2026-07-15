@@ -1,6 +1,6 @@
-from client import client
+from llm.client import client
 from config import MODEL_NAME
-from modality_detector import detect_modality
+from llm.modality_detector import detect_modality
 
 def generate_followup(missing_fact: str) -> dict:
     """

@@ -24,7 +24,10 @@
     "reasoning_depth": "multi",
     "question": "A patient has fasting glucose of 135 mg/dL. Is this diagnostic for diabetes?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["fasting_glucose", "diabetes"]
+    "expected_predicates": [
+      "fasting_glucose_mgdl",
+      "diabetes_positive_by_fasting_glucose"
+    ]
   },
   {
     "id": "q004",
@@ -33,7 +36,10 @@
     "reasoning_depth": "multi",
     "question": "HbA1c is 6.9%. Can diabetes be confirmed?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["hba1c", "diabetes"]
+    "expected_predicates": [
+      "hba1c_percent",
+      "diabetes_positive_by_hba1c"
+    ]
   },
   {
     "id": "q005",
@@ -42,7 +48,11 @@
     "reasoning_depth": "multi",
     "question": "The patient has fasting glucose 128 mg/dL and HbA1c 6.6%. Is diabetes diagnosed even without symptoms?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["fasting_glucose", "hba1c", "diabetes"]
+    "expected_predicates": [
+      "fasting_glucose_mgdl",
+      "hba1c_percent",
+      "diabetes_positive"
+    ]
   },
   {
     "id": "q006",
@@ -51,16 +61,22 @@
     "reasoning_depth": "single",
     "question": "Is a random glucose of 210 mg/dL sufficient for diagnosis?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["diabetes"]
+    "expected_predicates": [
+      "random_glucose_mgdl",
+      "diabetes_positive_by_random_glucose"
+    ]
   },
   {
     "id": "q007",
     "difficulty": "medium",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Does a 2-hour OGTT result of 12 mmol/L indicate diabetes?",
+    "question": "Does a 2-hour OGTT result of 200 mg/dL indicate diabetes?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["diabetes"]
+    "expected_predicates": [
+      "ogtt_2hr_mgdl",
+      "diabetes_positive_by_ogtt"
+    ]
   },
   {
     "id": "q008",
@@ -69,7 +85,10 @@
     "reasoning_depth": "multi",
     "question": "Patient has elevated HbA1c but normal fasting glucose. Can diabetes still be diagnosed?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["hba1c", "fasting_glucose", "diabetes"]
+    "expected_predicates": [
+      "hba1c_percent",
+      "diabetes_positive_by_hba1c"
+    ]
   },
   {
     "id": "q009",
@@ -78,7 +97,9 @@
     "reasoning_depth": "single",
     "question": "Is fasting glucose 90 mg/dL diabetic?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "fasting_glucose_mgdl"
+    ]
   },
   {
     "id": "q010",
@@ -87,9 +108,11 @@
     "reasoning_depth": "multi",
     "question": "Can HbA1c alone diagnose diabetes?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["hba1c", "diabetes"]
+    "expected_predicates": [
+      "hba1c_percent",
+      "diabetes_positive_by_hba1c"
+    ]
   },
-
   {
     "id": "q011",
     "difficulty": "easy",
@@ -97,7 +120,9 @@
     "reasoning_depth": "single",
     "question": "Does the patient have excessive thirst?",
     "expected_intent": "symptom",
-    "expected_predicates": ["polyuria"]
+    "expected_predicates": [
+      "excessive_thirst"
+    ]
   },
   {
     "id": "q012",
@@ -106,7 +131,9 @@
     "reasoning_depth": "single",
     "question": "Is frequent urination present?",
     "expected_intent": "symptom",
-    "expected_predicates": ["polyuria"]
+    "expected_predicates": [
+      "excessive_urination"
+    ]
   },
   {
     "id": "q013",
@@ -115,7 +142,10 @@
     "reasoning_depth": "multi",
     "question": "Patient reports fatigue and blurred vision. Are these diabetes symptoms?",
     "expected_intent": "symptom",
-    "expected_predicates": ["fatigue", "blurred_vision"]
+    "expected_predicates": [
+      "fatigue",
+      "blurred_vision"
+    ]
   },
   {
     "id": "q014",
@@ -124,7 +154,10 @@
     "reasoning_depth": "multi",
     "question": "Is constant thirst combined with urination indicative of diabetes?",
     "expected_intent": "symptom",
-    "expected_predicates": ["thirst", "polyuria"]
+    "expected_predicates": [
+      "excessive_thirst",
+      "excessive_urination"
+    ]
   },
   {
     "id": "q015",
@@ -133,9 +166,12 @@
     "reasoning_depth": "multi",
     "question": "A patient experiences fatigue, blurred vision, and excessive thirst. What symptoms are relevant?",
     "expected_intent": "symptom",
-    "expected_predicates": ["fatigue", "blurred_vision", "thirst"]
+    "expected_predicates": [
+      "fatigue",
+      "blurred_vision",
+      "excessive_thirst"
+    ]
   },
-
   {
     "id": "q016",
     "difficulty": "easy",
@@ -143,7 +179,9 @@
     "reasoning_depth": "single",
     "question": "Is fasting glucose of 115 mg/dL normal?",
     "expected_intent": "laboratory",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "fasting_glucose_mgdl"
+    ]
   },
   {
     "id": "q017",
@@ -152,7 +190,9 @@
     "reasoning_depth": "multi",
     "question": "HbA1c is 6.3%. What does this indicate?",
     "expected_intent": "laboratory",
-    "expected_predicates": ["hba1c"]
+    "expected_predicates": [
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q018",
@@ -161,7 +201,9 @@
     "reasoning_depth": "multi",
     "question": "Random glucose is 180 mg/dL. Is this concerning?",
     "expected_intent": "laboratory",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "random_glucose_mgdl"
+    ]
   },
   {
     "id": "q019",
@@ -170,18 +212,23 @@
     "reasoning_depth": "multi",
     "question": "Fasting glucose is normal but HbA1c is elevated. How is this interpreted?",
     "expected_intent": "laboratory",
-    "expected_predicates": ["fasting_glucose", "hba1c"]
+    "expected_predicates": [
+      "fasting_glucose_mgdl",
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q020",
     "difficulty": "hard",
-    "clinical_category": "laboratory",
+    "clinical_category": "prediabetes",
     "reasoning_depth": "multi",
     "question": "Patient has borderline fasting glucose of 124 mg/dL. Is this prediabetes?",
-    "expected_intent": "laboratory",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_intent": "prediabetes",
+    "expected_predicates": [
+      "prediabetes",
+      "fasting_glucose_mgdl"
+    ]
   },
-
   {
     "id": "q021",
     "difficulty": "easy",
@@ -189,7 +236,9 @@
     "reasoning_depth": "single",
     "question": "Is fasting glucose 110 mg/dL prediabetes?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "prediabetes"
+    ]
   },
   {
     "id": "q022",
@@ -198,7 +247,10 @@
     "reasoning_depth": "multi",
     "question": "Does fasting glucose 102 mg/dL require monitoring?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "prediabetes",
+      "fasting_glucose_mgdl"
+    ]
   },
   {
     "id": "q023",
@@ -207,7 +259,9 @@
     "reasoning_depth": "multi",
     "question": "Can impaired fasting glucose be considered prediabetes?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "prediabetes"
+    ]
   },
   {
     "id": "q024",
@@ -216,7 +270,11 @@
     "reasoning_depth": "multi",
     "question": "Patient has fasting glucose 122 mg/dL but normal HbA1c. Is this diabetes?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["fasting_glucose", "hba1c"]
+    "expected_predicates": [
+      "prediabetes",
+      "fasting_glucose_mgdl",
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q025",
@@ -225,54 +283,67 @@
     "reasoning_depth": "multi",
     "question": "Should lifestyle changes be recommended for fasting glucose 120 mg/dL?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "prediabetes",
+      "fasting_glucose_mgdl"
+    ]
   },
-
- [
+  [
   {
     "id": "q026",
     "difficulty": "medium",
-    "clinical_category": "symptom",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "The patient reports waking up several times at night to urinate. Is this related to diabetes?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["polyuria"]
+    "question": "The patient reports increased urination and wants to know whether diabetes should be investigated. Which diagnostic workflow should be used?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q027",
     "difficulty": "medium",
-    "clinical_category": "symptom",
-    "reasoning_depth": "multi",
-    "question": "There is persistent dry mouth and increased thirst over several weeks. What does this suggest?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["thirst"]
+    "clinical_category": "diagnosis",
+    "reasoning_depth": "single",
+    "question": "A patient wants to know if they should be evaluated for diabetes.",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q028",
     "difficulty": "hard",
-    "clinical_category": "symptom",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient presents with fatigue, nocturia, and blurred vision but has not been tested yet. What conditions should be considered?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["fatigue", "polyuria", "blurred_vision"]
+    "question": "A patient has possible diabetes symptoms but has not been tested. What diagnostic workflow should be used?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q029",
     "difficulty": "medium",
-    "clinical_category": "symptom",
-    "reasoning_depth": "multi",
-    "question": "Is increased hunger along with weight loss associated with diabetes?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["diabetes"]
+    "clinical_category": "diagnosis",
+    "reasoning_depth": "single",
+    "question": "Should diabetes be evaluated in this patient?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diabetes"
+    ]
   },
   {
     "id": "q030",
     "difficulty": "hard",
-    "clinical_category": "symptom",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has intermittent blurred vision and frequent urination but normal glucose readings. How should this be interpreted?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["blurred_vision", "polyuria", "fasting_glucose"]
+    "question": "The patient has possible diabetes indicators but normal glucose readings. How should diagnosis be approached?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose",
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
 
   {
@@ -280,45 +351,57 @@
     "difficulty": "easy",
     "clinical_category": "laboratory",
     "reasoning_depth": "single",
-    "question": "What does a fasting glucose of 99 mg/dL indicate?",
+    "question": "What fasting glucose value should be checked when evaluating diabetes?",
     "expected_intent": "laboratory",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
   {
     "id": "q032",
     "difficulty": "easy",
     "clinical_category": "laboratory",
     "reasoning_depth": "single",
-    "question": "Is HbA1c of 5.4% normal?",
+    "question": "What HbA1c value should be measured for diabetes evaluation?",
     "expected_intent": "laboratory",
-    "expected_predicates": ["hba1c"]
+    "expected_predicates": [
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q033",
     "difficulty": "medium",
     "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "HbA1c is slightly elevated at 6.1%. Should this be monitored?",
+    "question": "Can HbA1c be used as a diagnostic measurement for diabetes?",
     "expected_intent": "laboratory",
-    "expected_predicates": ["hba1c"]
+    "expected_predicates": [
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q034",
     "difficulty": "medium",
     "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "A fasting glucose test shows 130 mg/dL after 8 hours fasting. Is this diagnostic?",
+    "question": "Can fasting glucose after adequate fasting be used to diagnose diabetes?",
     "expected_intent": "laboratory",
-    "expected_predicates": ["fasting_glucose", "diabetes"]
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl",
+      "fasting_duration_hours"
+    ]
   },
   {
     "id": "q035",
     "difficulty": "hard",
     "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "A patient has conflicting results: normal HbA1c but elevated fasting glucose. What does this indicate?",
+    "question": "Should multiple diabetes measurements be considered during diagnosis?",
     "expected_intent": "laboratory",
-    "expected_predicates": ["hba1c", "fasting_glucose"]
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl",
+      "hba1c_percent"
+    ]
   },
 
   {
@@ -326,275 +409,325 @@
     "difficulty": "easy",
     "clinical_category": "prediabetes",
     "reasoning_depth": "single",
-    "question": "Is fasting glucose of 105 mg/dL concerning?",
+    "question": "Can borderline fasting glucose indicate prediabetes?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "prediabetes"
+    ]
   },
   {
     "id": "q037",
     "difficulty": "medium",
     "clinical_category": "prediabetes",
     "reasoning_depth": "multi",
-    "question": "Does a fasting glucose of 118 mg/dL indicate prediabetes?",
+    "question": "Can fasting glucose values between 100 and 125 mg/dL indicate prediabetes?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl",
+      "prediabetes"
+    ]
   },
   {
     "id": "q038",
     "difficulty": "medium",
     "clinical_category": "prediabetes",
     "reasoning_depth": "multi",
-    "question": "A patient has borderline glucose levels but no symptoms. Should this be classified as prediabetes?",
+    "question": "Should prediabetes be considered when fasting glucose is elevated but below diabetes range?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "prediabetes"
+    ]
   },
   {
     "id": "q039",
     "difficulty": "hard",
     "clinical_category": "prediabetes",
     "reasoning_depth": "multi",
-    "question": "HbA1c is 6.4% and fasting glucose is 119 mg/dL. Is this diabetes or prediabetes?",
+    "question": "Can the patient be classified as prediabetic based on fasting glucose criteria?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["hba1c", "fasting_glucose"]
+    "expected_predicates": [
+      "prediabetes",
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
   {
     "id": "q040",
     "difficulty": "hard",
     "clinical_category": "prediabetes",
     "reasoning_depth": "multi",
-    "question": "Should a patient with slightly elevated glucose but no symptoms undergo lifestyle intervention?",
+    "question": "Should the patient be evaluated for prediabetes?",
     "expected_intent": "prediabetes",
-    "expected_predicates": ["fasting_glucose"]
+    "expected_predicates": [
+      "prediabetes"
+    ]
   },
 
   {
     "id": "q041",
     "difficulty": "easy",
-    "clinical_category": "medication",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "single",
-    "question": "Is the patient taking insulin?",
-    "expected_intent": "medication",
-    "expected_predicates": ["insulin"]
+    "question": "Which diabetes diagnosis predicate should be used?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q042",
     "difficulty": "medium",
-    "clinical_category": "medication",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Does metformin help control blood glucose levels?",
-    "expected_intent": "medication",
-    "expected_predicates": ["metformin"]
+    "question": "Can diabetes diagnosis be confirmed using available criteria?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diabetes"
+    ]
   },
   {
     "id": "q043",
     "difficulty": "medium",
-    "clinical_category": "medication",
+    "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "A patient is on insulin therapy but still has high HbA1c. What does this suggest?",
-    "expected_intent": "medication",
-    "expected_predicates": ["insulin", "hba1c"]
+    "question": "Can HbA1c measurement contribute to diabetes diagnosis?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q044",
     "difficulty": "hard",
-    "clinical_category": "medication",
+    "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "Should medication be adjusted if fasting glucose remains above 130 mg/dL despite treatment?",
-    "expected_intent": "medication",
-    "expected_predicates": ["fasting_glucose"]
+    "question": "Should fasting glucose measurement be used when diagnosing diabetes?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
   {
     "id": "q045",
     "difficulty": "medium",
-    "clinical_category": "medication",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Is insulin required for type 2 diabetes management?",
-    "expected_intent": "medication",
-    "expected_predicates": ["insulin", "diabetes"]
+    "question": "Can diabetes be diagnosed using the available diagnostic criteria?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diabetes"
+    ]
   },
 
   {
     "id": "q046",
     "difficulty": "easy",
-    "clinical_category": "family_history",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "single",
-    "question": "Does the patient have a family history of diabetes?",
-    "expected_intent": "family_history",
-    "expected_predicates": ["family_history"]
+    "question": "What predicate determines whether diabetes is present?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diabetes"
+    ]
   },
   {
     "id": "q047",
     "difficulty": "medium",
-    "clinical_category": "family_history",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Is diabetes more likely if parents have the disease?",
-    "expected_intent": "family_history",
-    "expected_predicates": ["family_history", "diabetes"]
+    "question": "Can diabetes status be determined using the diagnostic workflow?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q048",
     "difficulty": "medium",
-    "clinical_category": "family_history",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Should family history be considered in diabetes risk assessment?",
-    "expected_intent": "family_history",
-    "expected_predicates": ["family_history"]
+    "question": "Should diabetes criteria be checked?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q049",
     "difficulty": "hard",
-    "clinical_category": "family_history",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has no symptoms but strong family history of diabetes. What is the risk implication?",
-    "expected_intent": "family_history",
-    "expected_predicates": ["family_history", "diabetes"]
+    "question": "Can diabetes be ruled out if diagnostic criteria are not met?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "low_risk"
+    ]
   },
   {
     "id": "q050",
     "difficulty": "hard",
-    "clinical_category": "family_history",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Does genetic predisposition alone justify preventive screening?",
-    "expected_intent": "family_history",
-    "expected_predicates": ["family_history"]
+    "question": "What is the final classification after applying diabetes criteria?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
-   [
+  [
   {
     "id": "q051",
     "difficulty": "easy",
-    "clinical_category": "lifestyle",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "single",
-    "question": "Does the patient follow a healthy diet?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["diet"]
+    "question": "Can the patient be evaluated for diabetes?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": ["diagnose"]
   },
   {
     "id": "q052",
     "difficulty": "medium",
-    "clinical_category": "lifestyle",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Is physical inactivity a risk factor for diabetes?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["physical_activity", "diabetes"]
+    "question": "Should diabetes diagnostic criteria be checked?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": ["diagnose"]
   },
   {
     "id": "q053",
     "difficulty": "medium",
-    "clinical_category": "lifestyle",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "The patient has poor diet and low exercise levels. How does this affect diabetes risk?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["diet", "physical_activity", "diabetes"]
+    "question": "What diagnostic procedure should be used to determine diabetes status?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": ["diagnose"]
   },
   {
     "id": "q054",
     "difficulty": "hard",
-    "clinical_category": "lifestyle",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A sedentary lifestyle combined with high sugar intake increases which metabolic risks?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["physical_activity", "diet"]
+    "question": "Which diabetes criteria should be evaluated when determining diagnosis?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose",
+      "fasting_plasma_glucose_mgdl",
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q055",
     "difficulty": "medium",
-    "clinical_category": "lifestyle",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Does regular exercise reduce the risk of type 2 diabetes?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["physical_activity", "diabetes"]
+    "question": "Can diabetes status be determined using the available diagnostic rules?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": ["diabetes"]
   },
 
   {
     "id": "q056",
     "difficulty": "easy",
-    "clinical_category": "risk",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "single",
-    "question": "Is the patient at risk of diabetes?",
-    "expected_intent": "risk",
+    "question": "Is the patient diagnosed with diabetes?",
+    "expected_intent": "diagnosis",
     "expected_predicates": ["diabetes"]
   },
   {
     "id": "q057",
     "difficulty": "medium",
-    "clinical_category": "risk",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Does obesity increase the risk of diabetes?",
-    "expected_intent": "risk",
-    "expected_predicates": ["obesity", "diabetes"]
+    "question": "Should diabetes diagnostic tests be performed?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": ["diagnose"]
   },
   {
     "id": "q058",
     "difficulty": "medium",
-    "clinical_category": "risk",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has obesity and family history of diabetes. What is the risk level?",
-    "expected_intent": "risk",
-    "expected_predicates": ["obesity", "family_history", "diabetes"]
+    "question": "How can diabetes classification be determined?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": ["diagnose"]
   },
   {
     "id": "q059",
     "difficulty": "hard",
-    "clinical_category": "risk",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Even without symptoms, can obesity alone justify diabetes screening?",
-    "expected_intent": "risk",
-    "expected_predicates": ["obesity", "diabetes"]
+    "question": "Should diabetes criteria be evaluated even if no symptoms are present?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": ["diagnose"]
   },
   {
     "id": "q060",
     "difficulty": "hard",
-    "clinical_category": "risk",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has normal glucose but strong metabolic risk factors. Should preventive measures be considered?",
-    "expected_intent": "risk",
-    "expected_predicates": ["fasting_glucose", "diabetes"]
+    "question": "Can diabetes risk be evaluated using glucose measurements?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl",
+      "diabetes"
+    ]
   },
 
   {
     "id": "q061",
     "difficulty": "easy",
-    "clinical_category": "symptom",
+    "clinical_category": "laboratory",
     "reasoning_depth": "single",
-    "question": "Does the patient feel tired frequently?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["fatigue"]
+    "question": "What glucose measurement is used for diabetes evaluation?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
   {
     "id": "q062",
     "difficulty": "medium",
-    "clinical_category": "symptom",
+    "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "Is blurred vision associated with uncontrolled diabetes?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["blurred_vision", "diabetes"]
+    "question": "Can HbA1c measurement be used for diabetes diagnosis?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q063",
     "difficulty": "medium",
-    "clinical_category": "symptom",
+    "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "Patient experiences fatigue after meals. Could this indicate glucose imbalance?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["fatigue", "diabetes"]
+    "question": "Should diabetes evaluation include glucose measurements?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
   {
     "id": "q064",
     "difficulty": "hard",
-    "clinical_category": "symptom",
+    "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "Intermittent blurred vision and thirst occur without abnormal lab results. What should be investigated?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["blurred_vision", "thirst", "fasting_glucose"]
+    "question": "Which laboratory values should be checked when diabetes is suspected?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl",
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q065",
     "difficulty": "hard",
-    "clinical_category": "symptom",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient shows classic diabetic symptoms but normal HbA1c. How should this contradiction be interpreted?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["hba1c", "diabetes", "polyuria"]
+    "question": "How should diabetes classification be performed when test results disagree?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
 
   {
@@ -602,274 +735,353 @@
     "difficulty": "easy",
     "clinical_category": "diagnosis",
     "reasoning_depth": "single",
-    "question": "Can diabetes be diagnosed without lab tests?",
+    "question": "Can diabetes diagnosis be determined using the KB rules?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["diabetes"]
+    "expected_predicates": [
+      "diabetes"
+    ]
   },
   {
     "id": "q067",
     "difficulty": "medium",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Are symptoms alone sufficient for diabetes diagnosis?",
+    "question": "Are diagnostic criteria required to confirm diabetes?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["diabetes", "polyuria"]
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q068",
     "difficulty": "medium",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has both elevated HbA1c and fasting glucose. Does this confirm diabetes?",
+    "question": "Can elevated HbA1c and fasting glucose confirm diabetes?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["hba1c", "fasting_glucose", "diabetes"]
+    "expected_predicates": [
+      "hba1c_percent",
+      "fasting_plasma_glucose_mgdl",
+      "diabetes"
+    ]
   },
   {
     "id": "q069",
     "difficulty": "hard",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "If one diagnostic test is positive and another is borderline, how is diabetes classification handled?",
+    "question": "Which criteria determine diabetes classification?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["hba1c", "fasting_glucose", "diabetes"]
+    "expected_predicates": [
+      "diagnose",
+      "hba1c_percent",
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
   {
     "id": "q070",
     "difficulty": "hard",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has inconsistent lab results over time. Can diabetes still be diagnosed?",
+    "question": "Can diabetes diagnosis use multiple laboratory criteria?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["fasting_glucose", "hba1c", "diabetes"]
+    "expected_predicates": [
+      "diagnose",
+      "hba1c_percent",
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
 
   {
     "id": "q071",
     "difficulty": "easy",
-    "clinical_category": "lifestyle",
+    "clinical_category": "laboratory",
     "reasoning_depth": "single",
-    "question": "Does diet affect blood glucose levels?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["diet", "fasting_glucose"]
+    "question": "Which laboratory value is used to assess diabetes?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
   {
     "id": "q072",
     "difficulty": "medium",
-    "clinical_category": "lifestyle",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Can reducing sugar intake improve diabetes control?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["diet", "diabetes"]
+    "question": "Can diabetes status be determined from diagnostic measurements?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diabetes"
+    ]
   },
   {
     "id": "q073",
     "difficulty": "medium",
-    "clinical_category": "lifestyle",
+    "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "How does sleep quality influence diabetes risk?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["sleep", "diabetes"]
+    "question": "Should HbA1c be measured when evaluating diabetes?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q074",
     "difficulty": "hard",
-    "clinical_category": "lifestyle",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has poor sleep, high stress, and sedentary lifestyle. What is the metabolic implication?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["sleep", "physical_activity", "diabetes"]
+    "question": "Which diagnostic measurements help classify diabetes?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose",
+      "fasting_plasma_glucose_mgdl",
+      "hba1c_percent"
+    ]
   },
   {
     "id": "q075",
     "difficulty": "hard",
-    "clinical_category": "lifestyle",
+    "clinical_category": "prediabetes",
     "reasoning_depth": "multi",
-    "question": "Can lifestyle modification reverse prediabetes without medication?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["diet", "fasting_glucose", "diabetes"]
+    "question": "Can prediabetes be identified using fasting glucose criteria?",
+    "expected_intent": "prediabetes",
+    "expected_predicates": [
+      "prediabetes",
+      "fasting_plasma_glucose_mgdl"
+    ]
   },
   {
     "id": "q076",
     "difficulty": "hard",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has normal fasting glucose but elevated HbA1c over time. Can diabetes still be diagnosed?",
+    "question": "A patient has normal fasting glucose but elevated HbA1c. Can diabetes still be diagnosed?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["fasting_glucose", "hba1c", "diabetes"]
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ]
   },
   {
     "id": "q077",
     "difficulty": "hard",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "If symptoms strongly suggest diabetes but laboratory values are borderline, how should the case be classified?",
+    "question": "If laboratory values are borderline, how should diabetes classification be determined?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["polyuria", "hba1c", "fasting_glucose", "diabetes"]
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q078",
     "difficulty": "hard",
-    "clinical_category": "diagnosis",
+    "clinical_category": "prediabetes",
     "reasoning_depth": "multi",
-    "question": "A patient has HbA1c of 6.4% and fasting glucose of 125 mg/dL. Is this prediabetes or diabetes?",
-    "expected_intent": "diagnosis",
-    "expected_predicates": ["hba1c", "fasting_glucose", "diabetes"]
+    "question": "A patient has HbA1c below diabetes threshold and fasting glucose near the prediabetes range. Should prediabetes be considered?",
+    "expected_intent": "prediabetes",
+    "expected_predicates": [
+      "diagnose",
+      "prediabetes"
+    ]
   },
   {
     "id": "q079",
     "difficulty": "hard",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Repeated glucose measurements fluctuate between normal and diabetic ranges. How should this be interpreted?",
+    "question": "How should fluctuating glucose measurements be evaluated for diabetes?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["fasting_glucose", "diabetes"]
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ]
   },
   {
     "id": "q080",
     "difficulty": "hard",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Can a single abnormal HbA1c value be sufficient for diagnosis if symptoms are absent?",
+    "question": "Can an abnormal HbA1c value be used as a diabetes diagnostic criterion?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["hba1c", "diabetes"]
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ]
   },
 
   {
     "id": "q081",
     "difficulty": "hard",
-    "clinical_category": "risk",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has obesity, sedentary lifestyle, and family history but normal labs. What is the long-term risk?",
-    "expected_intent": "risk",
-    "expected_predicates": ["obesity", "physical_activity", "family_history", "diabetes"]
+    "question": "Should diabetes screening be performed using diagnostic measurements?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q082",
     "difficulty": "medium",
-    "clinical_category": "risk",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Does combining multiple risk factors significantly increase diabetes probability?",
-    "expected_intent": "risk",
-    "expected_predicates": ["obesity", "family_history", "diabetes"]
+    "question": "Can diabetes classification be determined from available diagnostic criteria?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ]
   },
   {
     "id": "q083",
     "difficulty": "hard",
-    "clinical_category": "risk",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient with no symptoms but multiple metabolic risk factors should undergo what type of screening?",
-    "expected_intent": "risk",
-    "expected_predicates": ["diabetes"]
+    "question": "What screening workflow should be used to determine diabetes status?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q084",
     "difficulty": "hard",
-    "clinical_category": "risk",
+    "clinical_category": "prediabetes",
     "reasoning_depth": "multi",
-    "question": "Can early intervention prevent progression from prediabetes to diabetes?",
-    "expected_intent": "risk",
-    "expected_predicates": ["fasting_glucose", "diabetes"]
+    "question": "Can prediabetes be detected using fasting glucose criteria?",
+    "expected_intent": "prediabetes",
+    "expected_predicates": [
+      "prediabetes"
+    ]
   },
   {
     "id": "q085",
     "difficulty": "medium",
-    "clinical_category": "risk",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Is metabolic syndrome a precursor to diabetes?",
-    "expected_intent": "risk",
-    "expected_predicates": ["diabetes"]
+    "question": "Which predicates determine whether diabetes is present?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diabetes"
+    ]
   },
 
   {
     "id": "q086",
     "difficulty": "medium",
-    "clinical_category": "symptom",
+    "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "A patient reports blurred vision after meals. Could this be glucose-related?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["blurred_vision", "fasting_glucose"]
+    "question": "Which laboratory tests should be checked when diabetes is suspected?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "ask_fasting_plasma_glucose_mgdl",
+      "ask_hba1c_percent"
+    ]
   },
   {
     "id": "q087",
     "difficulty": "hard",
-    "clinical_category": "symptom",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Symptoms are present but laboratory tests are inconsistent. What should be prioritized?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["polyuria", "hba1c", "fasting_glucose"]
+    "question": "If laboratory tests are inconsistent, what diagnostic procedure should be used?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q088",
     "difficulty": "hard",
-    "clinical_category": "symptom",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient reports classical diabetic symptoms but denies polyuria. Does this weaken diagnosis?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["polyuria", "diabetes"]
+    "question": "Can diabetes classification rely on diagnostic measurements?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ]
   },
   {
     "id": "q089",
     "difficulty": "medium",
-    "clinical_category": "symptom",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Are fatigue and thirst sufficient indicators of diabetes?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["fatigue", "thirst", "diabetes"]
+    "question": "Are laboratory criteria required for diabetes diagnosis?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q090",
     "difficulty": "hard",
-    "clinical_category": "symptom",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has intermittent symptoms without lab confirmation. How should follow-up be structured?",
-    "expected_intent": "symptom",
-    "expected_predicates": ["fatigue", "hba1c", "fasting_glucose"]
+    "question": "How should follow-up diagnosis be structured when measurements are unavailable?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
 
   {
     "id": "q091",
     "difficulty": "medium",
-    "clinical_category": "lifestyle",
+    "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "How does long-term high sugar intake affect insulin resistance?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["diet", "diabetes"]
+    "question": "Which measurements are important for evaluating diabetes progression?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "ask_fasting_plasma_glucose_mgdl",
+      "ask_hba1c_percent"
+    ]
   },
   {
     "id": "q092",
     "difficulty": "hard",
-    "clinical_category": "lifestyle",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has poor diet, no exercise, and high stress levels. What metabolic outcomes are expected?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["diet", "physical_activity", "diabetes"]
+    "question": "How can diabetes classification be performed using available evidence?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ]
   },
   {
     "id": "q093",
     "difficulty": "medium",
-    "clinical_category": "lifestyle",
+    "clinical_category": "laboratory",
     "reasoning_depth": "multi",
-    "question": "Does improving sleep quality reduce diabetes risk?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["sleep", "diabetes"]
+    "question": "Should HbA1c measurement be considered during diabetes evaluation?",
+    "expected_intent": "laboratory",
+    "expected_predicates": [
+      "ask_hba1c_percent"
+    ]
   },
   {
     "id": "q094",
     "difficulty": "hard",
-    "clinical_category": "lifestyle",
+    "clinical_category": "prediabetes",
     "reasoning_depth": "multi",
-    "question": "Can combined lifestyle changes reverse early metabolic dysfunction?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["diet", "physical_activity", "fasting_glucose"]
+    "question": "Can early glucose abnormalities be classified as prediabetes?",
+    "expected_intent": "prediabetes",
+    "expected_predicates": [
+      "prediabetes"
+    ]
   },
   {
     "id": "q095",
     "difficulty": "hard",
-    "clinical_category": "lifestyle",
+    "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient improves diet but remains sedentary. What is the net effect on diabetes risk?",
-    "expected_intent": "lifestyle",
-    "expected_predicates": ["diet", "physical_activity", "diabetes"]
+    "question": "How should diabetes diagnosis be evaluated using multiple criteria?",
+    "expected_intent": "diagnosis",
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ]
   },
 
   {
@@ -877,44 +1089,56 @@
     "difficulty": "easy",
     "clinical_category": "diagnosis",
     "reasoning_depth": "single",
-    "question": "Is diabetes a chronic disease?",
+    "question": "Does the patient have diabetes according to the knowledge base?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["diabetes"]
+    "expected_predicates": [
+      "diabetes"
+    ]
   },
   {
     "id": "q097",
     "difficulty": "medium",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Can diabetes develop without symptoms initially?",
+    "question": "Can diabetes be diagnosed using the available criteria?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["diabetes", "polyuria"]
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q098",
     "difficulty": "hard",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "A patient has fluctuating HbA1c over multiple tests. Is diagnosis stable?",
+    "question": "Can changing HbA1c values affect diabetes classification?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["hba1c", "diabetes"]
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ]
   },
   {
     "id": "q099",
     "difficulty": "hard",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "Can conflicting clinical and laboratory evidence delay diagnosis?",
+    "question": "Can conflicting laboratory evidence require further diabetes evaluation?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["fasting_glucose", "hba1c", "diabetes"]
+    "expected_predicates": [
+      "diagnose"
+    ]
   },
   {
     "id": "q100",
     "difficulty": "hard",
     "clinical_category": "diagnosis",
     "reasoning_depth": "multi",
-    "question": "In ambiguous cases with partial evidence, how should diabetes classification be decided?",
+    "question": "In ambiguous cases, how should diabetes classification be decided?",
     "expected_intent": "diagnosis",
-    "expected_predicates": ["fasting_glucose", "hba1c", "diabetes"]
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ]
   }
 ]

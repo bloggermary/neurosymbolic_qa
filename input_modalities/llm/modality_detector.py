@@ -5,38 +5,81 @@ from config import MODEL_NAME
 ALLOWED_MODALITIES = {
     "boolean",
     "numeric",
-    "multiple_choice",
     "string",
     "categorical",
+    "range",
+    "duration"
 }
 
 
 def detect_modality(question: str) -> str:
     prompt = f"""
-Classify the expected user input type for the following follow-up question.
+    Classify the expected user input type.
 
-Return exactly one of these labels:
-- boolean
-- numeric
-- multiple_choice
-- string
-- categorical
+    Return ONLY ONE label:
 
-Definitions:
-- boolean: the user should answer yes or no.
-- numeric: the user should enter a number, measurement, duration, age, score, percentage, lab value, or quantity.
-- multiple_choice: the user should choose one option from an explicit list of options.
-- categorical: the user should enter one category from a fixed conceptual set, such as low/medium/high, mild/moderate/severe, positive/negative, male/female/other.
-- string: the user should enter free text.
+    boolean
+    numeric
+    string
+    categorical
+    range
+    duration
+    scale
 
-Important:
-- Classify only the expected input type.
-- Do not classify based on the medical topic.
-- Return only one label.
+    Rules:
 
-Question:
-{question}
-"""
+    boolean:
+    - Yes/no answers.
+    - True/false questions.
+
+    numeric:
+    - A single number value.
+    - Measurements, lab values, age, weight, glucose, percentage.
+    Examples:
+    "Enter glucose level"
+    "How old is the patient?"
+
+    duration:
+    - Time length with a unit.
+    - Years, months, weeks, days, hours.
+    Examples:
+    "How long have symptoms lasted?"
+    "Duration of fasting?"
+
+    range:
+    - A lower and upper numeric boundary.
+    - User enters a value between two numbers.
+    Examples:
+    "Choose a value from 1 to 10"
+    "Enter glucose range"
+
+    scale:
+    - Rating questions.
+    - Usually 1-10 or mild-to-severe scores.
+    Examples:
+    "Rate pain from 1 to 10"
+    "Severity score"
+
+    categorical:
+    - Choose one option from predefined categories.
+    Examples:
+    "Low/medium/high"
+    "Male/female"
+    "Type 1/type 2"
+
+    string:
+    - Free text explanation.
+    Examples:
+    "Describe symptoms"
+
+    Important:
+    - Ignore medical meaning.
+    - Only classify the answer format.
+    - Return only the label.
+
+    Question:
+    {question}
+    """
 
     response = client.chat.completions.create(
         model=MODEL_NAME,

@@ -1,17 +1,16 @@
-from modalities.validation import ModalityValidator
-
 class BooleanHandler:
     """
-    Handles boolean (Yes/No) outputs from Prolog.
+    Creates a yes/no input request
+    for the Streamlit interface.
     """
 
-    def handle(self, question: str) -> bool:
-        while True:
-            answer = input(f"{question} [yes/no]: ")
+    def handle(self, question: str):
 
-            result = ModalityValidator.normalize_yes_no(answer)
-
-            if result is not None:
-                return result
-
-            print("Please answer with yes/no")
+        return {
+            "type": "boolean",
+            "question": question,
+            "options": [
+                "yes",
+                "no"
+            ]
+        }

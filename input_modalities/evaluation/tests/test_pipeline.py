@@ -1,63 +1,140 @@
 import time
+import os
 import janus_swi as janus
 
-from input_modalities.llm.query_generator import generate_query
-from input_modalities.llm.response_translator import translate_result
-from input_modalities.evaluation.metrics import load_json, save_json
+from llm.query_generator import generate_query
+from llm.response_translator import translate_result
+from evaluation.metrics import load_json, save_json
 
 
 KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
 
 
+def load_kb():
+    """
+    Load the Prolog knowledge base before executing queries.
+    """
+    if not os.path.exists(KB_PATH):
+        raise FileNotFoundError(
+            f"Knowledge base not found: {KB_PATH}"
+        )
+
+    janus.consult(KB_PATH)
+
+
 def run_reasoning(query):
+    """
+    Execute generated Prolog query.
+    """
     query = query.rstrip(".").strip()
+
     return janus.query_once(query)
 
 
 def run():
-    data = load_json("evaluation/test_questions.json")
+
+    print("Loading Prolog KB...")
+    load_kb()
+    print("KB loaded successfully.")
+
+    data = load_json(
+        "evaluation/tests/json_entries/test_questions.json"
+    )
 
     results = []
-    success = 0
+
+    success_count = 0
 
     for item in data:
-        q = item["question"]
+
+        question = item["question"]
 
         try:
-            t0 = time.perf_counter()
 
-            query = generate_query(q, "")
+            start = time.perf_counter()
 
+            # Generate Prolog query
+            query = generate_query(
+                question,
+                ""
+            )
+
+            # Execute query
             result = run_reasoning(query)
 
-            answer = translate_result(q, query, result)
+            # Translate answer
+            answer = translate_result(
+                question,
+                query,
+                result
+            )
 
-            t1 = time.perf_counter()
+            end = time.perf_counter()
 
-            results.append({
-                "question": q,
-                "query": query,
-                "result": str(result),
-                "answer": answer,
-                "time": t1 - t0,
-                "success": True
-            })
 
-            success += 1
+            results.append(
+                {
+                    "id": item["id"],
+                    "question": question,
+                    "expected_predicates": item.get(
+                        "expected_predicates",
+                        []
+                    ),
+                    "query": query,
+                    "result": str(result),
+                    "answer": answer,
+                    "time": end - start,
+                    "success": True
+                }
+            )
+
+
+            success_count += 1
+
 
         except Exception as e:
-            results.append({
-                "question": q,
-                "error": str(e),
-                "success": False
-            })
 
-    save_json("evaluation/results/pipeline_results.json", results)
-    save_json("evaluation/results/pipeline_success.json", {
-        "success_rate": success / len(data)
-    })
+            results.append(
+                {
+                    "id": item["id"],
+                    "question": question,
+                    "error": str(e),
+                    "success": False
+                }
+            )
 
-    print("Pipeline success rate:", success / len(data))
+
+    total = len(data)
+
+    success_rate = (
+        success_count / total
+        if total > 0
+        else 0
+    )
+
+
+    # Detailed results for analysis
+    save_json(
+        "evaluation/results/pipeline_results.json",
+        results
+    )
+
+
+    # Better metric format for plotting
+    save_json(
+        "evaluation/results/pipeline_success.json",
+        {
+            "total_questions": total,
+            "successful": success_count,
+            "failed": total - success_count,
+            "success_rate": success_rate
+        }
+    )
+
+
+    print(
+        f"Pipeline success rate: {success_rate:.2%}"
+    )
 
 
 if __name__ == "__main__":

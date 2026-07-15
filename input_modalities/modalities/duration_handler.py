@@ -1,17 +1,16 @@
-from modalities.validation import ModalityValidator
-
-
 class DurationHandler:
     """
-    Handles duration input, e.g. how many days a symptom has lasted.
+    Creates a duration input request.
     """
 
-    def handle(self, question: str, unit: str = "days") -> int:
-        while True:
-            answer = input(f"{question} Enter duration in {unit}: ")
+    def handle(
+        self,
+        question: str,
+        unit: str = "days"
+    ):
 
-            result = ModalityValidator.parse_int_duration(answer)
-
-            if result is not None:
-                return result
-            print("Please enter a positive whole number.")
+        return {
+            "type": "duration",
+            "question": question,
+            "unit": unit
+        }

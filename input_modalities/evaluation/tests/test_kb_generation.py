@@ -11,7 +11,7 @@ from input_modalities.llm.kb_generator import generate_prolog_kb
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 KB_PATH = BASE_DIR / "prolog" / "generated_kb" / "diabetes_diagnosis.pl"
-TEST_PATH = BASE_DIR / "evaluation" / "test_kb_generation.json"
+TEST_PATH = BASE_DIR / "evaluation" / "tests" / "json_entries" / "test_kb_generation.json"
 
 
 def load_json(path):

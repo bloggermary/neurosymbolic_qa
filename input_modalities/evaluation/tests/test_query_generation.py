@@ -1,10 +1,10 @@
 import time
-from input_modalities.llm.query_generator import generate_query
-from input_modalities.evaluation.metrics import load_json, save_json, compute_accuracy
+from llm.query_generator import generate_query
+from evaluation.metrics import load_json, save_json, compute_accuracy
 
 
 def run():
-    data = load_json("tests/test_questions.json")
+    data = load_json("evaluation/tests/json_entries/test_questions.json")
 
     results = []
     correct = 0
@@ -49,8 +49,8 @@ def run():
 
     acc = compute_accuracy(correct, len(data))
 
-    save_json("tests/results/query_results.json", results)
-    save_json("tests/results/query_accuracy.json", {"accuracy": acc})
+    save_json("evaluation/results/query_results.json", results)
+    save_json("evaluation/results/query_accuracy.json", {"accuracy": acc})
 
     print("Query Accuracy:", acc)
 

@@ -1,17 +1,18 @@
-from modalities.validation import ModalityValidator
-
 class RangeHandler:
     """
-    Handles numeric user input that must fall within a specific range.
+    Creates a numeric range input request.
     """
 
-    def handle(self, question: str, start: int, stop: int) -> int:
-        while True:
-            answer = input(f"{question} Enter a value between {start} and {stop}: ")
+    def handle(
+        self,
+        question: str,
+        start: int,
+        stop: int
+    ):
 
-            result = ModalityValidator.parse_int_range(answer, start, stop)
-
-            if result is not None:
-                return result
-
-            print(f"Please enter an integer value between {start} and {stop}.")
+        return {
+            "type": "range",
+            "question": question,
+            "min": start,
+            "max": stop
+        }
