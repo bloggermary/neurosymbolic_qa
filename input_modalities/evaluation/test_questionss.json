@@ -1,0 +1,144 @@
+[
+{
+    "id": "multiple_symptoms",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Which of the following symptoms does the patient have?",
+            "modality": "multiple_category",
+            "categories": ["excessive thirst", "frequent urination", "unexplained weight loss", "fatigue", "blurred vision", "none"]
+        }
+    ],
+    "expected_keywords": ["ask_category_multiple", "symptom", "excessive thirst", "frequent urination", "unexplained weight loss", "fatigue", "blurred vision"]       
+},
+{
+    "id": "multiple_medications",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Which of the following medications is the patient currently taking?",
+            "modality": "multiple_category",
+            "categories": ["Metformin", "Insulin", "Aspirin", "none"]
+        }
+    ],
+    "expected_keywords": ["ask_category_multiple", "medication", "Metformin", "Insulin", "Aspirin"]       
+},
+{
+    "id": "multiple_allergies",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Which of the following allergies does the patient have?",
+            "modality": "multiple_category",
+            "categories": ["Penicillin", "Sulfa drugs", "Aspirin", "none"]
+        }
+    ],
+    "expected_keywords": ["ask_category_multiple", "allergy", "Penicillin", "Sulfa drugs", "Aspirin"]       
+},
+{
+    "id": "symptom_sequence",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Describe the patient's symptoms over time.",
+            "modality": "multi_structured_input",
+            "mode": "sequence"
+        }
+    ],
+    "expected_keywords": ["ask_sequence", "symptom"]
+},
+{
+    "id": "glucose_sequence",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Describe the patient's glucose levels over time.",
+            "modality": "multi_structured_input",
+            "mode": "sequence"
+        }
+    ],
+    "expected_keywords": ["ask_sequence", "glucose"]
+},
+{
+    "id": "symptom_ranking",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Rank the following symptoms based on their severity for the patient",
+            "modality": "multi_structured_input",
+            "mode": "ranking"
+        }
+    ],
+    "expected_keywords": ["ask_ranking", "symptom"]
+},
+{
+    "id": "medication_grouping",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Group the patient's medications by time of day.",
+            "modality": "multi_structured_input",
+            "mode": "grouping",
+            "groups": ["Morning", "Afternoon", "Evening"]
+        }
+    ],
+    "expected_keywords": ["ask_grouping", "medication", "morning", "afternoon", "evening"]
+},  
+{
+    "id": "medicaltest_grouping",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Group the patient's medical tests.",
+            "modality": "multi_structured_input",
+            "mode": "grouping",
+            "groups": ["Already Done", "Scheduled", "Not yet discussed"]
+        }
+    ],
+    "expected_keywords": ["ask_grouping", "medicaltest", "Already Done", "Scheduled", "Not yet discussed"]            
+},
+{
+    "id": "medication_entity",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Describe the patient's medication",
+            "modality": "multi_attribute_entity",
+            "entity": "medication",
+            "fields": ["Medication Name", "Dosage", "Frequency"]
+        }
+    ],
+    "expected_keywords": ["ask_entity", "medication", "Medication Name", "Dosage", "Frequency"]
+},      
+{
+    "id": "allergy_entity",
+    "question": "Is the patient diabetic?",
+    "expected_followups": [
+        {
+            "question": "Describe the patient's allergy",
+            "modality": "multi_attribute_entity",
+            "entity": "allergy",
+            "fields": ["Allergy Name", "Severity", "Reaction"]
+        }
+    ],
+    "expected_keywords": ["ask_entity", "allergy", "Allergy Name", "Severity", "Reaction"]
+},
+{
+    "id": "medication_assesment_workflow",
+    "question": "I want to know if my diabetes medication is appropriate for me.",
+    "expected_followups": [
+        {
+            "question": "Describe your medication",
+            "modality": "multi_attribute_entity",
+            "entity": "medication",
+            "fields": ["Medication Name", "Dosage", "Frequency"]
+        },
+        {
+            "question": "Rank the side effects of your medication from most to least severe.",
+            "modality": "multi_structured_input",
+            "mode": "ranking"
+        }
+    ],
+    "expected_keywords": ["ask_multi_attribute_entity", "medication", "Medication Name", "Dosage", "Frequency", "ask_multi_structured_input", "ranking", "side effects"]
+}
+]
