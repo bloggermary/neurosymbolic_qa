@@ -1,341 +1,138 @@
 :- use_module(library(janus)).
 
-
-% =========================================================
-% Python interaction wrappers
-% =========================================================
-
 ask_boolean(Question) :-
-    py_call(prolog_bridge:ask_boolean(Question), true).
-
+    py_call(main:ask_boolean(Question), true).
 
 ask_numeric(Question, Value) :-
-    py_call(prolog_bridge:ask_numeric(Question), Value).
-
+    py_call(main:ask_numeric(Question), Value).
 
 ask_string(Question, Value) :-
-    py_call(prolog_bridge:ask_string(Question), Value).
-
+    py_call(main:ask_string(Question), Value).
 
 ask_category(Question, Categories, Answer) :-
-    py_call(prolog_bridge:ask_category(Question, Categories), Answer).
-
+    py_call(main:ask_category(Question, Categories), Answer).
 
 ask_range(Question, Start, Stop, Value) :-
-    py_call(prolog_bridge:ask_range(Question, Start, Stop), Value).
-
+    py_call(main:ask_range(Question, Start, Stop), Value).
 
 ask_duration(Question, Value) :-
-    py_call(prolog_bridge:ask_duration(Question), Value).
+    py_call(main:ask_duration(Question), Value).    
 
+% Collect all inputs (all diagnostic criteria and common symptoms).
+collect_all_answers(answers(RandomMgdl, FastingMgdl, FastingHours, OGTT2hMmol, Hba1cPercent, Hba1cMmol, Thirst, Polyuria, Fatigue, Blurred)) :-
+    ask_numeric('Random (casual) plasma glucose in mg/dL? (enter -1 if unknown)', RandomMgdl),
+    ask_numeric('Fasting plasma glucose in mg/dL? (enter -1 if unknown)', FastingMgdl),
+    ask_numeric('Hours fasting before the fasting glucose measurement? (enter 0 if not fasting)', FastingHours),
+    ask_numeric('2-hour OGTT plasma glucose in mmol/L? (enter -1 if unknown)', OGTT2hMmol),
+    ask_numeric('HbA1c in percent? (enter -1 if unknown)', Hba1cPercent),
+    ask_numeric('HbA1c in mmol/mol? (enter -1 if unknown)', Hba1cMmol),
+    ( ask_boolean('Excessive thirst? ') -> Thirst = true ; Thirst = false ),
+    ( ask_boolean('Excessive urination (polyuria)? (yes/no)') -> Polyuria = true ; Polyuria = false ),
+    ( ask_boolean('Fatigue?') -> Fatigue = true ; Fatigue = false ),
+    ( ask_boolean('Blurred vision? ') -> Blurred = true ; Blurred = false ).
 
-ask_scale(Question, Value) :-
-    py_call(prolog_bridge:ask_scale(Question), Value).
+% Criterion predicates that can be asked individually.
 
+% Random (casual) plasma glucose >= 200 mg/dL.
+random_plasma_glucose_high :-
+    ask_numeric('Random (casual) plasma glucose in mg/dL?', V),
+    V >= 200.
 
+% Fasting plasma glucose diagnostic for diabetes: >=126 mg/dL after 8-12 hours fasting.
+fasting_plasma_glucose_diabetes :-
+    ask_numeric('Fasting plasma glucose in mg/dL?', F),
+    ask_numeric('Hours fasting before the fasting glucose measurement?', H),
+    H >= 8, H =< 12,
+    F >= 126.
 
-% =========================================================
-% Scale example
-% =========================================================
+% Fasting plasma glucose in the prediabetes range: 100-125 mg/dL after 8-12 hours fasting.
+fasting_plasma_glucose_prediabetes :-
+    ask_numeric('Fasting plasma glucose in mg/dL?', F),
+    ask_numeric('Hours fasting before the fasting glucose measurement?', H),
+    H >= 8, H =< 12,
+    F >= 100, F =< 125.
 
-symptom_scale(Value) :-
-    ask_scale(
-        'Rate symptom severity from 1-10:',
-        Value
-    ).
+% 2-hour OGTT plasma glucose >= 11.1 mmol/L.
+ogtt_2h_high :-
+    ask_numeric('2-hour OGTT plasma glucose in mmol/L?', V),
+    V >= 11.1.
 
+% HbA1c diagnostic for diabetes: >= 6.5% (or >= 48 mmol/mol).
+hba1c_high_percent :-
+    ask_numeric('HbA1c in percent (%)?', P),
+    P >= 6.5.
 
+hba1c_high_mmolmol :-
+    ask_numeric('HbA1c in mmol/mol?', M),
+    M >= 48.
 
-% =========================================================
-% Raw clinical measurements
-% =========================================================
+% Symptom predicates (succeed if the symptom is present).
+symptom_thirst :-
+    ask_boolean('Excessive thirst?').
 
-ask_random_plasma_glucose_mgdl(Value) :-
-    ask_numeric(
-        'Random plasma glucose (mg/dL):',
-        Value
-    ).
+symptom_polyuria :-
+    ask_boolean('Excessive urination (polyuria)?').
 
+symptom_fatigue :-
+    ask_boolean('Fatigue?').
 
-ask_fasting_plasma_glucose_mgdl(Value) :-
-    ask_numeric(
-        'Fasting plasma glucose (mg/dL):',
-        Value
-    ).
+symptom_blurred_vision :-
+    ask_boolean('Blurred vision?').
 
+% Evaluate diabetes from collected answers.
+diabetes_from_answers(answers(RandomMgdl, FastingMgdl, FastingHours, OGTT2hMmol, Hba1cPercent, Hba1cMmol, _Thirst, _Polyuria, _Fatigue, _Blurred)) :-
+    ( number(RandomMgdl), RandomMgdl >= 200 )
+    ;
+    ( number(FastingMgdl), number(FastingHours), FastingHours >= 8, FastingHours =< 12, FastingMgdl >= 126 )
+    ;
+    ( number(OGTT2hMmol), OGTT2hMmol >= 11.1 )
+    ;
+    ( number(Hba1cPercent), Hba1cPercent >= 6.5 )
+    ;
+    ( number(Hba1cMmol), Hba1cMmol >= 48 ).
 
-ask_fasting_duration_hours(Value) :-
-    ask_numeric(
-        'Fasting duration in hours:',
-        Value
-    ).
+% Evaluate prediabetes from collected answers (fasting 100-125 mg/dL after 8-12 h),
+% only true if diabetes criteria are not met.
+prediabetes_from_answers(Answers) :-
+    Answers = answers(_RandomMgdl, FastingMgdl, FastingHours, _OGTT2hMmol, _Hba1cPercent, _Hba1cMmol, _Thirst, _Polyuria, _Fatigue, _Blurred),
+    number(FastingMgdl), number(FastingHours),
+    FastingHours >= 8, FastingHours =< 12,
+    FastingMgdl >= 100, FastingMgdl =< 125,
+    \+ diabetes_from_answers(Answers).
 
+% Symptom combination commonly seen in diabetes: thirst and polyuria together.
+diabetes_symptoms_from_answers(answers(_RandomMgdl, _FastingMgdl, _FastingHours, _OGTT2hMmol, _Hba1cPercent, _Hba1cMmol, Thirst, Polyuria, _Fatigue, _Blurred)) :-
+    Thirst == true,
+    Polyuria == true.
 
-ask_ogtt_2h_plasma_glucose_mgdl(Value) :-
-    ask_numeric(
-        '2-hour OGTT plasma glucose (mg/dL):',
-        Value
-    ).
+% Public predicates that evaluate diagnosis by asking the necessary inputs.
 
+% diagnose/1 asks all available diagnostic criteria (and symptoms) before producing a result.
+% Result is one of: diabetes, prediabetes, low_risk.
+diagnose(diabetes) :-
+    collect_all_answers(Answers),
+    diabetes_from_answers(Answers), !.
 
-ask_hba1c_percent(Value) :-
-    ask_numeric(
-        'HbA1c percentage:',
-        Value
-    ).
+diagnose(prediabetes) :-
+    collect_all_answers(Answers),
+    prediabetes_from_answers(Answers), !.
 
+diagnose(low_risk) :-
+    collect_all_answers(Answers),
+    \+ diabetes_from_answers(Answers),
+    \+ prediabetes_from_answers(Answers).
 
-
-% =========================================================
-% Benchmark-compatible measurement predicates
-% =========================================================
-
-fasting_glucose_mgdl(Value) :-
-    ask_fasting_plasma_glucose_mgdl(Value).
-
-
-hba1c_percent(Value) :-
-    ask_hba1c_percent(Value).
-
-
-random_glucose_mgdl(Value) :-
-    ask_random_plasma_glucose_mgdl(Value).
-
-
-ogtt_2hr_mgdl(Value) :-
-    ask_ogtt_2h_plasma_glucose_mgdl(Value).
-
-
-
-% =========================================================
-% Diagnostic criteria predicates
-% =========================================================
-
-diabetes_positive_by_fasting_glucose :-
-    fasting_glucose_mgdl(Value),
-    number(Value),
-    Value >= 126.
-
-
-
-diabetes_positive_by_hba1c :-
-    hba1c_percent(Value),
-    number(Value),
-    Value >= 6.5.
-
-
-
-diabetes_positive_by_random_glucose :-
-    random_glucose_mgdl(Value),
-    number(Value),
-    Value >= 200.
-
-
-
-diabetes_positive_by_ogtt :-
-    ogtt_2hr_mgdl(Value),
-    number(Value),
-    Value >= 200.
-
-
-
-% =========================================================
-% Overall classification predicates
-% =========================================================
-
-diabetes_positive :-
-    (
-        diabetes_positive_by_fasting_glucose
-        ;
-        diabetes_positive_by_hba1c
-        ;
-        diabetes_positive_by_random_glucose
-        ;
-        diabetes_positive_by_ogtt
-    ).
-
-
-
+% Specific predicates for user queries about overall conditions.
+% If someone queries diabetes directly, these will ask the full set of inputs as required.
 diabetes :-
-    diabetes_positive.
-
-
+    collect_all_answers(Answers),
+    diabetes_from_answers(Answers).
 
 prediabetes :-
-    fasting_glucose_mgdl(Value),
-    number(Value),
-    Value >= 100,
-    Value < 126.
-
-
+    collect_all_answers(Answers),
+    prediabetes_from_answers(Answers).
 
 low_risk :-
-    fasting_glucose_mgdl(Value),
-    number(Value),
-    Value < 100.
-
-
-
-% =========================================================
-% Main diagnostic workflow
-% =========================================================
-
-diagnose(Result) :-
-
-    ask_random_plasma_glucose_mgdl(Random),
-
-    (
-        number(Random),
-        Random >= 200
-    ->
-        Result =
-            diabetes(random_glucose_mgdl(Random))
-
-    ;
-
-        ask_fasting_plasma_glucose_mgdl(Fasting),
-
-        (
-            number(Fasting),
-            Fasting >=126
-        ->
-            Result =
-                diabetes(fasting_glucose_mgdl(Fasting))
-
-        ;
-
-            ask_hba1c_percent(HbA1c),
-
-            (
-                number(HbA1c),
-                HbA1c >=6.5
-            ->
-                Result =
-                    diabetes(hba1c_percent(HbA1c))
-
-            ;
-
-                ask_ogtt_2h_plasma_glucose_mgdl(OGTT),
-
-                (
-                    number(OGTT),
-                    OGTT >=200
-                ->
-                    Result =
-                        diabetes(ogtt_2hr_mgdl(OGTT))
-
-                ;
-
-                    (
-                        number(Fasting),
-                        Fasting >=100,
-                        Fasting <126
-                    ->
-                        Result =
-                            prediabetes(fasting_glucose_mgdl(Fasting))
-
-                    ;
-                        Result = no_diabetes
-                    )
-                )
-            )
-        )
-    ).
-
-
-
-% =========================================================
-% Symptoms
-% =========================================================
-
-symptom(excessive_thirst, yes) :-
-    ask_boolean(
-        'Does the patient have excessive thirst?'
-    ).
-
-
-symptom(excessive_urination, yes) :-
-    ask_boolean(
-        'Does the patient have excessive urination (polyuria)?'
-    ).
-
-
-symptom(fatigue, yes) :-
-    ask_boolean(
-        'Does the patient have fatigue?'
-    ).
-
-
-symptom(blurred_vision, yes) :-
-    ask_boolean(
-        'Does the patient have blurred vision?'
-    ).
-
-
-
-% =========================================================
-% Medical history
-% =========================================================
-
-history(obesity) :-
-    ask_boolean(
-        'Does the patient have obesity?'
-    ).
-
-
-history(hypertension) :-
-    ask_boolean(
-        'Does the patient have hypertension?'
-    ).
-
-
-history(cardiovascular_disease) :-
-    ask_boolean(
-        'Does the patient have cardiovascular disease?'
-    ).
-
-
-
-% =========================================================
-% Family history
-% =========================================================
-
-family_history(first_degree, diabetes) :-
-    ask_boolean(
-        'Is there a first-degree relative with diabetes?'
-    ).
-
-
-family_history(second_degree, diabetes) :-
-    ask_boolean(
-        'Is there a second-degree relative with diabetes?'
-    ).
-
-
-
-% =========================================================
-% Medication
-% =========================================================
-
-medication_status(insulin) :-
-    ask_boolean(
-        'Is the patient on insulin therapy?'
-    ).
-
-
-medication_status(oral_antidiabetics) :-
-    ask_boolean(
-        'Is the patient on oral antidiabetic medication?'
-    ).
-
-
-medication_status(corticosteroids) :-
-    ask_boolean(
-        'Is the patient on corticosteroid therapy?'
-    ).
-
-
-medication_status(none) :-
-    ask_boolean(
-        'Is the patient taking no relevant medication?'
-    ).
+    collect_all_answers(Answers),
+    \+ diabetes_from_answers(Answers),
+    \+ prediabetes_from_answers(Answers).
