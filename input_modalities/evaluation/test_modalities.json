@@ -1,0 +1,251 @@
+[
+  {
+    "id": "case_urgent_01",
+    "question": "Assess for urgent neurological warning signs",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "urgent_neurological_warning",
+        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "modality": "boolean",
+        "answer": "yes"
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "urgent_neurological_assessment"
+  },
+  {
+    "id": "case_low_likelihood_01",
+    "question": "Assess for low likelihood of active migraine",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "urgent_neurological_warning",
+        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days per month does the patient typically experience?",
+        "modality": "numeric",
+        "answer": "0"
+      }
+    ],
+    "max_followups": 2,
+    "correct_answer": "low_likelihood_active_migraine"
+  },
+  {
+    "id": "case_chronic_01",
+    "question": "Assess for chronic migraine",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "urgent_neurological_warning",
+        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days per month does the patient typically experience?",
+        "modality": "numeric",
+        "answer": "15"
+      },
+      {
+        "key": "headache_pattern_duration_months",
+        "question": "For how many months has this recurring headache pattern been present?",
+        "modality": "numeric",
+        "answer": "3"
+      },
+      {
+        "key": "typical_headache_intensity",
+        "question": "Typical headache intensity on a 0-10 scale?",
+        "modality": "range",
+        "answer": "5"
+      }
+    ],
+    "max_followups": 4,
+    "correct_answer": "chronic_migraine"
+  },
+  {
+    "id": "case_episodic_01",
+    "question": "Assess for episodic migraine",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "urgent_neurological_warning",
+        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days per month does the patient typically experience?",
+        "modality": "numeric",
+        "answer": "5"
+      },
+      {
+        "key": "typical_headache_intensity",
+        "question": "Typical headache intensity on a 0-10 scale?",
+        "modality": "range",
+        "answer": "6"
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "episodic_migraine"
+  },
+  {
+    "id": "case_possible_migraine_01",
+    "question": "Assess for possible migraine (mild intensity)",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "urgent_neurological_warning",
+        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days per month does the patient typically experience?",
+        "modality": "numeric",
+        "answer": "3"
+      },
+      {
+        "key": "typical_headache_intensity",
+        "question": "Typical headache intensity on a 0-10 scale?",
+        "modality": "range",
+        "answer": "2"
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "possible_migraine"
+  },
+  {
+    "id": "case_unclassified_01",
+    "question": "Assess for unclassified headache pattern (chronic criteria met but intensity insufficient)",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "urgent_neurological_warning",
+        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days per month does the patient typically experience?",
+        "modality": "numeric",
+        "answer": "20"
+      },
+      {
+        "key": "headache_pattern_duration_months",
+        "question": "For how many months has this recurring headache pattern been present?",
+        "modality": "numeric",
+        "answer": "6"
+      },
+      {
+        "key": "typical_headache_intensity",
+        "question": "Typical headache intensity on a 0-10 scale?",
+        "modality": "range",
+        "answer": "3"
+      }
+    ],
+    "max_followups": 4,
+    "correct_answer": "unclassified_headache_pattern"
+  },
+  {
+    "id": "case_chronic_alternate_01",
+    "question": "Assess for chronic migraine (alternative positive path)",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "urgent_neurological_warning",
+        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days per month does the patient typically experience?",
+        "modality": "numeric",
+        "answer": "30"
+      },
+      {
+        "key": "headache_pattern_duration_months",
+        "question": "For how many months has this recurring headache pattern been present?",
+        "modality": "numeric",
+        "answer": "12"
+      },
+      {
+        "key": "typical_headache_intensity",
+        "question": "Typical headache intensity on a 0-10 scale?",
+        "modality": "range",
+        "answer": "7"
+      }
+    ],
+    "max_followups": 4,
+    "correct_answer": "chronic_migraine"
+  },
+  {
+    "id": "case_episodic_alternate_01",
+    "question": "Assess for episodic migraine (boundary values)",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "urgent_neurological_warning",
+        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days per month does the patient typically experience?",
+        "modality": "numeric",
+        "answer": "14"
+      },
+      {
+        "key": "typical_headache_intensity",
+        "question": "Typical headache intensity on a 0-10 scale?",
+        "modality": "range",
+        "answer": "4"
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "episodic_migraine"
+  },
+  {
+    "id": "case_possible_from_chronic_duration_short_01",
+    "question": "Assess for possible migraine when chronic duration not met",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "urgent_neurological_warning",
+        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days per month does the patient typically experience?",
+        "modality": "numeric",
+        "answer": "20"
+      },
+      {
+        "key": "headache_pattern_duration_months",
+        "question": "For how many months has this recurring headache pattern been present?",
+        "modality": "numeric",
+        "answer": "1"
+      },
+      {
+        "key": "typical_headache_intensity",
+        "question": "Typical headache intensity on a 0-10 scale?",
+        "modality": "range",
+        "answer": "3"
+      }
+    ],
+    "max_followups": 4,
+    "correct_answer": "possible_migraine"
+  }
+]
