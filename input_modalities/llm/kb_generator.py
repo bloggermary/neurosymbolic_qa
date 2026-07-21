@@ -83,6 +83,23 @@ Use:
 - ask_category for fixed choices
 - ask_string for free text
 
+QUESTION WORDING - every ask_* question string is shown DIRECTLY to a
+patient in a chat interface, so each one MUST be a complete, natural
+question, never a bare label, noun phrase, or field name:
+    GOOD: ask_boolean('Do you experience excessive thirst?')
+    BAD:  ask_boolean('Thirst?')
+    BAD:  ask_boolean('Excessive thirst')
+    GOOD: ask_numeric('What is your fasting plasma glucose in mg/dL?', Value)
+    BAD:  ask_numeric('Fasting glucose', Value)
+    GOOD: ask_category('What is your current medication status?', [insulin, oral_antidiabetics, none], Answer)
+    BAD:  ask_category('Medication status?', [insulin, oral_antidiabetics, none], Answer)
+    GOOD: ask_range('How many hours did you fast before this blood sample?', 0, 24, Value)
+    BAD:  ask_range('Fasting duration', 0, 24, Value)
+This applies to every single ask_* call in the file, including ones
+for symptoms, history, and lab values - none of them should read like
+a form field label. Phrase each one the way a clinician would actually
+ask the patient.
+
 CRITICAL - ask_boolean/1 HAS NO OUTPUT ARGUMENT:
 ask_boolean(Question) only succeeds (on "yes") or fails (on "no") - it does NOT bind
 a value anywhere. To actually capture the yes/no answer into a variable, you MUST use

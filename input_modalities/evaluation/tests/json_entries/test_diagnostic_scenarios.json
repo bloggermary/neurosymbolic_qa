@@ -1,0 +1,242 @@
+[
+  {
+    "id": "d001",
+    "description": "Diabetes via random plasma glucose >= 200 mg/dL",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 250,
+      "Fasting plasma glucose (mg/dL)?": 85,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d002",
+    "description": "Diabetes via fasting glucose >= 126 mg/dL, properly fasted (8-12h)",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 140,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d003",
+    "description": "Diabetes via 2-hour OGTT >= 200 mg/dL",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 85,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 220,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d004",
+    "description": "Diabetes via HbA1c >= 6.5%",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 85,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 7.0
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d005",
+    "description": "Prediabetes via fasting glucose 100-125 mg/dL, properly fasted",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 115,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "prediabetes"
+  },
+  {
+    "id": "d006",
+    "description": "Low risk - all values normal",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 85,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "low_risk"
+  },
+  {
+    "id": "d007",
+    "description": "Edge case: elevated fasting glucose but fasting duration too short (3h) - should NOT count toward diabetes or prediabetes",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 150,
+      "Hours fasting before sample?": 3,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "low_risk"
+  },
+  {
+    "id": "d008",
+    "description": "Boundary: fasting glucose exactly 126 mg/dL (inclusive threshold) -> diabetes",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 126,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d009",
+    "description": "Boundary: fasting glucose exactly 125 mg/dL -> top of prediabetes range",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 125,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "prediabetes"
+  },
+  {
+    "id": "d010",
+    "description": "Boundary: fasting glucose exactly 100 mg/dL -> bottom of prediabetes range (inclusive)",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 100,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "prediabetes"
+  },
+  {
+    "id": "d011",
+    "description": "Boundary: fasting glucose 99 mg/dL, just below prediabetes range -> low_risk",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 99,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "low_risk"
+  },
+  {
+    "id": "d012",
+    "description": "Boundary: random glucose 199 mg/dL, just below diabetes threshold -> low_risk",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 199,
+      "Fasting plasma glucose (mg/dL)?": 85,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "low_risk"
+  },
+  {
+    "id": "d013",
+    "description": "Boundary: random glucose exactly 200 mg/dL (inclusive threshold) -> diabetes",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 200,
+      "Fasting plasma glucose (mg/dL)?": 85,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d014",
+    "description": "Boundary: HbA1c exactly 6.5% (inclusive threshold) -> diabetes",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 85,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 6.5
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d015",
+    "description": "Boundary: HbA1c 6.4%, just below threshold -> low_risk",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 85,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 6.4
+    },
+    "expected_verdict": "low_risk"
+  },
+  {
+    "id": "d016",
+    "description": "Boundary: fasting duration exactly 8h (lower edge of valid window) with elevated fasting glucose -> diabetes",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 140,
+      "Hours fasting before sample?": 8,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d017",
+    "description": "Boundary: fasting duration exactly 12h (upper edge of valid window) with elevated fasting glucose -> diabetes",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 140,
+      "Hours fasting before sample?": 12,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d018",
+    "description": "Edge case: fasting duration 13h (just outside valid window) with elevated fasting glucose - should NOT count -> low_risk",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 140,
+      "Hours fasting before sample?": 13,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "low_risk"
+  },
+  {
+    "id": "d019",
+    "description": "Multiple criteria met simultaneously (random + HbA1c both elevated) -> still diabetes",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 230,
+      "Fasting plasma glucose (mg/dL)?": 85,
+      "Hours fasting before sample?": 10,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 7.2
+    },
+    "expected_verdict": "diabetes"
+  },
+  {
+    "id": "d020",
+    "description": "Fasting glucose in prediabetes range but improperly fasted (only 5h) - should NOT count toward prediabetes either -> low_risk",
+    "answers": {
+      "Random plasma glucose (mg/dL)?": 90,
+      "Fasting plasma glucose (mg/dL)?": 115,
+      "Hours fasting before sample?": 5,
+      "2-hour OGTT plasma glucose (mg/dL)?": 110,
+      "HbA1c (%)?": 5.2
+    },
+    "expected_verdict": "low_risk"
+  }
+]

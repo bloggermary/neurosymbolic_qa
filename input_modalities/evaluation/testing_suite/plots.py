@@ -351,13 +351,84 @@ def plot_followup_count():
 
 
 # =========================================================
-# 6. OVERVIEW
+# 6. DIAGNOSTIC ACCURACY
+# =========================================================
+
+def plot_diagnostic_accuracy():
+    """
+    The headline number: given realistic patient answers, does the
+    reasoning reach the medically correct diabetes/prediabetes/low_risk
+    verdict? Unlike the other evals, this checks the actual conclusion,
+    not a supporting component.
+    """
+
+    if not os.path.exists(os.path.join(BASE_PATH, "diagnostic_accuracy.json")):
+        return
+
+    data = load("diagnostic_accuracy.json")
+
+    _bar_with_labels(
+        ["Diagnostic accuracy"],
+        [data["accuracy"]],
+        f"Diagnostic Accuracy ({data['total']} patient scenarios)",
+        ylim=(0, 1),
+    )
+
+    save_plot("diagnostic_accuracy.png")
+
+
+def plot_diagnostic_by_category():
+    """
+    Accuracy broken down by expected verdict - reveals whether errors
+    cluster around one specific outcome (e.g. the system is good at
+    spotting diabetes but unreliable at low_risk) rather than being
+    spread evenly.
+    """
+
+    if not os.path.exists(os.path.join(BASE_PATH, "diagnostic_results.json")):
+        return
+
+    data = load("diagnostic_results.json")
+
+    by_verdict = {}
+
+    for item in data:
+        verdict = item["expected_verdict"]
+        by_verdict.setdefault(verdict, []).append(item["correct"])
+
+    labels = sorted(by_verdict.keys())
+    accuracies = [sum(by_verdict[v]) / len(by_verdict[v]) for v in labels]
+    counts = [len(by_verdict[v]) for v in labels]
+
+    plt.figure()
+
+    bars = plt.bar(labels, accuracies)
+
+    plt.ylim(0, 1.15)
+
+    plt.title("Diagnostic Accuracy by Expected Verdict")
+    plt.ylabel("Accuracy")
+
+    for bar, acc, n in zip(bars, accuracies, counts):
+        plt.text(
+            bar.get_x() + bar.get_width() / 2,
+            bar.get_height(),
+            f"{acc:.0%} (n={n})",
+            ha="center",
+            va="bottom",
+        )
+
+    save_plot("diagnostic_by_category.png")
+
+
+# =========================================================
+# 7. OVERVIEW
 # =========================================================
 
 def plot_overview():
     """
     One chart summarizing every eval's headline accuracy, for a
-    quick at-a-glance comparison across all four test suites.
+    quick at-a-glance comparison across all test suites.
     """
 
     bars = []
@@ -375,6 +446,11 @@ def plot_overview():
 
     try:
         bars.append(("Pipeline\nsuccess", load("pipeline_success.json")["success_rate"]))
+    except FileNotFoundError:
+        pass
+
+    try:
+        bars.append(("Diagnostic\naccuracy", load("diagnostic_accuracy.json")["accuracy"]))
     except FileNotFoundError:
         pass
 
