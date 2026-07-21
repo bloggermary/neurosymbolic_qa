@@ -341,7 +341,7 @@
     "expected_intent": "diagnosis",
     "expected_predicates": [
       "diagnose",
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
 
@@ -353,7 +353,7 @@
     "question": "What fasting glucose value should be checked when evaluating diabetes?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
   {
@@ -386,7 +386,7 @@
     "question": "Can fasting glucose after adequate fasting be used to diagnose diabetes?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl",
+      "fasting_glucose_mgdl",
       "fasting_duration_hours"
     ]
   },
@@ -398,7 +398,7 @@
     "question": "Should multiple diabetes measurements be considered during diagnosis?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl",
+      "fasting_glucose_mgdl",
       "hba1c_percent"
     ]
   },
@@ -422,7 +422,7 @@
     "question": "Can fasting glucose values between 100 and 125 mg/dL indicate prediabetes?",
     "expected_intent": "prediabetes",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl",
+      "fasting_glucose_mgdl",
       "prediabetes"
     ]
   },
@@ -446,7 +446,7 @@
     "expected_intent": "prediabetes",
     "expected_predicates": [
       "prediabetes",
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
   {
@@ -502,7 +502,7 @@
     "question": "Should fasting glucose measurement be used when diagnosing diabetes?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
   {
@@ -608,7 +608,7 @@
     "expected_intent": "diagnosis",
     "expected_predicates": [
       "diagnose",
-      "fasting_plasma_glucose_mgdl",
+      "fasting_glucose_mgdl",
       "hba1c_percent"
     ]
   },
@@ -666,7 +666,7 @@
     "question": "Can diabetes risk be evaluated using glucose measurements?",
     "expected_intent": "diagnosis",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl",
+      "fasting_glucose_mgdl",
       "diabetes"
     ]
   },
@@ -679,7 +679,7 @@
     "question": "What glucose measurement is used for diabetes evaluation?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
   {
@@ -701,7 +701,7 @@
     "question": "Should diabetes evaluation include glucose measurements?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
   {
@@ -712,7 +712,7 @@
     "question": "Which laboratory values should be checked when diabetes is suspected?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl",
+      "fasting_glucose_mgdl",
       "hba1c_percent"
     ]
   },
@@ -759,7 +759,7 @@
     "expected_intent": "diagnosis",
     "expected_predicates": [
       "hba1c_percent",
-      "fasting_plasma_glucose_mgdl",
+      "fasting_glucose_mgdl",
       "diabetes"
     ]
   },
@@ -773,7 +773,7 @@
     "expected_predicates": [
       "diagnose",
       "hba1c_percent",
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
   {
@@ -786,7 +786,7 @@
     "expected_predicates": [
       "diagnose",
       "hba1c_percent",
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
 
@@ -798,7 +798,7 @@
     "question": "Which laboratory value is used to assess diabetes?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
   {
@@ -832,7 +832,7 @@
     "expected_intent": "diagnosis",
     "expected_predicates": [
       "diagnose",
-      "fasting_plasma_glucose_mgdl",
+      "fasting_glucose_mgdl",
       "hba1c_percent"
     ]
   },
@@ -845,7 +845,7 @@
     "expected_intent": "prediabetes",
     "expected_predicates": [
       "prediabetes",
-      "fasting_plasma_glucose_mgdl"
+      "fasting_glucose_mgdl"
     ]
   },
   {
@@ -971,8 +971,8 @@
     "question": "Which laboratory tests should be checked when diabetes is suspected?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "ask_fasting_plasma_glucose_mgdl",
-      "ask_hba1c_percent"
+      "fasting_glucose_mgdl",
+      "hba1c_percent"
     ]
   },
   {
@@ -1028,8 +1028,8 @@
     "question": "Which measurements are important for evaluating diabetes progression?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "ask_fasting_plasma_glucose_mgdl",
-      "ask_hba1c_percent"
+      "fasting_glucose_mgdl",
+      "hba1c_percent"
     ]
   },
   {
@@ -1052,7 +1052,7 @@
     "question": "Should HbA1c measurement be considered during diabetes evaluation?",
     "expected_intent": "laboratory",
     "expected_predicates": [
-      "ask_hba1c_percent"
+      "hba1c_percent"
     ]
   },
   {

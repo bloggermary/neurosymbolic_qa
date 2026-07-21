@@ -1,0 +1,1539 @@
+[
+  {
+    "question": "Do you experience excessive thirst?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "thirst_duration"
+    ],
+    "predicted": [
+      "thirst_duration"
+    ],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "thirst_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "Do you urinate more frequently than usual?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "urination_frequency"
+    ],
+    "predicted": [
+      "urination_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "urination_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "Do you feel unusually tired?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "fatigue_level"
+    ],
+    "predicted": [
+      "fatigue_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "fatigue_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "Have you experienced unexplained weight loss?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "weight_loss_amount"
+    ],
+    "predicted": [
+      "weight_loss_amount_numeric"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "weight_loss_amount_numeric",
+        "modality": "numeric"
+      }
+    ]
+  },
+  {
+    "question": "Do you have blurred vision?",
+    "modality": "boolean",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Do you experience dizziness?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "dizziness_duration"
+    ],
+    "predicted": [
+      "dizziness_duration"
+    ],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "dizziness_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "Do you have nausea?",
+    "modality": "boolean",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Have you experienced increased hunger?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "hunger_duration"
+    ],
+    "predicted": [
+      "hunger_duration"
+    ],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "hunger_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "Do you have difficulty concentrating?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "concentration_severity"
+    ],
+    "predicted": [
+      "concentration_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "concentration_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "Have you experienced symptoms recently?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_description"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "How many times do you urinate per day?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "urination_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "urination_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "How many kilograms have you lost recently?",
+    "modality": "numeric",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "weight_loss_duration"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "What is your current blood glucose level?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How many hours do you sleep each night?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "sleep_quality_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "sleep_quality_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "How many symptoms do you currently have?",
+    "modality": "numeric",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_details"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "How old is the patient?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "What is the patient's current weight in kilograms?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How many days per week do you exercise?",
+    "modality": "numeric",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "exercise_type"
+    ],
+    "predicted": [
+      "exercise_type_category"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "exercise_type_category",
+        "modality": "category"
+      }
+    ]
+  },
+  {
+    "question": "What is your blood pressure reading?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How many cups of water do you drink daily?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Please describe your current symptoms.",
+    "modality": "string",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "symptom_duration"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Describe what you feel when your symptoms occur.",
+    "modality": "string",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "What other medical complaints would you like to mention?",
+    "modality": "string",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Explain when your symptoms usually appear.",
+    "modality": "string",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "symptom_frequency"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "What changes have you noticed in your health recently?",
+    "modality": "string",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Which symptom affects you the most?",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_duration"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Choose the type of pain you experience.",
+    "modality": "category",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "pain_duration"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "pain_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "Select your activity level.",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "exercise_days"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Which type of symptom do you have: thirst, fatigue, pain, or nausea?",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "symptom_severity"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Select your usual diet type.",
+    "modality": "category",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Rate your fatigue severity from 1 to 10.",
+    "modality": "range",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "On a scale from 0 to 10, how severe is your pain?",
+    "modality": "range",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "pain_duration"
+    ],
+    "predicted": [
+      "pain_duration"
+    ],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "pain_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "How intense is your thirst from 1 to 5?",
+    "modality": "range",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "thirst_duration"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "thirst_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "Rate your dizziness severity.",
+    "modality": "range",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "dizziness_duration"
+    ],
+    "predicted": [
+      "dizziness_duration"
+    ],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "dizziness_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "How severe are your symptoms overall?",
+    "modality": "range",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "How long have you experienced excessive thirst?",
+    "modality": "duration",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "thirst_frequency"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "How long have you had these symptoms?",
+    "modality": "duration",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "For how many weeks have you felt fatigued?",
+    "modality": "duration",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "fatigue_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "fatigue_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "When did your symptoms begin?",
+    "modality": "duration",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_description"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "How long has the patient had elevated glucose levels?",
+    "modality": "duration",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Do you experience frequent hunger?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "hunger_duration"
+    ],
+    "predicted": [
+      "hunger_duration"
+    ],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "hunger_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "Do you have difficulty sleeping?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "sleep_quality"
+    ],
+    "predicted": [
+      "sleep_quality_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "sleep_quality_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "Do you experience weakness?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "weakness_duration"
+    ],
+    "predicted": [
+      "weakness_duration"
+    ],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "weakness_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "Do you have any skin changes?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "skin_change_description"
+    ],
+    "predicted": [
+      "skin_change_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "skin_change_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Have you experienced nausea recently?",
+    "modality": "boolean",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How many meals do you eat per day?",
+    "modality": "numeric",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "diet_type"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "How many hours per day do you spend physically active?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How many times have you measured your blood sugar?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How many kilograms do you currently weigh?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How many symptoms are you experiencing?",
+    "modality": "numeric",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "main_symptom"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Tell me about your current health condition.",
+    "modality": "string",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Describe your eating habits.",
+    "modality": "string",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "diet_type"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Explain what happens when your symptoms appear.",
+    "modality": "string",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "symptom_frequency"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Describe the pain location.",
+    "modality": "string",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "pain_type"
+    ],
+    "predicted": [
+      "pain_duration"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "pain_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "What changes have you noticed recently?",
+    "modality": "string",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Choose the symptom category that describes your problem.",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_duration"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Select your current activity level.",
+    "modality": "category",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Which type of discomfort do you feel?",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "discomfort_level"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Select the time of day when symptoms are worst.",
+    "modality": "category",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Choose the most affected body area.",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "pain_description"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Rate your overall health from 1 to 10.",
+    "modality": "range",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Rate your level of tiredness.",
+    "modality": "range",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "fatigue_duration"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "How severe is your discomfort?",
+    "modality": "range",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Rate your current energy level.",
+    "modality": "range",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "energy_duration"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "How severe are your symptoms today?",
+    "modality": "range",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "How long have you been experiencing these symptoms?",
+    "modality": "duration",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_description"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "For how many months have you noticed increased thirst?",
+    "modality": "duration",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "When did the fatigue start?",
+    "modality": "duration",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "fatigue_severity"
+    ],
+    "predicted": [
+      "fatigue_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "fatigue_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "How long has the patient experienced frequent urination?",
+    "modality": "duration",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "urination_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "urination_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "How long have you had changes in appetite?",
+    "modality": "duration",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "appetite_change_type"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Do you have problems with concentration?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "concentration_duration"
+    ],
+    "predicted": [
+      "concentration_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "concentration_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "Do you experience cold sweats?",
+    "modality": "boolean",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Have you noticed changes in your vision?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "vision_problem_description"
+    ],
+    "predicted": [
+      "vision_problem_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "vision_problem_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Do you experience headaches?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "headache_severity"
+    ],
+    "predicted": [
+      "headache_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "headache_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "Have you experienced unexplained symptoms?",
+    "modality": "boolean",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_details"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "How many times did the symptom occur this week?",
+    "modality": "numeric",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_type"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "How many hours do you sleep each night?",
+    "modality": "numeric",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "sleep_quality"
+    ],
+    "predicted": [
+      "sleep_quality_range"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "sleep_quality_range",
+        "modality": "range"
+      }
+    ]
+  },
+  {
+    "question": "How many medications do you currently take?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How many times did you measure your glucose level?",
+    "modality": "numeric",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How many kilograms have you gained recently?",
+    "modality": "numeric",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "weight_change_duration"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Which symptom category best describes your condition?",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_severity"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Choose the type of pain you feel.",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "pain_description"
+    ],
+    "predicted": [
+      "pain_duration"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "pain_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "Select your current health status.",
+    "modality": "category",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Select when symptoms usually occur.",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_duration"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Which severity group describes your symptoms?",
+    "modality": "category",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "severity_score"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Describe your symptoms in your own words.",
+    "modality": "string",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Explain how your condition affects your daily life.",
+    "modality": "string",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "impact_level"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "What symptoms have you noticed?",
+    "modality": "string",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "symptom_category"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "Describe your recent health changes.",
+    "modality": "string",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Explain what triggers your symptoms.",
+    "modality": "string",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Rate your current symptom severity from 1 to 10.",
+    "modality": "range",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": true,
+    "expected": [],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Rate how much your symptoms interfere with daily activities.",
+    "modality": "range",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "daily_activity_description"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "Rate your pain intensity.",
+    "modality": "range",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "pain_duration"
+    ],
+    "predicted": [
+      "pain_duration"
+    ],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": [
+      {
+        "question": "pain_duration",
+        "modality": "duration"
+      }
+    ]
+  },
+  {
+    "question": "Rate your energy level today.",
+    "modality": "range",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "Rate your overall discomfort.",
+    "modality": "range",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "How long has this problem been present?",
+    "modality": "duration",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "For how many days have you felt unwell?",
+    "modality": "duration",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": false,
+    "expected": [
+      "symptom_description"
+    ],
+    "predicted": [],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": []
+  },
+  {
+    "question": "How long have you noticed changes in your body?",
+    "modality": "duration",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  },
+  {
+    "question": "When did your symptoms first appear?",
+    "modality": "duration",
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "symptom_category"
+    ],
+    "predicted": [
+      "symptom_description_string"
+    ],
+    "strict_correct": false,
+    "decision_correct": false,
+    "followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ]
+  },
+  {
+    "question": "How long has the patient had these health concerns?",
+    "modality": "duration",
+    "expected_followup_needed": false,
+    "predicted_followup_needed": false,
+    "expected": [],
+    "predicted": [],
+    "strict_correct": true,
+    "decision_correct": true,
+    "followups": []
+  }
+]

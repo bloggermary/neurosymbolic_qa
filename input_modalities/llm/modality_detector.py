@@ -6,7 +6,7 @@ ALLOWED_MODALITIES = {
     "boolean",
     "numeric",
     "string",
-    "categorical",
+    "category",
     "range",
     "duration"
 }
@@ -21,10 +21,9 @@ def detect_modality(question: str) -> str:
     boolean
     numeric
     string
-    categorical
+    category
     range
     duration
-    scale
 
     Rules:
 
@@ -40,27 +39,30 @@ def detect_modality(question: str) -> str:
     "How old is the patient?"
 
     duration:
-    - Time length with a unit.
+    - Time length with a unit, asked as an open-ended amount (not
+      bounded by two endpoints).
     - Years, months, weeks, days, hours.
+    - "When did X begin/start/first appear?" also counts as duration,
+      not string - the natural answer is elapsed time ("3 weeks ago"),
+      not a free-text description or calendar date.
     Examples:
     "How long have symptoms lasted?"
     "Duration of fasting?"
+    "When did your symptoms begin?"
+    "When did the fatigue start?"
 
     range:
-    - A lower and upper numeric boundary.
-    - User enters a value between two numbers.
+    - A lower and upper numeric boundary is given, and the user picks
+      or reports a value inside that boundary.
+    - Includes rating/severity scores (e.g. 1-10, mild-to-severe),
+      since those are also bounded-interval answers.
     Examples:
     "Choose a value from 1 to 10"
     "Enter glucose range"
-
-    scale:
-    - Rating questions.
-    - Usually 1-10 or mild-to-severe scores.
-    Examples:
     "Rate pain from 1 to 10"
-    "Severity score"
+    "Severity score from 1 to 10"
 
-    categorical:
+    category:
     - Choose one option from predefined categories.
     Examples:
     "Low/medium/high"

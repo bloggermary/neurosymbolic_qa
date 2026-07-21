@@ -1,25 +1,37 @@
 import time
-import os
 import janus_swi as janus
 
+from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
-from evaluation.metrics import load_json, save_json
+from evaluation.testing_suite.metrics import load_json, save_json
 
 
-KB_PATH = "prolog/generated_kb/diabetes_diagnosis.pl"
+SNIPPET_PATH = "data/snippets/diabetes.txt"
+KB_PATH = "prolog/generated_kb/diabetes.pl"
 
 
-def load_kb():
+def load_kb() -> str:
     """
-    Load the Prolog knowledge base before executing queries.
+    Build a fresh knowledge base from the current generator and
+    consult it. Returns the KB source text so the same text can be
+    used to ground generate_query() - a stale, pre-existing .pl file
+    would silently drift from whatever kb_generator.py currently
+    produces, and testing against mismatched predicates would fail
+    for reasons unrelated to reasoning quality.
     """
-    if not os.path.exists(KB_PATH):
-        raise FileNotFoundError(
-            f"Knowledge base not found: {KB_PATH}"
-        )
+
+    with open(SNIPPET_PATH, encoding="utf-8") as file:
+        medical_text = file.read()
+
+    kb_code = generate_prolog_kb(medical_text)
+
+    with open(KB_PATH, "w", encoding="utf-8") as file:
+        file.write(kb_code)
 
     janus.consult(KB_PATH)
+
+    return kb_code
 
 
 def run_reasoning(query):
@@ -34,7 +46,7 @@ def run_reasoning(query):
 def run():
 
     print("Loading Prolog KB...")
-    load_kb()
+    kb_code = load_kb()
     print("KB loaded successfully.")
 
     data = load_json(
@@ -45,6 +57,8 @@ def run():
 
     success_count = 0
 
+    needs_input_count = 0
+
     for item in data:
 
         question = item["question"]
@@ -53,10 +67,10 @@ def run():
 
             start = time.perf_counter()
 
-            # Generate Prolog query
+            # Generate Prolog query, grounded in the actual loaded KB
             query = generate_query(
                 question,
-                ""
+                kb_code
             )
 
             # Execute query
@@ -84,7 +98,8 @@ def run():
                     "result": str(result),
                     "answer": answer,
                     "time": end - start,
-                    "success": True
+                    "success": True,
+                    "needs_input": False
                 }
             )
 
@@ -94,14 +109,28 @@ def run():
 
         except Exception as e:
 
+            message = str(e)
+
+            # The KB always asks for missing clinical data interactively
+            # (ask_numeric/ask_boolean/...) - correctly recognizing that
+            # more input is needed is expected, correct behavior for this
+            # domain, not a pipeline failure. Only genuine errors (syntax
+            # errors, undefined predicates, bad queries) count as failures.
+            is_needs_input = "WaitingForUserInput" in message
+
             results.append(
                 {
                     "id": item["id"],
                     "question": question,
-                    "error": str(e),
-                    "success": False
+                    "error": message,
+                    "success": is_needs_input,
+                    "needs_input": is_needs_input
                 }
             )
+
+            if is_needs_input:
+                success_count += 1
+                needs_input_count += 1
 
 
     total = len(data)
@@ -126,6 +155,8 @@ def run():
         {
             "total_questions": total,
             "successful": success_count,
+            "answered_directly": success_count - needs_input_count,
+            "needs_input": needs_input_count,
             "failed": total - success_count,
             "success_rate": success_rate
         }

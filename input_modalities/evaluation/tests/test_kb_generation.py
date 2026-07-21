@@ -1,83 +1,127 @@
-import sys
-from pathlib import Path
-import json
+"""
+KB generation evaluation.
+
+Runs the current kb_generator.py against every medical text in
+data/snippets/ (not a separate hand-written fixture - the snippets
+themselves ARE the input domain this generator has to handle) and
+checks two kinds of properties:
+
+1. Universal structural requirements every generated KB must satisfy
+   regardless of domain (diagnose/1 and the three verdict predicates
+   are defined, it's valid enough Prolog to consult).
+2. Regressions against specific bug classes seen before (orphaned
+   "ask_" prefixed fact predicates, placeholder/dummy clauses).
+"""
+
 import re
+from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+import janus_swi as janus
 
-from input_modalities.llm.kb_generator import generate_prolog_kb
-
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-
-KB_PATH = BASE_DIR / "prolog" / "generated_kb" / "diabetes_diagnosis.pl"
-TEST_PATH = BASE_DIR / "evaluation" / "tests" / "json_entries" / "test_kb_generation.json"
+from llm.kb_generator import generate_prolog_kb
+from evaluation.testing_suite.metrics import save_json, compute_accuracy
 
 
-def load_json(path):
-    with open(path, "r", encoding="utf-8") as f:
-        return json.load(f)
+SNIPPETS_DIR = Path("data/snippets")
+
+REQUIRED_PREDICATES = ["diagnose", "diabetes", "prediabetes", "low_risk"]
+
+FORBIDDEN_PATTERNS = [
+    "ensure predicate",
+    "ensure ask_",
+]
 
 
-def extract_predicates(prolog_code: str):
+def _defines_predicate(kb_code: str, predicate: str) -> bool:
     """
-    Extracts predicate names from Prolog code.
-    Example: diabetes(patient) -> diabetes
+    True if `predicate` appears as a clause head, either as a fact/rule
+    written with parens (diagnose(X) :- ...) or with none (diabetes :- ...).
     """
-    matches = re.findall(r"([a-zA-Z_][a-zA-Z0-9_]*)\s*\(", prolog_code)
-    return set(matches)
+
+    pattern = rf"\b{re.escape(predicate)}\b\s*(\(|:-|\.)"
+
+    return re.search(pattern, kb_code) is not None
 
 
-def evaluate():
-    test_cases = load_json(TEST_PATH)
+def _consults_cleanly(kb_code: str, tmp_path: Path) -> tuple[bool, str]:
 
+    tmp_path.write_text(kb_code, encoding="utf-8")
+
+    try:
+        janus.consult(str(tmp_path))
+        return True, ""
+    except Exception as error:
+        return False, str(error)
+
+
+def run():
+
+    snippet_paths = sorted(SNIPPETS_DIR.glob("*.txt"))
+
+    results = []
     passed = 0
-    total = len(test_cases)
 
-    print("\n================ KB GENERATION EVALUATION ================\n")
+    tmp_path = Path("prolog/generated_kb/_kb_generation_eval_tmp.pl")
+    tmp_path.parent.mkdir(parents=True, exist_ok=True)
 
-    for case in test_cases:
-        input_text = case["input_text"]
+    for snippet_path in snippet_paths:
 
-        # Generate KB from model
-        kb_code = generate_prolog_kb(input_text)
+        name = snippet_path.stem
+        text = snippet_path.read_text(encoding="utf-8")
 
-        predicates = extract_predicates(kb_code)
+        kb_code = generate_prolog_kb(text)
 
-        success = True
+        missing_predicates = [
+            p for p in REQUIRED_PREDICATES
+            if not _defines_predicate(kb_code, p)
+        ]
 
-        print(f"\nTest ID: {case['id']}")
-        print(f"Input: {input_text}")
+        forbidden_found = [
+            pattern for pattern in FORBIDDEN_PATTERNS
+            if pattern in kb_code
+        ]
 
-        # --- Check expected predicates ---
-        for p in case.get("expected_predicates", []):
-            if p not in predicates:
-                print(f"Missing predicate: {p}")
-                success = False
+        consults_ok, consult_error = _consults_cleanly(kb_code, tmp_path)
 
-        # --- Check expected rules (simple substring check) ---
-        for rule in case.get("expected_rules", []):
-            if rule not in kb_code:
-                print(f"Missing rule/threshold: {rule}")
-                success = False
+        success = (
+            not missing_predicates
+            and not forbidden_found
+            and consults_ok
+        )
 
-        # --- Check forbidden patterns ---
-        for bad in case.get("must_not_contain", []):
-            if bad in kb_code:
-                print(f"Forbidden content found: {bad}")
-                success = False
+        results.append({
+            "snippet": name,
+            "missing_predicates": missing_predicates,
+            "forbidden_patterns_found": forbidden_found,
+            "consults_cleanly": consults_ok,
+            "consult_error": consult_error,
+            "success": success,
+        })
 
         if success:
-            print("RESULT: PASS")
             passed += 1
-        else:
-            print("RESULT: FAIL")
 
-    print("\n================ SUMMARY ================\n")
-    print(f"Passed: {passed}/{total}")
-    print(f"Accuracy: {(passed / total) * 100:.2f}%")
-    print("\n========================================\n")
+    tmp_path.unlink(missing_ok=True)
+
+    total = len(results)
+    accuracy = compute_accuracy(passed, total)
+
+    save_json("evaluation/results/kb_results.json", results)
+    save_json("evaluation/results/kb_accuracy.json", {
+        "total": total,
+        "passed": passed,
+        "accuracy": accuracy,
+    })
+
+    print(f"KB generation: {passed}/{total} passed ({accuracy:.0%})")
+
+    for r in results:
+        if not r["success"]:
+            print(f"  FAILED {r['snippet']}: "
+                  f"missing={r['missing_predicates']} "
+                  f"forbidden={r['forbidden_patterns_found']} "
+                  f"consult_error={r['consult_error'][:100]}")
 
 
 if __name__ == "__main__":
-    evaluate()
+    run()

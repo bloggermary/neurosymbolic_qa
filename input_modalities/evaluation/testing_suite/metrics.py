@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from collections import Counter, defaultdict
 
 
@@ -136,6 +137,66 @@ def predicate_recall(expected, query):
 
 
     return matched / len(expected)
+
+
+
+# Connector words that don't carry predicate-identifying meaning on
+# their own (e.g. "diabetes_positive_by_fasting_glucose" vs a model
+# writing "diabetes_positive_fasting_glucose" - dropping "by" shouldn't
+# count against it).
+_STOPWORDS = {"by", "is", "of", "the", "a"}
+
+
+def _tokenize(text: str) -> set:
+    """
+    Splits an identifier or query string into lowercase word tokens,
+    e.g. "diabetes_positive_by_fasting_glucose" ->
+    {"diabetes", "positive", "fasting", "glucose"} (stopwords dropped).
+    """
+
+    words = re.findall(r"[a-zA-Z]+", text.lower())
+
+    return {w for w in words if w not in _STOPWORDS}
+
+
+def keyword_predicate_overlap(expected_predicate: str, query: str) -> float:
+    """
+    Fraction of `expected_predicate`'s meaningful word tokens that
+    appear anywhere in `query`, regardless of exact naming, word
+    order, or connector words. More forgiving than predicate_recall's
+    exact-substring check: "fasting_glucose_mgdl" and
+    "fasting_plasma_glucose_value" would overlap heavily even though
+    neither is a substring of the other.
+    """
+
+    expected_tokens = _tokenize(expected_predicate)
+
+    if not expected_tokens:
+        return 1.0
+
+    query_tokens = _tokenize(query)
+
+    matched = expected_tokens & query_tokens
+
+    return len(matched) / len(expected_tokens)
+
+
+def keyword_query_score(expected_predicates, query) -> float:
+    """
+    Average keyword overlap across all expected predicates for one
+    query - a single 0-1 "how much of the intended meaning is there"
+    score, rather than requiring every predicate to match exactly.
+    """
+
+    if not expected_predicates:
+        return 1.0
+
+    scores = [
+        keyword_predicate_overlap(predicate, query)
+        for predicate in expected_predicates
+    ]
+
+    return sum(scores) / len(scores)
 
 
 

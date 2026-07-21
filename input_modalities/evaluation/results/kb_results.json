@@ -1,0 +1,42 @@
+[
+  {
+    "snippet": "diabetes",
+    "missing_predicates": [],
+    "forbidden_patterns_found": [],
+    "consults_cleanly": true,
+    "consult_error": "",
+    "success": true
+  },
+  {
+    "snippet": "diabetes_elderly_polypharmacy",
+    "missing_predicates": [],
+    "forbidden_patterns_found": [],
+    "consults_cleanly": true,
+    "consult_error": "",
+    "success": true
+  },
+  {
+    "snippet": "diabetes_gestational",
+    "missing_predicates": [],
+    "forbidden_patterns_found": [],
+    "consults_cleanly": true,
+    "consult_error": "",
+    "success": true
+  },
+  {
+    "snippet": "diabetes_type1_pediatric",
+    "missing_predicates": [],
+    "forbidden_patterns_found": [],
+    "consults_cleanly": true,
+    "consult_error": "",
+    "success": true
+  },
+  {
+    "snippet": "diabetes_type2_lifestyle",
+    "missing_predicates": [],
+    "forbidden_patterns_found": [],
+    "consults_cleanly": true,
+    "consult_error": "",
+    "success": true
+  }
+]

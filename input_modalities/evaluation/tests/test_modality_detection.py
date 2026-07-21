@@ -1,6 +1,6 @@
 import time
 from llm.modality_detector import detect_modality  # adjust if needed
-from evaluation.metrics import load_json, save_json, compute_accuracy
+from evaluation.testing_suite.metrics import load_json, save_json, compute_accuracy
 
 
 def run():
