@@ -209,7 +209,7 @@ def plot_query_accuracy():
 def plot_query_recall():
 
     data = load(
-        "results/query_results.json"
+        "../results/query_results.json"
     )
 
 
@@ -250,7 +250,7 @@ def plot_query_recall():
 def plot_query_complexity():
 
     data = load(
-        "results/query_results.json"
+        "../results/query_results.json"
     )
 
 
@@ -328,7 +328,7 @@ def plot_pipeline_success():
 def plot_pipeline_runtime():
 
     data = load(
-        "results/pipeline_results.json"
+        "../results/pipeline_results.json"
     )
 
 
@@ -368,7 +368,7 @@ def plot_pipeline_runtime():
 def plot_pipeline_errors():
 
     data = load(
-        "results/pipeline_results.json"
+        "../results/pipeline_results.json"
     )
 
 

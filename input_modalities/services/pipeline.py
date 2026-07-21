@@ -17,6 +17,7 @@ from typing import Any
 import sys
 
 import janus_swi as janus
+import streamlit as st
 
 
 from llm.kb_generator import generate_prolog_kb
@@ -56,17 +57,6 @@ class MedicalPipeline:
             "prolog/generated_kb/diabetes_diagnosis.pl"
         )
 
-
-        self.session_memory = SessionMemory()
-
-        self.state_manager = StateManager()
-
-        self.context_tracker = ContextTracker(
-            self.session_memory
-        )
-
-        self.followup_manager = FollowupManager()
-
         self.modality_handler = DialogueModalityHandler()
 
         self._loaded = False
@@ -76,6 +66,70 @@ class MedicalPipeline:
         # NOT on this object - `pipeline` is one shared instance for
         # the whole server process, so storing it here would leak
         # between concurrent browser tabs/sessions.
+        #
+        # session_memory / state_manager / context_tracker /
+        # followup_manager are dialogue-layer objects with the exact
+        # same problem: they hold per-conversation state (history,
+        # last turn, follow-ups), so they're exposed as properties
+        # backed by st.session_state below instead of being set here,
+        # keeping each browser tab's dialogue memory independent.
+
+
+
+    @property
+    def session_memory(self) -> SessionMemory:
+
+        if "pipeline_session_memory" not in st.session_state:
+            st.session_state["pipeline_session_memory"] = SessionMemory()
+
+        return st.session_state["pipeline_session_memory"]
+
+
+
+    @property
+    def state_manager(self) -> StateManager:
+
+        if "pipeline_state_manager" not in st.session_state:
+            st.session_state["pipeline_state_manager"] = StateManager()
+
+        return st.session_state["pipeline_state_manager"]
+
+
+
+    @property
+    def context_tracker(self) -> ContextTracker:
+
+        if "pipeline_context_tracker" not in st.session_state:
+            st.session_state["pipeline_context_tracker"] = ContextTracker(
+                self.session_memory
+            )
+
+        return st.session_state["pipeline_context_tracker"]
+
+
+
+    @property
+    def followup_manager(self) -> FollowupManager:
+
+        if "pipeline_followup_manager" not in st.session_state:
+            st.session_state["pipeline_followup_manager"] = FollowupManager()
+
+        return st.session_state["pipeline_followup_manager"]
+
+
+
+    def reset_dialogue(self):
+        """
+        Start a fresh conversation: wipe history, last-turn state, and
+        stored follow-ups for THIS browser session only.
+        """
+
+        st.session_state["pipeline_session_memory"] = SessionMemory()
+        st.session_state["pipeline_state_manager"] = StateManager()
+        st.session_state["pipeline_context_tracker"] = ContextTracker(
+            st.session_state["pipeline_session_memory"]
+        )
+        st.session_state["pipeline_followup_manager"] = FollowupManager()
 
 
 

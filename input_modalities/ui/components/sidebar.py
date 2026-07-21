@@ -8,6 +8,12 @@ import streamlit as st
 
 from services.session_service import session
 from services.interaction_service import interaction
+from services.pipeline import pipeline
+
+from ui.components.history_panel import (
+    render_history_panel,
+    render_save_controls,
+)
 
 
 def render_sidebar() -> None:
@@ -31,7 +37,16 @@ def render_sidebar() -> None:
         ):
             session.clear()
             interaction.reset_all()
+            pipeline.reset_dialogue()
             st.rerun()
+
+        st.divider()
+
+        render_history_panel()
+
+        st.divider()
+
+        render_save_controls()
 
         st.divider()
 
