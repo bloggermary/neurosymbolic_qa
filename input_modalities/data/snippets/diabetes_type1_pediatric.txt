@@ -1,0 +1,11 @@
+Type 1 diabetes mellitus in children and adolescents results from autoimmune destruction of pancreatic beta cells, leading to absolute insulin deficiency. Unlike type 2 diabetes, onset is typically abrupt, occurring over days to a few weeks rather than years.
+
+Diagnosis requires the same core glycemic thresholds used across diabetes types: a random plasma glucose of 200 mg/dL or higher, a fasting plasma glucose of 126 mg/dL or higher, or an HbA1c of 6.5% or higher. In children, however, presentation is frequently acute, so clinicians should also ask how many days the symptoms have been present, since rapid onset over less than two weeks is characteristic of type 1 disease.
+
+The classic symptom triad is polyuria, polydipsia, and unexplained weight loss. Additional boolean symptoms worth checking are nocturnal bedwetting in a previously toilet-trained child, and lethargy. Because untreated type 1 diabetes can progress quickly to diabetic ketoacidosis, ask whether the child has experienced nausea, vomiting, abdominal pain, or rapid breathing - the presence of any of these is a medical emergency requiring immediate referral, independent of glucose values.
+
+Severity of dehydration at presentation is often rated by clinicians on a scale from 1 (mild) to 10 (severe shock), based on skin turgor, mucous membrane dryness, and capillary refill time.
+
+Autoantibody status is categorical: a child may be tested for GAD65, IA-2, and ZnT8 antibodies, with results recorded as positive, negative, or not_tested. Family history in type 1 diabetes is less predictive than in type 2, but a first-degree relative with type 1 diabetes still raises risk and should be recorded as none, first_degree, or second_degree.
+
+Because type 1 diabetes is insulin-dependent from diagnosis, medication status is simpler than in adults: a newly diagnosed child is not yet on any diabetes medication, whereas a child with an established diagnosis will already be on insulin. Record this as a category: none, insulin, or unknown.

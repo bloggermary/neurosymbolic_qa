@@ -315,7 +315,8 @@ def render_chat() -> None:
             with reasoning_status():
 
                 response = pipeline.ask(
-                    question
+                    question,
+                    snippet_name=st.session_state.get("selected_snippet"),
                 )
 
 

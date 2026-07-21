@@ -199,7 +199,13 @@ class InteractionService:
 
 
 
-    def set_resume_context(self, query: str, question: str, enhanced_question: str):
+    def set_resume_context(
+        self,
+        query: str,
+        question: str,
+        enhanced_question: str,
+        snippet_name: str | None = None,
+    ):
         """
         Remember what to re-run once the user answers a pending
         question. Session-scoped so concurrent tabs never mix up
@@ -212,6 +218,7 @@ class InteractionService:
             "query": query,
             "question": question,
             "enhanced_question": enhanced_question,
+            "snippet_name": snippet_name,
         }
 
 

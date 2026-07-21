@@ -51,15 +51,42 @@ class PipelineResponse:
 class MedicalPipeline:
 
 
-    def __init__(self):
+    DEFAULT_SNIPPET = "diabetes"
 
-        self.kb_path = Path(
-            "prolog/generated_kb/diabetes_diagnosis.pl"
-        )
+    SNIPPETS_DIR = Path("data/snippets")
+    GENERATED_DIR = Path("prolog/generated_kb")
+
+    def __init__(self):
 
         self.modality_handler = DialogueModalityHandler()
 
-        self._loaded = False
+        # Which snippet's KB is currently consulted into the (single,
+        # process-wide) embedded Prolog engine. janus_swi embeds one
+        # SWI-Prolog interpreter per process, not per browser session,
+        # so only one knowledge base can be active at a time - switching
+        # snippets rebuilds and re-consults for the whole process. Fine
+        # for this single-active-demo-user setup; would need a real
+        # per-session Prolog engine to safely serve two different
+        # snippets to two concurrent users at once.
+        self._loaded_snippet: str | None = None
+
+
+
+    def available_snippets(self) -> list[str]:
+        """
+        Names (without .txt) of every medical text under data/snippets.
+        """
+
+        return sorted(
+            path.stem
+            for path in self.SNIPPETS_DIR.glob("*.txt")
+        )
+
+
+
+    def kb_path_for(self, snippet_name: str) -> Path:
+
+        return self.GENERATED_DIR / f"{snippet_name}.pl"
 
         # Resume state (which query to re-run once the user answers a
         # pending question) lives in `interaction` / st.session_state,
@@ -133,9 +160,11 @@ class MedicalPipeline:
 
 
 
-    def initialize(self):
+    def initialize(self, snippet_name: str | None = None):
 
-        if self._loaded:
+        snippet_name = snippet_name or self.DEFAULT_SNIPPET
+
+        if self._loaded_snippet == snippet_name:
             return
 
 
@@ -155,11 +184,13 @@ class MedicalPipeline:
 
 
 
-        print("Building knowledge base...")
+        print(f"Building knowledge base for '{snippet_name}'...")
 
+
+        snippet_path = self.SNIPPETS_DIR / f"{snippet_name}.txt"
 
         with open(
-            "data/snippets/diabetes.txt",
+            snippet_path,
             encoding="utf-8"
         ) as file:
 
@@ -173,13 +204,15 @@ class MedicalPipeline:
 
 
 
-        self.kb_path.parent.mkdir(
+        kb_path = self.kb_path_for(snippet_name)
+
+        kb_path.parent.mkdir(
             parents=True,
             exist_ok=True
         )
 
 
-        self.kb_path.write_text(
+        kb_path.write_text(
             kb_code,
             encoding="utf-8"
         )
@@ -190,12 +223,12 @@ class MedicalPipeline:
 
 
         janus.consult(
-            str(self.kb_path)
+            str(kb_path)
         )
 
 
 
-        self._loaded = True
+        self._loaded_snippet = snippet_name
 
 
         print("Pipeline initialized.")
@@ -247,8 +280,12 @@ class MedicalPipeline:
 
     def ask(
         self,
-        question: str
+        question: str,
+        snippet_name: str | None = None,
     ) -> PipelineResponse:
+
+
+        snippet_name = snippet_name or self.DEFAULT_SNIPPET
 
 
         print(
@@ -256,7 +293,7 @@ class MedicalPipeline:
         )
 
 
-        self.initialize()
+        self.initialize(snippet_name)
 
 
 
@@ -276,7 +313,7 @@ class MedicalPipeline:
 
 
 
-        kb_text = self.kb_path.read_text(
+        kb_text = self.kb_path_for(snippet_name).read_text(
             encoding="utf-8"
         )
 
@@ -328,6 +365,7 @@ class MedicalPipeline:
                 query=prolog_query,
                 question=question,
                 enhanced_question=enhanced_question,
+                snippet_name=snippet_name,
             )
 
             return PipelineResponse(
@@ -341,7 +379,8 @@ class MedicalPipeline:
             question,
             enhanced_question,
             prolog_query,
-            execution["result"]
+            execution["result"],
+            snippet_name,
         )
 
 
@@ -402,7 +441,8 @@ class MedicalPipeline:
             resume_context["question"],
             resume_context["enhanced_question"],
             resume_query,
-            execution["result"]
+            execution["result"],
+            resume_context.get("snippet_name") or self.DEFAULT_SNIPPET,
         )
 
 
@@ -429,7 +469,8 @@ class MedicalPipeline:
         question: str,
         enhanced_question: str,
         prolog_query: str,
-        result
+        result,
+        snippet_name: str | None = None,
     ) -> PipelineResponse:
         """
         Shared completion path: translate the Prolog result, update
@@ -486,7 +527,7 @@ class MedicalPipeline:
             raw_result=result,
             sources=[
                 {
-                    "title": "diabetes.txt",
+                    "title": f"{snippet_name or self.DEFAULT_SNIPPET}.txt",
                     "score": 1.0
                 }
             ]

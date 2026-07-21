@@ -1,0 +1,11 @@
+Gestational diabetes mellitus (GDM) is glucose intolerance first recognized during pregnancy, typically screened for between 24 and 28 weeks of gestation. It is diagnosed using a dedicated screening protocol rather than the general adult glycemic thresholds.
+
+The standard approach is a 75-gram oral glucose tolerance test (OGTT) performed after an overnight fast. Three plasma glucose values are collected: fasting, 1 hour post-load, and 2 hours post-load. Gestational diabetes is diagnosed if any ONE of the following is met or exceeded: fasting plasma glucose of 92 mg/dL, 1-hour value of 180 mg/dL, or 2-hour value of 153 mg/dL. Ask for the current week of gestation as a bounded value between 4 and 42 weeks, since a screening result is only interpretable within the correct gestational window.
+
+Risk factors should be collected categorically before deciding whether early screening (before 24 weeks) is warranted: previous gestational diabetes (none, this_pregnancy, previous_pregnancy), polycystic ovary syndrome history (yes/no), and pre-pregnancy body mass index category (normal, overweight, obese, severely_obese). A first-degree relative with type 2 diabetes also raises risk and should be asked as a boolean.
+
+Symptoms of gestational diabetes are frequently absent, but excessive thirst and unusually frequent urination beyond what is typical in pregnancy should still be asked about as boolean symptoms, since severe hyperglycemia can occasionally present symptomatically.
+
+If glucose values are only mildly elevated, ask the patient to rate how confident she is in her recent dietary control on a scale from 1 to 10, as this can help distinguish transient dietary lapses from true glucose intolerance.
+
+After delivery, gestational diabetes should be reclassified: record postpartum testing status as a category (not_yet_tested, normal, prediabetes, overt_diabetes), since a substantial proportion of women with GDM go on to develop type 2 diabetes later in life.

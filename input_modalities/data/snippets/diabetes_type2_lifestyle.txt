@@ -1,0 +1,13 @@
+Most adults who develop type 2 diabetes don't get sick overnight - it usually creeps up gradually over months or years, tied closely to weight, activity levels, and diet. This makes it different from the sudden-onset picture seen in type 1 diabetes.
+
+The lab thresholds are the familiar ones: fasting plasma glucose of 126 mg/dL or more, a random reading of 200 mg/dL or more, or an HbA1c of 6.5% or higher. But because type 2 diabetes is so closely tied to lifestyle, it's worth asking a broader set of questions than just lab values.
+
+Ask for body mass index as a plain number, and separately ask for waist circumference in centimeters, since central obesity carries extra risk even at a "normal" BMI. Ask how many minutes of moderate physical activity the person gets in a typical week - anything under 150 minutes is considered insufficient by most guidelines.
+
+Diet quality is worth capturing as a category rather than a number: mostly_whole_foods, mixed, mostly_processed, or unknown. Ask whether the person currently smokes (yes/no) and how many alcoholic drinks they have in a typical week as a plain number, since both affect metabolic risk.
+
+Ask how long they've noticed increased thirst or urination, in weeks, since gradual multi-month symptom creep is typical of type 2 diabetes and helps separate it from more acute presentations. Fatigue and blurred vision are also worth checking as yes/no questions.
+
+Family history matters a lot here: ask whether a parent or sibling has type 2 diabetes (none, one_relative, multiple_relatives). Also ask whether the person has ever been told they have prediabetes or "borderline" blood sugar (yes/no), since many people with type 2 diabetes passed through a prediabetic stage that went unaddressed.
+
+Finally, ask the person to rate their own motivation to make dietary and activity changes on a scale from 1 to 10 - this doesn't affect the diagnosis itself, but it's useful context for how the result should be communicated.

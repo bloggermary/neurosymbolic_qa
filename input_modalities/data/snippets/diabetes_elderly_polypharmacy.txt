@@ -1,0 +1,13 @@
+Diagnosing diabetes in older adults taking multiple medications requires more caution than in younger patients, because both presentation and test reliability are affected by age, comorbidity, and drug interactions.
+
+The core diagnostic thresholds remain unchanged in principle: fasting plasma glucose of 126 mg/dL or higher, random plasma glucose of 200 mg/dL or higher, 2-hour OGTT of 200 mg/dL or higher, or HbA1c of 6.5% or higher. However, HbA1c can be unreliable in patients with chronic kidney disease or anemia, so ask whether the patient has either condition (boolean) before relying heavily on the HbA1c result.
+
+Classic symptoms - excessive thirst, frequent urination, fatigue, blurred vision - are frequently absent or attributed to other causes in elderly patients, so their absence should not be reassuring. Still ask about each as a yes/no question, but weight a negative answer less heavily than in a younger adult.
+
+Medication use is a major confounder. Ask which of the following the patient currently takes, allowing more than one to apply conceptually but recording the primary contributor as a category: corticosteroids, thiazide_diuretics, atypical_antipsychotics, none. Each of these can raise blood glucose independent of true diabetes.
+
+Renal function should be captured as a plain numeric value: estimated glomerular filtration rate (eGFR) in mL/min/1.73m2. Ask how many distinct chronic conditions the patient has (a plain count), since a higher comorbidity burden changes how aggressively glucose targets should be pursued.
+
+Cognitive and functional status should be rated on a scale from 1 (fully independent) to 10 (fully dependent), since this materially affects what diagnostic follow-up and treatment plan is realistic.
+
+Ask how many years the patient has had any known glucose abnormality, if applicable, as this history changes the interpretation of a new borderline result versus a first-time finding.
