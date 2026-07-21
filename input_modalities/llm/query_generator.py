@@ -57,38 +57,6 @@ def generate_query(question: str, prolog_code: str) -> str:
 
     - the user explicitly asks about one criterion
 
-    Available predicates:
-
-    - diagnose/1
-
-    - diabetes/0
-
-    - prediabetes/0
-
-    - low_risk/0
-
-    - diabetes_positive/0
-
-    - prediabetes_positive/0
-
-    - diabetes_positive_by_random_glucose/0
-
-    - diabetes_positive_by_fasting_glucose/0
-
-    - diabetes_positive_by_ogtt/0
-
-    - diabetes_positive_by_hba1c/0
-
-    - random_glucose_mgdl/1
-
-    - fasting_glucose_mgdl/1
-
-    - fasting_duration_hours/1
-
-    - ogtt_2hr_mgdl/1
-
-    - hba1c_percent/1
-
     Knowledge Base:
 
     {prolog_code}

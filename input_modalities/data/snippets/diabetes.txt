@@ -1,13 +1,34 @@
-Diabetes mellitus is a chronic metabolic disorder characterized by persistently elevated blood glucose levels due to impaired insulin secretion, insulin action, or both. In a neurosymbolic system, its diagnosis is represented using multiple modalities, including numeric, boolean, range, categorical, frequency, and temporal structures to enable precise rule-based reasoning in Prolog.
+A diagnosis of diabetes mellitus is established if at least one of the following criteria is met:
 
-A diagnosis of diabetes is established if at least one of the following numerical thresholds is met: a random plasma glucose ≥ 11.1 mmol/L (200 mg/dL), a fasting plasma glucose ≥ 7.0 mmol/L (126 mg/dL) after 8–12 hours of fasting, or a 2-hour value in an oral glucose tolerance test ≥ 11.1 mmol/L. Additionally, an HbA1c value ≥ 6.5% (48 mmol/mol) indicates long-term hyperglycemia. These conditions are modeled primarily using numeric and scale-based modalities, often combined with duration constraints for fasting and testing procedures.
+Random plasma glucose ≥ 11.1 mmol/L (200 mg/dL).
+Fasting plasma glucose ≥ 7.0 mmol/L (126 mg/dL) after 8–12 hours of fasting.
+2-hour plasma glucose during an oral glucose tolerance test (OGTT) ≥ 11.1 mmol/L (200 mg/dL).
+HbA1c ≥ 6.5% (48 mmol/mol).
+Prediabetes
 
-Prediabetes is defined using a range-based modality, where fasting plasma glucose lies between 100 and 125 mg/dL. This intermediate state represents elevated metabolic risk without fulfilling full diagnostic criteria for diabetes.
+Prediabetes may be present if:
+Fasting plasma glucose is between 100 and 125 mg/dL.
 
-Clinical symptoms such as excessive thirst, excessive urination, fatigue, and blurred vision are represented as boolean modalities, indicating presence or absence. Some symptoms, such as nocturia or recurrent infections, may additionally use frequency-based modalities to capture how often they occur.
+Common symptoms include:
+- excessive thirst
+- excessive urination
+- fatigue
+- blurred vision
+Common symptoms associated with diabetes include excessive thirst,
+frequent urination, fatigue, and blurred vision.
 
-Medical history is encoded using categorical and boolean modalities, including conditions such as obesity, hypertension, cardiovascular disease, and gestational diabetes. Family history is represented relationally, distinguishing between affected first-degree and second-degree relatives, which contributes to genetic risk estimation.
+A symptom pattern is considered strongly supportive when excessive thirst
+and frequent urination are both present. One of these symptoms alone
+provides partial support.
 
-Medication status is modeled as a categorical modality, including insulin therapy, oral antidiabetics, corticosteroid use, or no medication, as these significantly influence glucose interpretation. Lifestyle factors such as diet and physical activity are also represented categorically and contribute to overall risk assessment.
+Symptoms present for fewer than 7 days are considered recent.
+Symptoms present for 7 to 30 days are considered persistent.
+Symptoms present for more than 30 days are considered long-term.
 
-In a Prolog-based neurosymbolic knowledge system, all these modalities are transformed into structured predicates. Numeric values represent measurable clinical data, boolean values represent symptom presence, range constraints capture threshold-based conditions, and categorical and frequency modalities encode contextual patient information. This multi-modal representation enables interpretable logical inference while supporting flexible dialogue-driven data collection.
+Fatigue severity is assessed on a whole-number scale from 1 to 10:
+
+- 1 to 3 indicates mild fatigue.
+- 4 to 6 indicates moderate fatigue.
+- 7 to 10 indicates severe fatigue.
+
+Thirst severity may be described as none, mild, moderate, or severe.
