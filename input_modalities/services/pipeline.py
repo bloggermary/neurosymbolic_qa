@@ -71,6 +71,12 @@ class MedicalPipeline:
 
         self._loaded = False
 
+        # Resume state (which query to re-run once the user answers a
+        # pending question) lives in `interaction` / st.session_state,
+        # NOT on this object - `pipeline` is one shared instance for
+        # the whole server process, so storing it here would leak
+        # between concurrent browser tabs/sessions.
+
 
 
     def initialize(self):
@@ -166,44 +172,20 @@ class MedicalPipeline:
                 message
             )
 
-            if "WaitingForUserInput" in message:
+            # WaitingForUserInput crosses the py_call boundary into
+            # Prolog and back out as a generic Prolog exception - only
+            # its string message survives, so modality/options can't be
+            # recovered from `error` here. Instead, prolog_bridge.ask_*
+            # registers the pending question with `interaction` itself
+            # (with full fidelity) before raising. We check both that
+            # marker AND the exception text as a safety net, in case the
+            # pending question was somehow already consumed/cleared by
+            # the time we get here.
 
-                question = "Additional information required"
-
-                # Janus message format:
-                #
-                # Python 'WaitingForUserInput':
-                #   Enter random plasma glucose (mg/dL):
-                #
-                # We take the first useful line after the exception message.
-
-                lines = message.splitlines()
-
-                for line in lines:
-
-                    clean = line.strip()
-
-                    if (
-                            clean
-                            and not clean.startswith("Python")
-                            and not clean.startswith("File")
-                            and not clean.startswith("raise")
-                            and "stack" not in clean
-                            and "..." not in clean
-                    ):
-                        question = clean
-                        break
+            if interaction.has_question() or "WaitingForUserInput" in message:
 
                 return {
-
-                    "status": "waiting",
-
-                    "question": question,
-
-                    "modality": "numeric",
-
-                    "options": None
-
+                    "status": "waiting"
                 }
 
             raise error
@@ -285,37 +267,124 @@ class MedicalPipeline:
 
         if execution["status"] == "waiting":
 
-
-            interaction.request(
-                question=execution["question"],
-                modality=execution["modality"],
-                options=execution["options"]
+            # Remember what to re-run once the user answers.
+            # (The pending question itself was already registered with
+            # `interaction` by prolog_bridge.ask_* - see _execute_query.)
+            interaction.set_resume_context(
+                query=prolog_query,
+                question=question,
+                enhanced_question=enhanced_question,
             )
-
 
             return PipelineResponse(
-
                 answer="",
-
                 query=prolog_query,
-
                 raw_result=None,
-
                 sources=[]
-
             )
 
+        return self._finalize(
+            question,
+            enhanced_question,
+            prolog_query,
+            execution["result"]
+        )
 
 
-        result = execution["result"]
+
+    def resume(
+        self,
+        answer
+    ) -> PipelineResponse:
+        """
+        Called after the user answers a pending Prolog question.
+
+        Prolog can't be paused and resumed mid-query, so this stores
+        the answer in the interaction cache and re-executes the same
+        query from scratch. Already-answered questions are skipped
+        (prolog_bridge returns the cached value instead of asking
+        again), so reasoning simply continues past them.
+        """
+
+        pending = interaction.get_question()
+
+        if pending is None:
+            raise RuntimeError("No pending question to resume")
+
+        converted = self._coerce_answer(
+            modality=pending.modality,
+            raw=answer
+        )
+
+        interaction.remember(
+            pending.question,
+            converted
+        )
+
+        interaction.clear()
+
+        resume_context = interaction.get_resume_context()
+
+        if resume_context is None:
+            raise RuntimeError("No resume context for this session")
+
+        resume_query = resume_context["query"]
+
+        execution = self._execute_query(
+            resume_query
+        )
+
+        if execution["status"] == "waiting":
+
+            # Pending question already registered by prolog_bridge.ask_*.
+            return PipelineResponse(
+                answer="",
+                query=resume_query,
+                raw_result=None,
+                sources=[]
+            )
+
+        return self._finalize(
+            resume_context["question"],
+            resume_context["enhanced_question"],
+            resume_query,
+            execution["result"]
+        )
 
 
+
+    @staticmethod
+    def _coerce_answer(modality: str, raw):
+        """
+        Convert a widget value into what the Prolog callback
+        (and py_call unification) expects.
+        """
+
+        if modality == "boolean":
+            return str(raw).strip().lower() in ("yes", "true", "1")
+
+        if modality in ("numeric", "duration", "range", "scale"):
+            return float(raw)
+
+        return raw
+
+
+
+    def _finalize(
+        self,
+        question: str,
+        enhanced_question: str,
+        prolog_query: str,
+        result
+    ) -> PipelineResponse:
+        """
+        Shared completion path: translate the Prolog result, update
+        dialogue memory, and build the response returned to the UI.
+        """
 
         print(
             "Reached translation step"
         )
-
-
 
         answer = translate_result(
             enhanced_question,
@@ -323,16 +392,12 @@ class MedicalPipeline:
             result
         )
 
-
-
         self.state_manager.update(
             question=question,
             answer=answer,
             modality=None,
             prolog_query=prolog_query
         )
-
-
 
         self.session_memory.add(
             {
@@ -343,21 +408,15 @@ class MedicalPipeline:
             }
         )
 
-
-
         self.followup_manager.store(
             question,
             []
         )
 
-
-
         response = {
             "answer": answer,
             "style": "default"
         }
-
-
 
         response = (
             self.modality_handler
@@ -367,26 +426,17 @@ class MedicalPipeline:
             )
         )
 
-
-
         return PipelineResponse(
-
             answer=response["answer"],
-
             query=prolog_query,
-
             raw_result=result,
-
             sources=[
                 {
                     "title": "diabetes.txt",
                     "score": 1.0
                 }
             ]
-
         )
-
-
 
 
 pipeline = MedicalPipeline()

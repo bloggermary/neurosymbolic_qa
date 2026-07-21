@@ -288,7 +288,6 @@
       "fasting_glucose_mgdl"
     ]
   },
-  [
   {
     "id": "q026",
     "difficulty": "medium",
@@ -573,7 +572,6 @@
       "diagnose"
     ]
   },
-  [
   {
     "id": "q051",
     "difficulty": "easy",
@@ -909,7 +907,6 @@
       "diabetes"
     ]
   },
-
   {
     "id": "q081",
     "difficulty": "hard",
@@ -966,7 +963,6 @@
       "diabetes"
     ]
   },
-
   {
     "id": "q086",
     "difficulty": "medium",
@@ -1024,7 +1020,6 @@
       "diagnose"
     ]
   },
-
   {
     "id": "q091",
     "difficulty": "medium",
@@ -1083,7 +1078,6 @@
       "diabetes"
     ]
   },
-
   {
     "id": "q096",
     "difficulty": "easy",

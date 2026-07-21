@@ -11,12 +11,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 2.654634583974257
+    "time": 4.923099083011039
   },
   {
     "id": "q002",
     "question": "Does the patient have diabetes mellitus?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(D)",
     "expected_predicates": [
       "diabetes"
     ],
@@ -25,27 +25,27 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 4.772338291979395
+    "time": 6.050516791990958
   },
   {
     "id": "q003",
     "question": "A patient has fasting glucose of 135 mg/dL. Is this diagnostic for diabetes?",
-    "query": "fasting_glucose_mgdl(135), diagnose(Result)",
+    "query": "?- fasting_glucose_mgdl(135), diabetes_positive_by_fasting_glucose",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "diabetes_positive_by_fasting_glucose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.162215791991912
+    "correct": true,
+    "time": 8.015310709015466
   },
   {
     "id": "q004",
     "question": "HbA1c is 6.9%. Can diabetes be confirmed?",
-    "query": "hba1c_percent(6.9), diagnose(Result)",
+    "query": "hba1c_percent(6.9), diabetes",
     "expected_predicates": [
       "hba1c_percent",
       "diabetes_positive_by_hba1c"
@@ -55,12 +55,12 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 4.605823167017661
+    "time": 7.372085583978333
   },
   {
     "id": "q005",
     "question": "The patient has fasting glucose 128 mg/dL and HbA1c 6.6%. Is diabetes diagnosed even without symptoms?",
-    "query": "fasting_glucose_mgdl(128), hba1c_percent(6.6), diagnose(Result)",
+    "query": "fasting_glucose_mgdl(128), hba1c_percent(6.6), diagnose(D)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent",
@@ -71,7 +71,7 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 3.3794977499637753
+    "time": 8.566602249979042
   },
   {
     "id": "q006",
@@ -86,12 +86,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 6.928093375056051
+    "time": 8.337739333044738
   },
   {
     "id": "q007",
-    "question": "Does a 2-hour OGTT result of 12 mmol/L indicate diabetes?",
-    "query": "ogtt_2hr_mgdl(216), diabetes_positive_by_ogtt",
+    "question": "Does a 2-hour OGTT result of 200 mg/dL indicate diabetes?",
+    "query": "ogtt_2hr_mgdl(200), diabetes_positive_by_ogtt",
     "expected_predicates": [
       "ogtt_2hr_mgdl",
       "diabetes_positive_by_ogtt"
@@ -101,12 +101,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 4.235272292047739
+    "time": 10.591193416970782
   },
   {
     "id": "q008",
     "question": "Patient has elevated HbA1c but normal fasting glucose. Can diabetes still be diagnosed?",
-    "query": "hba1c_percent(6.8), fasting_glucose_mgdl(95), diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "hba1c_percent",
       "diabetes_positive_by_hba1c"
@@ -116,12 +116,12 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 6.65538645896595
+    "time": 5.495256540947594
   },
   {
     "id": "q009",
     "question": "Is fasting glucose 90 mg/dL diabetic?",
-    "query": "fasting_glucose_mgdl(90), diagnose(Result)",
+    "query": "?- fasting_glucose_mgdl(90), diabetes_positive_by_fasting_glucose",
     "expected_predicates": [
       "fasting_glucose_mgdl"
     ],
@@ -130,12 +130,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 5.870180000085384
+    "time": 17.506791959051043
   },
   {
     "id": "q010",
     "question": "Can HbA1c alone diagnose diabetes?",
-    "query": "diabetes_positive_by_hba1c",
+    "query": "?- diabetes_positive_by_hba1c",
     "expected_predicates": [
       "hba1c_percent",
       "diabetes_positive_by_hba1c"
@@ -145,77 +145,81 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 4.062788125011139
+    "time": 4.968554708990268
   },
   {
     "id": "q011",
     "question": "Does the patient have excessive thirst?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(D)",
     "expected_predicates": [
-      "diagnose"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": true,
-    "keyword_match": true,
-    "correct": true,
-    "time": 3.0472592499572784
-  },
-  {
-    "id": "q012",
-    "question": "Is frequent urination present?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diagnose"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": true,
-    "keyword_match": true,
-    "correct": true,
-    "time": 3.4112426249776036
-  },
-  {
-    "id": "q013",
-    "question": "Patient reports fatigue and blurred vision. Are these diabetes symptoms?",
-    "query": "diabetes",
-    "expected_predicates": [
-      "diabetes"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": true,
-    "keyword_match": true,
-    "correct": true,
-    "time": 3.2675341659924015
-  },
-  {
-    "id": "q014",
-    "question": "Is constant thirst combined with urination indicative of diabetes?",
-    "query": "diabetes",
-    "expected_predicates": [
-      "diabetes"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": true,
-    "keyword_match": true,
-    "correct": true,
-    "time": 4.198889750055969
-  },
-  {
-    "id": "q015",
-    "question": "A patient experiences fatigue, blurred vision, and excessive thirst. What symptoms are relevant?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diabetes"
+      "excessive_thirst"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 4.098621500073932
+    "time": 11.75309004203882
+  },
+  {
+    "id": "q012",
+    "question": "Is frequent urination present?",
+    "query": "diagnose(X)",
+    "expected_predicates": [
+      "excessive_urination"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": false,
+    "keyword_match": true,
+    "correct": false,
+    "time": 11.284931291011162
+  },
+  {
+    "id": "q013",
+    "question": "Patient reports fatigue and blurred vision. Are these diabetes symptoms?",
+    "query": "diagnose(D)",
+    "expected_predicates": [
+      "fatigue",
+      "blurred_vision"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": false,
+    "keyword_match": true,
+    "correct": false,
+    "time": 7.135907166055404
+  },
+  {
+    "id": "q014",
+    "question": "Is constant thirst combined with urination indicative of diabetes?",
+    "query": "diagnose(X)",
+    "expected_predicates": [
+      "excessive_thirst",
+      "excessive_urination"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": false,
+    "keyword_match": true,
+    "correct": false,
+    "time": 5.997218333999626
+  },
+  {
+    "id": "q015",
+    "question": "A patient experiences fatigue, blurred vision, and excessive thirst. What symptoms are relevant?",
+    "query": "diagnose(D)",
+    "expected_predicates": [
+      "fatigue",
+      "blurred_vision",
+      "excessive_thirst"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": false,
+    "keyword_match": true,
+    "correct": false,
+    "time": 6.429847041959874
   },
   {
     "id": "q016",
@@ -229,12 +233,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 2.5493356669321656
+    "time": 6.156056958017871
   },
   {
     "id": "q017",
     "question": "HbA1c is 6.3%. What does this indicate?",
-    "query": "hba1c_percent(6.3), diagnose(Result)",
+    "query": "hba1c_percent(6.3), diagnose(X)",
     "expected_predicates": [
       "hba1c_percent"
     ],
@@ -243,7 +247,7 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 4.473332708002999
+    "time": 22.51401070796419
   },
   {
     "id": "q018",
@@ -257,12 +261,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 5.501220208010636
+    "time": 26.18446675001178
   },
   {
     "id": "q019",
     "question": "Fasting glucose is normal but HbA1c is elevated. How is this interpreted?",
-    "query": "diabetes_positive_by_hba1c",
+    "query": "?- diagnose(Diagnosis)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -272,22 +276,22 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 5.804365999996662
+    "time": 11.040276458021253
   },
   {
     "id": "q020",
     "question": "Patient has borderline fasting glucose of 124 mg/dL. Is this prediabetes?",
-    "query": "fasting_glucose_mgdl(124), prediabetes",
+    "query": "prediabetes",
     "expected_predicates": [
       "prediabetes",
       "fasting_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "correct": true,
-    "time": 4.686442542006262
+    "correct": false,
+    "time": 3.7095825410215184
   },
   {
     "id": "q021",
@@ -301,7 +305,7 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 3.505063542048447
+    "time": 8.912585374899209
   },
   {
     "id": "q022",
@@ -316,7 +320,7 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 3.460632709087804
+    "time": 7.291238458012231
   },
   {
     "id": "q023",
@@ -330,12 +334,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 3.2851963330758736
+    "time": 11.340660415939055
   },
   {
     "id": "q024",
     "question": "Patient has fasting glucose 122 mg/dL but normal HbA1c. Is this diabetes?",
-    "query": "fasting_glucose_mgdl(122), diagnose(Result)",
+    "query": "diabetes",
     "expected_predicates": [
       "prediabetes",
       "fasting_glucose_mgdl",
@@ -346,12 +350,12 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 8.131416499963962
+    "time": 19.825029041967355
   },
   {
     "id": "q025",
     "question": "Should lifestyle changes be recommended for fasting glucose 120 mg/dL?",
-    "query": "fasting_glucose_mgdl(120), diagnose(Result)",
+    "query": "fasting_glucose_mgdl(120)",
     "expected_predicates": [
       "prediabetes",
       "fasting_glucose_mgdl"
@@ -361,27 +365,26 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 3.2854421669617295
+    "time": 17.656240041018464
   },
   {
     "id": "q026",
-    "question": "The patient reports increased urination and wants to know whether diabetes should be investigated. Which diagnostic check should be performed?",
-    "query": "diagnose(Result)",
+    "question": "The patient reports increased urination and wants to know whether diabetes should be investigated. Which diagnostic workflow should be used?",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "diagnose",
-      "diabetes"
+      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.8178302919259295
+    "correct": true,
+    "time": 5.245314750005491
   },
   {
     "id": "q027",
     "question": "A patient wants to know if they should be evaluated for diabetes.",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -390,12 +393,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 2.145630707964301
+    "time": 7.475162958027795
   },
   {
     "id": "q028",
     "question": "A patient has possible diabetes symptoms but has not been tested. What diagnostic workflow should be used?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -404,12 +407,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 2.240383542026393
+    "time": 4.811327208066359
   },
   {
     "id": "q029",
     "question": "Should diabetes be evaluated in this patient?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diabetes"
     ],
@@ -418,41 +421,41 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.7155149589525536
+    "time": 9.29025029100012
   },
   {
     "id": "q030",
     "question": "The patient has possible diabetes indicators but normal glucose readings. How should diagnosis be approached?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(Diagnosis)",
     "expected_predicates": [
       "diagnose",
-      "fasting_glucose_mgdl"
+      "fasting_plasma_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.5523624590132385
+    "time": 4.459593707928434
   },
   {
     "id": "q031",
     "question": "What fasting glucose value should be checked when evaluating diabetes?",
-    "query": "fasting_glucose_mgdl(Value)",
+    "query": "fasting_glucose_mgdl(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl"
+      "fasting_plasma_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.7176557080820203
+    "correct": false,
+    "time": 6.554171458003111
   },
   {
     "id": "q032",
     "question": "What HbA1c value should be measured for diabetes evaluation?",
-    "query": "hba1c_percent(Value)",
+    "query": "hba1c_percent(H)",
     "expected_predicates": [
       "hba1c_percent"
     ],
@@ -461,54 +464,51 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 1.9189836248988286
+    "time": 6.422851625015028
   },
   {
     "id": "q033",
     "question": "Can HbA1c be used as a diagnostic measurement for diabetes?",
-    "query": "diabetes_positive_by_hba1c",
+    "query": "?- diabetes_positive_by_hba1c",
     "expected_predicates": [
-      "hba1c_percent",
-      "diabetes_positive_by_hba1c"
+      "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.4645881669130176
+    "time": 7.586340166977607
   },
   {
     "id": "q034",
     "question": "Can fasting glucose after adequate fasting be used to diagnose diabetes?",
     "query": "diabetes_positive_by_fasting_glucose",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "fasting_duration_hours",
-      "diabetes_positive_by_fasting_glucose"
+      "fasting_plasma_glucose_mgdl",
+      "fasting_duration_hours"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.9835933330468833
+    "time": 7.03676725004334
   },
   {
     "id": "q035",
     "question": "Should multiple diabetes measurements be considered during diagnosis?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "hba1c_percent",
-      "diabetes_positive"
+      "fasting_plasma_glucose_mgdl",
+      "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.2691837910097092
+    "time": 4.550132540985942
   },
   {
     "id": "q036",
@@ -522,51 +522,51 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 2.426002125022933
+    "time": 5.6905381249962375
   },
   {
     "id": "q037",
     "question": "Can fasting glucose values between 100 and 125 mg/dL indicate prediabetes?",
-    "query": "fasting_glucose_mgdl(110), prediabetes",
+    "query": "?- prediabetes",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "prediabetes_positive"
+      "fasting_plasma_glucose_mgdl",
+      "prediabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 4.188390332972631
+    "time": 4.524402874987572
   },
   {
     "id": "q038",
     "question": "Should prediabetes be considered when fasting glucose is elevated but below diabetes range?",
     "query": "prediabetes",
     "expected_predicates": [
-      "prediabetes_positive"
+      "prediabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.9191087919753045
+    "correct": true,
+    "time": 3.444171042065136
   },
   {
     "id": "q039",
     "question": "Can the patient be classified as prediabetic based on fasting glucose criteria?",
     "query": "prediabetes",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "prediabetes_positive"
+      "prediabetes",
+      "fasting_plasma_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 12.358206709031947
+    "time": 10.545610959059559
   },
   {
     "id": "q040",
@@ -580,12 +580,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 1.6747040830086917
+    "time": 3.357874834095128
   },
   {
     "id": "q041",
     "question": "Which diabetes diagnosis predicate should be used?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -594,65 +594,63 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 2.5832349590491503
+    "time": 5.276775958016515
   },
   {
     "id": "q042",
     "question": "Can diabetes diagnosis be confirmed using available criteria?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(Dx)",
     "expected_predicates": [
-      "diabetes_positive"
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 1.6147061670199037
+    "time": 5.185496208956465
   },
   {
     "id": "q043",
     "question": "Can HbA1c measurement contribute to diabetes diagnosis?",
-    "query": "diabetes_positive_by_hba1c",
+    "query": "?- diabetes_positive_by_hba1c",
     "expected_predicates": [
-      "hba1c_percent",
-      "diabetes_positive_by_hba1c"
+      "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 4.661850958014838
+    "time": 6.684039457933977
   },
   {
     "id": "q044",
     "question": "Should fasting glucose measurement be used when diagnosing diabetes?",
-    "query": "diabetes_positive_by_fasting_glucose",
+    "query": "?- diabetes_positive_by_fasting_glucose",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "diabetes_positive_by_fasting_glucose"
+      "fasting_plasma_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.3430277090519667
+    "time": 15.805328374961391
   },
   {
     "id": "q045",
-    "question": "Can diabetes be diagnosed using one of the available diagnostic criteria?",
-    "query": "diagnose(Result)",
+    "question": "Can diabetes be diagnosed using the available diagnostic criteria?",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "diabetes_positive"
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.962320249993354
+    "time": 4.645403458038345
   },
   {
     "id": "q046",
@@ -666,12 +664,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 2.5062874170253053
+    "time": 11.412341624964029
   },
   {
     "id": "q047",
     "question": "Can diabetes status be determined using the diagnostic workflow?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(Status)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -680,26 +678,26 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 2.4976167909335345
+    "time": 3.6848241250263527
   },
   {
     "id": "q048",
-    "question": "Should diabetes positive criteria be checked?",
-    "query": "diabetes_positive",
+    "question": "Should diabetes criteria be checked?",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "diabetes_positive"
+      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 7.117938041919842
+    "time": 4.8141034579603
   },
   {
     "id": "q049",
     "question": "Can diabetes be ruled out if diagnostic criteria are not met?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(D)",
     "expected_predicates": [
       "low_risk"
     ],
@@ -708,12 +706,12 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 6.390384459053166
+    "time": 3.851092000026256
   },
   {
     "id": "q050",
     "question": "What is the final classification after applying diabetes criteria?",
-    "query": "diagnose(Result)",
+    "query": "?- diagnose(Classification)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -722,12 +720,12 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 1.8766197499353439
+    "time": 3.6812441250076517
   },
   {
     "id": "q051",
     "question": "Can the patient be evaluated for diabetes?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -736,56 +734,56 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 1.851179042016156
+    "time": 5.1657320419326425
   },
   {
     "id": "q052",
     "question": "Should diabetes diagnostic criteria be checked?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(D)",
     "expected_predicates": [
-      "diabetes_positive"
+      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.7555805830052122
+    "correct": true,
+    "time": 4.921750791021623
   },
   {
     "id": "q053",
     "question": "What diagnostic procedure should be used to determine diabetes status?",
-    "query": "(diabetes_positive_by_random_glucose; diabetes_positive_by_fasting_glucose; diabetes_positive_by_ogtt; diabetes_positive_by_hba1c)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.356674832990393
+    "correct": true,
+    "time": 6.6412057500565425
   },
   {
     "id": "q054",
     "question": "Which diabetes criteria should be evaluated when determining diagnosis?",
-    "query": "(diabetes_positive_by_random_glucose; diabetes_positive_by_fasting_glucose; diabetes_positive_by_ogtt; diabetes_positive_by_hba1c)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "diabetes_positive",
-      "diabetes_positive_by_fasting_glucose",
-      "diabetes_positive_by_hba1c"
+      "diagnose",
+      "fasting_plasma_glucose_mgdl",
+      "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "correct": true,
-    "time": 6.460697832982987
+    "correct": false,
+    "time": 4.122240500058979
   },
   {
     "id": "q055",
     "question": "Can diabetes status be determined using the available diagnostic rules?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(Dx)",
     "expected_predicates": [
       "diabetes"
     ],
@@ -794,12 +792,12 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 1.8665045420639217
+    "time": 4.586978624924086
   },
   {
     "id": "q056",
     "question": "Is the patient diagnosed with diabetes?",
-    "query": "diagnose(Result)",
+    "query": "?- diagnose(D)",
     "expected_predicates": [
       "diabetes"
     ],
@@ -808,12 +806,12 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.1659857080085203
+    "time": 6.0414996249601245
   },
   {
     "id": "q057",
     "question": "Should diabetes diagnostic tests be performed?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(V)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -822,7 +820,7 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 2.8920035000192
+    "time": 5.42730429104995
   },
   {
     "id": "q058",
@@ -836,28 +834,28 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 1.854310250026174
+    "time": 5.392214125022292
   },
   {
     "id": "q059",
     "question": "Should diabetes criteria be evaluated even if no symptoms are present?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "diabetes_positive"
+      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.2792603329289705
+    "correct": true,
+    "time": 4.872558917035349
   },
   {
     "id": "q060",
     "question": "Can diabetes risk be evaluated using glucose measurements?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(D)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
+      "fasting_plasma_glucose_mgdl",
       "diabetes"
     ],
     "expected_contains": [],
@@ -865,85 +863,83 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 1.8008337079081684
+    "time": 6.815309208002873
   },
   {
     "id": "q061",
     "question": "What glucose measurement is used for diabetes evaluation?",
-    "query": "diabetes_positive_by_random_glucose; diabetes_positive_by_fasting_glucose; diabetes_positive_by_ogtt; diabetes_positive_by_hba1c",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl"
+      "fasting_plasma_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 6.556184874963947
+    "time": 5.881751750013791
   },
   {
     "id": "q062",
     "question": "Can HbA1c measurement be used for diabetes diagnosis?",
     "query": "diabetes_positive_by_hba1c",
     "expected_predicates": [
-      "hba1c_percent",
-      "diabetes_positive_by_hba1c"
+      "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 3.3468988749664277
+    "time": 7.262694834033027
   },
   {
     "id": "q063",
     "question": "Should diabetes evaluation include glucose measurements?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl"
+      "fasting_plasma_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 4.431497875018977
+    "time": 6.415660541970283
   },
   {
     "id": "q064",
     "question": "Which laboratory values should be checked when diabetes is suspected?",
-    "query": "(random_glucose_mgdl(Value); fasting_glucose_mgdl(Value); ogtt_2hr_mgdl(Value); hba1c_percent(Value))",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
+      "fasting_plasma_glucose_mgdl",
       "hba1c_percent"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": false,
+    "keyword_match": true,
+    "correct": false,
+    "time": 4.274161875015125
+  },
+  {
+    "id": "q065",
+    "question": "How should diabetes classification be performed when test results disagree?",
+    "query": "diagnose(X)",
+    "expected_predicates": [
+      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 12.029214499983937
-  },
-  {
-    "id": "q065",
-    "question": "How should diabetes classification be performed when test results disagree?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diagnose",
-      "diabetes_positive"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "correct": false,
-    "time": 2.1048173749586567
+    "time": 5.662479749997146
   },
   {
     "id": "q066",
     "question": "Can diabetes diagnosis be determined using the KB rules?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diabetes"
     ],
@@ -952,223 +948,236 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.150681541999802
+    "time": 4.882340959040448
   },
   {
     "id": "q067",
     "question": "Are diagnostic criteria required to confirm diabetes?",
-    "query": "diagnose(Result)",
+    "query": "?- diagnose(X)",
     "expected_predicates": [
-      "diabetes_positive"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "correct": false,
-    "time": 2.393647334072739
-  },
-  {
-    "id": "q068",
-    "question": "Can elevated HbA1c and fasting glucose confirm diabetes?",
-    "query": "diabetes_positive_by_hba1c, diabetes_positive_by_fasting_glucose",
-    "expected_predicates": [
-      "hba1c_percent",
-      "fasting_glucose_mgdl",
-      "diabetes_positive"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "correct": false,
-    "time": 6.038857833016664
-  },
-  {
-    "id": "q069",
-    "question": "Which criteria determine diabetes classification?",
-    "query": "(diabetes_positive_by_random_glucose; diabetes_positive_by_fasting_glucose; diabetes_positive_by_ogtt; diabetes_positive_by_hba1c)",
-    "expected_predicates": [
-      "diabetes_positive",
-      "diabetes_positive_by_hba1c",
-      "diabetes_positive_by_fasting_glucose"
+      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 6.654766375082545
+    "time": 6.92052808299195
+  },
+  {
+    "id": "q068",
+    "question": "Can elevated HbA1c and fasting glucose confirm diabetes?",
+    "query": "diagnose(D)",
+    "expected_predicates": [
+      "hba1c_percent",
+      "fasting_plasma_glucose_mgdl",
+      "diabetes"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": false,
+    "keyword_match": true,
+    "correct": false,
+    "time": 6.029105916968547
+  },
+  {
+    "id": "q069",
+    "question": "Which criteria determine diabetes classification?",
+    "query": "diagnose(X)",
+    "expected_predicates": [
+      "diagnose",
+      "hba1c_percent",
+      "fasting_plasma_glucose_mgdl"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": false,
+    "keyword_match": true,
+    "correct": false,
+    "time": 5.96769758395385
   },
   {
     "id": "q070",
     "question": "Can diabetes diagnosis use multiple laboratory criteria?",
-    "query": "diabetes_positive_by_hba1c, diabetes_positive_by_fasting_glucose",
+    "query": "?- diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
+      "diagnose",
       "hba1c_percent",
-      "diabetes_positive"
+      "fasting_plasma_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 4.060770000098273
+    "time": 7.332621250068769
   },
   {
     "id": "q071",
     "question": "Which laboratory value is used to assess diabetes?",
-    "query": "hba1c_percent(Value)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl"
+      "fasting_plasma_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 4.806909124949016
+    "time": 6.921932916971855
   },
   {
     "id": "q072",
     "question": "Can diabetes status be determined from diagnostic measurements?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(Status)",
     "expected_predicates": [
-      "diabetes_positive"
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 1.8859267919324338
+    "time": 2.8423510420834646
   },
   {
     "id": "q073",
     "question": "Should HbA1c be measured when evaluating diabetes?",
-    "query": "hba1c_percent(Value)",
+    "query": "?- diabetes_positive_by_hba1c",
     "expected_predicates": [
       "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.078076458070427
+    "correct": false,
+    "time": 19.450498208985664
   },
   {
     "id": "q074",
     "question": "Which diagnostic measurements help classify diabetes?",
-    "query": "diabetes_positive_by_random_glucose; diabetes_positive_by_fasting_glucose; diabetes_positive_by_ogtt; diabetes_positive_by_hba1c",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "hba1c_percent",
-      "diagnose"
+      "diagnose",
+      "fasting_plasma_glucose_mgdl",
+      "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 10.60770012496505
+    "time": 4.664638667018153
   },
   {
     "id": "q075",
     "question": "Can prediabetes be identified using fasting glucose criteria?",
-    "query": "diabetes_positive_by_fasting_glucose",
+    "query": "prediabetes",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "prediabetes_positive"
+      "prediabetes",
+      "fasting_plasma_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 6.03483120794408
+    "time": 7.134253083029762
   },
   {
     "id": "q076",
     "question": "A patient has normal fasting glucose but elevated HbA1c. Can diabetes still be diagnosed?",
-    "query": "fasting_glucose_mgdl(95), hba1c_percent(6.8), diagnose(Result)",
+    "query": "diagnose(D)",
     "expected_predicates": [
-      "hba1c_percent",
-      "diabetes_positive_by_hba1c"
+      "diagnose",
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 5.2710500420071185
+    "time": 4.770200000028126
   },
   {
     "id": "q077",
     "question": "If laboratory values are borderline, how should diabetes classification be determined?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(Class)",
     "expected_predicates": [
-      "diagnose",
-      "diabetes_positive"
+      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.0057445419952273
+    "correct": true,
+    "time": 3.3787491250550374
   },
   {
     "id": "q078",
     "question": "A patient has HbA1c below diabetes threshold and fasting glucose near the prediabetes range. Should prediabetes be considered?",
     "query": "prediabetes",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "prediabetes_positive"
+      "diagnose",
+      "prediabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 10.355334250023589
+    "time": 2.6439162499736995
   },
   {
     "id": "q079",
     "question": "How should fluctuating glucose measurements be evaluated for diabetes?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "diabetes_positive_by_fasting_glucose"
+      "diagnose",
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 1.924351082998328
+    "time": 4.423085042042658
   },
   {
     "id": "q080",
     "question": "Can an abnormal HbA1c value be used as a diabetes diagnostic criterion?",
-    "query": "diabetes_positive_by_hba1c",
+    "query": "?- diabetes_positive_by_hba1c",
     "expected_predicates": [
-      "hba1c_percent",
-      "diabetes_positive_by_hba1c"
+      "diagnose",
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.598654333036393
+    "time": 5.015067750005983
   },
   {
     "id": "q081",
     "question": "Should diabetes screening be performed using diagnostic measurements?",
     "query": "diagnose(Result)",
     "expected_predicates": [
+      "diagnose"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": true,
+    "keyword_match": true,
+    "correct": true,
+    "time": 4.767374458955601
+  },
+  {
+    "id": "q082",
+    "question": "Can diabetes classification be determined from available diagnostic criteria?",
+    "query": "diagnose(R)",
+    "expected_predicates": [
       "diagnose",
       "diabetes"
     ],
@@ -1177,26 +1186,12 @@
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.6317257090704516
-  },
-  {
-    "id": "q082",
-    "question": "Can diabetes classification be determined from available diagnostic criteria?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diabetes_positive"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "correct": false,
-    "time": 2.895027459017001
+    "time": 5.198135958984494
   },
   {
     "id": "q083",
     "question": "What screening workflow should be used to determine diabetes status?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -1205,99 +1200,84 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 4.366686332970858
+    "time": 4.884969917009585
   },
   {
     "id": "q084",
     "question": "Can prediabetes be detected using fasting glucose criteria?",
     "query": "prediabetes",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "prediabetes_positive"
+      "prediabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 4.823094874969684
+    "correct": true,
+    "time": 2.7664303329074755
   },
   {
     "id": "q085",
     "question": "Which predicates determine whether diabetes is present?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "diabetes",
-      "diabetes_positive"
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 5.121269332943484
+    "time": 5.951765084057115
   },
   {
     "id": "q086",
     "question": "Which laboratory tests should be checked when diabetes is suspected?",
-    "query": "(fasting_glucose_mgdl(V1); random_glucose_mgdl(V2); ogtt_2hr_mgdl(V3); hba1c_percent(V4); fasting_duration_hours(V5))",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "hba1c_percent"
+      "ask_fasting_plasma_glucose_mgdl",
+      "ask_hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "correct": true,
-    "time": 8.986665457952768
+    "correct": false,
+    "time": 4.798292624996975
   },
   {
     "id": "q087",
     "question": "If laboratory tests are inconsistent, what diagnostic procedure should be used?",
-    "query": "diabetes_positive_by_ogtt",
+    "query": "?- diagnose(Procedure)",
     "expected_predicates": [
       "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.5801555409561843
+    "correct": true,
+    "time": 8.90157620899845
   },
   {
     "id": "q088",
     "question": "Can diabetes classification rely on diagnostic measurements?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "diabetes_positive"
+      "diagnose",
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.9965775420423597
+    "time": 4.71962720900774
   },
   {
     "id": "q089",
     "question": "Are laboratory criteria required for diabetes diagnosis?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diabetes_positive"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "correct": false,
-    "time": 4.422767042065971
-  },
-  {
-    "id": "q090",
-    "question": "How should follow-up diagnosis be structured when measurements are unavailable?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(D)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -1306,101 +1286,113 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 3.8705534170148894
+    "time": 4.401546333101578
   },
   {
-    "id": "q091",
-    "question": "Which measurements are important for evaluating diabetes progression?",
-    "query": "random_glucose_mgdl(RG), fasting_duration_hours(FH), fasting_glucose_mgdl(FG), ogtt_2hr_mgdl(OG), hba1c_percent(HBA)",
+    "id": "q090",
+    "question": "How should follow-up diagnosis be structured when measurements are unavailable?",
+    "query": "?- diagnose(FollowUp)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "hba1c_percent"
+      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 7.369823582936078
+    "time": 3.856250207987614
   },
   {
-    "id": "q092",
-    "question": "How can diabetes classification be performed using available evidence?",
-    "query": "diagnose(Result)",
+    "id": "q091",
+    "question": "Which measurements are important for evaluating diabetes progression?",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "diagnose",
-      "diabetes_positive"
+      "ask_fasting_plasma_glucose_mgdl",
+      "ask_hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 1.8402677080594003
+    "time": 6.490252415998839
+  },
+  {
+    "id": "q092",
+    "question": "How can diabetes classification be performed using available evidence?",
+    "query": "diagnose(X)",
+    "expected_predicates": [
+      "diagnose",
+      "diabetes"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": false,
+    "keyword_match": true,
+    "correct": false,
+    "time": 4.602645416045561
   },
   {
     "id": "q093",
     "question": "Should HbA1c measurement be considered during diabetes evaluation?",
     "query": "diabetes_positive_by_hba1c",
     "expected_predicates": [
-      "hba1c_percent"
+      "ask_hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 3.2086664169328287
+    "time": 6.759042417048477
   },
   {
     "id": "q094",
     "question": "Can early glucose abnormalities be classified as prediabetes?",
     "query": "prediabetes",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "prediabetes_positive"
+      "prediabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.4866486670216545
+    "correct": true,
+    "time": 4.412094541010447
   },
   {
     "id": "q095",
     "question": "How should diabetes diagnosis be evaluated using multiple criteria?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "hba1c_percent",
-      "diabetes_positive"
+      "diagnose",
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.399608499952592
+    "time": 3.4210479999892414
   },
   {
     "id": "q096",
     "question": "Does the patient have diabetes according to the knowledge base?",
-    "query": "diabetes",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "correct": true,
-    "time": 4.401237291982397
+    "correct": false,
+    "time": 6.810306875035167
   },
   {
     "id": "q097",
     "question": "Can diabetes be diagnosed using the available criteria?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -1409,52 +1401,50 @@
     "predicate_match": true,
     "keyword_match": true,
     "correct": true,
-    "time": 1.8997849579900503
+    "time": 4.312112250016071
   },
   {
     "id": "q098",
     "question": "Can changing HbA1c values affect diabetes classification?",
-    "query": "hba1c_percent(Value), diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
-      "hba1c_percent",
-      "diabetes_positive_by_hba1c"
+      "diagnose",
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 5.381677458994091
+    "time": 6.83678733301349
   },
   {
     "id": "q099",
     "question": "Can conflicting laboratory evidence require further diabetes evaluation?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(D)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "hba1c_percent",
       "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.2740317909047008
+    "correct": true,
+    "time": 4.4413484579417855
   },
   {
     "id": "q100",
     "question": "In ambiguous cases, how should diabetes classification be decided?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(X)",
     "expected_predicates": [
       "diagnose",
-      "diabetes_positive"
+      "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
     "correct": false,
-    "time": 2.323725000023842
+    "time": 3.3207437089877203
   }
 ]

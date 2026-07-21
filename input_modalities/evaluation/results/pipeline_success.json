@@ -1,3 +1,6 @@
 {
-  "success_rate": 0.80
+  "total_questions": 100,
+  "successful": 52,
+  "failed": 100,
+  "success_rate": 0.52
 }

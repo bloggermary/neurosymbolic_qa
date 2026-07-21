@@ -18,6 +18,15 @@ def generate_query(question: str, prolog_code: str) -> str:
 
     - Use only predicates existing in the knowledge base.
 
+    - NEVER call ask_boolean, ask_numeric, ask_string, ask_category, ask_range,
+      ask_duration, or ask_scale directly in the query. These are internal
+      input-collection primitives used INSIDE the knowledge base's own rules,
+      not queryable facts - calling them directly passes a bare Prolog atom
+      where a natural-language question string is expected, which breaks the
+      dialogue. Always call a real diagnostic/domain predicate instead (e.g.
+      diagnose/1, diabetes/0, prediabetes/0, low_risk/0, or a specific
+      criterion predicate) and let that predicate call ask_* internally.
+
     - Variables must start with uppercase letters.
 
     - Do not use natural language words as variables.

@@ -56,7 +56,7 @@ def save_plot(name):
 def plot_modality_accuracy():
 
     data = load(
-        "modality_metrics.json"
+        "modality_results.json"
     )
 
     accuracy = data["accuracy"]
@@ -180,7 +180,7 @@ def plot_modality_confusion():
 def plot_query_accuracy():
 
     data = load(
-        "query_metrics.json"
+        "query_results.json"
     )
 
 

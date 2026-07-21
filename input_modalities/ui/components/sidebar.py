@@ -7,6 +7,7 @@ from __future__ import annotations
 import streamlit as st
 
 from services.session_service import session
+from services.interaction_service import interaction
 
 
 def render_sidebar() -> None:
@@ -29,6 +30,7 @@ def render_sidebar() -> None:
             use_container_width=True,
         ):
             session.clear()
+            interaction.reset_all()
             st.rerun()
 
         st.divider()

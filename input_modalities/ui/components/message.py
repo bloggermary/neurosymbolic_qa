@@ -40,3 +40,7 @@ def render_message(message: dict) -> None:
                     if reasoning.get("result") is not None:
                         st.markdown("**Raw Prolog Result**")
                         st.code(str(reasoning["result"]))
+
+                    if reasoning.get("error"):
+                        st.markdown("**Error**")
+                        st.code(str(reasoning["error"]))
