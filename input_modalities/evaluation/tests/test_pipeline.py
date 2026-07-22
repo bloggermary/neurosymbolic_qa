@@ -8,7 +8,16 @@ from evaluation.testing_suite.metrics import load_json, save_json
 
 
 SNIPPET_PATH = "data/snippets/diabetes.txt"
-KB_PATH = "prolog/generated_kb/diabetes.pl"
+
+# NOT prolog/generated_kb/diabetes.pl - that's the exact file the live
+# Streamlit app consults for its "diabetes" snippet. Writing to it here
+# would silently overwrite the live app's on-disk KB with a different
+# LLM generation while a running server still has its OLD generation
+# consulted in memory, causing generate_query() (which reads the file
+# fresh from disk) and the actually-loaded engine to drift apart - the
+# exact bug that produced "Unknown procedure: present_symptoms/4" for
+# a real user. Keep eval-only KBs fully separate from the live app's.
+KB_PATH = "prolog/generated_kb/_eval_diabetes_pipeline.pl"
 
 
 def load_kb() -> str:

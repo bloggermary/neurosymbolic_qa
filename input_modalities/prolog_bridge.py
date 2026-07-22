@@ -68,7 +68,14 @@ def ask_boolean(question: str):
 
     cached = interaction.get_cached_answer(question)
     if cached is not NO_ANSWER:
-        return cached
+        # The KB calls this as py_call(prolog_bridge:ask_boolean(Question), true),
+        # unifying the return value against the literal Prolog atom `true`.
+        # Only the Python STRING 'true' unifies with that atom - a Python bool
+        # True/False does not (janus converts it to something else entirely),
+        # so returning the raw cached bool here would make ask_boolean fail
+        # unconditionally regardless of the real answer, once it's re-asked
+        # during resume().
+        return "true" if cached else "false"
 
     interaction.request(
         question=question,
@@ -186,4 +193,87 @@ def ask_scale(question: str):
             "min": 1,
             "max": 10
         }
+    )
+
+
+
+def ask_multiple_category(question: str, categories):
+    """
+    Select any number of applicable options at once (e.g. "which of
+    these symptoms apply?"), instead of asking one boolean per option.
+    Returns a Prolog list of the selected category atoms/strings.
+    """
+
+    cached = interaction.get_cached_answer(question)
+    if cached is not NO_ANSWER:
+        return cached
+
+    interaction.request(
+        question=question,
+        modality="multiple_category",
+        options=categories
+    )
+
+    raise WaitingForUserInput(
+        question=question,
+        modality="multiple_category",
+        options=categories
+    )
+
+
+
+def ask_multi_structured_input(question: str, mode: str, groups=None):
+    """
+    Collect ordered (mode="sequence"), ranked (mode="ranking"), or
+    grouped (mode="grouping", using `groups` as the group labels)
+    multi-item input. Returns a Prolog list (sequence/ranking) or a
+    top-level dict keyed by group name (grouping).
+    """
+
+    cached = interaction.get_cached_answer(question)
+    if cached is not NO_ANSWER:
+        return cached
+
+    options = {"mode": mode, "groups": groups or []}
+
+    interaction.request(
+        question=question,
+        modality="multi_structured_input",
+        options=options
+    )
+
+    raise WaitingForUserInput(
+        question=question,
+        modality="multi_structured_input",
+        options=options
+    )
+
+
+
+def ask_multi_attribute_entity(question: str, entity: str, fields):
+    """
+    Collect one structured record with several typed fields in a
+    single turn (e.g. a medication's name/dose/frequency), instead of
+    three separate questions. `fields` is a Prolog list of
+    [key, prompt, type] lists, where type is one of:
+    string, int, float, bool, category. Returns a top-level dict
+    {"entity": entity, "data": {key: value, ...}}.
+    """
+
+    cached = interaction.get_cached_answer(question)
+    if cached is not NO_ANSWER:
+        return cached
+
+    options = {"entity": entity, "fields": fields}
+
+    interaction.request(
+        question=question,
+        modality="multi_attribute_entity",
+        options=options
+    )
+
+    raise WaitingForUserInput(
+        question=question,
+        modality="multi_attribute_entity",
+        options=options
     )

@@ -49,7 +49,6 @@ _NO_FOLLOWUP_KEYWORDS = (
     "how old",
     "age",
     "cups of water",
-    "medication",
     "blurred vision",
 )
 
@@ -60,6 +59,25 @@ _CONDITIONAL_FOLLOWUPS: dict[str, dict[str, tuple[str, str]]] = {
     "weight loss": {
         "boolean": ("numeric", "weight_loss_amount"),
         "numeric": ("duration", "weight_loss_duration"),
+    },
+    "medication": {
+        # A single medication CATEGORY pick is missing WHICH ones
+        # specifically apply - a multi-select is the natural complement.
+        "category": ("multiple_category", "medication_list"),
+        # A plain yes/no "are you on medication" is missing WHAT the
+        # medication actually is - name/dose/frequency, one entry per
+        # attribute, is the natural complement.
+        # Other medication phrasings (e.g. "how many medications do you
+        # take?", numeric) fall through with no follow-up, unchanged.
+        "boolean": ("multi_attribute_entity", "medication_details"),
+    },
+    "symptom": {
+        # Having just picked SEVERAL symptoms at once is missing the
+        # ORDER they appeared in - a natural complement once more than
+        # one symptom is on the table. A single-modality "symptom"
+        # question (boolean/string/etc.) falls through to the generic
+        # _TOPIC_FOLLOWUPS entry below instead.
+        "multiple_category": ("multi_structured_input", "symptom_order"),
     },
 }
 
@@ -105,9 +123,11 @@ def generate_followup(question: str, modality: str | None = None) -> list[dict]:
 
     Returns
     -------
-    A list containing zero or one {"question": str, "modality": str}
-    dicts - a list (not a single dict) so callers can uniformly treat
-    "no follow-up needed" as an empty list.
+    A list containing zero or one
+    {"question": str, "modality": str, "topic": str} dicts - a list
+    (not a single dict) so callers can uniformly treat "no follow-up
+    needed" as an empty list. `topic` is a human-readable label (for
+    UI display); `question` is a stable slug (for evaluation matching).
     """
 
     complementary_modality, topic = _find_topic(question, modality)
@@ -122,5 +142,6 @@ def generate_followup(question: str, modality: str | None = None) -> list[dict]:
         {
             "question": f"{topic}_{complementary_modality}",
             "modality": complementary_modality,
+            "topic": topic.replace("_", " "),
         }
     ]

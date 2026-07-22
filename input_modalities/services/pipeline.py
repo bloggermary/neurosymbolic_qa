@@ -23,6 +23,7 @@ import streamlit as st
 from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
 from llm.response_translator import translate_result
+from llm.followup_generator import generate_followup
 
 
 from dialogue.session_handler import SessionMemory
@@ -447,6 +448,23 @@ class MedicalPipeline:
 
 
 
+    def followups_for_pending(self, question: str, modality: str | None) -> list[dict]:
+        """
+        Suggest (and remember) a complementary follow-up for the
+        Prolog question currently being asked, e.g. a medication
+        yes/no is missing WHICH medication - name/dose/frequency.
+        Purely informational: nothing consumes the suggestion back
+        into the Prolog dialogue, it's just surfaced to the user.
+        """
+
+        followups = generate_followup(question, modality)
+
+        self.followup_manager.store(question, followups)
+
+        return followups
+
+
+
     @staticmethod
     def _coerce_answer(modality: str, raw):
         """
@@ -460,6 +478,10 @@ class MedicalPipeline:
         if modality in ("numeric", "duration", "range", "scale"):
             return float(raw)
 
+        # string, category, multiple_category, multi_structured_input,
+        # and multi_attribute_entity are already fully-shaped (str,
+        # list, or dict) by the widget code in ui/pages/chat.py -
+        # nothing left to convert.
         return raw
 
 

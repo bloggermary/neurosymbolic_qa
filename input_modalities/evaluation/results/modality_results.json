@@ -4,699 +4,699 @@
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 2.6067505839746445
+    "time": 3.6168872078415006
   },
   {
     "question": "Do you urinate more frequently than usual?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.4644399578683078
+    "time": 1.9089758328627795
   },
   {
     "question": "Do you feel unusually tired?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 2.0833315001800656
+    "time": 1.363498916849494
   },
   {
     "question": "Have you experienced unexplained weight loss?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.8425468341447413
+    "time": 1.6545244168955833
   },
   {
     "question": "Do you have blurred vision?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.7526130001060665
+    "time": 1.1471031249966472
   },
   {
     "question": "Do you experience dizziness?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.2766368750017136
+    "time": 1.2192043750546873
   },
   {
     "question": "Do you have nausea?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.3931143330410123
+    "time": 1.6364970840513706
   },
   {
     "question": "Have you experienced increased hunger?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.4218675000593066
+    "time": 1.1989924581721425
   },
   {
     "question": "Do you have difficulty concentrating?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.7391900420188904
+    "time": 1.3985249591059983
   },
   {
     "question": "Have you experienced symptoms recently?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.3663929160684347
+    "time": 1.5369947499129921
   },
   {
     "question": "How many times do you urinate per day?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.2999215829186141
+    "time": 1.2105821669101715
   },
   {
     "question": "How many kilograms have you lost recently?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.3706462918780744
+    "time": 1.4003506251610816
   },
   {
     "question": "What is your current blood glucose level?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.193567791953683
+    "time": 1.306974207982421
   },
   {
     "question": "How many hours do you sleep each night?",
     "expected": "numeric",
     "predicted": "duration",
     "correct": false,
-    "time": 5.301071666879579
+    "time": 2.972954750061035
   },
   {
     "question": "How many symptoms do you currently have?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.853637957945466
+    "time": 1.6050057078246027
   },
   {
     "question": "How old is the patient?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.1455576249863952
+    "time": 1.2685099579393864
   },
   {
     "question": "What is the patient's current weight in kilograms?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.3069334998726845
+    "time": 1.8459312089253217
   },
   {
     "question": "How many days per week do you exercise?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 2.624030375154689
+    "time": 1.5228864171076566
   },
   {
     "question": "What is your blood pressure reading?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.977865417022258
+    "time": 3.7623274591751397
   },
   {
     "question": "How many cups of water do you drink daily?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.946771458024159
+    "time": 2.626686624949798
   },
   {
     "question": "Please describe your current symptoms.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.1459532498847693
+    "time": 2.6865583329927176
   },
   {
     "question": "Describe what you feel when your symptoms occur.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.2091980420518667
+    "time": 1.3177980829495937
   },
   {
     "question": "What other medical complaints would you like to mention?",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.0216408339329064
+    "time": 2.0538167918566614
   },
   {
     "question": "Explain when your symptoms usually appear.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 3.9946783329360187
+    "time": 1.865749916061759
   },
   {
     "question": "What changes have you noticed in your health recently?",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.5845089578069746
+    "time": 1.5455760839395225
   },
   {
     "question": "Which symptom affects you the most?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.502085791900754
+    "time": 1.901954917004332
   },
   {
     "question": "Choose the type of pain you experience.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.223110374994576
+    "time": 2.149789083050564
   },
   {
     "question": "Select your activity level.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.627983917016536
+    "time": 2.040388667024672
   },
   {
     "question": "Which type of symptom do you have: thirst, fatigue, pain, or nausea?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.0632825000211596
+    "time": 1.6748304159846157
   },
   {
     "question": "Select your usual diet type.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.7430096669122577
+    "time": 2.0174908749759197
   },
   {
     "question": "Rate your fatigue severity from 1 to 10.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.2367895829956979
+    "time": 2.292209208011627
   },
   {
     "question": "On a scale from 0 to 10, how severe is your pain?",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.692526041995734
+    "time": 1.3520885829348117
   },
   {
     "question": "How intense is your thirst from 1 to 5?",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 2.0054697499144822
+    "time": 1.6892527090385556
   },
   {
     "question": "Rate your dizziness severity.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 3.3906937499996275
+    "time": 1.5595575829502195
   },
   {
     "question": "How severe are your symptoms overall?",
     "expected": "range",
-    "predicted": "range",
-    "correct": true,
-    "time": 2.8612245419062674
+    "predicted": "category",
+    "correct": false,
+    "time": 3.6464610828552395
   },
   {
     "question": "How long have you experienced excessive thirst?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.4436870419885963
+    "time": 1.4797495829407126
   },
   {
     "question": "How long have you had these symptoms?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.7373595419339836
+    "time": 1.4476202500518411
   },
   {
     "question": "For how many weeks have you felt fatigued?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.526913459179923
+    "time": 1.6485986250918359
   },
   {
     "question": "When did your symptoms begin?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.4153862078674138
+    "time": 2.567630499834195
   },
   {
     "question": "How long has the patient had elevated glucose levels?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.4063400840386748
+    "time": 1.6786319999955595
   },
   {
     "question": "Do you experience frequent hunger?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.1199940838851035
+    "time": 1.3741801669821143
   },
   {
     "question": "Do you have difficulty sleeping?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.4993188749067485
+    "time": 1.2062422919552773
   },
   {
     "question": "Do you experience weakness?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.222319208085537
+    "time": 1.1434729171451181
   },
   {
     "question": "Do you have any skin changes?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.6155040408484638
+    "time": 1.5440345420502126
   },
   {
     "question": "Have you experienced nausea recently?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.6256595829036087
+    "time": 1.468968499917537
   },
   {
     "question": "How many meals do you eat per day?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.6338362919632345
+    "time": 1.813269958132878
   },
   {
     "question": "How many hours per day do you spend physically active?",
     "expected": "numeric",
     "predicted": "duration",
     "correct": false,
-    "time": 1.733242082875222
+    "time": 1.9806805420666933
   },
   {
     "question": "How many times have you measured your blood sugar?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.894146166043356
+    "time": 3.7769859170075506
   },
   {
     "question": "How many kilograms do you currently weigh?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.400671125156805
+    "time": 1.3712238750886172
   },
   {
     "question": "How many symptoms are you experiencing?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 2.8387210841756314
+    "time": 1.8119435829576105
   },
   {
     "question": "Tell me about your current health condition.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.4806450840551406
+    "time": 1.4289790838956833
   },
   {
     "question": "Describe your eating habits.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.4067275838460773
+    "time": 1.3281221250072122
   },
   {
     "question": "Explain what happens when your symptoms appear.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.47174962493591
+    "time": 1.563129625050351
   },
   {
     "question": "Describe the pain location.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.525233207968995
+    "time": 1.3042570420075208
   },
   {
     "question": "What changes have you noticed recently?",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.3059634999372065
+    "time": 602.792073374847
   },
   {
     "question": "Choose the symptom category that describes your problem.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 2.289646124932915
+    "time": 2.0983862502034754
   },
   {
     "question": "Select your current activity level.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.4417633330449462
+    "time": 1.3498650409746915
   },
   {
     "question": "Which type of discomfort do you feel?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 2.00900650001131
+    "time": 1.6561333751305938
   },
   {
     "question": "Select the time of day when symptoms are worst.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.308172000106424
+    "time": 1.726139625068754
   },
   {
     "question": "Choose the most affected body area.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.522680666996166
+    "time": 1.585552749922499
   },
   {
     "question": "Rate your overall health from 1 to 10.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.4547433329280466
+    "time": 1.75938337482512
   },
   {
     "question": "Rate your level of tiredness.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.281516958028078
+    "time": 2.083781166933477
   },
   {
     "question": "How severe is your discomfort?",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.7353867499623448
+    "time": 2.2695112500805408
   },
   {
     "question": "Rate your current energy level.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.4682666251901537
+    "time": 4.99934924999252
   },
   {
     "question": "How severe are your symptoms today?",
     "expected": "range",
-    "predicted": "range",
-    "correct": true,
-    "time": 1.5350622499827296
+    "predicted": "category",
+    "correct": false,
+    "time": 5.263413333101198
   },
   {
     "question": "How long have you been experiencing these symptoms?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.8076953329145908
+    "time": 1.8093884580302984
   },
   {
     "question": "For how many months have you noticed increased thirst?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.2796072082128376
+    "time": 1.3268978330306709
   },
   {
     "question": "When did the fatigue start?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.6235191249288619
+    "time": 1.7387787499465048
   },
   {
     "question": "How long has the patient experienced frequent urination?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.3806368340738118
+    "time": 1.3367405419703573
   },
   {
     "question": "How long have you had changes in appetite?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.2959664158988744
+    "time": 1.9509628750383854
   },
   {
     "question": "Do you have problems with concentration?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.2365486670751125
+    "time": 3.001278624869883
   },
   {
     "question": "Do you experience cold sweats?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.579841332975775
+    "time": 1.5729147088713944
   },
   {
     "question": "Have you noticed changes in your vision?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.3900592501740903
+    "time": 1.4522607079707086
   },
   {
     "question": "Do you experience headaches?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.1763886250555515
+    "time": 1.8906662499066442
   },
   {
     "question": "Have you experienced unexplained symptoms?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.3068015000317246
+    "time": 2.313278791960329
   },
   {
     "question": "How many times did the symptom occur this week?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.5018971669487655
+    "time": 1.74930891697295
   },
   {
     "question": "How many hours do you sleep each night?",
     "expected": "numeric",
     "predicted": "duration",
     "correct": false,
-    "time": 2.2945349169895053
+    "time": 2.751297250157222
   },
   {
     "question": "How many medications do you currently take?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 3.302868500119075
+    "time": 1.3253558329306543
   },
   {
     "question": "How many times did you measure your glucose level?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.6668555829674006
+    "time": 1.8857734999619424
   },
   {
     "question": "How many kilograms have you gained recently?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 2.2746220419649035
+    "time": 1.7849972499534488
   },
   {
     "question": "Which symptom category best describes your condition?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.631526250159368
+    "time": 1.4993232090491802
   },
   {
     "question": "Choose the type of pain you feel.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.2627445000689477
+    "time": 1.8296765410341322
   },
   {
     "question": "Select your current health status.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.375906707951799
+    "time": 2.094668250065297
   },
   {
     "question": "Select when symptoms usually occur.",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.8128120829351246
+    "time": 5.269251625053585
   },
   {
     "question": "Which severity group describes your symptoms?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 2.0927003328688443
+    "time": 1.8300000000745058
   },
   {
     "question": "Describe your symptoms in your own words.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.6349620420951396
+    "time": 1.4595321251545101
   },
   {
     "question": "Explain how your condition affects your daily life.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.4511205409653485
+    "time": 4.071713249897584
   },
   {
     "question": "What symptoms have you noticed?",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.3642428328748792
+    "time": 1.5169212920591235
   },
   {
     "question": "Describe your recent health changes.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.3370651248842478
+    "time": 1.4528306249994785
   },
   {
     "question": "Explain what triggers your symptoms.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.9205372920259833
+    "time": 1.7414180841296911
   },
   {
     "question": "Rate your current symptom severity from 1 to 10.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.8132922498043627
+    "time": 2.048103000037372
   },
   {
     "question": "Rate how much your symptoms interfere with daily activities.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 2.460674291010946
+    "time": 1.9619497081730515
   },
   {
     "question": "Rate your pain intensity.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.632475750055164
+    "time": 1.3886016248725355
   },
   {
     "question": "Rate your energy level today.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.7632115001324564
+    "time": 2.4136123340576887
   },
   {
     "question": "Rate your overall discomfort.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.325885457918048
+    "time": 1.8995673339813948
   },
   {
     "question": "How long has this problem been present?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.065715708071366
+    "time": 1.9489690829068422
   },
   {
     "question": "For how many days have you felt unwell?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 2.162340084090829
+    "time": 1.8525493750348687
   },
   {
     "question": "How long have you noticed changes in your body?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.3131005419418216
+    "time": 1.5877562500536442
   },
   {
     "question": "When did your symptoms first appear?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.3118214579299092
+    "time": 1.7909317500889301
   },
   {
     "question": "How long has the patient had these health concerns?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.5326532919425517
+    "time": 1.4858908748719841
   }
 ]

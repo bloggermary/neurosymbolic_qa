@@ -184,6 +184,74 @@ class DialogueModalityHandler:
 
 
 
+    def ask_scale(
+        self,
+        question: str,
+        min_value: int = 1,
+        max_value: int = 10
+    ) -> None:
+
+        self.request_input(
+            question,
+            "scale",
+            {
+                "min": min_value,
+                "max": max_value,
+            }
+        )
+
+
+
+    def ask_multiple_category(
+        self,
+        question: str,
+        categories: list[str]
+    ) -> None:
+
+        self.request_input(
+            question,
+            "multiple_category",
+            categories
+        )
+
+
+
+    def ask_multi_structured_input(
+        self,
+        question: str,
+        mode: str,
+        groups: list[str] | None = None
+    ) -> None:
+
+        self.request_input(
+            question,
+            "multi_structured_input",
+            {
+                "mode": mode,
+                "groups": groups or [],
+            }
+        )
+
+
+
+    def ask_multi_attribute_entity(
+        self,
+        question: str,
+        entity: str,
+        fields: list[tuple[str, str, str]]
+    ) -> None:
+
+        self.request_input(
+            question,
+            "multi_attribute_entity",
+            {
+                "entity": entity,
+                "fields": fields,
+            }
+        )
+
+
+
     # ----------------------------------------------------
     # Response formatting
     # ----------------------------------------------------
@@ -216,6 +284,16 @@ class DialogueModalityHandler:
         elif modality == "categorical":
 
             response["style"] = "label_focused"
+
+
+        elif modality == "scale":
+
+            response["style"] = "explanatory"
+
+
+        elif modality in ("multiple_category", "multi_structured_input", "multi_attribute_entity"):
+
+            response["style"] = "interactive"
 
 
         else:

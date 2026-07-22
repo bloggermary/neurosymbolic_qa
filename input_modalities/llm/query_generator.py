@@ -19,7 +19,8 @@ def generate_query(question: str, prolog_code: str) -> str:
     - Use only predicates existing in the knowledge base.
 
     - NEVER call ask_boolean, ask_numeric, ask_string, ask_category, ask_range,
-      ask_duration, or ask_scale directly in the query. These are internal
+      ask_duration, ask_scale, ask_multiple_category, ask_multi_structured_input,
+      or ask_multi_attribute_entity directly in the query. These are internal
       input-collection primitives used INSIDE the knowledge base's own rules,
       not queryable facts - calling them directly passes a bare Prolog atom
       where a natural-language question string is expected, which breaks the
@@ -98,6 +99,20 @@ def generate_query(question: str, prolog_code: str) -> str:
     even if that predicate would also check them internally - so the
     query reflects every specific measurement the user named:
         fasting_glucose_mgdl(F), hba1c_percent(H), diagnose(Result)
+
+    NEVER call a predicate that takes 3 or more arguments directly in
+    the query, and NEVER pass an anonymous variable (_) or a fresh
+    unbound variable as an argument just to satisfy an arity you don't
+    have a real value for. Predicates with several arguments (e.g.
+    something like numeric_evidence(FastingHours, RandomValue, ...))
+    are internal helpers that assume earlier context already bound
+    those arguments - calling them directly from a top-level query with
+    made-up placeholders will crash with an uninstantiated-argument
+    error. If the question doesn't map cleanly onto a simple 0 or
+    1-argument predicate (diagnose/1, diabetes/0, a criterion predicate,
+    or a single measurement predicate), fall back to diagnose(Result)
+    with a free variable rather than guessing at a complex predicate's
+    internal calling convention.
 
     Knowledge Base:
 

@@ -21,132 +21,175 @@ ask_duration(Question, Value) :-
 ask_scale(Question, Value) :-
     py_call(prolog_bridge:ask_scale(Question), Value).
 
-% Main diagnostic workflow. Gathers multimodal clinical picture and applies numeric thresholds.
-diagnose(diagnosis_summary(Verdict, Symptoms, Medication, FastingHours, NumericEvidence, DurationCategory, FatigueCategory, ThirstSeverity)) :-
-    % Collect boolean symptoms explicitly mentioned in the text
-    ( ask_boolean('Is there excessive thirst?') -> ThirstPresent = true ; ThirstPresent = false ),
-    ( ask_boolean('Is there excessive urination (frequent urination)?') -> UrinationPresent = true ; UrinationPresent = false ),
-    ( ask_boolean('Is there fatigue?') -> FatiguePresent = true ; FatiguePresent = false ),
-    ( ask_boolean('Is there blurred vision?') -> BlurredPresent = true ; BlurredPresent = false ),
+ask_multiple_category(Question, Categories, Answer) :-
+    py_call(prolog_bridge:ask_multiple_category(Question, Categories), Answer).
 
-    % Fatigue severity on a 1-10 scale
-    ( ask_scale('Rate fatigue severity on a scale 1-10 (whole number)') -> FatigueScoreRaw = true ; FatigueScoreRaw = false ),
-    ( FatigueScoreRaw = true -> ask_scale('Enter fatigue severity (1-10)', FatigueScore) ; FatigueScore = 0 ),
+ask_multi_structured_input(Question, Mode, Groups, Answer) :-
+    py_call(prolog_bridge:ask_multi_structured_input(Question, Mode, Groups), Answer).
 
-    % Classify fatigue severity into categories per text
-    fatigue_category_from_score(FatigueScore, FatigueCategory),
+ask_multi_attribute_entity(Question, Entity, Fields, Answer) :-
+    py_call(prolog_bridge:ask_multi_attribute_entity(Question, Entity, Fields), Answer).
 
-    % Thirst severity categorical: none, mild, moderate, severe
-    ask_category('Thirst severity (none, mild, moderate, severe)', [none,mild,moderate,severe], ThirstSeverity),
+/* ---------- Standalone numeric/diagnostic criteria (each self-contained) ---------- */
 
-    % Symptom duration (days) to classify recent/persistent/long-term
-    ( ask_duration('Duration of symptoms in days?') -> SymptomDays = true ; SymptomDays = false ),
-    ( SymptomDays = true -> ask_duration('Enter number of days symptoms have been present', Days) ; Days = 0 ),
-    duration_category_from_days(Days, DurationCategory),
+random_plasma_glucose_positive :-
+    ask_numeric('What is your random (non-fasting) plasma glucose in mg/dL?', Value),
+    Value >= 200.0.
 
-    % Medication / history categorical question
-    ask_category('Current medication status (insulin, oral_antidiabetics, corticosteroids, none, other)', [insulin,oral_antidiabetics,corticosteroids,none,other], Medication),
+fasting_plasma_glucose_positive :-
+    ask_range('How many hours did you fast before this blood sample?', 0.0, 72.0, Hours),
+    Hours >= 8.0, Hours =< 12.0,
+    ask_numeric('What is your fasting plasma glucose in mg/dL?', Value),
+    Value >= 126.0.
 
-    % Hours of fasting before a fasting glucose sample (asked as a bounded range)
-    ask_range('Hours fasting before the glucose sample (0-72)', 0, 72, FastingHours),
+ogtt_2hour_positive :-
+    ask_numeric('What is your 2-hour plasma glucose during an oral glucose tolerance test in mg/dL?', Value),
+    Value >= 200.0.
 
-    % Determine symptom support strength
-    symptom_support(ThirstPresent, UrinationPresent, SupportLevel),
+hba1c_positive :-
+    ask_numeric('What is your hemoglobin A1c percentage (HbA1c)?', Value),
+    Value >= 6.5.
 
-    Symptoms = symptoms(ThirstPresent, UrinationPresent, FatiguePresent, BlurredPresent, SupportLevel),
+prediabetes_fasting_positive :-
+    ask_range('How many hours did you fast before this blood sample?', 0.0, 72.0, Hours),
+    Hours >= 8.0, Hours =< 12.0,
+    ask_numeric('What is your fasting plasma glucose in mg/dL?', Value),
+    Value >= 100.0, Value =< 125.0.
 
-    % Numeric diagnostic thresholds: stop asking further numeric criteria as soon as one threshold is met.
-    diabetes_numeric_evidence(FastingHours, NumericEvidenceTemp),
+/* ---------- Public logical predicates ---------- */
 
-    ( NumericEvidenceTemp = evidence(Type, Value) ->
-        Verdict = diabetes,
-        NumericEvidence = NumericEvidenceTemp
-    ;
-        % No diabetes-level numeric criterion met. Check prediabetes fasting range (100-125 mg/dL).
-        % Only check fasting glucose here (may prompt). Use fasting hours as context but still allow check.
-        ask_numeric('Fasting plasma glucose (mg/dL) for prediabetes check', FastingForPred),
-        ( FastingForPred >= 100, FastingForPred =< 125 ->
-            Verdict = prediabetes,
-            NumericEvidence = evidence(prediabetes_fasting, FastingForPred)
-        ;
-            Verdict = low_risk,
-            NumericEvidence = none
-        )
-    ).
-
-% Sequential numeric checks for diabetes criteria. Each ask_numeric is only called when needed.
-% Returns evidence(Type, Value) when a diabetes threshold is met, or none.
-diabetes_numeric_evidence(FastingHours, Evidence) :-
-    % 1) Random plasma glucose ≥ 200 mg/dL
-    ( ask_numeric('Random plasma glucose (mg/dL)', RandomG),
-      RandomG >= 200 ->
-        Evidence = evidence(random_plasma_glucose_mgdl, RandomG)
-    ;
-      % 2) Fasting plasma glucose ≥ 126 mg/dL after 8–12 hours fasting
-      ( FastingHours >= 8, FastingHours =< 12 ->
-            ( ask_numeric('Fasting plasma glucose (mg/dL)', FastingG),
-              FastingG >= 126 ->
-                Evidence = evidence(fasting_plasma_glucose_mgdl, FastingG)
-            ;
-                % fallback to next check if fasting glucose not diagnostic
-                check_ogtt_and_hba1c(Evidence)
-            )
-        ;
-            % If fasting hours not in 8-12, skip the fasting criterion and move on
-            check_ogtt_and_hba1c(Evidence)
-      )
-    ).
-
-check_ogtt_and_hba1c(Evidence) :-
-    % 3) 2-hour OGTT ≥ 200 mg/dL
-    ( ask_numeric('2-hour plasma glucose during OGTT (mg/dL)', OGTT2h),
-      OGTT2h >= 200 ->
-        Evidence = evidence(ogtt_2h_plasma_glucose_mgdl, OGTT2h)
-    ;
-      % 4) HbA1c ≥ 6.5%
-      ( ask_numeric('HbA1c (%)', HbA1c),
-        HbA1c >= 6.5 ->
-          Evidence = evidence(hba1c_percent, HbA1c)
-      ;
-        Evidence = none
-      )
-    ).
-
-% Symptom pattern support determination
-symptom_support(true, true, strong) :- !.
-symptom_support(true, false, partial) :- !.
-symptom_support(false, true, partial) :- !.
-symptom_support(_, _, none).
-
-% Fatigue category mapping from numeric score
-fatigue_category_from_score(Score, none) :-
-    Score =< 0, !.
-fatigue_category_from_score(Score, mild) :-
-    Score >= 1, Score =< 3, !.
-fatigue_category_from_score(Score, moderate) :-
-    Score >= 4, Score =< 6, !.
-fatigue_category_from_score(Score, severe) :-
-    Score >= 7, Score =< 10, !.
-fatigue_category_from_score(_, unknown).
-
-% Duration category mapping
-duration_category_from_days(Days, recent) :-
-    Days > 0, Days < 7, !.
-duration_category_from_days(Days, persistent) :-
-    Days >= 7, Days =< 30, !.
-duration_category_from_days(Days, long_term) :-
-    Days > 30, !.
-duration_category_from_days(_, unknown).
-
-% Public predicates to query final logical labels. They run the diagnostic workflow and succeed only if matching.
 diabetes :-
-    diagnose(Summary),
-    Summary = diagnosis_summary(diabetes, _, _, _, _, _, _, _).
+    random_plasma_glucose_positive
+    ;
+    fasting_plasma_glucose_positive
+    ;
+    ogtt_2hour_positive
+    ;
+    hba1c_positive.
 
 prediabetes :-
-    diagnose(Summary),
-    Summary = diagnosis_summary(prediabetes, _, _, _, _, _, _, _).
+    \+ diabetes,
+    prediabetes_fasting_positive.
 
 low_risk :-
-    diagnose(Summary),
-    Summary = diagnosis_summary(low_risk, _, _, _, _, _, _, _).
+    \+ diabetes,
+    \+ prediabetes.
+
+/* ---------- Helpers for medication collection ---------- */
+
+collect_medications(CountFloat, Meds) :-
+    Round is round(CountFloat),
+    ( Round =< 0 ->
+        Meds = []
+    ;
+        collect_medications_n(Round, Meds)
+    ).
+
+collect_medications_n(0, []) :- !.
+collect_medications_n(N, [MedPairs|Rest]) :-
+    N > 0,
+    atomic_list_concat(['What is the name of medication #', N, '?'], '', Q1Temp),
+    % Above Q1Temp will be something like "What is the name of medication #3?" but we want ordinal from 1..N.
+    % To provide a clearer prompt, compute index:
+    Index is N,
+    atomic_list_concat(['What is the name of medication #', Index, '?'], QName),
+    ask_string(QName, Name),
+    ask_numeric('What is the dose in milligrams for this medication?', Dose),
+    ask_numeric('How many times per day is this medication taken?', Times),
+    MedPairs = [name-Name, dose-Dose, times_per_day-Times],
+    N1 is N - 1,
+    collect_medications_n(N1, Rest).
+
+/* ---------- Main diagnosis workflow ---------- */
+
+diagnose(Result) :-
+    % Collect symptom booleans (must ask each explicitly)
+    ( ask_boolean('Do you experience excessive thirst?') -> ExcessiveThirst = true ; ExcessiveThirst = false ),
+    ( ask_boolean('Do you experience excessive urination (frequent urination)?') -> ExcessiveUrination = true ; ExcessiveUrination = false ),
+    ( ask_boolean('Do you experience fatigue?') -> FatiguePresent = true ; FatiguePresent = false ),
+    ( ask_boolean('Do you experience blurred vision?') -> BlurredVision = true ; BlurredVision = false ),
+
+    % If thirst present, ask severity; otherwise set none
+    ( ExcessiveThirst = true ->
+        ask_category('How would you describe your thirst severity?', [none, mild, moderate, severe], ThirstSeverity)
+    ;
+        ThirstSeverity = none
+    ),
+
+    % If fatigue present, ask numeric severity on scale 1-10 and classify; otherwise none
+    ( FatiguePresent = true ->
+        ask_scale('On a scale of 1 to 10, how severe is your fatigue?', FatigueScale),
+        ( FatigueScale >= 1.0, FatigueScale =< 3.0 -> FatigueSeverity = mild
+        ; FatigueScale >= 4.0, FatigueScale =< 6.0 -> FatigueSeverity = moderate
+        ; FatigueScale >= 7.0 -> FatigueSeverity = severe
+        ; FatigueSeverity = mild
+        )
+    ;
+        FatigueSeverity = none
+    ),
+
+    % Ask symptom duration in days and categorize
+    ask_duration('How many days have these symptoms been present?', SymptomDays),
+    ( SymptomDays < 7.0 -> DurationCategory = recent
+    ; SymptomDays >= 7.0, SymptomDays =< 30.0 -> DurationCategory = persistent
+    ; SymptomDays > 30.0 -> DurationCategory = long_term
+    ; DurationCategory = recent
+    ),
+
+    % Medication categorical status
+    ask_category('What is your current medication status?', [insulin, oral_antidiabetics, corticosteroids, none], MedicationStatus),
+
+    % If medication status indicates medications, ask how many and collect each as structured entries
+    ( MedicationStatus \= none ->
+        ask_numeric('How many diabetes medications do you currently take?', MedCountFloat),
+        collect_medications(MedCountFloat, Medications)
+    ;
+        Medications = []
+    ),
+
+    % If more than one symptom present, ask for ordering (as a free-text ordered list)
+    SymptomCount0 = 0,
+    ( ExcessiveThirst = true -> SymptomCount1 is SymptomCount0 + 1 ; SymptomCount1 is SymptomCount0 ),
+    ( ExcessiveUrination = true -> SymptomCount2 is SymptomCount1 + 1 ; SymptomCount2 is SymptomCount1 ),
+    ( FatiguePresent = true -> SymptomCount3 is SymptomCount2 + 1 ; SymptomCount3 is SymptomCount2 ),
+    ( BlurredVision = true -> SymptomCount is SymptomCount3 + 1 ; SymptomCount is SymptomCount3 ),
+    ( SymptomCount >= 2 ->
+        ask_string('Please list the symptoms in the order they first appeared, from earliest to most recent, separated by commas', SymptomOrder)
+    ;
+        SymptomOrder = ""
+    ),
+
+    % Now evaluate numeric diagnostic criteria sequentially, stopping when one numeric threshold alone justifies diabetes.
+    ( random_plasma_glucose_positive ->
+        Verdict = diabetes,
+        Evidence = random_plasma_glucose
+    ; fasting_plasma_glucose_positive ->
+        Verdict = diabetes,
+        Evidence = fasting_plasma_glucose
+    ; ogtt_2hour_positive ->
+        Verdict = diabetes,
+        Evidence = ogtt_2hour_glucose
+    ; hba1c_positive ->
+        Verdict = diabetes,
+        Evidence = hba1c
+    ; prediabetes_fasting_positive ->
+        Verdict = prediabetes,
+        Evidence = prediabetes_fasting
+    ;
+        Verdict = low_risk,
+        Evidence = none
+    ),
+
+    % Build janus-safe result dict (only atoms, numbers, strings, lists, pairs)
+    Result = _{
+        verdict: Verdict,
+        evidence: Evidence,
+        symptoms: [excessive_thirst-ExcessiveThirst, excessive_urination-ExcessiveUrination, fatigue-FatiguePresent, blurred_vision-BlurredVision],
+        thirst_severity: ThirstSeverity,
+        fatigue_severity: FatigueSeverity,
+        symptom_duration_days: SymptomDays,
+        duration_category: DurationCategory,
+        medication_status: MedicationStatus,
+        medications: Medications,
+        symptom_order: SymptomOrder
+    }.

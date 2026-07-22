@@ -15,7 +15,8 @@
     "followups": [
       {
         "question": "thirst_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "thirst"
       }
     ]
   },
@@ -35,7 +36,8 @@
     "followups": [
       {
         "question": "urination_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "urination"
       }
     ]
   },
@@ -55,7 +57,8 @@
     "followups": [
       {
         "question": "fatigue_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "fatigue"
       }
     ]
   },
@@ -75,7 +78,8 @@
     "followups": [
       {
         "question": "weight_loss_amount_numeric",
-        "modality": "numeric"
+        "modality": "numeric",
+        "topic": "weight loss amount"
       }
     ]
   },
@@ -106,7 +110,8 @@
     "followups": [
       {
         "question": "dizziness_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "dizziness"
       }
     ]
   },
@@ -137,7 +142,8 @@
     "followups": [
       {
         "question": "hunger_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "hunger"
       }
     ]
   },
@@ -157,7 +163,8 @@
     "followups": [
       {
         "question": "concentration_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "concentration"
       }
     ]
   },
@@ -177,7 +184,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -195,7 +203,8 @@
     "followups": [
       {
         "question": "urination_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "urination"
       }
     ]
   },
@@ -237,7 +246,8 @@
     "followups": [
       {
         "question": "sleep_quality_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "sleep quality"
       }
     ]
   },
@@ -257,7 +267,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -299,7 +310,8 @@
     "followups": [
       {
         "question": "exercise_type_category",
-        "modality": "category"
+        "modality": "category",
+        "topic": "exercise type"
       }
     ]
   },
@@ -400,7 +412,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -418,7 +431,8 @@
     "followups": [
       {
         "question": "pain_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "pain"
       }
     ]
   },
@@ -486,7 +500,8 @@
     "followups": [
       {
         "question": "pain_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "pain"
       }
     ]
   },
@@ -504,7 +519,8 @@
     "followups": [
       {
         "question": "thirst_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "thirst"
       }
     ]
   },
@@ -524,7 +540,8 @@
     "followups": [
       {
         "question": "dizziness_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "dizziness"
       }
     ]
   },
@@ -542,7 +559,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -573,7 +591,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -591,7 +610,8 @@
     "followups": [
       {
         "question": "fatigue_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "fatigue"
       }
     ]
   },
@@ -611,7 +631,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -642,7 +663,8 @@
     "followups": [
       {
         "question": "hunger_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "hunger"
       }
     ]
   },
@@ -662,7 +684,8 @@
     "followups": [
       {
         "question": "sleep_quality_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "sleep quality"
       }
     ]
   },
@@ -682,7 +705,8 @@
     "followups": [
       {
         "question": "weakness_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "weakness"
       }
     ]
   },
@@ -702,7 +726,8 @@
     "followups": [
       {
         "question": "skin_change_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "skin change"
       }
     ]
   },
@@ -779,7 +804,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -836,7 +862,8 @@
     "followups": [
       {
         "question": "pain_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "pain"
       }
     ]
   },
@@ -867,7 +894,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -909,7 +937,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -988,7 +1017,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -1008,7 +1038,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -1039,7 +1070,8 @@
     "followups": [
       {
         "question": "fatigue_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "fatigue"
       }
     ]
   },
@@ -1057,7 +1089,8 @@
     "followups": [
       {
         "question": "urination_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "urination"
       }
     ]
   },
@@ -1090,7 +1123,8 @@
     "followups": [
       {
         "question": "concentration_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "concentration"
       }
     ]
   },
@@ -1121,7 +1155,8 @@
     "followups": [
       {
         "question": "vision_problem_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "vision problem"
       }
     ]
   },
@@ -1141,7 +1176,8 @@
     "followups": [
       {
         "question": "headache_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "headache"
       }
     ]
   },
@@ -1161,7 +1197,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -1181,7 +1218,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -1201,7 +1239,8 @@
     "followups": [
       {
         "question": "sleep_quality_range",
-        "modality": "range"
+        "modality": "range",
+        "topic": "sleep quality"
       }
     ]
   },
@@ -1256,7 +1295,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -1276,7 +1316,8 @@
     "followups": [
       {
         "question": "pain_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "pain"
       }
     ]
   },
@@ -1307,7 +1348,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -1327,7 +1369,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -1404,7 +1447,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -1424,7 +1468,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },
@@ -1444,7 +1489,8 @@
     "followups": [
       {
         "question": "pain_duration",
-        "modality": "duration"
+        "modality": "duration",
+        "topic": "pain"
       }
     ]
   },
@@ -1521,7 +1567,8 @@
     "followups": [
       {
         "question": "symptom_description_string",
-        "modality": "string"
+        "modality": "string",
+        "topic": "symptom description"
       }
     ]
   },

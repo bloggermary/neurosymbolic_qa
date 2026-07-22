@@ -32,3 +32,16 @@ Fatigue severity is assessed on a whole-number scale from 1 to 10:
 - 7 to 10 indicates severe fatigue.
 
 Thirst severity may be described as none, mild, moderate, or severe.
+
+Rather than asking about each symptom one at a time, the clinician may
+instead present the full symptom checklist at once - excessive thirst,
+excessive urination, fatigue, and blurred vision - and ask the patient
+to select all of the ones that currently apply.
+
+When more than one symptom is present, ask the patient to list the
+symptoms in the order they first appeared, from earliest to most
+recent.
+
+If the patient is currently taking any diabetes medication, record
+each medication as a single structured entry: the medication's name,
+its dose in milligrams, and how many times per day it is taken.

@@ -4,7 +4,9 @@ The core diagnostic thresholds remain unchanged in principle: fasting plasma glu
 
 Classic symptoms - excessive thirst, frequent urination, fatigue, blurred vision - are frequently absent or attributed to other causes in elderly patients, so their absence should not be reassuring. Still ask about each as a yes/no question, but weight a negative answer less heavily than in a younger adult.
 
-Medication use is a major confounder. Ask which of the following the patient currently takes, allowing more than one to apply conceptually but recording the primary contributor as a category: corticosteroids, thiazide_diuretics, atypical_antipsychotics, none. Each of these can raise blood glucose independent of true diabetes.
+Medication use is a major confounder, and elderly patients are frequently on several glucose-raising medications at once, not just one. Ask the patient to select ALL of the following that currently apply, not just a single primary contributor: corticosteroids, thiazide_diuretics, atypical_antipsychotics, none. Each of these can raise blood glucose independent of true diabetes.
+
+Because polypharmacy patients often take many medications at different times of day, it is useful to ask the patient to group their current medications by when they are taken - morning, afternoon, evening, or bedtime - rather than listing them as one undifferentiated set.
 
 Renal function should be captured as a plain numeric value: estimated glomerular filtration rate (eGFR) in mL/min/1.73m2. Ask how many distinct chronic conditions the patient has (a plain count), since a higher comorbidity burden changes how aggressively glucose targets should be pursued.
 

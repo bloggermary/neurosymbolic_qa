@@ -97,6 +97,21 @@ def render_pending_question():
             pending.question
         )
 
+        followups = pipeline.followups_for_pending(
+            pending.question,
+            pending.modality,
+        )
+
+        if followups:
+
+            for followup in followups:
+
+                st.caption(
+                    f"💡 You might also consider asking about: "
+                    f"**{followup['topic']}** "
+                    f"({followup['modality'].replace('_', ' ')})"
+                )
+
 
         answer = None
 
@@ -172,6 +187,115 @@ def render_pending_question():
                 key="scale_input",
                 label_visibility="collapsed",
             )
+
+
+        elif pending.modality == "multiple_category":
+
+            answer = st.multiselect(
+                pending.question,
+                pending.options,
+                key="multiple_category_input",
+                label_visibility="collapsed",
+            )
+
+
+        elif pending.modality == "multi_structured_input":
+
+            mode = pending.options["mode"]
+            groups = pending.options.get("groups") or []
+
+            if mode == "grouping":
+
+                group_answers = {}
+
+                for group in groups:
+
+                    text = st.text_area(
+                        group,
+                        key=f"multi_structured_group_{group}",
+                    )
+
+                    group_answers[group] = [
+                        line.strip()
+                        for line in text.splitlines()
+                        if line.strip()
+                    ]
+
+                answer = group_answers
+
+            else:
+
+                text = st.text_area(
+                    pending.question,
+                    key="multi_structured_input",
+                    help="Enter one item per line, in order.",
+                    label_visibility="collapsed",
+                )
+
+                items = [
+                    line.strip()
+                    for line in text.splitlines()
+                    if line.strip()
+                ]
+
+                if mode == "ranking":
+
+                    answer = [
+                        {"rank": index + 1, "value": item}
+                        for index, item in enumerate(items)
+                    ]
+
+                else:
+
+                    answer = items
+
+
+        elif pending.modality == "multi_attribute_entity":
+
+            entity = pending.options["entity"]
+            fields = pending.options["fields"]
+
+            field_values = {}
+
+            for field in fields:
+
+                key, prompt, field_type = field[0], field[1], field[2]
+
+                widget_key = f"entity_field_{key}"
+
+                if field_type == "int":
+
+                    field_values[key] = st.number_input(
+                        prompt,
+                        step=1,
+                        key=widget_key,
+                    )
+
+                elif field_type == "float":
+
+                    field_values[key] = st.number_input(
+                        prompt,
+                        step=0.1,
+                        format="%.2f",
+                        key=widget_key,
+                    )
+
+                elif field_type == "bool":
+
+                    field_values[key] = st.radio(
+                        prompt,
+                        ["yes", "no"],
+                        key=widget_key,
+                    ) == "yes"
+
+                else:
+
+                    field_values[key] = st.text_input(
+                        prompt,
+                        key=widget_key,
+                    )
+
+            answer = {"entity": entity, "data": field_values}
 
 
         if st.button(
