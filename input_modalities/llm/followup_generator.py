@@ -16,6 +16,8 @@ never match a fixed expected question string anyway.
 
 from __future__ import annotations
 
+import re
+
 
 # keyword -> (complementary_modality, canonical_topic)
 # `complementary_modality` is None when no useful follow-up applies
@@ -82,6 +84,22 @@ _CONDITIONAL_FOLLOWUPS: dict[str, dict[str, tuple[str, str]]] = {
 }
 
 
+def _contains_keyword(lowered: str, keyword: str) -> bool:
+    """
+    True if `keyword` appears in `lowered` starting at a word boundary,
+    e.g. "sleep" matches "how much sleep" but "age" does NOT match
+    inside "average" - plain substring containment was matching short
+    keywords like "age" or "pain" inside unrelated words ("average",
+    "Spain"), silently suppressing or misrouting real follow-ups.
+    Only a boundary on the left is required (not the right), since some
+    keywords are deliberate word-stem prefixes intended to also match
+    inflected forms (e.g. "fatigu" matching "fatigued", "concentrat"
+    matching "concentration").
+    """
+
+    return re.search(r"\b" + re.escape(keyword), lowered) is not None
+
+
 def _find_topic(
     question: str,
     modality: str | None,
@@ -94,15 +112,15 @@ def _find_topic(
     lowered = question.lower()
 
     for keyword in _NO_FOLLOWUP_KEYWORDS:
-        if keyword in lowered:
+        if _contains_keyword(lowered, keyword):
             return None, None
 
     for keyword, by_modality in _CONDITIONAL_FOLLOWUPS.items():
-        if keyword in lowered and modality in by_modality:
+        if _contains_keyword(lowered, keyword) and modality in by_modality:
             return by_modality[modality]
 
     for keyword, (followup_modality, topic) in _TOPIC_FOLLOWUPS.items():
-        if keyword in lowered:
+        if _contains_keyword(lowered, keyword):
             return followup_modality, topic
 
     return None, None
