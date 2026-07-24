@@ -56,7 +56,7 @@ def _bar_with_labels(labels, values, title, ylabel="", ylim=None):
 
     plt.figure()
 
-    bars = plt.bar(labels, values)
+    bars = plt.bar(labels, values, width=0.4)
 
     if ylim:
         plt.ylim(*ylim)
@@ -102,7 +102,7 @@ def plot_modality_distribution():
 
     plt.figure()
 
-    plt.bar(distribution.keys(), distribution.values())
+    plt.bar(distribution.keys(), distribution.values(), width=0.5)
 
     plt.xticks(rotation=45)
 
@@ -220,7 +220,7 @@ def plot_kb_generation():
 
     plt.figure()
 
-    plt.bar(["Success", "Failure"], [success, fail])
+    plt.bar(["Success", "Failure"], [success, fail], width=0.4)
 
     plt.title(f"KB Generation ({len(data)} medical texts)")
 
@@ -234,7 +234,7 @@ def plot_kb_generation():
     names = [x["snippet"] for x in data]
     outcomes = [1 if x.get("success") else 0 for x in data]
 
-    plt.bar(names, outcomes)
+    plt.bar(names, outcomes, width=0.5)
 
     plt.xticks(rotation=45, ha="right")
     plt.ylim(0, 1.2)
@@ -335,7 +335,7 @@ def plot_diagnostic_by_category():
 
     plt.figure()
 
-    bars = plt.bar(labels, accuracies)
+    bars = plt.bar(labels, accuracies, width=0.5)
 
     plt.ylim(0, 1.15)
 
