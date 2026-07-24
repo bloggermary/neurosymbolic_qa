@@ -1,0 +1,841 @@
+[
+  {
+    "id": "m001",
+    "question": "Do you experience excessive thirst?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "thirst_severity", "modality": "scale" }
+    ],
+    "must_not_contain_followups": ["insulin"]
+  },
+  {
+    "id": "m002",
+    "question": "How many hours do you fast before a blood test?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": ["diabetes"]
+  },
+  {
+    "id": "m003",
+    "question": "What is your fasting glucose level?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": ["medication"]
+  },
+  {
+    "id": "m004",
+    "question": "Do you have a family history of diabetes?",
+    "expected_modality": "family_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "which_relative", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m005",
+    "question": "How often do you feel fatigued?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m006",
+    "question": "Which symptoms do you experience: thirst, fatigue, blurred vision?",
+    "expected_modality": "multiple_choice",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m007",
+    "question": "Rate your physical activity from 1 to 10",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m008",
+    "question": "Are you currently taking insulin?",
+    "expected_modality": "medication",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "dosage", "modality": "numeric" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m009",
+    "question": "Describe your medical history",
+    "expected_modality": "medical_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "previous_diagnoses", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m010",
+    "question": "Do you prefer diet control or medication?",
+    "expected_modality": "categorical",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m011",
+    "question": "Is your blood sugar stable or fluctuating?",
+    "expected_modality": "categorical",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m012",
+    "question": "What is your HbA1c value?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m013",
+    "question": "How long have symptoms lasted?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m014",
+    "question": "Do you feel hungry often?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m015",
+    "question": "How many times do you exercise per week?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m016",
+    "question": "Which symptoms apply to you?",
+    "expected_modality": "multiple_choice",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m017",
+    "question": "Rate fatigue severity 1–5",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m018",
+    "question": "Are you on glucose-lowering medication?",
+    "expected_modality": "medication",
+    "followup_expected": true,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m019",
+    "question": "Does your family have diabetes?",
+    "expected_modality": "family_history",
+    "followup_expected": true,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m020",
+    "question": "Describe your diet",
+    "expected_modality": "medical_history",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m021",
+    "question": "Do you experience blurred vision?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m022",
+    "question": "How many liters of water do you drink daily?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m023",
+    "question": "How long do symptoms last?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m024",
+    "question": "Do you follow a low-carb diet?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m025",
+    "question": "How often do you feel dizzy?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m026",
+    "question": "Do you wake up at night to urinate frequently?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "nocturia_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m027",
+    "question": "How severe is your thirst on a daily basis?",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": ["insulin"]
+  },
+  {
+    "id": "m028",
+    "question": "Have you noticed unexplained weight loss recently?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "weight_loss_amount", "modality": "numeric" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m029",
+    "question": "What medications are you currently taking?",
+    "expected_modality": "medical_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "medication_name", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m030",
+    "question": "How often do you experience blurred vision after meals?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+
+  {
+    "id": "m031",
+    "question": "Do you feel excessively hungry even after eating?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m032",
+    "question": "How many hours do you sleep per night?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m033",
+    "question": "Describe your daily physical activity pattern",
+    "expected_modality": "medical_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "activity_type", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m034",
+    "question": "Do you have a family history of metabolic disorders?",
+    "expected_modality": "family_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "which_condition", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m035",
+    "question": "Rate your stress level from 1 to 10",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+
+  {
+    "id": "m036",
+    "question": "Do you experience dizziness during the day?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m037",
+    "question": "How many sugary drinks do you consume daily?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m038",
+    "question": "Which type of diet do you follow?",
+    "expected_modality": "categorical",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m039",
+    "question": "How long have you had increased thirst?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m040",
+    "question": "Do you monitor your blood sugar regularly?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "monitoring_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+
+  {
+    "id": "m041",
+    "question": "What is your typical fasting glucose range?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m042",
+    "question": "Do you take insulin injections daily?",
+    "expected_modality": "medication",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "insulin_dosage", "modality": "numeric" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m043",
+    "question": "Have you ever been diagnosed with diabetes?",
+    "expected_modality": "medical_history",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m044",
+    "question": "How frequently do you eat high-carb meals?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m045",
+    "question": "Do you experience fatigue after meals?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+
+  {
+    "id": "m046",
+    "question": "How many meals do you eat per day?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m047",
+    "question": "Do you follow any medical treatment currently?",
+    "expected_modality": "medical_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "treatment_type", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m048",
+    "question": "How often do you feel weak or tired?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m049",
+    "question": "Do you have relatives with chronic diseases?",
+    "expected_modality": "family_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "disease_type", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m050",
+    "question": "Rate your daily energy level",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m051",
+    "question": "Do you often feel thirsty even after drinking enough water?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "thirst_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m052",
+    "question": "How long does your fatigue usually last during the day?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m053",
+    "question": "Do you experience blurred vision when your blood sugar is high?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "blurred_vision_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m054",
+    "question": "What is your usual fasting glucose range in the morning?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m055",
+    "question": "Do you take any medication to control your blood sugar?",
+    "expected_modality": "medication",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "medication_name", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+
+  {
+    "id": "m056",
+    "question": "How often do you feel tired after meals?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m057",
+    "question": "Do you have a family history of diabetes or heart disease?",
+    "expected_modality": "family_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "which_condition", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m058",
+    "question": "Rate how often you consume sugary foods from 1 to 10",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m059",
+    "question": "Do you follow any specific diet plan for health reasons?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "diet_type", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m060",
+    "question": "How many hours per day do you feel energetic?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+
+  {
+    "id": "m061",
+    "question": "Do you experience frequent urination during the night?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "nocturia_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m062",
+    "question": "What is your current insulin dosage if applicable?",
+    "expected_modality": "medication",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m063",
+    "question": "How frequently do you monitor your blood sugar levels?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m064",
+    "question": "Do you feel weak when your glucose levels drop?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m065",
+    "question": "How many liters of fluids do you consume per day?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+
+  {
+    "id": "m066",
+    "question": "Do you have a history of high blood sugar in your family?",
+    "expected_modality": "family_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "affected_member", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m067",
+    "question": "Rate your daily stress level from 1 to 5",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m068",
+    "question": "Do you feel dizzy after skipping meals?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m069",
+    "question": "How long have you been on your current medication?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m070",
+    "question": "Do you experience blurred vision during the day?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "blurred_vision_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+
+  {
+    "id": "m071",
+    "question": "What type of diet do you usually follow?",
+    "expected_modality": "categorical",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m072",
+    "question": "Do you feel hungry even after eating meals?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m073",
+    "question": "How often do you eat high carbohydrate meals per week?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m074",
+    "question": "Do you take insulin injections regularly?",
+    "expected_modality": "medication",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "injection_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m075",
+    "question": "How severe is your fatigue on average?",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m076",
+    "question": "Do you experience excessive thirst even when your fluid intake is sufficient?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "thirst_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m077",
+    "question": "How often do you wake up at night to urinate?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m078",
+    "question": "Do you feel fatigued after normal daily activities?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m079",
+    "question": "What is your average fasting blood glucose level?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m080",
+    "question": "Do you currently use any medication for chronic conditions?",
+    "expected_modality": "medication",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "medication_type", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+
+  {
+    "id": "m081",
+    "question": "How long have you been experiencing increased thirst and fatigue?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m082",
+    "question": "Do you have relatives diagnosed with diabetes or hypertension?",
+    "expected_modality": "family_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "which_disease", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m083",
+    "question": "Rate your daily energy levels from 1 to 10",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m084",
+    "question": "Do you follow a structured diet plan?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "diet_type", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m085",
+    "question": "How frequently do you experience dizziness during the week?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+
+  {
+    "id": "m086",
+    "question": "Do you experience blurred vision when your blood sugar fluctuates?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "blurred_vision_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m087",
+    "question": "How many hours per night do you usually sleep?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m088",
+    "question": "Do you take insulin injections regularly?",
+    "expected_modality": "medication",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "insulin_dosage", "modality": "numeric" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m089",
+    "question": "Have you ever been diagnosed with prediabetes or diabetes?",
+    "expected_modality": "medical_history",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m090",
+    "question": "How often do you consume sugary beverages?",
+    "expected_modality": "frequency",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+
+  {
+    "id": "m091",
+    "question": "Do you feel increased hunger even after meals?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m092",
+    "question": "What is your typical diet composition?",
+    "expected_modality": "categorical",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m093",
+    "question": "Do you experience fatigue more than usual in recent weeks?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m094",
+    "question": "How long have you been on your current diabetes treatment plan?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m095",
+    "question": "Do you have a family history of metabolic disorders?",
+    "expected_modality": "family_history",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "which_disorder", "modality": "categorical" }
+    ],
+    "must_not_contain_followups": []
+  },
+
+  {
+    "id": "m096",
+    "question": "Rate your stress level from 1 to 10",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m097",
+    "question": "Do you experience dizziness after skipping meals?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m098",
+    "question": "How many liters of water do you drink daily?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": []
+  },
+  {
+    "id": "m099",
+    "question": "Do you feel excessive thirst despite adequate hydration?",
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      { "question": "thirst_frequency", "modality": "frequency" }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m100",
+    "question": "How severe is your fatigue on average throughout the day?",
+    "expected_modality": "scale",
+    "followup_expected": false,
+    "expected_followups": []
+  }
+
+]
