@@ -13,3 +13,5 @@ Renal function should be captured as a plain numeric value: estimated glomerular
 Cognitive and functional status should be rated on a scale from 1 (fully independent) to 10 (fully dependent), since this materially affects what diagnostic follow-up and treatment plan is realistic.
 
 Ask how many years the patient has had any known glucose abnormality, if applicable, as this history changes the interpretation of a new borderline result versus a first-time finding.
+
+Systolic blood pressure (mmHg) and unintentional weight loss over the past 6 months (kg) are additional numeric values worth capturing, but only when the glucose evidence alone is inconclusive - they are not needed for every patient.

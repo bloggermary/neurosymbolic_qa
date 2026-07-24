@@ -9,3 +9,9 @@ Symptoms of gestational diabetes are frequently absent, but excessive thirst and
 If glucose values are only mildly elevated, ask the patient to rate how confident she is in her recent dietary control on a scale from 1 to 10, as this can help distinguish transient dietary lapses from true glucose intolerance.
 
 After delivery, gestational diabetes should be reclassified: record postpartum testing status as a category (not_yet_tested, normal, prediabetes, overt_diabetes), since a substantial proportion of women with GDM go on to develop type 2 diabetes later in life.
+
+Pre-pregnancy weight gain to date (kg) is a further numeric value worth asking about, but only when risk factors and OGTT results together leave the picture ambiguous.
+
+Maternal age is also relevant: ask for age in years, since 35 or older independently raises risk and can factor into the decision to screen early. Multiple pregnancy (twins or higher) is a further boolean risk factor worth checking, as it increases the likelihood of gestational diabetes compared to a singleton pregnancy.
+
+Postpartum retesting should happen within a defined window, not indefinitely: ask how many weeks after delivery the postpartum test was performed, since a result outside the typical 6-to-12-week window is less reliable for reclassification.

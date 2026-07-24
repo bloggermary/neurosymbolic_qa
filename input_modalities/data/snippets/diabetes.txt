@@ -20,11 +20,22 @@ Common symptoms of prediabetes include:
 - blurred vision
 
 Common symptoms associated with diabetes include excessive thirst,
-frequent urination, fatigue, and blurred vision.
+frequent urination, fatigue, and blurred vision. Less commonly, patients
+may also report unexplained weight loss, increased hunger, slow-healing
+wounds or frequent infections, and tingling or numbness in the hands or
+feet. These additional symptoms are not required for every evaluation -
+they are only worth asking about when the core symptom picture and
+numeric evidence are not already sufficient to reach a conclusion.
 
 A symptom pattern is considered strongly supportive when excessive thirst
 and frequent urination are both present. One of these symptoms alone
 provides partial support.
+
+Body mass index (BMI), waist circumference, resting blood pressure, and
+a family history of diabetes are additional risk factors clinicians may
+record as part of a full workup. None of these on their own confirms or
+rules out diabetes, and they do not need to be collected every time - they
+mainly help clarify risk in borderline or ambiguous cases.
 
 Symptoms present for fewer than 7 days are considered recent.
 Symptoms present for 7 to 30 days are considered persistent.

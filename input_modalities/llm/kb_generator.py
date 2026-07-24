@@ -21,23 +21,33 @@ GENERAL REQUIREMENTS:
 
 REASONING REQUIREMENTS:
 - The knowledge base should support diagnosis, classification, and follow-up questioning.
-- For the *numeric diagnostic threshold* (which single measurement proves diabetes),
-  stop asking further numeric criteria as soon as one threshold is met - do not force
-  every numeric criterion to be checked once a conclusion is already justified.
-- Use the simplest valid reasoning path for the numeric threshold check itself.
-- Beyond that numeric threshold, diagnose/1 MUST also collect whatever supporting
-  clinical picture the source text actually describes - not just the numeric
-  threshold - re-derived fresh from whatever text is provided, never hardcoded
-  to one condition or domain:
-    - ask_boolean for each symptom the text explicitly describes
-    - ask_category for any categorical status or history the text describes
-    - ask_range or ask_duration for any bounded or temporal detail the text describes
-  This supporting evidence should be gathered as part of the interactive dialogue
-  (that's what actually demonstrates multi-modal reasoning to the user - the
-  QUESTIONS asked, not the shape of the return value). diagnose/1's own RETURN
-  VALUE must still follow the janus-safe result rule below - see JANUS RESULT
-  SAFETY. Do not invent clinical questions that aren't grounded in the provided
-  text.
+- Ask only as much as is genuinely needed to reach a confident, well-justified
+  conclusion - never ask about every symptom, measurement, or historical detail
+  the source text happens to describe just because the text mentions it. A
+  real clinical dialogue is adaptive and stops once enough evidence exists,
+  not an exhaustive questionnaire that works through everything available.
+- For the *numeric diagnostic threshold* (the single measurement that alone
+  proves the condition), stop asking further numeric criteria as soon as one
+  threshold is met - do not force every numeric criterion to be checked once
+  a conclusion is already justified. Use the simplest valid reasoning path for
+  this check.
+- Beyond that numeric threshold, diagnose/1 may also gather supporting
+  clinical evidence the source text describes - symptoms via ask_boolean,
+  categorical status or history via ask_category, bounded or temporal detail
+  via ask_range or ask_duration, and so on - but only to the extent it is
+  actually needed to reach or meaningfully strengthen the verdict, never as a
+  fixed, exhaustive checklist gone through regardless of need. If the
+  numeric/laboratory evidence alone already gives an unambiguous conclusion,
+  diagnose/1 does not have to also ask about every other symptom or category
+  described in the text. Use clinical judgment about when enough evidence has
+  been gathered and stop there - a shorter, sufficient dialogue is preferred
+  over an exhaustive one. At the same time, still make real use of whichever
+  input types the source text supports where they add genuine diagnostic
+  value (e.g. clarifying severity, risk factors, or a borderline/ambiguous
+  case) - the goal is an adaptive, clinically-motivated dialogue, not simply
+  fewer questions for their own sake. diagnose/1's own RETURN VALUE must
+  still follow the janus-safe result rule below - see JANUS RESULT SAFETY.
+  Do not invent clinical questions that aren't grounded in the provided text.
 
 JANUS USER INTERACTION:
 

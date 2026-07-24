@@ -11,3 +11,5 @@ Ask how long they've noticed increased thirst or urination, in weeks, since grad
 Family history matters a lot here: ask whether a parent or sibling has type 2 diabetes (none, one_relative, multiple_relatives). Also ask whether the person has ever been told they have prediabetes or "borderline" blood sugar (yes/no), since many people with type 2 diabetes passed through a prediabetic stage that went unaddressed.
 
 Finally, ask the person to rate their own motivation to make dietary and activity changes on a scale from 1 to 10 - this doesn't affect the diagnosis itself, but it's useful context for how the result should be communicated.
+
+Resting blood pressure (systolic, mmHg) and typical nightly sleep duration (hours) are two further numeric values worth capturing, since both hypertension and poor sleep are independently linked to insulin resistance - but neither needs to be asked unless the lab and lifestyle picture together still leave real uncertainty.

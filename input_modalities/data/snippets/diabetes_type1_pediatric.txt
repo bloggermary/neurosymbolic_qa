@@ -9,3 +9,9 @@ Severity of dehydration at presentation is often rated by clinicians on a scale 
 Autoantibody status is categorical: a child may be tested for GAD65, IA-2, and ZnT8 antibodies, with results recorded as positive, negative, or not_tested. Family history in type 1 diabetes is less predictive than in type 2, but a first-degree relative with type 1 diabetes still raises risk and should be recorded as none, first_degree, or second_degree.
 
 Because type 1 diabetes is insulin-dependent from diagnosis, medication status is simpler than in adults: a newly diagnosed child is not yet on any diabetes medication, whereas a child with an established diagnosis will already be on insulin. Record this as a category: none, insulin, or unknown.
+
+Weight loss over the preceding month (kg) is a further numeric value worth asking about, but only if the symptom picture and glucose values do not already make the diagnosis clear.
+
+If diabetic ketoacidosis is suspected because of the emergency symptoms above, venous blood pH and serum bicarbonate (mEq/L) are the key numeric values that grade its severity, but they only need to be asked about when those emergency symptoms are actually present - not as a routine part of every evaluation.
+
+Height and weight percentile-for-age (as plain numbers) can help distinguish a child whose growth has faltered, which is itself suggestive of longer-standing undiagnosed disease, but this is supplementary detail rather than something to check in every case.
