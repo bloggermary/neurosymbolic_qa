@@ -5,9 +5,14 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "thirst_duration", "modality": "duration"}
+      {
+        "question": "thirst_duration",
+        "modality": "duration"
+      }
     ],
-    "must_not_contain_followups": ["medication"]
+    "must_not_contain_followups": [
+      "medication"
+    ]
   },
   {
     "id": "m002",
@@ -15,7 +20,10 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "urination_frequency", "modality": "range"}
+      {
+        "question": "urination_frequency",
+        "modality": "range"
+      }
     ],
     "must_not_contain_followups": []
   },
@@ -25,7 +33,10 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "fatigue_level", "modality": "range"}
+      {
+        "question": "fatigue_level",
+        "modality": "range"
+      }
     ],
     "must_not_contain_followups": []
   },
@@ -35,7 +46,10 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "weight_loss_amount", "modality": "numeric"}
+      {
+        "question": "weight_loss_amount",
+        "modality": "numeric"
+      }
     ],
     "must_not_contain_followups": []
   },
@@ -45,7 +59,9 @@
     "expected_modality": "boolean",
     "followup_expected": false,
     "expected_followups": [],
-    "must_not_contain_followups": ["duration"]
+    "must_not_contain_followups": [
+      "duration"
+    ]
   },
   {
     "id": "m006",
@@ -53,7 +69,10 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "dizziness_duration", "modality": "duration"}
+      {
+        "question": "dizziness_duration",
+        "modality": "duration"
+      }
     ],
     "must_not_contain_followups": []
   },
@@ -71,7 +90,10 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "hunger_duration", "modality": "duration"}
+      {
+        "question": "hunger_duration",
+        "modality": "duration"
+      }
     ],
     "must_not_contain_followups": []
   },
@@ -81,7 +103,10 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "concentration_severity", "modality": "range"}
+      {
+        "question": "concentration_severity",
+        "modality": "range"
+      }
     ],
     "must_not_contain_followups": []
   },
@@ -91,7 +116,10 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "symptom_description", "modality": "string"}
+      {
+        "question": "symptom_description",
+        "modality": "string"
+      }
     ],
     "must_not_contain_followups": []
   },
@@ -109,7 +137,10 @@
     "expected_modality": "numeric",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "weight_loss_duration", "modality": "duration"}
+      {
+        "question": "weight_loss_duration",
+        "modality": "duration"
+      }
     ],
     "must_not_contain_followups": []
   },
@@ -135,7 +166,10 @@
     "expected_modality": "numeric",
     "followup_expected": true,
     "expected_followups": [
-      {"question": "symptom_details", "modality": "string"}
+      {
+        "question": "symptom_details",
+        "modality": "string"
+      }
     ],
     "must_not_contain_followups": []
   },
@@ -339,7 +373,6 @@
     "expected_followups": [],
     "must_not_contain_followups": []
   },
-
   {
     "id": "m036",
     "question": "How long have you experienced excessive thirst?",
@@ -715,7 +748,6 @@
     ],
     "must_not_contain_followups": []
   },
-
   {
     "id": "m071",
     "question": "Do you have problems with concentration?",
@@ -1037,6 +1069,886 @@
     "id": "m100",
     "question": "How long has the patient had these health concerns?",
     "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m101",
+    "question": "Do you have a family history of diabetes?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m102",
+    "question": "Have you been diagnosed with prediabetes before?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m103",
+    "question": "Are you currently pregnant?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m104",
+    "question": "Do you smoke cigarettes?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m105",
+    "question": "Have you noticed any numbness in your feet?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m106",
+    "question": "Do you have high blood pressure?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m107",
+    "question": "Is there a history of gestational diabetes in a previous pregnancy?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m108",
+    "question": "Have you experienced nausea recently?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m109",
+    "question": "Do you have polycystic ovary syndrome?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m110",
+    "question": "Have you had a heart attack in the past?",
+    "expected_modality": "boolean",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m111",
+    "question": "What is your current age?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m112",
+    "question": "What is your HbA1c percentage?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m113",
+    "question": "What is your body mass index?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m114",
+    "question": "How many milligrams of metformin do you take daily?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m115",
+    "question": "What is your total cholesterol level?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m116",
+    "question": "What is your resting heart rate?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m117",
+    "question": "How many pounds have you gained in the past year?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m118",
+    "question": "What is your waist circumference in centimeters?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m119",
+    "question": "What is your triglyceride level?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m120",
+    "question": "How many hours of sleep do you get on average?",
+    "expected_modality": "numeric",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m121",
+    "question": "Describe any changes in your vision.",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m122",
+    "question": "Please describe your typical breakfast.",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m123",
+    "question": "What medications are you currently taking, in your own words?",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m124",
+    "question": "Describe how you feel after eating a large meal.",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m125",
+    "question": "Please describe your family's medical history in detail.",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m126",
+    "question": "What symptoms have you noticed recently?",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m127",
+    "question": "Describe your daily exercise routine in your own words.",
+    "expected_modality": "string",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "exercise_type_category",
+        "modality": "category"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m128",
+    "question": "Please explain why you think you might have diabetes.",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m129",
+    "question": "Describe any skin changes you've noticed.",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m130",
+    "question": "What is your current diabetes medication status?",
+    "expected_modality": "category",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "medication_list_multiple_category",
+        "modality": "multiple_category"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m131",
+    "question": "How would you classify your diet quality?",
+    "expected_modality": "category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m132",
+    "question": "What type of diabetes does the patient have?",
+    "expected_modality": "category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m133",
+    "question": "How would you describe your activity level?",
+    "expected_modality": "category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m134",
+    "question": "What is your blood type?",
+    "expected_modality": "category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m135",
+    "question": "Which type of insulin are you currently using?",
+    "expected_modality": "category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m136",
+    "question": "How would you rate your stress level category: low, moderate, or high?",
+    "expected_modality": "category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m137",
+    "question": "What is your smoking status?",
+    "expected_modality": "category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m138",
+    "question": "Which ethnic background best describes the patient?",
+    "expected_modality": "category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m139",
+    "question": "How many hours did you fast before this blood test?",
+    "expected_modality": "range",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m140",
+    "question": "Rate your pain level from 1 to 10.",
+    "expected_modality": "range",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "pain_duration",
+        "modality": "duration"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m141",
+    "question": "What is your current gestational week?",
+    "expected_modality": "range",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m142",
+    "question": "How severe is your fatigue on a scale of 1 to 10?",
+    "expected_modality": "range",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m143",
+    "question": "How many minutes of exercise do you get per week, on a scale up to 300?",
+    "expected_modality": "range",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "exercise_type_category",
+        "modality": "category"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m144",
+    "question": "Rate your appetite from 1 to 10.",
+    "expected_modality": "range",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m145",
+    "question": "How confident are you in managing your diet, from 1 to 10?",
+    "expected_modality": "range",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "diet_type_category",
+        "modality": "category"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m146",
+    "question": "What is your current stress level on a scale from 1 to 10?",
+    "expected_modality": "range",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m147",
+    "question": "How many alcoholic drinks do you have weekly, up to 20?",
+    "expected_modality": "range",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m148",
+    "question": "How long have you been experiencing symptoms?",
+    "expected_modality": "duration",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m149",
+    "question": "How many weeks pregnant are you?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m150",
+    "question": "How many years have you had type 2 diabetes?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m151",
+    "question": "How long have you been on your current medication?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m152",
+    "question": "How many days has the wound been healing?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m153",
+    "question": "How many months have you noticed weight changes?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m154",
+    "question": "How long ago did you last check your blood sugar?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m155",
+    "question": "How many years since your last HbA1c test?",
+    "expected_modality": "duration",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m156",
+    "question": "Which of the following symptoms apply to you? Select all that apply: thirst, fatigue, blurred vision, frequent urination.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m157",
+    "question": "Select all medications you are currently taking from this list.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m158",
+    "question": "Which of the following risk factors apply to you? Select all that apply.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m159",
+    "question": "Choose all the complications you have experienced, if any.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m160",
+    "question": "Which of the following dietary habits apply to you? Select all that apply.",
+    "expected_modality": "multiple_category",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "diet_type_category",
+        "modality": "category"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m161",
+    "question": "Select all family members who have been diagnosed with diabetes.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m162",
+    "question": "Which of the following medications affect blood sugar? Select all that apply.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m163",
+    "question": "Choose all symptoms of low blood sugar you have experienced.",
+    "expected_modality": "multiple_category",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "symptom_order_multi_structured_input",
+        "modality": "multi_structured_input"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m164",
+    "question": "Select all the types of physical activity you engage in weekly.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m165",
+    "question": "Which of the following pregnancy complications apply? Select all that apply.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m166",
+    "question": "Choose all comorbid conditions the patient has, selecting every one that applies.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m167",
+    "question": "Select all the times of day you experience symptoms.",
+    "expected_modality": "multiple_category",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "symptom_order_multi_structured_input",
+        "modality": "multi_structured_input"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m168",
+    "question": "Which of the following dietary restrictions apply to you? Select all that apply.",
+    "expected_modality": "multiple_category",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "diet_type_category",
+        "modality": "category"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m169",
+    "question": "Choose every warning sign of diabetic ketoacidosis you have noticed.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m170",
+    "question": "Select all forms of insulin the patient has used.",
+    "expected_modality": "multiple_category",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m171",
+    "question": "List your symptoms in the order they first appeared, from earliest to most recent.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m172",
+    "question": "Rank these symptoms from most to least severe.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m173",
+    "question": "Group your current medications by the time of day they are taken.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m174",
+    "question": "List the complications you've experienced in the order they occurred.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m175",
+    "question": "Rank your dietary habits from healthiest to least healthy.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "diet_type_category",
+        "modality": "category"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m176",
+    "question": "Group your symptoms by whether they occur before or after meals.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m177",
+    "question": "List your blood sugar readings in the order they were taken this week.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m178",
+    "question": "Rank the following risk factors by how much they concern you.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m179",
+    "question": "Group your medications by which condition they treat.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m180",
+    "question": "List the lifestyle changes you've made in the order you made them.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m181",
+    "question": "Rank your family members by how closely related they are to your diabetes history.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m182",
+    "question": "Group your exercise sessions by type of activity.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "exercise_type_category",
+        "modality": "category"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m183",
+    "question": "List your prior diagnoses in chronological order.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m184",
+    "question": "Rank the symptoms you experience by how much they affect daily life.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "symptom_description_string",
+        "modality": "string"
+      }
+    ],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m185",
+    "question": "Group your meals by time of day for the past week.",
+    "expected_modality": "multi_structured_input",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m186",
+    "question": "Please provide the name, dose in milligrams, and frequency of your current medication.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m187",
+    "question": "Enter the details of your last HbA1c test: the value, the date, and the lab that performed it.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m188",
+    "question": "Provide your emergency contact's name, relationship, and phone number.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m189",
+    "question": "Enter the name, dosage, and route of administration for each insulin you use.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m190",
+    "question": "Provide the type, brand, and duration of use for your glucose monitor.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m191",
+    "question": "Enter your specialist's name, specialty, and the date of your last visit.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m192",
+    "question": "Provide the name, strength, and frequency of any supplements you take.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m193",
+    "question": "Enter the details of your last eye exam: the date, the result, and the examiner's name.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m194",
+    "question": "Provide the name, dose, and time of day for your blood pressure medication.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m195",
+    "question": "Enter your surgeon's name, the procedure performed, and the date of surgery.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m196",
+    "question": "Provide the brand, model, and purchase date of your insulin pump.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m197",
+    "question": "Enter the name, relationship, and diabetes type for each affected family member.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m198",
+    "question": "Provide the name, dose, and injection site for your most recent insulin shot.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m199",
+    "question": "Enter the clinic name, appointment date, and reason for your most recent hospital visit.",
+    "expected_modality": "multi_attribute_entity",
+    "followup_expected": false,
+    "expected_followups": [],
+    "must_not_contain_followups": []
+  },
+  {
+    "id": "m200",
+    "question": "Provide the name, dosage, and prescribing doctor for each diabetes medication.",
+    "expected_modality": "multi_attribute_entity",
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []

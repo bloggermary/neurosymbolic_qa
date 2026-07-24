@@ -10,10 +10,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 6.0457886250223964,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 5.200394875137135
   },
   {
     "id": "q002",
@@ -26,10 +26,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.3828708329237998,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.777119084028527
   },
   {
     "id": "q003",
@@ -43,10 +43,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.461349165998399,
     "keyword_overlap_score": 0.875,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": false,
+    "time": 11.000045916996896
   },
   {
     "id": "q004",
@@ -60,10 +60,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 4.878970124991611,
     "keyword_overlap_score": 0.875,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": false,
+    "time": 6.032841041916981
   },
   {
     "id": "q005",
@@ -78,10 +78,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 9.328906790819019,
     "keyword_overlap_score": 0.8333333333333334,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": false,
+    "time": 10.613635332789272
   },
   {
     "id": "q006",
@@ -95,10 +95,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 5.474357625003904,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.95606404193677
   },
   {
     "id": "q007",
@@ -112,10 +112,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 7.6404319170396775,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 7.1249506659805775
   },
   {
     "id": "q008",
@@ -129,10 +129,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.717326333047822,
     "keyword_overlap_score": 0.875,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": false,
+    "time": 8.701018125051633
   },
   {
     "id": "q009",
@@ -145,10 +145,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 8.304938166867942,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 12.17543924995698
   },
   {
     "id": "q010",
@@ -162,10 +162,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 4.212266499875113,
     "keyword_overlap_score": 0.8333333333333333,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": false,
+    "time": 4.5283741671592
   },
   {
     "id": "q011",
@@ -178,10 +178,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.0159285829868168,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.5492436250206083
   },
   {
     "id": "q012",
@@ -194,10 +194,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.52602225006558,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.8711694579105824
   },
   {
     "id": "q013",
@@ -211,10 +211,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.6108782081864774,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 5.133573791012168
   },
   {
     "id": "q014",
@@ -228,10 +228,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 5.90260845888406,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 9.55238224985078
   },
   {
     "id": "q015",
@@ -246,15 +246,15 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 4.451167999999598,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 6.22809583414346
   },
   {
     "id": "q016",
     "question": "Is fasting glucose of 115 mg/dL normal?",
-    "query": "fasting_glucose_mgdl(115), prediabetes",
+    "query": "fasting_glucose_mgdl(115), diagnose(low_risk)",
     "expected_predicates": [
       "fasting_glucose_mgdl"
     ],
@@ -262,10 +262,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 18.564621416851878,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 9.102231292054057
   },
   {
     "id": "q017",
@@ -278,10 +278,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 5.558307790895924,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 9.608223750023171
   },
   {
     "id": "q018",
@@ -294,10 +294,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 10.052376667037606,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 8.559250624850392
   },
   {
     "id": "q019",
@@ -311,10 +311,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 6.26566941710189,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 10.590028333012015
   },
   {
     "id": "q020",
@@ -328,15 +328,15 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 7.168908291030675,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 8.971848250133917
   },
   {
     "id": "q021",
     "question": "Is fasting glucose 110 mg/dL prediabetes?",
-    "query": "fasting_glucose_mgdl(110), diagnose(prediabetes)",
+    "query": "fasting_glucose_mgdl(110), prediabetes_positive",
     "expected_predicates": [
       "prediabetes"
     ],
@@ -344,10 +344,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 9.440677792066708,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 12.145344624994323
   },
   {
     "id": "q022",
@@ -361,10 +361,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 11.646146832965314,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 10.840566333848983
   },
   {
     "id": "q023",
@@ -377,10 +377,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 7.749203958082944,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 9.756365207955241
   },
   {
     "id": "q024",
@@ -395,15 +395,15 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 15.200054332846776,
     "keyword_overlap_score": 0.6666666666666666,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 11.574783582938835
   },
   {
     "id": "q025",
     "question": "Should lifestyle changes be recommended for fasting glucose 120 mg/dL?",
-    "query": "fasting_glucose_mgdl(120), diagnose(prediabetes)",
+    "query": "fasting_glucose_mgdl(120), prediabetes",
     "expected_predicates": [
       "prediabetes",
       "fasting_glucose_mgdl"
@@ -412,10 +412,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 309.11780699994415,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 9.808287415886298
   },
   {
     "id": "q026",
@@ -428,10 +428,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 9.5447669159621,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 6.466604082845151
   },
   {
     "id": "q027",
@@ -444,10 +444,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.914308833889663,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.7577112081926316
   },
   {
     "id": "q028",
@@ -460,10 +460,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.4522345419973135,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.317304000025615
   },
   {
     "id": "q029",
@@ -476,10 +476,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.050103332847357,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 3.0157851250842214
   },
   {
     "id": "q030",
@@ -493,10 +493,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.8387667080387473,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 2.6626727499533445
   },
   {
     "id": "q031",
@@ -509,10 +509,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.8752825420815498,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.5916865409817547
   },
   {
     "id": "q032",
@@ -525,10 +525,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.2818039171397686,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 18.304934041108936
   },
   {
     "id": "q033",
@@ -541,10 +541,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 10.007032084045932,
     "keyword_overlap_score": 0.6666666666666666,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 6.430866542039439
   },
   {
     "id": "q034",
@@ -558,10 +558,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.628139625070617,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 7.790215665940195
   },
   {
     "id": "q035",
@@ -575,15 +575,15 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.59599058306776,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 3.2002328338567168
   },
   {
     "id": "q036",
     "question": "Can borderline fasting glucose indicate prediabetes?",
-    "query": "fasting_glucose_mgdl(Value), prediabetes_positive",
+    "query": "prediabetes_positive",
     "expected_predicates": [
       "prediabetes"
     ],
@@ -591,27 +591,27 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 91.21868595806882,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 8.70799016696401
   },
   {
     "id": "q037",
     "question": "Can fasting glucose values between 100 and 125 mg/dL indicate prediabetes?",
-    "query": "fasting_glucose_mgdl(Value), Value >= 100, Value =< 125, prediabetes_positive",
+    "query": "prediabetes_positive",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "prediabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "correct": true,
-    "time": 14.919836208224297,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_overlap_score": 0.5,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 11.176081249956042
   },
   {
     "id": "q038",
@@ -624,27 +624,27 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 8.811768500134349,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 10.355500790989026
   },
   {
     "id": "q039",
     "question": "Can the patient be classified as prediabetic based on fasting glucose criteria?",
-    "query": "prediabetes_positive",
+    "query": "fasting_duration_hours(Hours), fasting_glucose_mgdl(Value), prediabetes_positive",
     "expected_predicates": [
       "prediabetes",
       "fasting_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 7.34722066600807,
-    "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 15.61326541681774
   },
   {
     "id": "q040",
@@ -657,10 +657,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 7.071983915986493,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 5.3655099999159575
   },
   {
     "id": "q041",
@@ -673,10 +673,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.535188250010833,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.7399476249702275
   },
   {
     "id": "q042",
@@ -689,26 +689,26 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.278895708033815,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 5.195822958135977
   },
   {
     "id": "q043",
     "question": "Can HbA1c measurement contribute to diabetes diagnosis?",
-    "query": "diabetes_positive_by_hba1c",
+    "query": "hba1c_percent(Value)",
     "expected_predicates": [
       "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 4.59461179189384,
-    "keyword_overlap_score": 0.6666666666666666,
-    "keyword_correct": false
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 6.317501208977774
   },
   {
     "id": "q044",
@@ -721,10 +721,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 5.001126707997173,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 7.448551124893129
   },
   {
     "id": "q045",
@@ -737,10 +737,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.652287291130051,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 6.355821708915755
   },
   {
     "id": "q046",
@@ -753,10 +753,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 7.228191709145904,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 6.358398749958724
   },
   {
     "id": "q047",
@@ -769,10 +769,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.1047562919557095,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.601122417021543
   },
   {
     "id": "q048",
@@ -785,10 +785,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.3267857918981463,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.086977042024955
   },
   {
     "id": "q049",
@@ -801,10 +801,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 4.642790833022445,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 6.292704291874543
   },
   {
     "id": "q050",
@@ -817,10 +817,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.894340916071087,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.985858540982008
   },
   {
     "id": "q051",
@@ -833,10 +833,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 4.76635633315891,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.790743458084762
   },
   {
     "id": "q052",
@@ -849,10 +849,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.3417286248877645,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.7868427911307663
   },
   {
     "id": "q053",
@@ -865,10 +865,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.3185111249331385,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.4916746250819415
   },
   {
     "id": "q054",
@@ -883,10 +883,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.7187967500649393,
     "keyword_overlap_score": 0.3333333333333333,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 3.7228378339204937
   },
   {
     "id": "q055",
@@ -899,10 +899,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.920469333184883,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 5.690321917179972
   },
   {
     "id": "q056",
@@ -915,10 +915,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.209638000000268,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.427748082904145
   },
   {
     "id": "q057",
@@ -931,10 +931,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 4.6807738749776036,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.6543739170301706
   },
   {
     "id": "q058",
@@ -947,10 +947,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.0023005828261375,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.607136999955401
   },
   {
     "id": "q059",
@@ -963,10 +963,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 4.593491124920547,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 9.972288582939655
   },
   {
     "id": "q060",
@@ -980,10 +980,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 6.142086625099182,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 4.016203583916649
   },
   {
     "id": "q061",
@@ -996,10 +996,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 5.598376458045095,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 5.1523043748456985
   },
   {
     "id": "q062",
@@ -1012,10 +1012,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.4701947087887675,
     "keyword_overlap_score": 0.6666666666666666,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 6.633466832805425
   },
   {
     "id": "q063",
@@ -1028,15 +1028,15 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.9419542090035975,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 2.5496727919671685
   },
   {
     "id": "q064",
     "question": "Which laboratory values should be checked when diabetes is suspected?",
-    "query": "fasting_glucose_mgdl(F), random_glucose_mgdl(R), ogtt_2hr_mgdl(OGTT), hba1c_percent(H)",
+    "query": "fasting_glucose_mgdl(FastingValue), random_glucose_mgdl(RandomValue), ogtt_2hr_mgdl(OGTTValue), hba1c_percent(Hba1cValue)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -1045,10 +1045,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 7.4876707079820335,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 10.940051625017077
   },
   {
     "id": "q065",
@@ -1061,10 +1061,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.198560999939218,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.9724516249261796
   },
   {
     "id": "q066",
@@ -1077,15 +1077,15 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.501361125148833,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 3.5651207910850644
   },
   {
     "id": "q067",
     "question": "Are diagnostic criteria required to confirm diabetes?",
-    "query": "diagnose(diabetes)",
+    "query": "diagnose(Result)",
     "expected_predicates": [
       "diagnose"
     ],
@@ -1093,10 +1093,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 5.12689141696319,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 15.322678999975324
   },
   {
     "id": "q068",
@@ -1111,10 +1111,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 8.264127791160718,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 6.837555875070393
   },
   {
     "id": "q069",
@@ -1129,10 +1129,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.1255262920167297,
     "keyword_overlap_score": 0.3333333333333333,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 3.312053957954049
   },
   {
     "id": "q070",
@@ -1147,10 +1147,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 8.167787707876414,
     "keyword_overlap_score": 0.3333333333333333,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 5.125293333083391
   },
   {
     "id": "q071",
@@ -1163,10 +1163,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 6.517182666808367,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 9.220628875074908
   },
   {
     "id": "q072",
@@ -1179,15 +1179,15 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.3647147500887513,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 3.1580178330186754
   },
   {
     "id": "q073",
     "question": "Should HbA1c be measured when evaluating diabetes?",
-    "query": "hba1c_percent(Value), diagnose(Result)",
+    "query": "hba1c_percent(Value)",
     "expected_predicates": [
       "hba1c_percent"
     ],
@@ -1195,15 +1195,15 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 7.058945124968886,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 4.558716499945149
   },
   {
     "id": "q074",
     "question": "Which diagnostic measurements help classify diabetes?",
-    "query": "(random_glucose_mgdl(Value) ; fasting_glucose_mgdl(Value) ; ogtt_2hr_mgdl(Value) ; hba1c_percent(Value) ; fasting_duration_hours(Value))",
+    "query": "fasting_glucose_mgdl(F), hba1c_percent(H), random_glucose_mgdl(R), ogtt_2hr_mgdl(O)",
     "expected_predicates": [
       "diagnose",
       "fasting_glucose_mgdl",
@@ -1213,10 +1213,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 11.997004708042368,
     "keyword_overlap_score": 0.6666666666666666,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 8.271828416967764
   },
   {
     "id": "q075",
@@ -1230,10 +1230,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.2476382500026375,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 5.007023999933153
   },
   {
     "id": "q076",
@@ -1247,10 +1247,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 7.438327499898151,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 11.16560325003229
   },
   {
     "id": "q077",
@@ -1263,27 +1263,27 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.278631249908358,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.550086332950741
   },
   {
     "id": "q078",
     "question": "A patient has HbA1c below diabetes threshold and fasting glucose near the prediabetes range. Should prediabetes be considered?",
-    "query": "hba1c_percent(H), fasting_glucose_mgdl(F), diagnose(prediabetes)",
+    "query": "prediabetes",
     "expected_predicates": [
       "diagnose",
       "prediabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "correct": true,
-    "time": 5.615493667079136,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_overlap_score": 0.5,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 7.956648957915604
   },
   {
     "id": "q079",
@@ -1297,10 +1297,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.20292712491937,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 1.9975463331211358
   },
   {
     "id": "q080",
@@ -1314,10 +1314,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.9047246251720935,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 5.371929000131786
   },
   {
     "id": "q081",
@@ -1330,10 +1330,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.5510812499560416,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 6.541682000039145
   },
   {
     "id": "q082",
@@ -1347,10 +1347,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.0631953340489417,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 3.5219960000831634
   },
   {
     "id": "q083",
@@ -1363,15 +1363,15 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 2.1885587500873953,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.0425422079861164
   },
   {
     "id": "q084",
     "question": "Can prediabetes be detected using fasting glucose criteria?",
-    "query": "prediabetes_positive",
+    "query": "fasting_glucose_mgdl(Value), diagnose(prediabetes)",
     "expected_predicates": [
       "prediabetes"
     ],
@@ -1379,31 +1379,31 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 6.412843249971047,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 10.517549874959514
   },
   {
     "id": "q085",
     "question": "Which predicates determine whether diabetes is present?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(diabetes)",
     "expected_predicates": [
       "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "correct": false,
-    "time": 605.6424836660735,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 8.933331417152658
   },
   {
     "id": "q086",
     "question": "Which laboratory tests should be checked when diabetes is suspected?",
-    "query": "random_glucose_mgdl(R), fasting_glucose_mgdl(F), ogtt_2hr_mgdl(O), hba1c_percent(H)",
+    "query": "random_glucose_mgdl(Random), fasting_glucose_mgdl(Fasting), ogtt_2hr_mgdl(OGTT), hba1c_percent(HbA1c)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -1412,10 +1412,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 6.059707541018724,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 12.030758082866669
   },
   {
     "id": "q087",
@@ -1428,10 +1428,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 3.1135043329559267,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 4.2607554998248816
   },
   {
     "id": "q088",
@@ -1445,10 +1445,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.434373749885708,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 3.018762416904792
   },
   {
     "id": "q089",
@@ -1461,10 +1461,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 7.1204882501624525,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.8480562078766525
   },
   {
     "id": "q090",
@@ -1477,15 +1477,15 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 4.676985542057082,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.3260771250352263
   },
   {
     "id": "q091",
     "question": "Which measurements are important for evaluating diabetes progression?",
-    "query": "fasting_glucose_mgdl(F), hba1c_percent(H), ogtt_2hr_mgdl(O), random_glucose_mgdl(R)",
+    "query": "random_glucose_mgdl(RG), fasting_glucose_mgdl(FG), ogtt_2hr_mgdl(OG), hba1c_percent(HA), fasting_duration_hours(FH)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -1494,10 +1494,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 6.8248507080134,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 11.540595583152026
   },
   {
     "id": "q092",
@@ -1511,10 +1511,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.6020267917774618,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 2.6496487909462303
   },
   {
     "id": "q093",
@@ -1527,15 +1527,15 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 8.271742624929175,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 6.435798000078648
   },
   {
     "id": "q094",
     "question": "Can early glucose abnormalities be classified as prediabetes?",
-    "query": "diagnose(prediabetes)",
+    "query": "prediabetes",
     "expected_predicates": [
       "prediabetes"
     ],
@@ -1543,10 +1543,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 7.503239665878937,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 4.555856334045529
   },
   {
     "id": "q095",
@@ -1560,10 +1560,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.065623875008896,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 2.84555449988693
   },
   {
     "id": "q096",
@@ -1576,10 +1576,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 5.101195125142112,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.521755666937679
   },
   {
     "id": "q097",
@@ -1592,15 +1592,15 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 3.840176291996613,
     "keyword_overlap_score": 0.0,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 8.64836183306761
   },
   {
     "id": "q098",
     "question": "Can changing HbA1c values affect diabetes classification?",
-    "query": "hba1c_percent(H), diagnose(Result)",
+    "query": "hba1c_percent(Value), diagnose(Result)",
     "expected_predicates": [
       "diagnose",
       "diabetes"
@@ -1609,10 +1609,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 5.587763749994338,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 4.900591667043045
   },
   {
     "id": "q099",
@@ -1625,10 +1625,10 @@
     "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
-    "correct": true,
-    "time": 7.084592124912888,
     "keyword_overlap_score": 1.0,
-    "keyword_correct": true
+    "keyword_correct": true,
+    "correct": true,
+    "time": 4.33875812520273
   },
   {
     "id": "q100",
@@ -1642,9 +1642,9 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "correct": false,
-    "time": 2.986511625116691,
     "keyword_overlap_score": 0.5,
-    "keyword_correct": false
+    "keyword_correct": false,
+    "correct": false,
+    "time": 2.549695709021762
   }
 ]

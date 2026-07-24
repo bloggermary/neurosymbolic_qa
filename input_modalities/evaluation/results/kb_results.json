@@ -16,6 +16,14 @@
     "success": true
   },
   {
+    "snippet": "diabetes_german_source",
+    "missing_predicates": [],
+    "forbidden_patterns_found": [],
+    "consults_cleanly": true,
+    "consult_error": "",
+    "success": true
+  },
+  {
     "snippet": "diabetes_gestational",
     "missing_predicates": [],
     "forbidden_patterns_found": [],
