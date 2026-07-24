@@ -12,7 +12,6 @@ from modalities.string_handler import StringHandler
 from modalities.category_handler import CategoryHandler
 from modalities.range_handler import RangeHandler
 from modalities.duration_handler import DurationHandler
-from modalities.scale_handler import ScaleHandler
 from modalities.multiple_category_handler import MultipleCategoryHandler
 from modalities.multi_structured_input_handler import MultiStructuredInputHandler
 from modalities.multi_attribute_entity_handler import MultiAttributeEntityHandler
@@ -31,7 +30,6 @@ class ModalityRouter:
         self.category_handler = CategoryHandler()
         self.range_handler = RangeHandler()
         self.duration_handler = DurationHandler()
-        self.scale_handler = ScaleHandler()
         self.multiple_category_handler = MultipleCategoryHandler()
         self.multi_structured_input_handler = MultiStructuredInputHandler()
         self.multi_attribute_entity_handler = MultiAttributeEntityHandler()
@@ -103,18 +101,6 @@ class ModalityRouter:
         )
 
 
-    def route_scale(
-        self,
-        question: str,
-        min_value: int,
-        max_value: int
-    ) -> dict:
-
-        return self.scale_handler.handle(
-            question,
-            min_value,
-            max_value
-        )
 
 
     def route_multiple_category(
@@ -228,17 +214,6 @@ def route_duration(
 
 
 
-def route_scale(
-    question: str,
-    min_value: int = 1,
-    max_value: int = 10
-) -> dict:
-
-    return router.route_scale(
-        question,
-        min_value,
-        max_value
-    )
 
 
 

@@ -173,30 +173,6 @@ def ask_duration(question: str):
     )
 
 
-
-def ask_scale(question: str):
-
-    cached = interaction.get_cached_answer(question)
-    if cached is not NO_ANSWER:
-        return cached
-
-    interaction.request(
-        question=question,
-        modality="scale",
-        options={"min": 1, "max": 10}
-    )
-
-    raise WaitingForUserInput(
-        question=question,
-        modality="scale",
-        options={
-            "min": 1,
-            "max": 10
-        }
-    )
-
-
-
 def ask_multiple_category(question: str, categories):
     """
     Select any number of applicable options at once (e.g. "which of

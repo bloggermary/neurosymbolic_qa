@@ -19,7 +19,7 @@ def generate_query(question: str, prolog_code: str) -> str:
     - Use only predicates existing in the knowledge base.
 
     - NEVER call ask_boolean, ask_numeric, ask_string, ask_category, ask_range,
-      ask_duration, ask_scale, ask_multiple_category, ask_multi_structured_input,
+      ask_duration, ask_multiple_category, ask_multi_structured_input,
       or ask_multi_attribute_entity directly in the query. These are internal
       input-collection primitives used INSIDE the knowledge base's own rules,
       not queryable facts - calling them directly passes a bare Prolog atom

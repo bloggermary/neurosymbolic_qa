@@ -18,8 +18,6 @@ ask_range(Question, Start, Stop, Value) :-
 ask_duration(Question, Value) :-
     py_call(prolog_bridge:ask_duration(Question), Value).
 
-ask_scale(Question, Value) :-
-    py_call(prolog_bridge:ask_scale(Question), Value).
 
 /* Numeric criteria predicates (each will ask the relevant numeric question when invoked) */
 
@@ -84,7 +82,7 @@ diagnose(diagnosis_summary(Verdict, Symptoms, Medication, Antibodies, FamilyHist
     % Duration and range details
     ask_duration('How many days have symptoms been present? (enter number of days)', SymptomDays),
     ask_range('Hours fasting before plasma glucose sample (0-48)?', 0, 48, FastingHours),
-    ask_scale('Severity of dehydration (1 mild - 10 severe)?', DehydrationScore),
+    ask_range('Severity of dehydration (1 mild - 10 severe)?', DehydrationScore),
 
     % Compose symptoms list and emergency flag
     Symptoms = [polyuria-Polyuria, polydipsia-Polydipsia, weight_loss-WeightLoss, bedwetting-Bedwetting, lethargy-Lethargy],

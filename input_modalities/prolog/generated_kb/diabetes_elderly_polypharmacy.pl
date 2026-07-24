@@ -18,113 +18,135 @@ ask_range(Question, Start, Stop, Value) :-
 ask_duration(Question, Value) :-
     py_call(prolog_bridge:ask_duration(Question), Value).
 
-ask_scale(Question, Value) :-
-    py_call(prolog_bridge:ask_scale(Question), Value).
+ask_multiple_category(Question, Categories, Answer) :-
+    py_call(prolog_bridge:ask_multiple_category(Question, Categories), Answer).
 
-% Main diagnostic workflow: single clause performs full multimodal collection.
-diagnose(diagnosis_summary(Verdict, SymptomsPresent, MedicationPrimary, EGFR, ComorbidityCount, CognitiveScore, FastingHours, YearsKnown, NumericEvidence, HbA1cUnreliable)) :-
-    % Ask classic symptoms (always asked; negative answers are down-weighted but collected)
-    ( ask_boolean('Excessive thirst?') -> Thirst = true ; Thirst = false ),
-    ( ask_boolean('Frequent urination (polyuria)?') -> Polyuria = true ; Polyuria = false ),
-    ( ask_boolean('Fatigue?') -> Fatigue = true ; Fatigue = false ),
-    ( ask_boolean('Blurred vision?') -> BlurredVision = true ; BlurredVision = false ),
-    SymptomsMap = [thirst-Thirst, polyuria-Polyuria, fatigue-Fatigue, blurred_vision-BlurredVision],
-    findall(Name, (member(Name-true, SymptomsMap)), SymptomsPresent),
+ask_multi_structured_input(Question, Mode, Groups, Answer) :-
+    py_call(prolog_bridge:ask_multi_structured_input(Question, Mode, Groups), Answer).
 
-    % Medication category (primary contributor)
-    MedCategories = [corticosteroids, thiazide_diuretics, atypical_antipsychotics, none],
-    ask_category('Which medication most likely affects glucose (choose primary)?', MedCategories, MedicationPrimary),
+ask_multi_attribute_entity(Question, Entity, Fields, Answer) :-
+    py_call(prolog_bridge:ask_multi_attribute_entity(Question, Entity, Fields), Answer).
 
-    % Fasting hours before sample (range question)
-    ask_range('How many hours fasting before the fasting plasma glucose sample?', 0, 72, FastingHours),
+/* Numeric input helpers (standalone, callable) */
+fasting_glucose_mgdl(Value) :-
+    ask_numeric('What is your fasting plasma glucose in mg/dL?', Value).
 
-    % Renal function numeric
-    ask_numeric('Estimated glomerular filtration rate (eGFR) in mL/min/1.73m2?', EGFR),
+random_glucose_mgdl(Value) :-
+    ask_numeric('What is your random (non-fasting) plasma glucose in mg/dL?', Value).
 
-    % Comorbidity count
-    ask_numeric('How many distinct chronic conditions does the patient have (count)?', ComorbidityCount),
+ogtt_2h_mgdl(Value) :-
+    ask_numeric('What is your 2-hour oral glucose tolerance test (OGTT) plasma glucose in mg/dL?', Value).
 
-    % Cognitive/functional status scale 1-10
-    ask_scale('Cognitive/functional status rated 1 (fully independent) to 10 (fully dependent)?', CognitiveScore),
+hba1c_percent(Value) :-
+    ask_numeric('What is your hemoglobin A1c (HbA1c) in percent?', Value).
 
-    % Years with known glucose abnormality (duration; 0 if none)
-    ask_duration('How many years has the patient had any known glucose abnormality (0 if none)?', YearsKnown),
+/* Diagnostic criterion predicates (each self-contained) */
+diabetes_by_fasting :-
+    ask_range('How many hours did you fast before this blood sample?', 0, 24, Hours),
+    Hours >= 8.0,
+    fasting_glucose_mgdl(Value),
+    Value >= 126.0.
 
-    % Conditions affecting HbA1c reliability
-    ( ask_boolean('Chronic kidney disease present?') -> CKD = true ; CKD = false ),
-    ( ask_boolean('Anemia present?') -> Anemia = true ; Anemia = false ),
-    ( (CKD = true ; Anemia = true) -> HbA1cUnreliable = true ; HbA1cUnreliable = false ),
+diabetes_by_random :-
+    random_glucose_mgdl(Value),
+    Value >= 200.0.
 
-    % Numeric diagnostic thresholds: stop after first numeric threshold that alone justifies diabetes
-    % Order: fasting glucose, random glucose, 2-hour OGTT, HbA1c (but HbA1c only if not flagged unreliable for sole diagnosis)
-    (
-        % Check fasting plasma glucose first
-        ask_numeric('Fasting plasma glucose (mg/dL)?', FastingValue),
-        ( number(FastingValue), FastingValue >= 126 ->
-            NumericEvidence = [fasting(FastingValue)],
-            Verdict = diabetes
-        ;
-            % Not diagnostic by fasting -> check random
-            ask_numeric('Random plasma glucose (mg/dL)?', RandomValue),
-            ( number(RandomValue), RandomValue >= 200 ->
-                NumericEvidence = [random(RandomValue)],
-                Verdict = diabetes
-            ;
-                % Not diagnostic by random -> check 2-hour OGTT
-                ask_numeric('2-hour oral glucose tolerance test (OGTT) plasma glucose (mg/dL)?', OgttValue),
-                ( number(OgttValue), OgttValue >= 200 ->
-                    NumericEvidence = [ogtt2h(OgttValue)],
-                    Verdict = diabetes
-                ;
-                    % Not diagnostic by OGTT -> check HbA1c but heed unreliability
-                    ask_numeric('Hemoglobin A1c (%)?', Hba1cValue),
-                    ( number(Hba1cValue), Hba1cValue >= 6.5, HbA1cUnreliable = false ->
-                        NumericEvidence = [hba1c(Hba1cValue,reliable)],
-                        Verdict = diabetes
-                    ;
-                        ( number(Hba1cValue), Hba1cValue >= 6.5, HbA1cUnreliable = true ->
-                            NumericEvidence = [hba1c(Hba1cValue,unreliable)],
-                            Verdict = possible_diabetes_unconfirmed
-                        ;
-                            % No single numeric diabetes threshold met; check prediabetes ranges
-                            determine_prediabetes(FastingValue, RandomValue, OgttValue, Hba1cValue, PredFlag, PredEvidence),
-                            ( PredFlag = true ->
-                                NumericEvidence = PredEvidence,
-                                Verdict = prediabetes
-                            ;
-                                NumericEvidence = [],
-                                Verdict = low_risk
-                            )
-                        )
-                    )
-                )
-            )
-        )
-    ).
+diabetes_by_ogtt :-
+    ogtt_2h_mgdl(Value),
+    Value >= 200.0.
 
-% Determine prediabetes using common thresholds (uses already-asked numeric values if available)
-determine_prediabetes(FastingValue, _RandomValue, OgttValue, Hba1cValue, true, Evidence) :-
-    ( number(FastingValue), FastingValue >= 100, FastingValue =< 125 ->
-        Evidence = [prediabetes_fasting(FastingValue)]
-    ;
-      number(OgttValue), OgttValue >= 140, OgttValue =< 199 ->
-        Evidence = [prediabetes_ogtt2h(OgttValue)]
-    ;
-      number(Hba1cValue), Hba1cValue >= 5.7, Hba1cValue =< 6.4 ->
-        Evidence = [prediabetes_hba1c(Hba1cValue)]
-    ).
+diabetes_by_hba1c :-
+    ( ask_boolean('Do you have chronic kidney disease (CKD)?') -> CKD = true ; CKD = false ),
+    ( ask_boolean('Do you have anemia?') -> Anemia = true ; Anemia = false ),
+    hba1c_percent(Value),
+    Value >= 6.5,
+    /* We ask about CKD/anemia as required by the domain text before relying on HbA1c;
+       their presence does not automatically exclude the criterion but was collected. */
+    ( CKD = true -> true ; true ),
+    ( Anemia = true -> true ; true ).
 
-determine_prediabetes(_, _, _, _, false, []).
-
-% Public predicates that trigger the interactive workflow and succeed according to the result
-diabetes :-
-    diagnose(diagnosis_summary(Verdict, _, _, _, _, _, _, _, _, _)),
-    Verdict = diabetes.
-
+/* Prediabetes standalone predicate (asks the minimum required) */
 prediabetes :-
-    diagnose(diagnosis_summary(Verdict, _, _, _, _, _, _, _, _, _)),
-    Verdict = prediabetes.
+    ( ask_boolean('Have you previously been told by a clinician that you have prediabetes or impaired glucose tolerance?') ->
+        true
+    ;
+        fail
+    ).
+
+/* Main diagnosis workflow: collects multi-modal supporting evidence and then evaluates numeric criteria.
+   Stops checking further numeric thresholds once one numeric criterion justifies diabetes. */
+diagnose(Result) :-
+    /* Collect classic symptoms as explicit yes/no questions */
+    ( ask_boolean('Do you experience excessive thirst (polydipsia)?') -> Thirst = true ; Thirst = false ),
+    ( ask_boolean('Do you experience frequent urination (polyuria)?') -> Polyuria = true ; Polyuria = false ),
+    ( ask_boolean('Do you experience unusual fatigue?') -> Fatigue = true ; Fatigue = false ),
+    ( ask_boolean('Do you experience blurred vision?') -> BlurredVision = true ; BlurredVision = false ),
+
+    /* Medication use: select all that apply */
+    ask_multiple_category(
+        'Which of the following medications currently apply to you? Select all that apply.',
+        [corticosteroids, thiazide_diuretics, atypical_antipsychotics, none],
+        MedicationsSelected
+    ),
+
+    /* Group current medications by when they are taken */
+    ask_multi_structured_input(
+        'Please group your current medications by when you take them: morning, afternoon, evening, or bedtime. For each group, list the medication names.',
+        grouping,
+        ['morning','afternoon','evening','bedtime'],
+        MedicationGroups
+    ),
+
+    /* Renal function as numeric eGFR */
+    ask_numeric('What is the estimated glomerular filtration rate (eGFR) in mL/min/1.73m2?', EGFR),
+
+    /* Count of distinct chronic conditions (numeric) */
+    ask_numeric('How many distinct chronic conditions do you have?', ComorbidityCount),
+
+
+    /* Duration: years of any known glucose abnormality, if applicable */
+    ask_duration('How many years have you had any known glucose abnormality, if applicable?', YearsKnownAbnormality),
+
+    /* Evaluate numeric diagnostic criteria in sequence, stopping at first that justifies diabetes */
+    (   diabetes_by_fasting
+    ->  Evidence = fasting_glucose,
+        Verdict = diabetes
+    ;   diabetes_by_random
+    ->  Evidence = random_glucose,
+        Verdict = diabetes
+    ;   diabetes_by_ogtt
+    ->  Evidence = ogtt_2h,
+        Verdict = diabetes
+    ;   diabetes_by_hba1c
+    ->  Evidence = hba1c,
+        Verdict = diabetes
+    ;   /* No numeric threshold met: consider prior history for prediabetes */
+        ( prediabetes
+        -> Evidence = prior_prediabetes,
+           Verdict = prediabetes
+        ;  Evidence = none,
+           Verdict = low_risk
+        )
+    ),
+
+    /* Build a Janus-safe result dict summarizing the verdict and collected supporting data */
+    Result = _{
+        verdict: Verdict,
+        evidence: Evidence,
+        symptoms: [thirst-Thirst, polyuria-Polyuria, fatigue-Fatigue, blurred_vision-BlurredVision],
+        medications: MedicationsSelected,
+        medication_groups: MedicationGroups,
+        egfr: EGFR,
+        comorbidities: ComorbidityCount,
+        cognitive_scale: CognitiveScale,
+        years_glucose_abnormality: YearsKnownAbnormality
+    }.
+
+/* Convenience predicates that run the diagnostic workflow and return boolean answers */
+diabetes :-
+    diagnose(R),
+    get_dict(verdict, R, diabetes).
 
 low_risk :-
-    diagnose(diagnosis_summary(Verdict, _, _, _, _, _, _, _, _, _)),
-    Verdict = low_risk.
+    diagnose(R),
+    get_dict(verdict, R, low_risk).

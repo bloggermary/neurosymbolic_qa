@@ -18,10 +18,6 @@ ask_range(Question, Start, Stop, Value) :-
 ask_duration(Question, Value) :-
     py_call(prolog_bridge:ask_duration(Question), Value).
 
-ask_scale(Question, Value) :-
-    py_call(prolog_bridge:ask_scale(Question), Value).
-
-
 /* OGTT numeric criteria predicates */
 fasting_glucose_mgdl(Value) :-
     ask_numeric('Fasting plasma glucose (mg/dL)?', Value).

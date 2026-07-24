@@ -475,7 +475,7 @@ class MedicalPipeline:
         if modality == "boolean":
             return str(raw).strip().lower() in ("yes", "true", "1")
 
-        if modality in ("numeric", "duration", "range", "scale"):
+        if modality in ("numeric", "duration", "range"):
             return float(raw)
 
         # string, category, multiple_category, multi_structured_input,

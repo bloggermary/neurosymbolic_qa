@@ -25,20 +25,13 @@ REASONING REQUIREMENTS:
   stop asking further numeric criteria as soon as one threshold is met - do not force
   every numeric criterion to be checked once a conclusion is already justified.
 - Use the simplest valid reasoning path for the numeric threshold check itself.
-- HOWEVER: the source text describes this domain as explicitly multi-modal (numeric,
-  boolean, range, categorical, and temporal/duration data all appear in it). The main
-  diagnose/1 workflow MUST also collect the supporting clinical picture described in
-  the text - not just the numeric threshold - because that supporting evidence is part
-  of what a real clinical dialogue would gather, and because this system is built to
-  demonstrate multi-modal reasoning, not numeric-only reasoning. Concretely, diagnose/1
-  (and diabetes/0 when used as the general entry point) should, in addition to the
-  numeric threshold check:
-    - ask_boolean for each symptom explicitly mentioned in the text (e.g. excessive
-      thirst, excessive urination, fatigue, blurred vision)
-    - ask_category for medication status and any categorical history mentioned in the
-      text (e.g. insulin / oral antidiabetics / corticosteroids / none)
-    - ask_range or ask_duration for any threshold/temporal detail mentioned in the text
-      (e.g. hours of fasting before a glucose sample)
+- Beyond that numeric threshold, diagnose/1 MUST also collect whatever supporting
+  clinical picture the source text actually describes - not just the numeric
+  threshold - re-derived fresh from whatever text is provided, never hardcoded
+  to one condition or domain:
+    - ask_boolean for each symptom the text explicitly describes
+    - ask_category for any categorical status or history the text describes
+    - ask_range or ask_duration for any bounded or temporal detail the text describes
   This supporting evidence should be gathered as part of the interactive dialogue
   (that's what actually demonstrates multi-modal reasoning to the user - the
   QUESTIONS asked, not the shape of the return value). diagnose/1's own RETURN
@@ -70,9 +63,6 @@ ask_range(Question, Start, Stop, Value) :-
 ask_duration(Question, Value) :-
     py_call(prolog_bridge:ask_duration(Question), Value).
 
-ask_scale(Question, Value) :-
-    py_call(prolog_bridge:ask_scale(Question), Value).
-
 ask_multiple_category(Question, Categories, Answer) :-
     py_call(prolog_bridge:ask_multiple_category(Question, Categories), Answer).
 
@@ -89,12 +79,12 @@ Use:
 - ask_boolean for yes/no questions
 - ask_numeric for measurements and numbers
 - ask_duration for time durations
-- ask_range for bounded numeric intervals
-- ask_scale for ratings from 1-10
+- ask_range for bounded numeric intervals (including ratings/severity
+  scores from 1-10, since those are also bounded-interval answers)
 - ask_category for fixed choices
 - ask_string for free text
 
-CRITICAL - ask_numeric/ask_duration/ask_range/ask_scale ALWAYS RETURN A FLOAT:
+CRITICAL - ask_numeric/ask_duration/ask_range ALWAYS RETURN A FLOAT:
 even a count or "how many" answer comes back as e.g. 1.0, never the integer 1.
 NEVER gate logic on integer(Value) for anything sourced from these - it will
 silently and always fail, even for a perfectly valid answer. Use a numeric
@@ -104,6 +94,23 @@ comparison instead:
 If you need a whole-number count for something like "how many entries to
 collect", compare with >= /=< or convert explicitly with round/1 or
 truncate/1 - do not test the term's type.
+
+CRITICAL - NEVER PUT ==, \\=, OR CONTROL CONSTRUCTS INSIDE is/2:
+is/2's right-hand side must be a pure arithmetic expression over numbers -
+it does NOT understand atom/term comparisons like == or \\=, and it will try
+to arithmetically evaluate whatever variable you give it. Counting boolean
+flags this way is a common mistake and WILL crash:
+    BAD:  NumThirst is (ThirstPresent == true -> 1.0 ; 0.0)
+          -- crashes with "Arithmetic: `true/0' is not a function", because
+          is/2 tries to evaluate the ThirstPresent==true test arithmetically,
+          which means evaluating the atom `true` as a number.
+Instead, bind counts with an ordinary clause-level if-then-else (using =,
+not is), or accumulate with plain unification:
+    GOOD: ( ThirstPresent == true -> NumThirst = 1 ; NumThirst = 0 )
+    GOOD: findall(1, member(true, [ThirstPresent, PolyuriaPresent, FatiguePresent, BlurredVisionPresent]), Ones), length(Ones, SymptomCount)
+Only ever put a real arithmetic expression (numbers, +, -, *, /, round/1,
+etc. over already-numeric values) on the right of is/2 - never a boolean
+test, comparison, or atom.
 - ask_multiple_category for selecting SEVERAL applicable options in one
   question, instead of asking one boolean per option - use this for
   "which of the following apply?" style questions (e.g. multiple
@@ -126,8 +133,7 @@ truncate/1 - do not test the term's type.
   3-element list, NOT a compound term, per JANUS RESULT SAFETY below).
   Answer is a top-level dict: _{{entity: Entity, data: _{{...}}}}.
   Only use this when the text describes multiple attributes of the
-  SAME thing that naturally belong together (e.g. one medication's
-  dose AND frequency) - do not force unrelated facts into one entity.
+  SAME thing that naturally belong together - do not force unrelated facts into one entity.
 
 These three are OPTIONAL, more expressive alternatives to the basic
 modalities above - use them only where they are a clearly better fit
@@ -216,20 +222,6 @@ diagnose/1 first - if a criterion predicate needs an external input argument
 to work correctly, calling it alone will crash with an uninstantiated-argument
 error. Each criterion predicate must gather everything it needs itself:
 
-Example (GOOD - each one is fully self-contained):
-
-fasting_glucose_mgdl(Value) :- ask_numeric('What is your fasting plasma glucose in mg/dL?', Value).
-
-diabetes_positive_by_fasting_glucose :-
-    ask_duration('How many hours did you fast before this blood sample?', Hours),
-    Hours >= 8, Hours =< 12,
-    fasting_glucose_mgdl(Value),
-    Value >= 126.
-
-diabetes_positive_by_hba1c :-
-    hba1c_percent(Value),
-    Value >= 6.5.
-
 BAD - do NOT write a single combined helper that bundles several criteria
 together and requires the caller to already supply values like FastingHours
 as an argument (e.g. numeric_diabetes_evidence(FastingHours, RandomValue, ...)):
@@ -239,14 +231,6 @@ diagnose/1 may of course call each standalone criterion predicate in
 sequence itself (stopping early once one succeeds) - the requirement is
 just that each criterion ALSO works when called completely on its own.
 
-
-IMPORTANT:
-- diagnose/1 should stop asking further NUMERIC threshold criteria once one of them
-  alone already justifies the verdict (do not check every numeric criterion).
-- diagnose/1 must still ALSO collect the supporting boolean symptoms, categorical
-  medication/history, and any duration/range detail described in the text, every time -
-  these are not part of the "stop early" rule, they are the multi-modal clinical
-  picture this system is designed to demonstrate.
 
 OUTPUT:
 Return only executable Prolog code.

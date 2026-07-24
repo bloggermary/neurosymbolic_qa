@@ -178,17 +178,6 @@ def render_pending_question():
             )
 
 
-        elif pending.modality == "scale":
-
-            answer = st.slider(
-                pending.question,
-                pending.options["min"],
-                pending.options["max"],
-                key="scale_input",
-                label_visibility="collapsed",
-            )
-
-
         elif pending.modality == "multiple_category":
 
             answer = st.multiselect(

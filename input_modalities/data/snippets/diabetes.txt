@@ -4,16 +4,21 @@ Random plasma glucose ≥ 11.1 mmol/L (200 mg/dL).
 Fasting plasma glucose ≥ 7.0 mmol/L (126 mg/dL) after 8–12 hours of fasting.
 2-hour plasma glucose during an oral glucose tolerance test (OGTT) ≥ 11.1 mmol/L (200 mg/dL).
 HbA1c ≥ 6.5% (48 mmol/mol).
+
+
+
+
 Prediabetes
 
 Prediabetes may be present if:
 Fasting plasma glucose is between 100 and 125 mg/dL.
 
-Common symptoms include:
+Common symptoms of prediabetes include:
 - excessive thirst
 - excessive urination
 - fatigue
 - blurred vision
+
 Common symptoms associated with diabetes include excessive thirst,
 frequent urination, fatigue, and blurred vision.
 

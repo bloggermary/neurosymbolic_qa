@@ -1,6 +1,3 @@
-from modalities.validation import ModalityValidator
-
-
 class NumericHandler:
     """
     Creates a numeric input request.

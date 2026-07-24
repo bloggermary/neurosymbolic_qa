@@ -184,23 +184,6 @@ class DialogueModalityHandler:
 
 
 
-    def ask_scale(
-        self,
-        question: str,
-        min_value: int = 1,
-        max_value: int = 10
-    ) -> None:
-
-        self.request_input(
-            question,
-            "scale",
-            {
-                "min": min_value,
-                "max": max_value,
-            }
-        )
-
-
 
     def ask_multiple_category(
         self,
@@ -284,11 +267,6 @@ class DialogueModalityHandler:
         elif modality == "categorical":
 
             response["style"] = "label_focused"
-
-
-        elif modality == "scale":
-
-            response["style"] = "explanatory"
 
 
         elif modality in ("multiple_category", "multi_structured_input", "multi_attribute_entity"):

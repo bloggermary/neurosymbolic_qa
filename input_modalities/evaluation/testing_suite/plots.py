@@ -205,74 +205,7 @@ def plot_query_complexity():
 
 
 # =========================================================
-# 3. PIPELINE
-# =========================================================
-
-def plot_pipeline_success():
-
-    data = load("pipeline_success.json")
-
-    answered = data.get("answered_directly", data.get("successful", 0))
-    needs_input = data.get("needs_input", 0)
-    failed = data.get("failed", 0)
-
-    _bar_with_labels(
-        ["Answered\ndirectly", "Correctly asked\nfor more input", "Failed"],
-        [answered, needs_input, failed],
-        "Pipeline Outcomes",
-        ylabel="Number of questions",
-    )
-
-    save_plot("pipeline_success.png")
-
-
-def plot_pipeline_runtime():
-
-    data = load("pipeline_results.json")
-
-    times = [x["time"] for x in data if "time" in x]
-
-    if not times:
-        return
-
-    plt.figure()
-
-    plt.hist(times, bins=10)
-
-    plt.title("Pipeline Runtime Distribution")
-
-    plt.xlabel("Seconds")
-    plt.ylabel("Number of questions")
-
-    save_plot("pipeline_runtime.png")
-
-
-def plot_pipeline_errors():
-
-    data = load("pipeline_results.json")
-
-    needs_input = sum(1 for x in data if x.get("needs_input"))
-
-    other_errors = sum(
-        1 for x in data
-        if not x.get("success", True) and not x.get("needs_input")
-    )
-
-    if needs_input == 0 and other_errors == 0:
-        return
-
-    _bar_with_labels(
-        ["Correctly needs\nmore input", "Genuine\nerror"],
-        [needs_input, other_errors],
-        "Pipeline Error Categories",
-        ylabel="Number of questions",
-    )
-
-    save_plot("pipeline_errors.png")
-
-
-# =========================================================
-# 4. KB GENERATION
+# 3. KB GENERATION
 # =========================================================
 
 def plot_kb_generation():
@@ -313,7 +246,7 @@ def plot_kb_generation():
 
 
 # =========================================================
-# 5. FOLLOW-UP
+# 4. FOLLOW-UP
 # =========================================================
 
 def plot_followup_accuracy():
@@ -351,7 +284,7 @@ def plot_followup_count():
 
 
 # =========================================================
-# 6. DIAGNOSTIC ACCURACY
+# 5. DIAGNOSTIC ACCURACY
 # =========================================================
 
 def plot_diagnostic_accuracy():
@@ -422,7 +355,7 @@ def plot_diagnostic_by_category():
 
 
 # =========================================================
-# 7. OVERVIEW
+# 6. OVERVIEW
 # =========================================================
 
 def plot_overview():
@@ -441,11 +374,6 @@ def plot_overview():
     try:
         bars.append(("Query gen\n(strict)", load("query_accuracy.json")["strict_accuracy"]))
         bars.append(("Query gen\n(keyword)", load("query_accuracy.json")["keyword_accuracy"]))
-    except FileNotFoundError:
-        pass
-
-    try:
-        bars.append(("Pipeline\nsuccess", load("pipeline_success.json")["success_rate"]))
     except FileNotFoundError:
         pass
 
@@ -501,22 +429,16 @@ if __name__ == "__main__":
     plot_query_complexity()
 
 
-    # 3 Pipeline
-    plot_pipeline_success()
-    plot_pipeline_runtime()
-    plot_pipeline_errors()
-
-
-    # 4 KB
+    # 3 KB
     plot_kb_generation()
 
 
-    # 5 Follow-up
+    # 4 Follow-up
     plot_followup_accuracy()
     plot_followup_count()
 
 
-    # 6 Overview
+    # 5 Overview
     plot_overview()
 
 

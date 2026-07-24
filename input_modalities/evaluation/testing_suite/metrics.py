@@ -245,62 +245,7 @@ def query_predicate_scores(results):
 
 
 # =========================================================
-# 3. Pipeline Metrics
-# =========================================================
-
-def pipeline_success_rate(results):
-
-    success = sum(
-        1
-        for r in results
-        if r.get("success", False)
-    )
-
-
-    return compute_accuracy(
-        success,
-        len(results)
-    )
-
-
-
-def pipeline_execution_times(results):
-
-    return [
-        r.get(
-            "time",
-            0
-        )
-        for r in results
-    ]
-
-
-
-def pipeline_error_distribution(results):
-
-    errors = Counter()
-
-    for r in results:
-
-        if not r.get(
-            "success",
-            False
-        ):
-
-            error = r.get(
-                "error",
-                "unknown"
-            )
-
-            errors[error] += 1
-
-
-    return dict(errors)
-
-
-
-# =========================================================
-# 4. KB Generation Metrics
+# 3. KB Generation Metrics
 # =========================================================
 
 def kb_generation_success(results):
@@ -323,7 +268,7 @@ def kb_generation_success(results):
 
 
 # =========================================================
-# 5. Follow-up Metrics
+# 4. Follow-up Metrics
 # =========================================================
 
 def average_followups(results):

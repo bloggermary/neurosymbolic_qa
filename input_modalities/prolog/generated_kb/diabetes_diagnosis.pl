@@ -18,9 +18,6 @@ ask_range(Question, Start, Stop, Value) :-
 ask_duration(Question, Value) :-
     py_call(prolog_bridge:ask_duration(Question), Value).
 
-ask_scale(Question, Value) :-
-    py_call(prolog_bridge:ask_scale(Question), Value).
-
 /* Clinical picture gathering */
 gather_clinical_picture(Symptoms, Medication, FastingHours, SymptomDurationDays, SymptomDurationCategory, SymptomSupport, FatigueCategory, ThirstSeverity, FatigueScale) :-
     ( ask_boolean('Do you have excessive thirst?') -> ThirstPresent = true ; ThirstPresent = false ),
@@ -33,7 +30,6 @@ gather_clinical_picture(Symptoms, Medication, FastingHours, SymptomDurationDays,
     ask_duration('For how many days have the symptoms been present? (enter whole days)', SymptomDurationDays),
     classify_duration(SymptomDurationDays, SymptomDurationCategory),
     classify_symptom_support(ThirstPresent, UrinationPresent, SymptomSupport),
-    ask_scale('On a scale 1-10, how severe is your fatigue (whole number)?', FatigueScale),
     classify_fatigue(FatigueScale, FatigueCategory),
     ask_category('How would you describe thirst severity?', [none, mild, moderate, severe], ThirstSeverity).
 
@@ -50,15 +46,15 @@ classify_symptom_support(true, false, partial) :- !.
 classify_symptom_support(false, true, partial) :- !.
 classify_symptom_support(false, false, none).
 
-classify_fatigue(Scale, mild) :-
-    Scale >= 1,
-    Scale =< 3.
+classify_fatigue(Range, mild) :-
+    Range >= 1,
+    Range =< 3.
 classify_fatigue(Scale, moderate) :-
-    Scale >= 4,
-    Scale =< 6.
+    Range >= 4,
+    Range =< 6.
 classify_fatigue(Scale, severe) :-
-    Scale >= 7,
-    Scale =< 10.
+    Range >= 7,
+    Range =< 10.
 
 /* Numeric diagnostic criteria (each asks only the numeric value it needs) */
 diabetes_by_random(Value) :-

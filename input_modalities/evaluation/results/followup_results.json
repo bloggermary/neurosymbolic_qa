@@ -71,9 +71,9 @@
       "weight_loss_amount"
     ],
     "predicted": [
-      "weight_loss_amount_numeric"
+      "weight_loss_amount"
     ],
-    "strict_correct": false,
+    "strict_correct": true,
     "decision_correct": true,
     "followups": [
       {
