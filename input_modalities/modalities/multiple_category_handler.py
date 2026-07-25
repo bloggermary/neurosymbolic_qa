@@ -8,7 +8,7 @@ class MultipleCategoryHandler:
         self,
         question: str,
         categories: list[str]
-    ):
+    ) -> dict:
 
         return {
             "type": "multiple_category",
