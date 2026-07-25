@@ -101,13 +101,11 @@ class ModalityRouter:
         )
 
 
-
-
     def route_multiple_category(
         self,
         question: str,
         categories: list[str]
-    ) -> list[str]:
+    ) -> dict:
 
         return self.multiple_category_handler.handle(
             question,
@@ -119,13 +117,13 @@ class ModalityRouter:
         self,
         question: str,
         mode: str,
-        groups: list[str] | None = None
-    ):
+        structure: list[str]
+    ) -> dict:
 
         return self.multi_structured_input_handler.handle(
             question,
             mode,
-            groups
+            structure
         )
 
 
@@ -133,7 +131,7 @@ class ModalityRouter:
         self,
         question: str,
         entity: str,
-        fields: list[tuple[str, str, str]]
+        fields: list[str]
     ) -> dict:
 
         return self.multi_attribute_entity_handler.handle(
@@ -214,13 +212,10 @@ def route_duration(
 
 
 
-
-
-
 def route_multiple_category(
     question: str,
     categories: list[str]
-) -> list[str]:
+) -> dict:
 
     return router.route_multiple_category(
         question,
@@ -232,13 +227,13 @@ def route_multiple_category(
 def route_multi_structured_input(
     question: str,
     mode: str,
-    groups: list[str] | None = None
-):
+    structure: list[str]
+) -> dict:
 
     return router.route_multi_structured_input(
         question,
         mode,
-        groups
+        structure
     )
 
 
@@ -246,7 +241,7 @@ def route_multi_structured_input(
 def route_multi_attribute_entity(
     question: str,
     entity: str,
-    fields: list[tuple[str, str, str]]
+    fields: list[str]
 ) -> dict:
 
     return router.route_multi_attribute_entity(

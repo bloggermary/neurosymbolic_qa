@@ -8,12 +8,12 @@ class MultiStructuredInputHandler:
         self,
         question: str,
         mode: str,
-        groups: list[str] | None = None
-    ):
+        structure: list[str]
+    ) -> dict:
 
         return {
             "type": "multi_structured_input",
             "question": question,
             "mode": mode,
-            "groups": groups or []
+            "structure": structure
         }

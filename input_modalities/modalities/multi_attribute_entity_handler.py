@@ -8,8 +8,8 @@ class MultiAttributeEntityHandler:
         self,
         question: str,
         entity: str,
-        fields: list[tuple[str, str, str]]
-    ):
+        fields: list[str]
+    ) -> dict:
 
         return {
             "type": "multi_attribute_entity",

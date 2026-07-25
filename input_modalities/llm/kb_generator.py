@@ -64,8 +64,8 @@ ask_duration(Question, Value) :-
 ask_multiple_category(Question, Categories, Answer) :-
     py_call(prolog_bridge:ask_multiple_category(Question, Categories), Answer).
 
-ask_multi_structured_input(Question, Mode, Groups, Answer) :-
-    py_call(prolog_bridge:ask_multi_structured_input(Question, Mode, Groups), Answer).
+ask_multi_structured_input(Question, Mode, Structure, Answer) :-
+    py_call(prolog_bridge:ask_multi_structured_input(Question, Mode, Structure), Answer).
 
 ask_multi_attribute_entity(Question, Entity, Fields, Answer) :-
     py_call(prolog_bridge:ask_multi_attribute_entity(Question, Entity, Fields), Answer).
