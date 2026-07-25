@@ -1229,8 +1229,13 @@
     "id": "m120",
     "question": "How many hours of sleep do you get on average?",
     "expected_modality": "numeric",
-    "followup_expected": false,
-    "expected_followups": [],
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "sleep_quality_range",
+        "modality": "range"
+      }
+    ],
     "must_not_contain_followups": []
   },
   {

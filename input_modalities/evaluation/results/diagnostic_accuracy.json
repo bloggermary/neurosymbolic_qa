@@ -1,5 +1,6 @@
 {
-  "total": 20,
-  "correct": 20,
-  "accuracy": 1.0
+  "total": 200,
+  "correct": 200,
+  "accuracy": 1.0,
+  "scope_caveat": "This number tests internal consistency between reference_kb.pl and the Python verdict() function used to label these scenarios - both written by the same author from the same understanding of the ADA criteria. It does NOT test the actual LLM-generated knowledge bases the live app uses; see diagnostic_fresh_generation_check.json for that."
 }

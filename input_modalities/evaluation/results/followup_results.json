@@ -401,20 +401,14 @@
     "modality": "category",
     "expected_followup_needed": true,
     "predicted_followup_needed": true,
-    "expected": [
-      "symptom_duration"
-    ],
-    "predicted": [
-      "symptom_description_string"
-    ],
+    "expected": ["symptom_duration"],
+    "predicted": ["symptom_description_string"],
     "strict_correct": false,
     "decision_correct": false,
     "followups": [
-      {
-        "question": "symptom_description_string",
+      {"question": "symptom_description_string",
         "modality": "string",
-        "topic": "symptom description"
-      }
+        "topic": "symptom description"}
     ]
   },
   {
@@ -1795,13 +1789,23 @@
   {
     "question": "How many hours of sleep do you get on average?",
     "modality": "numeric",
-    "expected_followup_needed": false,
-    "predicted_followup_needed": false,
-    "expected": [],
-    "predicted": [],
+    "expected_followup_needed": true,
+    "predicted_followup_needed": true,
+    "expected": [
+      "sleep_quality_range"
+    ],
+    "predicted": [
+      "sleep_quality_range"
+    ],
     "strict_correct": true,
     "decision_correct": true,
-    "followups": []
+    "followups": [
+      {
+        "question": "sleep_quality_range",
+        "modality": "range",
+        "topic": "sleep quality"
+      }
+    ]
   },
   {
     "question": "Describe any changes in your vision.",

@@ -1,0 +1,14 @@
+{
+  "diabetic_scenario_correct": true,
+  "prediabetic_scenario_correct": true,
+  "normal_scenario_correct": true,
+  "diabetic_outcome": "completed",
+  "prediabetic_outcome": "completed",
+  "normal_outcome": "completed",
+  "diabetic_answer": "The available data meet diagnostic criteria for diabetes based on an elevated random plasma glucose measurement; correlate clinically by assessing for classic hyperglycemia symptoms (polyuria, polydipsia, nocturia, unexplained weight loss) and screen for acute complications (dehydration, ketosis/DKA). Determine severity and chronicity with quantitative glucose values, HbA1c, fasting plasma glucose, and review for end-organ effects (retinopathy, nephropathy, neuropathy) and cardiovascular risk factors. No antihyperglycemic medications are listed; confirm diagnosis promptly and initiate appropriate baseline labs (electrolytes, renal function, liver tests, lipids, urine ketones) and treatment planning.",
+  "prediabetic_answer": "Findings indicate prediabetes manifested by impaired fasting glucose (fasting‑prediabetes); patients are often asymptomatic or have nonspecific symptoms and this represents increased cardiometabolic risk rather than overt diabetes. Duration is indeterminate and should be clarified with repeat fasting glucose, HbA1c or a 2‑hour OGTT; no glucose‑lowering medications are currently reported, so initial management centers on lifestyle modification and serial monitoring.",
+  "normal_answer": "Assessment: The patient is assessed as low risk with no reported symptoms (including no fatigue or excessive thirst), no noted symptom duration, and no current medications or supporting clinical findings. Recommend routine monitoring and prompt reassessment if new symptoms, persistent concerns, or risk factors emerge.",
+  "diabetic_error": null,
+  "prediabetic_error": null,
+  "normal_error": null
+}

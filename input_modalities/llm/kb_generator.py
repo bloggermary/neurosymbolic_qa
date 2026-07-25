@@ -110,24 +110,25 @@ is/2's right-hand side must be a pure arithmetic expression over numbers -
 it does NOT understand atom/term comparisons like == or \\=, and it will try
 to arithmetically evaluate whatever variable you give it. Counting boolean
 flags this way is a common mistake and WILL crash:
-    BAD:  NumThirst is (ThirstPresent == true -> 1.0 ; 0.0)
+    BAD:  NumFlag is (SomeFlag == true -> 1.0 ; 0.0)
           -- crashes with "Arithmetic: `true/0' is not a function", because
-          is/2 tries to evaluate the ThirstPresent==true test arithmetically,
+          is/2 tries to evaluate the SomeFlag==true test arithmetically,
           which means evaluating the atom `true` as a number.
 Instead, bind counts with an ordinary clause-level if-then-else (using =,
 not is), or accumulate with plain unification:
-    GOOD: ( ThirstPresent == true -> NumThirst = 1 ; NumThirst = 0 )
-    GOOD: findall(1, member(true, [ThirstPresent, PolyuriaPresent, FatiguePresent, BlurredVisionPresent]), Ones), length(Ones, SymptomCount)
+    GOOD: ( SomeFlag == true -> NumFlag = 1 ; NumFlag = 0 )
+    GOOD: findall(1, member(true, ListOfFlags), Ones), length(Ones, Count)
 Only ever put a real arithmetic expression (numbers, +, -, *, /, round/1,
 etc. over already-numeric values) on the right of is/2 - never a boolean
 test, comparison, or atom.
 - ask_multiple_category for selecting SEVERAL applicable options in one
   question, instead of asking one boolean per option - use this for
-  "which of the following apply?" style questions (e.g. multiple
-  symptoms at once). Answer is bound to a Prolog list of the selected
-  atoms/strings (an empty list if none apply). Categories is a plain
-  list, e.g. ['thirst', 'polyuria', 'fatigue', 'blurred_vision'] - you
-  do not need to add 'none' yourself, the UI adds it automatically.
+  "which of the following apply?" style questions (e.g. several findings
+  from the source text at once). Answer is bound to a Prolog list of the
+  selected atoms/strings (an empty list if none apply). Categories is a
+  plain list of atoms derived from what the source text actually
+  describes - you do not need to add 'none' yourself, the UI adds it
+  automatically.
 - ask_multi_structured_input for collecting several related items at
   once: Mode is one of sequence (ordered list), ranking (list of
   rank-value pairs), or grouping (Groups is a list of group-name
@@ -154,19 +155,20 @@ demonstrate that they exist.
 QUESTION WORDING - every ask_* question string is shown DIRECTLY to a
 patient in a chat interface, so each one MUST be a complete, natural
 question, never a bare label, noun phrase, or field name:
-    GOOD: ask_boolean('Do you experience excessive thirst?')
-    BAD:  ask_boolean('Thirst?')
-    BAD:  ask_boolean('Excessive thirst')
-    GOOD: ask_numeric('What is your fasting plasma glucose in mg/dL?', Value)
-    BAD:  ask_numeric('Fasting glucose', Value)
-    GOOD: ask_category('What is your current medication status?', [insulin, oral_antidiabetics, none], Answer)
-    BAD:  ask_category('Medication status?', [insulin, oral_antidiabetics, none], Answer)
-    GOOD: ask_range('How many hours did you fast before this blood sample?', 0, 24, Value)
-    BAD:  ask_range('Fasting duration', 0, 24, Value)
+    GOOD: ask_boolean('Do you experience <the actual symptom/finding>?')
+    BAD:  ask_boolean('<Finding>?')
+    BAD:  ask_boolean('<Finding>')
+    GOOD: ask_numeric('What is your <measurement>, in <its actual unit>?', Value)
+    BAD:  ask_numeric('<Measurement name>', Value)
+    GOOD: ask_category('What is your current <status the text describes>?', [<the actual categories the text names>], Answer)
+    BAD:  ask_category('<Status>?', [<categories>], Answer)
+    GOOD: ask_range('<a complete, natural question about the bounded value>?', Start, Stop, Value)
+    BAD:  ask_range('<Bare label>', Start, Stop, Value)
 This applies to every single ask_* call in the file, including ones
-for symptoms, history, and lab values - none of them should read like
+for symptoms, history, and measurements - none of them should read like
 a form field label. Phrase each one the way a clinician would actually
-ask the patient.
+ask the patient, grounded in the specific vocabulary the source text
+itself uses, not a generic template.
 
 CRITICAL - ask_boolean/1 HAS NO OUTPUT ARGUMENT:
 ask_boolean(Question) only succeeds (on "yes") or fails (on "no") - it does NOT bind
@@ -190,7 +192,7 @@ handles: atoms, numbers, strings, lists (recursively), Key-Value pairs written
 as Key-Value, and SWI-Prolog dicts (Tag{{...}} or _{{...}}) written at the TOP
 LEVEL of the returned value. It CANNOT convert a custom-named compound term
 (any Name(Arg1, Arg2, ...) you invent, e.g. diagnosis_summary(...), point(1,2),
-fatigue_severity(3,mild)) - if ANY custom compound term appears ANYWHERE in the
+severity_rating(3,moderate)) - if ANY custom compound term appears ANYWHERE in the
 value bound to a query's result variable, even nested inside a list or dict,
 the whole query crashes with "Domain error: py_term expected". This happens
 AFTER the user has already answered every question, which is the worst
@@ -199,13 +201,14 @@ Concretely, diagnose/1's argument (and the argument of any other predicate a
 query might bind a free variable to) must be built ONLY from: atoms, numbers,
 strings, lists, Key-Value pairs, and top-level dicts whose values are
 themselves only atoms/numbers/strings/lists/pairs - never a custom compound.
-    GOOD: diagnose(diabetes)   -- just the bare verdict atom
-    GOOD: diagnose(_{{verdict: diabetes, evidence: random_glucose, symptoms: [thirst-true, fatigue-false]}})
-    BAD:  diagnose(diagnosis_summary(diabetes, symptoms(true,false), ...))  -- custom compound, WILL crash
-    BAD:  X = fatigue_severity(6, moderate), ... , Result = summary(V, X, ...)  -- nested custom compound, WILL crash
-If you want to report a classified/severity value (e.g. "moderate" fatigue),
-just use the plain atom (moderate) or a pair (fatigue-moderate) directly -
-never wrap it in its own named compound like fatigue_severity(6, moderate).
+    GOOD: diagnose(<verdict atom>)   -- just the bare verdict atom
+    GOOD: diagnose(_{{verdict: <verdict atom>, evidence: <atom>, findings: [<finding>-true, <finding>-false]}})
+    BAD:  diagnose(diagnosis_summary(<verdict>, findings(true,false), ...))  -- custom compound, WILL crash
+    BAD:  X = severity_rating(6, moderate), ... , Result = summary(V, X, ...)  -- nested custom compound, WILL crash
+If you want to report a classified/severity value (e.g. a "moderate"
+rating), just use the plain atom (moderate) or a pair (finding-moderate)
+directly - never wrap it in its own named compound like
+severity_rating(6, moderate).
 This same rule applies to ask_multi_attribute_entity's Fields argument:
 each field must be a plain list [Key, Prompt, Type], never a compound term
 like field(Key, Prompt, Type) - a list of lists is janus-safe, a list of
@@ -234,7 +237,7 @@ error. Each criterion predicate must gather everything it needs itself:
 
 BAD - do NOT write a single combined helper that bundles several criteria
 together and requires the caller to already supply values like FastingHours
-as an argument (e.g. numeric_diabetes_evidence(FastingHours, RandomValue, ...)):
+as an argument (e.g. combined_evidence(FastingHours, SomeOtherValue, ...)):
 this cannot be safely called except from inside diagnose/1's own exact
 sequence, so any other query that tries to use it directly will break.
 diagnose/1 may of course call each standalone criterion predicate in

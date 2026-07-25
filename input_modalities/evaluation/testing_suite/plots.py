@@ -54,12 +54,33 @@ def save_plot(name):
 
 def _bar_with_labels(labels, values, title, ylabel="", ylim=None):
 
-    plt.figure()
+    # Fixed per-bar width so charts with more bars (e.g. the 7-bar
+    # overview) get proportionally more figure width instead of the
+    # same fixed size squeezing every label together.
+    width_per_bar = 1.3
+    fig_width = max(6.4, width_per_bar * len(labels))
+    plt.figure(figsize=(fig_width, 4.8))
 
-    bars = plt.bar(labels, values, width=0.4)
+    # Default categorical spacing (1.0 apart) leaves a wide empty gap
+    # when there are only a few bars, since the bars themselves stay
+    # narrow (width=0.4) but the slots between them don't shrink to
+    # match. Packing bars 0.5 apart instead keeps them visually close
+    # regardless of how many there are.
+    positions = [i * 0.5 for i in range(len(labels))]
+
+    bars = plt.bar(positions, values, width=0.35)
+
+    plt.xticks(positions, labels)
+
+    if len(labels) > 1:
+        plt.xlim(positions[0] - 0.4, positions[-1] + 0.4)
 
     if ylim:
-        plt.ylim(*ylim)
+        # A little headroom above the top of the range so a label on
+        # a bar that hits the ceiling (e.g. "100%") doesn't collide
+        # with the title.
+        top = ylim[1] + (ylim[1] - ylim[0]) * 0.08
+        plt.ylim(ylim[0], top)
 
     plt.title(title)
 
@@ -205,7 +226,56 @@ def plot_query_complexity():
 
 
 # =========================================================
-# 3. KB GENERATION
+# 3. FULL PIPELINE
+# =========================================================
+
+def plot_pipeline_success():
+
+    if not os.path.exists(os.path.join(BASE_PATH, "pipeline_success.json")):
+        return
+
+    data = load("pipeline_success.json")
+
+    completed = data.get("completed", 0)
+    exceeded = data.get("exceeded_max_turns", 0)
+    failed = data.get("failed", 0)
+
+    _bar_with_labels(
+        ["Completed", "Exceeded\nmax turns", "Failed"],
+        [completed, exceeded, failed],
+        "Full Pipeline Outcomes",
+        ylabel="Number of questions",
+    )
+
+    save_plot("pipeline_success.png")
+
+
+def plot_pipeline_turns():
+
+    if not os.path.exists(os.path.join(BASE_PATH, "pipeline_results.json")):
+        return
+
+    data = load("pipeline_results.json")
+
+    turns = [x.get("turns", 0) for x in data]
+
+    if not turns:
+        return
+
+    plt.figure()
+
+    plt.hist(turns, bins=range(0, max(turns) + 2))
+
+    plt.title("Full Pipeline: Turns to Completion")
+
+    plt.xlabel("Number of resume() turns")
+    plt.ylabel("Number of questions")
+
+    save_plot("pipeline_turns.png")
+
+
+# =========================================================
+# 4. KB GENERATION
 # =========================================================
 
 def plot_kb_generation():
@@ -246,7 +316,7 @@ def plot_kb_generation():
 
 
 # =========================================================
-# 4. FOLLOW-UP
+# 5. FOLLOW-UP
 # =========================================================
 
 def plot_followup_accuracy():
@@ -284,7 +354,7 @@ def plot_followup_count():
 
 
 # =========================================================
-# 5. DIAGNOSTIC ACCURACY
+# 6. DIAGNOSTIC ACCURACY
 # =========================================================
 
 def plot_diagnostic_accuracy():
@@ -355,7 +425,7 @@ def plot_diagnostic_by_category():
 
 
 # =========================================================
-# 6. OVERVIEW
+# 7. OVERVIEW
 # =========================================================
 
 def plot_overview():
@@ -374,6 +444,11 @@ def plot_overview():
     try:
         bars.append(("Query gen\n(strict)", load("query_accuracy.json")["strict_accuracy"]))
         bars.append(("Query gen\n(keyword)", load("query_accuracy.json")["keyword_accuracy"]))
+    except FileNotFoundError:
+        pass
+
+    try:
+        bars.append(("Full pipeline\ncompletion", load("pipeline_success.json")["success_rate"]))
     except FileNotFoundError:
         pass
 
@@ -429,16 +504,21 @@ if __name__ == "__main__":
     plot_query_complexity()
 
 
-    # 3 KB
+    # 3 Pipeline
+    plot_pipeline_success()
+    plot_pipeline_turns()
+
+
+    # 4 KB
     plot_kb_generation()
 
 
-    # 4 Follow-up
+    # 5 Follow-up
     plot_followup_accuracy()
     plot_followup_count()
 
 
-    # 5 Overview
+    # 6 Overview
     plot_overview()
 
 

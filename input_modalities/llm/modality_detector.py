@@ -39,7 +39,8 @@ def detect_modality(question: str) -> str:
 
     numeric:
     - A single number value.
-    - Measurements, lab values, age, weight, glucose, percentage.
+    - Measurements, lab values, age, weight, or any other percentage
+      or quantity expressed as one number.
 
 
     duration:
@@ -59,11 +60,7 @@ def detect_modality(question: str) -> str:
  
 
     category:
-    - Choose one option from predefined categories.
-    Examples:
-    "Low/medium/high"
-    "Male/female"
-    "Type 1/type 2"
+    - Choose one option from predefined categories the text describes.
 
     string:
     - Free text explanation.

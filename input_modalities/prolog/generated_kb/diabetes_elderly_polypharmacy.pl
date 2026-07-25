@@ -27,139 +27,155 @@ ask_multi_structured_input(Question, Mode, Groups, Answer) :-
 ask_multi_attribute_entity(Question, Entity, Fields, Answer) :-
     py_call(prolog_bridge:ask_multi_attribute_entity(Question, Entity, Fields), Answer).
 
-/* Standalone diagnostic criterion predicates.
-   Each asks its own required questions and succeeds if that single
-   measurement criterion for diabetes is met. */
+/* Standalone numeric/lab criteria predicates */
 
-fasting_glucose_criteria :-
-    ask_numeric('What is the fasting plasma glucose in mg/dL?', Fasting),
-    ( Fasting >= 126.0 ).
+/* Fasting plasma glucose diagnostic criterion: >= 126 mg/dL */
+fasting_diabetes_criterion :-
+    ask_numeric('What is the fasting plasma glucose in mg/dL?', Value),
+    ( Value >= 126.0 -> true ; fail ).
 
-random_glucose_criteria :-
-    ask_numeric('What is the random (non-fasting) plasma glucose in mg/dL?', Random),
-    ( Random >= 200.0 ).
+/* Random (non-fasting) plasma glucose diagnostic criterion: >= 200 mg/dL */
+random_diabetes_criterion :-
+    ask_numeric('What is the random (non-fasting) plasma glucose in mg/dL?', Value),
+    ( Value >= 200.0 -> true ; fail ).
 
-ogtt_2hr_criteria :-
-    ask_numeric('What is the 2-hour oral glucose tolerance test (OGTT) plasma glucose in mg/dL?', OGTT2),
-    ( OGTT2 >= 200.0 ).
+/* 2-hour OGTT diagnostic criterion: >= 200 mg/dL */
+ogtt_diabetes_criterion :-
+    ask_numeric('What is the 2-hour oral glucose tolerance test (OGTT) plasma glucose in mg/dL?', Value),
+    ( Value >= 200.0 -> true ; fail ).
 
-hba1c_criteria :-
-    ask_numeric('What is the hemoglobin A1c (%)?', HbA1c),
+/* HbA1c unreliability check: chronic kidney disease or anemia */
+hba1c_unreliable :-
     ( ask_boolean('Do you have chronic kidney disease?') -> CKD = true ; CKD = false ),
     ( ask_boolean('Do you have anemia?') -> Anemia = true ; Anemia = false ),
-    ( HbA1c >= 6.5 ->
-        ( (CKD = false, Anemia = false) -> true
-        ; /* HbA1c is high but unreliable because of CKD or anemia.
-             In that case we require either no major confounding meds and at least one classic symptom. */
-          ask_multiple_category('Which of the following medications currently apply? Select all that apply.', [corticosteroids, thiazide_diuretics, atypical_antipsychotics, none], Meds),
-          ( member(none, Meds) -> NoMedConfound = true ; NoMedConfound = false ),
-          NoMedConfound = true,
-          ask_multiple_category('Do you have any of these classic symptoms? Select all that apply.', [excessive_thirst, frequent_urination, fatigue, blurred_vision], Symptoms),
-          Symptoms \= []
+    ( CKD = true ; Anemia = true ).
+
+/* HbA1c diagnostic criterion: >= 6.5% when reliable; if unreliable, require confirmatory glucose test */
+hba1c_diabetes_criterion :-
+    ask_numeric('What is the glycated hemoglobin (HbA1c) percentage?', Value),
+    ( Value >= 6.5 ->
+        ( hba1c_unreliable ->
+            /* If HbA1c is potentially unreliable, require a confirmatory glucose test */
+            ( fasting_diabetes_criterion ; random_diabetes_criterion ; ogtt_diabetes_criterion )
+        ;
+            true
         )
     ; fail ).
 
-/* Prediabetes predicate using standard ADA ranges (used only if diabetes criteria not met).
-   Each numeric check is done in sequence and stops when one threshold is met. */
+/* Prediabetes criterion (checks minimal necessary tests in sequence, stops when one applies)
+   - fasting 100-125 mg/dL
+   - OR 2-hour OGTT 140-199 mg/dL
+   - OR HbA1c 5.7-6.4% when HbA1c is considered reliable */
+prediabetes_criterion :-
+    ask_numeric('What is the fasting plasma glucose in mg/dL?', Fasting),
+    ( Fasting >= 100.0, Fasting < 126.0 -> true
+    ;
+      /* If fasting not in prediabetes range, check OGTT next */
+      ask_numeric('What is the 2-hour oral glucose tolerance test (OGTT) plasma glucose in mg/dL?', Ogtt),
+      ( Ogtt >= 140.0, Ogtt < 200.0 -> true
+      ;
+        /* If OGTT not in range, check HbA1c last (only if reliable) */
+        ask_numeric('What is the glycated hemoglobin (HbA1c) percentage?', Hba1c),
+        Hba1c >= 5.7, Hba1c < 6.5,
+        \+ hba1c_unreliable
+      )
+    ).
 
-prediabetes :-
-    /* fasting 100-125 mg/dL */
-    ask_numeric('What is the fasting plasma glucose in mg/dL?', FastingP),
-    ( FastingP >= 100.0, FastingP =< 125.0 ) -> true ;
-    /* HbA1c 5.7-6.4% */
-    ask_numeric('What is the hemoglobin A1c (%)?', HbA1cP),
-    ( HbA1cP >= 5.7, HbA1cP =< 6.4 ) -> true ;
-    /* 2-hour OGTT 140-199 mg/dL */
-    ask_numeric('What is the 2-hour oral glucose tolerance test (OGTT) plasma glucose in mg/dL?', OGTT2P),
-    ( OGTT2P >= 140.0, OGTT2P =< 199.0 ).
+/* Classic symptoms: succeed if any classic symptom is present (asks in a single question) */
+classic_symptoms :-
+    ask_multiple_category('Which of the following classic symptoms do you experience? Select all that apply.', ['excessive_thirst','frequent_urination','fatigue','blurred_vision'], List),
+    member(_, List).
 
-/* diabetes/0 succeeds if any diagnostic criterion for diabetes is met.
-   It is callable independently and will perform the same measurements. */
+/* Medication confounders: succeed if any of the listed glucose-raising medication classes are selected */
+meds_confounders :-
+    ask_multiple_category('Which of the following medications do you currently take? Select all that apply.', ['corticosteroids','thiazide_diuretics','atypical_antipsychotics','none'], List),
+    /* succeed only if user selected at least one real medication (not just "none") */
+    member(Choice, List),
+    Choice \= none,
+    !.
+
+/* Group current medications by time of day: collect grouped input (always succeeds after asking) */
+med_grouping :-
+    ask_multi_structured_input('Please list your current medications grouped by when you take them: morning, afternoon, evening, or bedtime. For each group, enter medication names separated by commas.', grouping, ['morning','afternoon','evening','bedtime'], _Answer),
+    true.
+
+/* Capture eGFR as a numeric value (standalone predicate asks and succeeds) */
+egfr_value :-
+    ask_numeric('What is the estimated glomerular filtration rate (eGFR) in mL/min/1.73m2?', _Value),
+    true.
+
+/* Number of distinct chronic conditions (count) */
+comorbidity_count :-
+    ask_numeric('How many distinct chronic conditions do you have?', _Count),
+    true.
+
+/* Cognitive and functional status rating 1-10 */
+cognitive_rating :-
+    ask_range('On a scale from 1 (fully independent) to 10 (fully dependent), how would you rate your cognitive and functional status?', 1, 10, _Rating),
+    true.
+
+/* Years of known glucose abnormality (duration in years) */
+years_glucose_history :-
+    ask_duration('How many years have you had any known glucose abnormality?', _Years),
+    true.
+
+/* Systolic blood pressure and unintentional weight loss (used only when glucose evidence is inconclusive) */
+systolic_bp_and_weight_loss :-
+    ask_numeric('What is the systolic blood pressure (mmHg)?', _Systolic),
+    ask_numeric('How many kilograms of unintentional weight loss have you had over the past 6 months?', _Kg),
+    true.
+
+/* Public helper predicates for direct queries (standalone, no args) */
 
 diabetes :-
-    ( fasting_glucose_criteria -> true
-    ; random_glucose_criteria -> true
-    ; ogtt_2hr_criteria -> true
-    ; hba1c_criteria -> true ).
+    ( fasting_diabetes_criterion
+    ; random_diabetes_criterion
+    ; ogtt_diabetes_criterion
+    ; hba1c_diabetes_criterion ).
 
-/* Helper to convert a dict of grouped medications into a list of Group-List pairs.
-   This avoids returning nested dicts in the top-level result. */
+prediabetes :-
+    \+ diabetes,
+    prediabetes_criterion.
 
-med_groups_pairs_from_dict(Dict, Pairs) :-
-    findall(Group-List, get_dict(Group, Dict, List), Pairs).
+low_risk :-
+    \+ diabetes,
+    \+ prediabetes.
 
-/* Main workflow: diagnose/1 performs an adaptive question sequence and returns
-   a janus-safe top-level dict describing the verdict and minimal supporting data.
-   It asks only the information necessary to reach a confident conclusion and
-   asks additional contextual questions (medication confounders, grouping, comorbidity,
-   renal function, cognitive/functional status, history) when they affect interpretation. */
-
+/* Main diagnostic workflow: adaptive questioning, stops when a confident conclusion is reached.
+   Returns a janus-safe top-level dict with verdict and minimal supporting evidence. */
 diagnose(Result) :-
-    /* First, check clear diabetes diagnostic criteria in order. Stop as soon as one is met. */
-    ( ask_numeric('What is the fasting plasma glucose in mg/dL?', F1), (F1 >= 126.0) ->
-        Evidence = fasting_glucose,
-        Verdict = diabetes,
-        EvidenceValue = F1,
-        CriterionMet = true
-    ; ask_numeric('What is the random (non-fasting) plasma glucose in mg/dL?', R1), (R1 >= 200.0) ->
-        Evidence = random_glucose,
-        Verdict = diabetes,
-        EvidenceValue = R1,
-        CriterionMet = true
-    ; ask_numeric('What is the 2-hour oral glucose tolerance test (OGTT) plasma glucose in mg/dL?', O1), (O1 >= 200.0) ->
-        Evidence = ogtt_2hr,
-        Verdict = diabetes,
-        EvidenceValue = O1,
-        CriterionMet = true
-    ; /* HbA1c handled with caution for CKD/anemia */
-      ask_numeric('What is the hemoglobin A1c (%)?', H1),
-      ( (H1 >= 6.5) ->
-          ( ( ask_boolean('Do you have chronic kidney disease?') -> CKD2 = true ; CKD2 = false ),
-            ( ask_boolean('Do you have anemia?') -> Anemia2 = true ; Anemia2 = false )
-          ),
-          ( (CKD2 = false, Anemia2 = false) ->
-                Evidence = hba1c,
-                Verdict = diabetes,
-                EvidenceValue = H1,
-                CriterionMet = true
-          ; /* HbA1c high but potentially unreliable: seek medication confounders and symptoms before concluding */
-            ask_multiple_category('Which of the following medications currently apply? Select all that apply.', [corticosteroids, thiazide_diuretics, atypical_antipsychotics, none], MedsConf),
-            ( member(none, MedsConf) ->
-                ask_multiple_category('Do you have any of these classic symptoms? Select all that apply.', [excessive_thirst, frequent_urination, fatigue, blurred_vision], Symptoms2),
-                ( Symptoms2 \= [] ->
-                    Evidence = hba1c_with_symptoms,
-                    Verdict = diabetes,
-                    EvidenceValue = H1,
-                    CriterionMet = true
-                ; CriterionMet = false
-                )
-            ; CriterionMet = false
-            )
-          )
-      ; CriterionMet = false,
-        Evidence = none,
-        Verdict = unknown,
-        EvidenceValue = 0.0
-      )
-    ),
-    /* If any diabetes criterion met, collect contextual modifiers that matter for elderly/polypharmacy patients. */
-    ( CriterionMet = true ->
-        ( ask_multiple_category('Which of the following medications currently apply? Select all that apply.', [corticosteroids, thiazide_diuretics, atypical_antipsychotics, none], MedsList) -> true ; MedsList = [] ),
-        ask_multi_structured_input('Please group your current medications by when they are taken (provide medication names or leave groups empty).', grouping, [morning, afternoon, evening, bedtime], MedGroupsDict),
-        med_groups_pairs_from_dict(MedGroupsDict, MedGroupsPairs),
-        ask_numeric('What is the estimated glomerular filtration rate (eGFR) in mL/min/1.73m2?', EGFR),
-        ask_numeric('How many distinct chronic conditions do you have?', ComorbidityCount),
-        ask_range('Please rate cognitive/functional status on a scale from 1 (fully independent) to 10 (fully dependent).', 1, 10, CognitiveFunctional),
-        ( ask_boolean('Have you previously been told you have any glucose abnormality (pre-diabetes or diabetes)?') ->
-            ( ask_numeric('If yes, how many years have you had a known glucose abnormality?', YearsKnown) -> Years = YearsKnown ; Years = 0.0 )
-        ; Years = 0.0 ),
-        Result = _{verdict: Verdict, evidence: Evidence, evidence_value: EvidenceValue, medications: MedsList, medication_groups: MedGroupsPairs, egfr: EGFR, comorbidity_count: ComorbidityCount, cognitive_functional_rating: CognitiveFunctional, years_known_glucose_abnormality: Years}
-    ; /* No clear diabetes criterion met: check for prediabetes using minimal questions, then collect limited additional data if still inconclusive. */
-      ( prediabetes ->
-            Result = _{verdict: prediabetes, evidence: prediabetes, evidence_value: none}
-      ; /* Neither diabetes nor prediabetes — gather systolic BP and unintentional weight loss only because glucose evidence is inconclusive. */
-        ask_numeric('What is the systolic blood pressure in mmHg?', SystolicBP),
-        ask_numeric('How much unintentional weight loss have you had over the past 6 months in kg?', WeightLoss6mo),
-        Result = _{verdict: low_risk, evidence: none, systolic_bp: SystolicBP, weight_loss_6mo_kg: WeightLoss6mo}
-      )
+    ( fasting_diabetes_criterion ->
+        Result = _{verdict: diabetes, evidence: fasting_glucose}
+    ; random_diabetes_criterion ->
+        Result = _{verdict: diabetes, evidence: random_glucose}
+    ; ogtt_diabetes_criterion ->
+        Result = _{verdict: diabetes, evidence: ogtt}
+    ; hba1c_diabetes_criterion ->
+        ( hba1c_unreliable ->
+            /* HbA1c required confirmatory glucose test to satisfy diabetes() above, so label accordingly */
+            Result = _{verdict: diabetes, evidence: hba1c_confirmed_by_glucose}
+        ;
+            Result = _{verdict: diabetes, evidence: hba1c}
+        )
+    ; prediabetes_criterion ->
+        /* Gather a limited set of supporting contextual data that meaningfully affects interpretation */
+        ask_multiple_category('Which of the following medications do you currently take? Select all that apply.', ['corticosteroids','thiazide_diuretics','atypical_antipsychotics','none'], MedList),
+        ask_multi_structured_input('Please list your current medications grouped by when you take them: morning, afternoon, evening, or bedtime. For each group, enter medication names separated by commas.', grouping, ['morning','afternoon','evening','bedtime'], GroupingDict),
+        ask_numeric('What is the estimated glomerular filtration rate (eGFR) in mL/min/1.73m2?', Egfr),
+        ask_numeric('How many distinct chronic conditions do you have?', ComorbCount),
+        ask_range('On a scale from 1 (fully independent) to 10 (fully dependent), how would you rate your cognitive and functional status?', 1, 10, CogRating),
+        ask_duration('How many years have you had any known glucose abnormality?', YearsGlucose),
+        /* Convert grouping dict to pairs to keep the top-level Result janus-safe (no nested dicts) */
+        dict_pairs(GroupingDict, _, GroupPairs),
+        Result = _{verdict: prediabetes,
+                   evidence: prediabetes_test,
+                   medications: MedList,
+                   medication_groups: GroupPairs,
+                   egfr: Egfr,
+                   comorbidity_count: ComorbCount,
+                   cognitive_rating: CogRating,
+                   years_glucose_history: YearsGlucose}
+    ;
+        /* No diagnostic thresholds met and not prediabetes */
+        Result = _{verdict: low_risk}
     ).
