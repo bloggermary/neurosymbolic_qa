@@ -1,251 +1,296 @@
 [
   {
-    "id": "case_urgent_01",
-    "question": "Assess for urgent neurological warning signs",
+    "id": "diabetes_by_hba1c",
+    "question": "Does the patient have diabetes?",
     "source_file": "data/snippets/diabetes.txt",
     "expected_followups": [
       {
-        "key": "urgent_neurological_warning",
-        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
+        "question": "What is the random plasma glucose in mmol/L?",
+        "modality": "numeric",
+        "answer": "5.5"
+      },
+      {
+        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
+        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
         "modality": "boolean",
-        "answer": "yes"
+        "answer": "no"
+      },
+      {
+        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
+        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "what_is_the_hba1c_percent_value",
+        "question": "What is the HbA1c percent value (%)?",
+        "modality": "numeric",
+        "answer": "6.8"
       }
     ],
     "max_followups": 1,
-    "correct_answer": "urgent_neurological_assessment"
+    "correct_answer": "diabetes"
   },
   {
-    "id": "case_low_likelihood_01",
-    "question": "Assess for low likelihood of active migraine",
+    "id": "diabetes_by_random_glucose",
+    "question": "Does the patient have diabetes?",
     "source_file": "data/snippets/diabetes.txt",
     "expected_followups": [
       {
-        "key": "urgent_neurological_warning",
-        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
+        "question": "What is the random plasma glucose in mmol/L?",
+        "modality": "numeric",
+        "answer": "11.2"
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_fasting_mmol",
+    "question": "Does the patient have diabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
+        "question": "What is the random plasma glucose in mmol/L?",
+        "modality": "numeric",
+        "answer": "5.0"
+      },
+      {
+        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
+        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "which_units_will_you_provide_for_the_fasting_plasma_glucose",
+        "question": "Which units will you provide for the fasting plasma glucose?",
+        "modality": "category",
+        "answer": "mmol_per_l"
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mmol_l",
+        "question": "What is the fasting plasma glucose in mmol/L?",
+        "modality": "numeric",
+        "answer": "7.2"
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_fasting_mgdl",
+    "question": "Does the patient have diabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
+        "question": "What is the random plasma glucose in mmol/L?",
+        "modality": "numeric",
+        "answer": "5.0"
+      },
+      {
+        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
+        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "which_units_will_you_provide_for_the_fasting_plasma_glucose",
+        "question": "Which units will you provide for the fasting plasma glucose?",
+        "modality": "category",
+        "answer": "mg_per_dl"
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_per_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": "130"
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_ogtt",
+    "question": "Does the patient have diabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
+        "question": "What is the random plasma glucose in mmol/L?",
+        "modality": "numeric",
+        "answer": "6.0"
+      },
+      {
+        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
+        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "headache_days_per_month",
-        "question": "How many headache days per month does the patient typically experience?",
+        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
+        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_ogtt_in_mmol_l",
+        "question": "What is the 2-hour plasma glucose during the OGTT in mmol/L?",
         "modality": "numeric",
-        "answer": "0"
+        "answer": "11.5"
       }
     ],
-    "max_followups": 2,
-    "correct_answer": "low_likelihood_active_migraine"
+    "max_followups": 1,
+    "correct_answer": "diabetes"
   },
   {
-    "id": "case_chronic_01",
-    "question": "Assess for chronic migraine",
+    "id": "prediabetes_by_fasting",
+    "question": "Does the patient have diabetes?",
     "source_file": "data/snippets/diabetes.txt",
     "expected_followups": [
       {
-        "key": "urgent_neurological_warning",
-        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
+        "question": "What is the random plasma glucose in mmol/L?",
+        "modality": "numeric",
+        "answer": "6.0"
+      },
+      {
+        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
+        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "headache_days_per_month",
-        "question": "How many headache days per month does the patient typically experience?",
-        "modality": "numeric",
-        "answer": "15"
-      },
-      {
-        "key": "headache_pattern_duration_months",
-        "question": "For how many months has this recurring headache pattern been present?",
-        "modality": "numeric",
-        "answer": "3"
-      },
-      {
-        "key": "typical_headache_intensity",
-        "question": "Typical headache intensity on a 0-10 scale?",
-        "modality": "range",
-        "answer": "5"
-      }
-    ],
-    "max_followups": 4,
-    "correct_answer": "chronic_migraine"
-  },
-  {
-    "id": "case_episodic_01",
-    "question": "Assess for episodic migraine",
-    "source_file": "data/snippets/diabetes.txt",
-    "expected_followups": [
-      {
-        "key": "urgent_neurological_warning",
-        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
+        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "headache_days_per_month",
-        "question": "How many headache days per month does the patient typically experience?",
+        "key": "what_is_the_hba1c_percent_value",
+        "question": "What is the HbA1c percent value (%)?",
         "modality": "numeric",
-        "answer": "5"
+        "answer": "6.0"
       },
       {
-        "key": "typical_headache_intensity",
-        "question": "Typical headache intensity on a 0-10 scale?",
-        "modality": "range",
-        "answer": "6"
+        "key": "was_the_plasma_sample_obtained_after_fasting_yes_if_fasting",
+        "question": "Was the plasma sample obtained after fasting? (Yes if fasting)",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "which_units_will_you_provide_for_the_fasting_plasma_glucose",
+        "question": "Which units will you provide for the fasting plasma glucose?",
+        "modality": "category",
+        "answer": "mg_per_dl"
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_per_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": "110"
       }
     ],
-    "max_followups": 3,
-    "correct_answer": "episodic_migraine"
+    "max_followups": 1,
+    "correct_answer": "prediabetes"
   },
   {
-    "id": "case_possible_migraine_01",
-    "question": "Assess for possible migraine (mild intensity)",
+    "id": "symptom_supporting_diabetes",
+    "question": "Does the patient have diabetes?",
     "source_file": "data/snippets/diabetes.txt",
     "expected_followups": [
       {
-        "key": "urgent_neurological_warning",
-        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
+        "question": "What is the random plasma glucose in mmol/L?",
+        "modality": "numeric",
+        "answer": "5.0"
+      },
+      {
+        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
+        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "headache_days_per_month",
-        "question": "How many headache days per month does the patient typically experience?",
-        "modality": "numeric",
-        "answer": "3"
-      },
-      {
-        "key": "typical_headache_intensity",
-        "question": "Typical headache intensity on a 0-10 scale?",
-        "modality": "range",
-        "answer": "2"
-      }
-    ],
-    "max_followups": 3,
-    "correct_answer": "possible_migraine"
-  },
-  {
-    "id": "case_unclassified_01",
-    "question": "Assess for unclassified headache pattern (chronic criteria met but intensity insufficient)",
-    "source_file": "data/snippets/diabetes.txt",
-    "expected_followups": [
-      {
-        "key": "urgent_neurological_warning",
-        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
+        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "headache_days_per_month",
-        "question": "How many headache days per month does the patient typically experience?",
+        "key": "what_is_the_hba1c_percent_value",
+        "question": "What is the HbA1c percent value (%)?",
         "modality": "numeric",
-        "answer": "20"
+        "answer": "5.8"
       },
       {
-        "key": "headache_pattern_duration_months",
-        "question": "For how many months has this recurring headache pattern been present?",
-        "modality": "numeric",
-        "answer": "6"
-      },
-      {
-        "key": "typical_headache_intensity",
-        "question": "Typical headache intensity on a 0-10 scale?",
-        "modality": "range",
-        "answer": "3"
-      }
-    ],
-    "max_followups": 4,
-    "correct_answer": "unclassified_headache_pattern"
-  },
-  {
-    "id": "case_chronic_alternate_01",
-    "question": "Assess for chronic migraine (alternative positive path)",
-    "source_file": "data/snippets/diabetes.txt",
-    "expected_followups": [
-      {
-        "key": "urgent_neurological_warning",
-        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "key": "was_the_plasma_sample_obtained_after_fasting_yes_if_fasting",
+        "question": "Was the plasma sample obtained after fasting? (Yes if fasting)",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "headache_days_per_month",
-        "question": "How many headache days per month does the patient typically experience?",
-        "modality": "numeric",
-        "answer": "30"
+        "key": "please_select_all_current_symptoms_from_this_list_excessive_thirst_excessive_urination_fatigue_blurred_vision",
+        "question": "Please select all current symptoms from this list: excessive thirst, excessive urination, fatigue, blurred vision.",
+        "modality": "multiple_category",
+        "answer": "[\"excessive_thirst\",\"excessive_urination\"]"
       },
       {
-        "key": "headache_pattern_duration_months",
-        "question": "For how many months has this recurring headache pattern been present?",
-        "modality": "numeric",
-        "answer": "12"
-      },
-      {
-        "key": "typical_headache_intensity",
-        "question": "Typical headache intensity on a 0-10 scale?",
-        "modality": "range",
-        "answer": "7"
+        "key": "for_how_many_days_have_the_symptoms_been_present",
+        "question": "For how many days have the symptoms been present?",
+        "modality": "duration",
+        "answer": "10"
       }
     ],
-    "max_followups": 4,
-    "correct_answer": "chronic_migraine"
+    "max_followups": 1,
+    "correct_answer": "symptom_supporting_diabetes"
   },
   {
-    "id": "case_episodic_alternate_01",
-    "question": "Assess for episodic migraine (boundary values)",
+    "id": "no_diabetes",
+    "question": "Does the patient have diabetes?",
     "source_file": "data/snippets/diabetes.txt",
     "expected_followups": [
       {
-        "key": "urgent_neurological_warning",
-        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
+        "question": "What is the random plasma glucose in mmol/L?",
+        "modality": "numeric",
+        "answer": "5.0"
+      },
+      {
+        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
+        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "headache_days_per_month",
-        "question": "How many headache days per month does the patient typically experience?",
-        "modality": "numeric",
-        "answer": "14"
-      },
-      {
-        "key": "typical_headache_intensity",
-        "question": "Typical headache intensity on a 0-10 scale?",
-        "modality": "range",
-        "answer": "4"
-      }
-    ],
-    "max_followups": 3,
-    "correct_answer": "episodic_migraine"
-  },
-  {
-    "id": "case_possible_from_chronic_duration_short_01",
-    "question": "Assess for possible migraine when chronic duration not met",
-    "source_file": "data/snippets/diabetes.txt",
-    "expected_followups": [
-      {
-        "key": "urgent_neurological_warning",
-        "question": "Any urgent neurological warning sign (sudden unilateral weakness, new speech disturbance, sudden loss of vision, loss of consciousness, or the worst headache ever)?",
+        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
+        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "headache_days_per_month",
-        "question": "How many headache days per month does the patient typically experience?",
+        "key": "what_is_the_hba1c_percent_value",
+        "question": "What is the HbA1c percent value (%)?",
         "modality": "numeric",
-        "answer": "20"
+        "answer": "5.5"
       },
       {
-        "key": "headache_pattern_duration_months",
-        "question": "For how many months has this recurring headache pattern been present?",
-        "modality": "numeric",
-        "answer": "1"
+        "key": "was_the_plasma_sample_obtained_after_fasting_yes_if_fasting",
+        "question": "Was the plasma sample obtained after fasting? (Yes if fasting)",
+        "modality": "boolean",
+        "answer": "no"
       },
       {
-        "key": "typical_headache_intensity",
-        "question": "Typical headache intensity on a 0-10 scale?",
-        "modality": "range",
-        "answer": "3"
+        "key": "please_select_all_current_symptoms_from_this_list_excessive_thirst_excessive_urination_fatigue_blurred_vision",
+        "question": "Please select all current symptoms from this list: excessive thirst, excessive urination, fatigue, blurred vision.",
+        "modality": "multiple_category",
+        "answer": "[]"
       }
     ],
-    "max_followups": 4,
-    "correct_answer": "possible_migraine"
+    "max_followups": 1,
+    "correct_answer": "no_diabetes"
   }
 ]
