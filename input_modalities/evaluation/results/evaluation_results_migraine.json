@@ -1,0 +1,90 @@
+[
+  {
+    "id": "migraine_chronic",
+    "question": "Does the patient have migraine?",
+    "source_file": "data/snippets/migraine.txt",
+    "correct_answer": "chronic_migraine",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "urgent_warning_signs",
+        "question": "Which (if any) urgent warning signs are present? Select all that apply: sudden weakness, speech disturbance, loss of vision, loss of consciousness, worst headache experienced so far.",
+        "modality": "multiple_category",
+        "answer": []
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days do you have per month (number of days)?",
+        "modality": "numeric",
+        "answer": 20
+      },
+      {
+        "key": "pattern_months",
+        "question": "For how many months has this headache pattern been present?",
+        "modality": "numeric",
+        "answer": 6
+      },
+      {
+        "key": "associated_symptoms",
+        "question": "Which migraine-associated symptoms are present? Select all that apply: nausea, vomiting, sensitivity to light, sensitivity to sound, worsening with physical activity.",
+        "modality": "multiple_category",
+        "answer": [
+          "nausea",
+          "sensitivity_to_light"
+        ]
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "urgent_warning_signs",
+        "question": "Which (if any) urgent warning signs are present? Select all that apply: sudden weakness, speech disturbance, loss of vision, loss of consciousness, worst headache experienced so far.",
+        "modality": "multiple_category",
+        "options": [
+          "sudden_weakness",
+          "speech_disturbance",
+          "loss_of_vision",
+          "loss_of_consciousness",
+          "worst_headache_experienced_so_far"
+        ]
+      },
+      {
+        "key": "headache_days_per_month",
+        "question": "How many headache days do you have per month (number of days)?",
+        "modality": "numeric",
+        "options": null
+      },
+      {
+        "key": "pattern_months",
+        "question": "For how many months has this headache pattern been present?",
+        "modality": "numeric",
+        "options": null
+      },
+      {
+        "key": "associated_symptoms",
+        "question": "Which migraine-associated symptoms are present? Select all that apply: nausea, vomiting, sensitivity to light, sensitivity to sound, worsening with physical activity.",
+        "modality": "multiple_category",
+        "options": [
+          "nausea",
+          "vomiting",
+          "sensitivity_to_light",
+          "sensitivity_to_sound",
+          "worsening_with_physical_activity"
+        ]
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 1.0,
+      "modality_accuracy": 1.0,
+      "answer_accuracy": 1.0,
+      "efficiency_score": 0.25,
+      "unnecessary_followups": 3
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": "chronic_migraine"
+    },
+    "error": null
+  }
+]

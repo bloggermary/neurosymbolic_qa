@@ -1,0 +1,9 @@
+{
+  "total_tests": 1,
+  "query_validity": 1.0,
+  "followup_recall": 1.0,
+  "modality_accuracy": 1.0,
+  "answer_accuracy": 1.0,
+  "efficiency_score": 0.25,
+  "total_unnecessary_followups": 3
+}

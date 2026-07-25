@@ -1,0 +1,1049 @@
+[
+  {
+    "id": "random_plasma_glucose_diabetes",
+    "question": "Do I have diabetes or prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "correct_answer": "diabetes",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "what_is_the_random_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the random plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "answer": 210
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "what_is_the_random_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the random plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "options": null
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 1.0,
+      "modality_accuracy": 1.0,
+      "answer_accuracy": 1.0,
+      "efficiency_score": 1.0,
+      "unnecessary_followups": 0
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "verdict": "diabetes",
+        "evidence": [
+          {
+            "type": "random_plasma_glucose",
+            "value": 210.0,
+            "unit": "mg_per_dl"
+          }
+        ]
+      }
+    },
+    "error": null
+  },
+  {
+    "id": "fasting_plasma_glucose_diabetes",
+    "question": "Do I have diabetes or prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "correct_answer": "diabetes",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the fasting plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "answer": 130
+      },
+      {
+        "key": "was_this_obtained_after_8_12_hours_of_fasting",
+        "question": "Was this obtained after 8-12 hours of fasting?",
+        "modality": "boolean",
+        "answer": "yes"
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the random plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "options": null
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_og",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "please_select_all_current_symptoms_that_apply_excessive_thirst_excessive_urinati",
+        "question": "Please select all current symptoms that apply (excessive thirst, excessive urination, fatigue, blurred vision):",
+        "modality": "multiple_category",
+        "options": [
+          "excessive_thirst",
+          "excessive_urination",
+          "fatigue",
+          "blurred_vision"
+        ]
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 0.6666666666666666,
+      "modality_accuracy": 0.6666666666666666,
+      "answer_accuracy": 0.0,
+      "efficiency_score": 0.5,
+      "unnecessary_followups": 3
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "verdict": "possible_diabetes_by_symptoms",
+        "support": "none",
+        "symptoms": [],
+        "details": {
+          "fatigue_severity": "not_reported",
+          "thirst_severity": "not_reported",
+          "onset_order": []
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "id": "fasting_plasma_glucose_prediabetes",
+    "question": "Do I have diabetes or prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "correct_answer": "prediabetes",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the fasting plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "answer": 110
+      },
+      {
+        "key": "was_this_obtained_after_8_12_hours_of_fasting",
+        "question": "Was this obtained after 8-12 hours of fasting?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "do_you_have_other_diabetes_specific_lab_tests_available_random_glucose_2_hour_ogtt_or_hba1c",
+        "question": "Do you have other diabetes-specific lab tests available (random glucose, 2-hour OGTT, or HbA1c)?",
+        "modality": "boolean",
+        "answer": "no"
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the random plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "options": null
+      },
+      {
+        "key": "do_you_have_other_diabetes_specific_lab_tests_available_random_glucose_2_hour_ogtt_or_hba1c",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_og",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "please_select_all_current_symptoms_that_apply_excessive_thirst_excessive_urinati",
+        "question": "Please select all current symptoms that apply (excessive thirst, excessive urination, fatigue, blurred vision):",
+        "modality": "multiple_category",
+        "options": [
+          "excessive_thirst",
+          "excessive_urination",
+          "fatigue",
+          "blurred_vision"
+        ]
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 0.75,
+      "modality_accuracy": 0.75,
+      "answer_accuracy": 0.0,
+      "efficiency_score": 0.6666666666666666,
+      "unnecessary_followups": 2
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "verdict": "possible_diabetes_by_symptoms",
+        "support": "none",
+        "symptoms": [],
+        "details": {
+          "fatigue_severity": "not_reported",
+          "thirst_severity": "not_reported",
+          "onset_order": []
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "id": "fasting_then_hba1c_diabetes",
+    "question": "Do I have diabetes or prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "correct_answer": "diabetes",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the fasting plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "answer": 110
+      },
+      {
+        "key": "was_this_obtained_after_8_12_hours_of_fasting",
+        "question": "Was this obtained after 8-12 hours of fasting?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "do_you_have_other_diabetes_specific_lab_tests_available_random_glucose_2_hour_ogtt_or_hba1c",
+        "question": "Do you have other diabetes-specific lab tests available (random glucose, 2-hour OGTT, or HbA1c)?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "what_is_the_hba1c_value_percent",
+        "question": "What is the HbA1c value (percent)?",
+        "modality": "numeric",
+        "answer": 7.0
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the random plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "options": null
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "what_is_the_hba1c_value_percent",
+        "question": "What is the fasting plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "options": null
+      },
+      {
+        "key": "was_this_obtained_after_8_12_hours_of_fasting",
+        "question": "Was this obtained after 8-12 hours of fasting?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "please_select_all_current_symptoms_that_apply_excessive_thirst_excessive_urinati",
+        "question": "Please select all current symptoms that apply (excessive thirst, excessive urination, fatigue, blurred vision):",
+        "modality": "multiple_category",
+        "options": [
+          "excessive_thirst",
+          "excessive_urination",
+          "fatigue",
+          "blurred_vision"
+        ]
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 0.8571428571428571,
+      "modality_accuracy": 0.8571428571428571,
+      "answer_accuracy": 0.0,
+      "efficiency_score": 0.875,
+      "unnecessary_followups": 1
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "verdict": "possible_diabetes_by_symptoms",
+        "support": "none",
+        "symptoms": [],
+        "details": {
+          "fatigue_severity": "not_reported",
+          "thirst_severity": "not_reported",
+          "onset_order": []
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "id": "ogtt_diabetes",
+    "question": "Do I have diabetes or prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "correct_answer": "diabetes",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "what_is_the_2_hour_ogtt_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the 2-hour OGTT plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "answer": 205
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "what_is_the_2_hour_ogtt_plasma_glucose_value_in_mg_per_dl",
+        "question": "What is the 2-hour OGTT plasma glucose value in mg/dL?",
+        "modality": "numeric",
+        "options": null
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 1.0,
+      "modality_accuracy": 1.0,
+      "answer_accuracy": 1.0,
+      "efficiency_score": 1.0,
+      "unnecessary_followups": 0
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "verdict": "diabetes",
+        "evidence": [
+          {
+            "type": "ogtt_2h_plasma_glucose",
+            "value": 205.0,
+            "unit": "mg_per_dl"
+          }
+        ]
+      }
+    },
+    "error": null
+  },
+  {
+    "id": "hba1c_diabetes_after_other_tests_negative",
+    "question": "Do I have diabetes or prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "correct_answer": "diabetes",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "what_is_the_hba1c_value_percent",
+        "question": "What is the HbA1c value (percent)?",
+        "modality": "numeric",
+        "answer": 6.8
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "what_is_the_hba1c_value_percent",
+        "question": "What is the HbA1c value (percent)?",
+        "modality": "numeric",
+        "options": null
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 1.0,
+      "modality_accuracy": 1.0,
+      "answer_accuracy": 1.0,
+      "efficiency_score": 1.0,
+      "unnecessary_followups": 0
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "verdict": "diabetes",
+        "evidence": [
+          {
+            "type": "hba1c",
+            "value_percent": 6.8
+          }
+        ]
+      }
+    },
+    "error": null
+  },
+  {
+    "id": "symptom_based_strong_support",
+    "question": "Do I have diabetes or prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "correct_answer": "possible_diabetes_by_symptoms",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "please_select_all_current_symptoms_that_apply_excessive_thirst_excessive_urination_fatigue_blurred_vision",
+        "question": "Please select all current symptoms that apply (excessive thirst, excessive urination, fatigue, blurred vision):",
+        "modality": "multiple_category",
+        "answer": [
+          "excessive_thirst",
+          "excessive_urination",
+          "fatigue"
+        ]
+      },
+      {
+        "key": "on_a_scale_of_1_to_10_how_severe_is_your_fatigue",
+        "question": "On a scale of 1 to 10, how severe is your fatigue?",
+        "modality": "range",
+        "answer": 8
+      },
+      {
+        "key": "how_would_you_describe_your_thirst_severity",
+        "question": "How would you describe your thirst severity?",
+        "modality": "category",
+        "answer": "moderate"
+      },
+      {
+        "key": "please_list_the_symptoms_in_the_order_they_first_appeared_from_earliest_to_most_recent",
+        "question": "Please list the symptoms in the order they first appeared, from earliest to most recent.",
+        "modality": "multi_structured_input",
+        "answer": [
+          "excessive_thirst",
+          "excessive_urination",
+          "fatigue"
+        ]
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "please_select_all_current_symptoms_that_apply_excessive_thirst_excessive_urination_fatigue_blurred_vision",
+        "question": "Please select all current symptoms that apply (excessive thirst, excessive urination, fatigue, blurred vision):",
+        "modality": "multiple_category",
+        "options": [
+          "excessive_thirst",
+          "excessive_urination",
+          "fatigue",
+          "blurred_vision"
+        ]
+      },
+      {
+        "key": "on_a_scale_of_1_to_10_how_severe_is_your_fatigue",
+        "question": "On a scale of 1 to 10, how severe is your fatigue?",
+        "modality": "range",
+        "options": {
+          "min": 1.0,
+          "max": 10.0
+        }
+      },
+      {
+        "key": "how_would_you_describe_your_thirst_severity",
+        "question": "How would you describe your thirst severity?",
+        "modality": "category",
+        "options": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ]
+      },
+      {
+        "key": "please_list_the_symptoms_in_the_order_they_first_appeared_from_earliest_to_most_recent",
+        "question": "Please list the symptoms in the order they first appeared, from earliest to most recent.",
+        "modality": "multi_structured_input",
+        "options": {
+          "mode": "sequence",
+          "groups": [
+            [
+              "excessive_thirst"
+            ],
+            [
+              "excessive_urination"
+            ],
+            [
+              "fatigue"
+            ],
+            [
+              "blurred_vision"
+            ]
+          ]
+        }
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 1.0,
+      "modality_accuracy": 1.0,
+      "answer_accuracy": 1.0,
+      "efficiency_score": 1.0,
+      "unnecessary_followups": 0
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "verdict": "possible_diabetes_by_symptoms",
+        "support": "strong",
+        "symptoms": [
+          "excessive_thirst",
+          "excessive_urination",
+          "fatigue"
+        ],
+        "details": {
+          "fatigue_severity": "severe",
+          "thirst_severity": "moderate",
+          "onset_order": [
+            "excessive_thirst",
+            "excessive_urination",
+            "fatigue"
+          ]
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "id": "symptom_partial_thirst_only",
+    "question": "Do I have diabetes or prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "correct_answer": "possible_diabetes_by_symptoms",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "please_select_all_current_symptoms_that_apply_excessive_thirst_excessive_urination_fatigue_blurred_vision",
+        "question": "Please select all current symptoms that apply (excessive thirst, excessive urination, fatigue, blurred vision):",
+        "modality": "multiple_category",
+        "answer": [
+          "excessive_thirst"
+        ]
+      },
+      {
+        "key": "how_would_you_describe_your_thirst_severity",
+        "question": "How would you describe your thirst severity?",
+        "modality": "category",
+        "answer": "severe"
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "please_select_all_current_symptoms_that_apply_excessive_thirst_excessive_urination_fatigue_blurred_vision",
+        "question": "Please select all current symptoms that apply (excessive thirst, excessive urination, fatigue, blurred vision):",
+        "modality": "multiple_category",
+        "options": [
+          "excessive_thirst",
+          "excessive_urination",
+          "fatigue",
+          "blurred_vision"
+        ]
+      },
+      {
+        "key": "how_would_you_describe_your_thirst_severity",
+        "question": "How would you describe your thirst severity?",
+        "modality": "category",
+        "options": [
+          "none",
+          "mild",
+          "moderate",
+          "severe"
+        ]
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 1.0,
+      "modality_accuracy": 1.0,
+      "answer_accuracy": 1.0,
+      "efficiency_score": 1.0,
+      "unnecessary_followups": 0
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "verdict": "possible_diabetes_by_symptoms",
+        "support": "partial",
+        "symptoms": [
+          "excessive_thirst"
+        ],
+        "details": {
+          "fatigue_severity": "not_reported",
+          "thirst_severity": "severe",
+          "onset_order": []
+        }
+      }
+    },
+    "error": null
+  },
+  {
+    "id": "symptom_none_reported",
+    "question": "Do I have diabetes or prediabetes?",
+    "source_file": "data/snippets/diabetes.txt",
+    "correct_answer": "possible_diabetes_by_symptoms",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "please_select_all_current_symptoms_that_apply_excessive_thirst_excessive_urination_fatigue_blurred_vision",
+        "question": "Please select all current symptoms that apply (excessive thirst, excessive urination, fatigue, blurred vision):",
+        "modality": "multiple_category",
+        "answer": []
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_a_random_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a random plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_fasting_plasma_glucose_measurement_in_mg_per_dl",
+        "question": "Do you have a fasting plasma glucose measurement in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_2_hour_plasma_glucose_value_from_an_oral_glucose_tolerance_test_ogtt_in_mg_per_dl",
+        "question": "Do you have a 2-hour plasma glucose value from an oral glucose tolerance test (OGTT) in mg/dL?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_an_hba1c_measurement_in_percent",
+        "question": "Do you have an HbA1c measurement in percent?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "please_select_all_current_symptoms_that_apply_excessive_thirst_excessive_urination_fatigue_blurred_vision",
+        "question": "Please select all current symptoms that apply (excessive thirst, excessive urination, fatigue, blurred vision):",
+        "modality": "multiple_category",
+        "options": [
+          "excessive_thirst",
+          "excessive_urination",
+          "fatigue",
+          "blurred_vision"
+        ]
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
+      "followup_recall": 1.0,
+      "modality_accuracy": 1.0,
+      "answer_accuracy": 1.0,
+      "efficiency_score": 1.0,
+      "unnecessary_followups": 0
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "verdict": "possible_diabetes_by_symptoms",
+        "support": "none",
+        "symptoms": [],
+        "details": {
+          "fatigue_severity": "not_reported",
+          "thirst_severity": "not_reported",
+          "onset_order": []
+        }
+      }
+    },
+    "error": null
+  }
+]

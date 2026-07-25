@@ -10,7 +10,7 @@ import matplotlib.pyplot as plt
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-RESULTS_DIR = BASE_DIR / "evaluation" / "results"
+RESULTS_DIR = BASE_DIR / "results"
 PLOT_DIR = RESULTS_DIR / "plots" / "modalities"
 RESULTS_PATH = RESULTS_DIR / "modalities_evaluation_results.json"
 SUMMARY_PATH = RESULTS_DIR / "modalities_evaluation_summary.json"

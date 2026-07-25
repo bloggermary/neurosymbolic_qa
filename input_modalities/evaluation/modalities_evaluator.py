@@ -36,9 +36,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 TEST_PATH = BASE_DIR / "evaluation" / "test_modalities.json"
 EVAL_KB_PATH = BASE_DIR / "prolog" / "generated_kb" / "evaluation_kb.pl"
 RESULTS_DIR = BASE_DIR / "evaluation" / "results"
-RESULTS_PATH = RESULTS_DIR / "modalities_evaluation_results.json"
-SUMMARY_PATH = RESULTS_DIR / "modalities_evaluation_summary.json"
-DEFAULT_SOURCE_FILE = "data/snippets/diabetes.txt"
+RESULTS_PATH = RESULTS_DIR / "evaluation_results_diabetic.json"
+SUMMARY_PATH = RESULTS_DIR / "evaluation_summary_diabetic.json"
+DEFAULT_SOURCE_FILE = "data/snippets/diabetic.txt"
 TEST_GENERATOR_MODEL = "gpt-5-mini"
 MAX_REASONING_STEPS = 50
 
@@ -125,6 +125,13 @@ You receive the medical source text and the generated SWI-Prolog knowledge
 base. The generated knowledge base is the source of truth for reachable
 ask_* calls, question wording, modalities, categories, range bounds, and
 possible execution paths.
+
+- Generate between 9 and 12 test cases.
+- expected_followups must contain only the questions required for the
+  specific expected diagnosis.
+- Do not include every modality or every field mentioned in the source text.
+- Follow the conditional diagnostic path.
+- Stop adding follow-ups as soon as the correct classification can be reached.
 
 The current KB uses ask_* predicates whose first relevant argument is the
 natural-language question. It does NOT provide a separate semantic key.

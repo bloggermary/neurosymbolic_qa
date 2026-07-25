@@ -1,47 +1,47 @@
 [
   {
-    "id": "diabetes_by_hba1c",
-    "question": "Does the patient have diabetes?",
-    "source_file": "data/snippets/diabetes.txt",
-    "correct_answer": "diabetes",
+    "id": "urgent_assessment",
+    "question": "Could this be migraine?",
+    "source_file": "data/snippets/migraine.txt",
+    "correct_answer": "urgent_assessment",
     "generated_query": "diagnose(Result)",
     "query_valid": true,
     "expected_followups": [
       {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "answer": "5.5"
+        "key": "do_you_have_sudden_weakness",
+        "question": "Do you have sudden weakness?",
+        "modality": "boolean",
+        "answer": "yes"
       },
       {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
+        "key": "do_you_have_a_speech_disturbance",
+        "question": "Do you have a speech disturbance?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
+        "key": "have_you_experienced_loss_of_vision",
+        "question": "Have you experienced loss of vision?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "what_is_the_hba1c_percent_value",
-        "question": "What is the HbA1c percent value (%)?",
-        "modality": "numeric",
-        "answer": "6.8"
+        "key": "have_you_had_a_loss_of_consciousness",
+        "question": "Have you had a loss of consciousness?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "is_this_the_worst_headache_you_have_experienced_so_far",
+        "question": "Is this the worst headache you have experienced so far?",
+        "modality": "boolean",
+        "answer": "no"
       }
     ],
     "actual_followups": [
       {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "options": null
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
+        "key": "do_you_have_sudden_weakness",
+        "question": "Do you have sudden weakness?",
         "modality": "boolean",
         "options": [
           "yes",
@@ -49,8 +49,8 @@
         ]
       },
       {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
+        "key": "do_you_have_a_speech_disturbance",
+        "question": "Do you have a speech disturbance?",
         "modality": "boolean",
         "options": [
           "yes",
@@ -58,53 +58,31 @@
         ]
       },
       {
-        "key": "what_is_the_hba1c_percent_value",
-        "question": "What is the HbA1c percent value (%)?",
-        "modality": "numeric",
-        "options": null
-      }
-    ],
-    "metrics": {
-      "query_validity": 1.0,
-      "followup_recall": 1.0,
-      "modality_accuracy": 1.0,
-      "answer_accuracy": 1.0,
-      "efficiency_score": 0.25,
-      "unnecessary_followups": 3
-    },
-    "raw_result": {
-      "truth": true,
-      "Result": {
-        "verdict": "diabetes",
-        "evidence": {
-          "criterion": "hba1c",
-          "value_percent": 6.8
-        }
-      }
-    },
-    "error": null
-  },
-  {
-    "id": "diabetes_by_random_glucose",
-    "question": "Does the patient have diabetes?",
-    "source_file": "data/snippets/diabetes.txt",
-    "correct_answer": "diabetes",
-    "generated_query": "diagnose(Result)",
-    "query_valid": true,
-    "expected_followups": [
+        "key": "have_you_experienced_loss_of_vision",
+        "question": "Have you experienced loss of vision?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
       {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "answer": "11.2"
-      }
-    ],
-    "actual_followups": [
+        "key": "have_you_had_a_loss_of_consciousness",
+        "question": "Have you had a loss of consciousness?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
       {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "options": null
+        "key": "is_this_the_worst_headache_you_have_experienced_so_far",
+        "question": "Is this the worst headache you have experienced so far?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
       }
     ],
     "metrics": {
@@ -118,614 +96,581 @@
     "raw_result": {
       "truth": true,
       "Result": {
-        "verdict": "diabetes",
-        "evidence": {
-          "criterion": "random_plasma_glucose",
-          "value_mmol_per_l": 11.2
-        }
+        "verdict": "urgent_assessment",
+        "urgent_warning_signs": [
+          "sudden_weakness"
+        ]
       }
     },
     "error": null
   },
   {
-    "id": "diabetes_by_fasting_mmol",
-    "question": "Does the patient have diabetes?",
-    "source_file": "data/snippets/diabetes.txt",
-    "correct_answer": "diabetes",
+    "id": "chronic_migraine",
+    "question": "Could this be migraine?",
+    "source_file": "data/snippets/migraine.txt",
+    "correct_answer": "chronic_migraine",
     "generated_query": "diagnose(Result)",
     "query_valid": true,
     "expected_followups": [
       {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "answer": "5.0"
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
-        "modality": "boolean",
-        "answer": "yes"
-      },
-      {
-        "key": "which_units_will_you_provide_for_the_fasting_plasma_glucose",
-        "question": "Which units will you provide for the fasting plasma glucose?",
-        "modality": "category",
-        "answer": "mmol_per_l"
-      },
-      {
-        "key": "what_is_the_fasting_plasma_glucose_in_mmol_l",
-        "question": "What is the fasting plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "answer": "7.2"
-      }
-    ],
-    "actual_followups": [
-      {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "options": null
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "which_units_will_you_provide_for_the_fasting_plasma_glucose",
-        "question": "Which units will you provide for the fasting plasma glucose?",
-        "modality": "category",
-        "options": [
-          "mmol_per_l",
-          "mg_per_dl"
-        ]
-      },
-      {
-        "key": "what_is_the_fasting_plasma_glucose_in_mmol_l",
-        "question": "What is the fasting plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "options": null
-      }
-    ],
-    "metrics": {
-      "query_validity": 1.0,
-      "followup_recall": 1.0,
-      "modality_accuracy": 1.0,
-      "answer_accuracy": 1.0,
-      "efficiency_score": 0.25,
-      "unnecessary_followups": 3
-    },
-    "raw_result": {
-      "truth": true,
-      "Result": {
-        "verdict": "diabetes",
-        "evidence": {
-          "criterion": "fasting_plasma_glucose",
-          "value_mmol_per_l": 7.2
-        }
-      }
-    },
-    "error": null
-  },
-  {
-    "id": "diabetes_by_fasting_mgdl",
-    "question": "Does the patient have diabetes?",
-    "source_file": "data/snippets/diabetes.txt",
-    "correct_answer": "diabetes",
-    "generated_query": "diagnose(Result)",
-    "query_valid": true,
-    "expected_followups": [
-      {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "answer": "5.0"
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
-        "modality": "boolean",
-        "answer": "yes"
-      },
-      {
-        "key": "which_units_will_you_provide_for_the_fasting_plasma_glucose",
-        "question": "Which units will you provide for the fasting plasma glucose?",
-        "modality": "category",
-        "answer": "mg_per_dl"
-      },
-      {
-        "key": "what_is_the_fasting_plasma_glucose_in_mg_per_dl",
-        "question": "What is the fasting plasma glucose in mg/dL?",
-        "modality": "numeric",
-        "answer": "130"
-      }
-    ],
-    "actual_followups": [
-      {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "options": null
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "which_units_will_you_provide_for_the_fasting_plasma_glucose",
-        "question": "Which units will you provide for the fasting plasma glucose?",
-        "modality": "category",
-        "options": [
-          "mmol_per_l",
-          "mg_per_dl"
-        ]
-      },
-      {
-        "key": "what_is_the_fasting_plasma_glucose_in_mg_per_dl",
-        "question": "What is the fasting plasma glucose in mg/dL?",
-        "modality": "numeric",
-        "options": null
-      }
-    ],
-    "metrics": {
-      "query_validity": 1.0,
-      "followup_recall": 1.0,
-      "modality_accuracy": 1.0,
-      "answer_accuracy": 1.0,
-      "efficiency_score": 0.25,
-      "unnecessary_followups": 3
-    },
-    "raw_result": {
-      "truth": true,
-      "Result": {
-        "verdict": "diabetes",
-        "evidence": {
-          "criterion": "fasting_plasma_glucose",
-          "value_mg_per_dl": 130.0
-        }
-      }
-    },
-    "error": null
-  },
-  {
-    "id": "diabetes_by_ogtt",
-    "question": "Does the patient have diabetes?",
-    "source_file": "data/snippets/diabetes.txt",
-    "correct_answer": "diabetes",
-    "generated_query": "diagnose(Result)",
-    "query_valid": true,
-    "expected_followups": [
-      {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "answer": "6.0"
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
+        "key": "do_you_have_sudden_weakness",
+        "question": "Do you have sudden weakness?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
-        "modality": "boolean",
-        "answer": "yes"
-      },
-      {
-        "key": "what_is_the_2_hour_plasma_glucose_during_the_ogtt_in_mmol_l",
-        "question": "What is the 2-hour plasma glucose during the OGTT in mmol/L?",
-        "modality": "numeric",
-        "answer": "11.5"
-      }
-    ],
-    "actual_followups": [
-      {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "options": null
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "what_is_the_2_hour_plasma_glucose_during_the_ogtt_in_mmol_l",
-        "question": "What is the 2-hour plasma glucose during the OGTT in mmol/L?",
-        "modality": "numeric",
-        "options": null
-      }
-    ],
-    "metrics": {
-      "query_validity": 1.0,
-      "followup_recall": 1.0,
-      "modality_accuracy": 1.0,
-      "answer_accuracy": 1.0,
-      "efficiency_score": 0.25,
-      "unnecessary_followups": 3
-    },
-    "raw_result": {
-      "truth": true,
-      "Result": {
-        "verdict": "diabetes",
-        "evidence": {
-          "criterion": "ogtt_2h_plasma_glucose",
-          "value_mmol_per_l": 11.5
-        }
-      }
-    },
-    "error": null
-  },
-  {
-    "id": "prediabetes_by_fasting",
-    "question": "Does the patient have diabetes?",
-    "source_file": "data/snippets/diabetes.txt",
-    "correct_answer": "prediabetes",
-    "generated_query": "diagnose(Result)",
-    "query_valid": true,
-    "expected_followups": [
-      {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "answer": "6.0"
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
+        "key": "do_you_have_a_speech_disturbance",
+        "question": "Do you have a speech disturbance?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
+        "key": "have_you_experienced_loss_of_vision",
+        "question": "Have you experienced loss of vision?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "what_is_the_hba1c_percent_value",
-        "question": "What is the HbA1c percent value (%)?",
-        "modality": "numeric",
-        "answer": "6.0"
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_fasting_yes_if_fasting",
-        "question": "Was the plasma sample obtained after fasting? (Yes if fasting)",
-        "modality": "boolean",
-        "answer": "yes"
-      },
-      {
-        "key": "which_units_will_you_provide_for_the_fasting_plasma_glucose",
-        "question": "Which units will you provide for the fasting plasma glucose?",
-        "modality": "category",
-        "answer": "mg_per_dl"
-      },
-      {
-        "key": "what_is_the_fasting_plasma_glucose_in_mg_per_dl",
-        "question": "What is the fasting plasma glucose in mg/dL?",
-        "modality": "numeric",
-        "answer": "110"
-      }
-    ],
-    "actual_followups": [
-      {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "options": null
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "what_is_the_hba1c_percent_value",
-        "question": "What is the HbA1c percent value (%)?",
-        "modality": "numeric",
-        "options": null
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_fasting_yes_if_fasting",
-        "question": "Was the plasma sample obtained after fasting? (Yes if fasting)",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "which_units_will_you_provide_for_the_fasting_plasma_glucose",
-        "question": "Which units will you provide for the fasting plasma glucose?",
-        "modality": "category",
-        "options": [
-          "mmol_per_l",
-          "mg_per_dl"
-        ]
-      },
-      {
-        "key": "what_is_the_fasting_plasma_glucose_in_mg_per_dl",
-        "question": "What is the fasting plasma glucose in mg/dL?",
-        "modality": "numeric",
-        "options": null
-      }
-    ],
-    "metrics": {
-      "query_validity": 1.0,
-      "followup_recall": 1.0,
-      "modality_accuracy": 1.0,
-      "answer_accuracy": 1.0,
-      "efficiency_score": 0.14285714285714285,
-      "unnecessary_followups": 6
-    },
-    "raw_result": {
-      "truth": true,
-      "Result": {
-        "verdict": "prediabetes",
-        "evidence": {
-          "criterion": "fasting_plasma_glucose",
-          "value_mg_per_dl": 110.0,
-          "classification": "prediabetes"
-        }
-      }
-    },
-    "error": null
-  },
-  {
-    "id": "symptom_supporting_diabetes",
-    "question": "Does the patient have diabetes?",
-    "source_file": "data/snippets/diabetes.txt",
-    "correct_answer": "symptom_supporting_diabetes",
-    "generated_query": "diagnose(Result)",
-    "query_valid": false,
-    "expected_followups": [
-      {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
-        "modality": "numeric",
-        "answer": "5.0"
-      },
-      {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
+        "key": "have_you_had_a_loss_of_consciousness",
+        "question": "Have you had a loss of consciousness?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
+        "key": "is_this_the_worst_headache_you_have_experienced_so_far",
+        "question": "Is this the worst headache you have experienced so far?",
         "modality": "boolean",
         "answer": "no"
       },
       {
-        "key": "what_is_the_hba1c_percent_value",
-        "question": "What is the HbA1c percent value (%)?",
+        "key": "how_many_headache_days_per_month_do_you_have_enter_a_number",
+        "question": "How many headache days per month do you have? (enter a number)",
         "modality": "numeric",
-        "answer": "5.8"
+        "answer": 18
       },
       {
-        "key": "was_the_plasma_sample_obtained_after_fasting_yes_if_fasting",
-        "question": "Was the plasma sample obtained after fasting? (Yes if fasting)",
-        "modality": "boolean",
-        "answer": "no"
+        "key": "for_how_many_months_has_this_headache_pattern_been_present_enter_a_number",
+        "question": "For how many months has this headache pattern been present? (enter a number)",
+        "modality": "numeric",
+        "answer": 4
       },
       {
-        "key": "please_select_all_current_symptoms_from_this_list_excessive_thirst_excessive_urination_fatigue_blurred_vision",
-        "question": "Please select all current symptoms from this list: excessive thirst, excessive urination, fatigue, blurred vision.",
+        "key": "which_associated_symptoms_are_present_select_all_that_apply",
+        "question": "Which associated symptoms are present? Select all that apply.",
         "modality": "multiple_category",
-        "answer": "[\"excessive_thirst\",\"excessive_urination\"]"
+        "answer": [
+          "nausea",
+          "sensitivity_to_light"
+        ]
       },
       {
-        "key": "for_how_many_days_have_the_symptoms_been_present",
-        "question": "For how many days have the symptoms been present?",
-        "modality": "duration",
-        "answer": "10"
+        "key": "what_is_the_aura_type_choose_one",
+        "question": "What is the aura type? Choose one.",
+        "modality": "category",
+        "answer": "visual"
       }
     ],
     "actual_followups": [
       {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
+        "key": "do_you_have_sudden_weakness",
+        "question": "Do you have sudden weakness?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_speech_disturbance",
+        "question": "Do you have a speech disturbance?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "have_you_experienced_loss_of_vision",
+        "question": "Have you experienced loss of vision?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "have_you_had_a_loss_of_consciousness",
+        "question": "Have you had a loss of consciousness?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "is_this_the_worst_headache_you_have_experienced_so_far",
+        "question": "Is this the worst headache you have experienced so far?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "how_many_headache_days_per_month_do_you_have_enter_a_number",
+        "question": "How many headache days per month do you have? (enter a number)",
         "modality": "numeric",
         "options": null
       },
       {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "what_is_the_hba1c_percent_value",
-        "question": "What is the HbA1c percent value (%)?",
+        "key": "for_how_many_months_has_this_headache_pattern_been_present_enter_a_number",
+        "question": "For how many months has this headache pattern been present? (enter a number)",
         "modality": "numeric",
         "options": null
       },
       {
-        "key": "was_the_plasma_sample_obtained_after_fasting_yes_if_fasting",
-        "question": "Was the plasma sample obtained after fasting? (Yes if fasting)",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "please_select_all_current_symptoms_from_this_list_excessive_thirst_excessive_urination_fatigue_blurred_vision",
-        "question": "Please select all current symptoms from this list: excessive thirst, excessive urination, fatigue, blurred vision.",
+        "key": "which_associated_symptoms_are_present_select_all_that_apply",
+        "question": "Which associated symptoms are present? Select all that apply.",
         "modality": "multiple_category",
         "options": [
-          "excessive_thirst",
-          "excessive_urination",
-          "fatigue",
-          "blurred_vision"
+          "nausea",
+          "vomiting",
+          "sensitivity_to_light",
+          "sensitivity_to_sound",
+          "worsening_with_physical_activity"
         ]
       },
       {
-        "key": "for_how_many_days_have_the_symptoms_been_present",
-        "question": "For how many days have the symptoms been present?",
-        "modality": "duration",
-        "options": null
+        "key": "what_is_the_aura_type_choose_one",
+        "question": "What is the aura type? Choose one.",
+        "modality": "category",
+        "options": [
+          "none",
+          "visual",
+          "sensory",
+          "speech",
+          "mixed"
+        ]
       }
     ],
     "metrics": {
-      "query_validity": 0.0,
+      "query_validity": 1.0,
+      "followup_recall": 1.0,
+      "modality_accuracy": 1.0,
+      "answer_accuracy": 1.0,
+      "efficiency_score": 1.0,
+      "unnecessary_followups": 0
+    },
+    "raw_result": {
+      "truth": true,
+      "Result": {
+        "days_per_month": 18.0,
+        "months_pattern_months": 4.0,
+        "associated_symptoms": [
+          "nausea",
+          "sensitivity_to_light"
+        ],
+        "verdict": "chronic_migraine",
+        "aura": "visual"
+      }
+    },
+    "error": null
+  },
+  {
+    "id": "episodic_migraine",
+    "question": "Could this be migraine?",
+    "source_file": "data/snippets/migraine.txt",
+    "correct_answer": "episodic_migraine",
+    "generated_query": "diagnose(Result)",
+    "query_valid": true,
+    "expected_followups": [
+      {
+        "key": "do_you_have_sudden_weakness",
+        "question": "Do you have sudden weakness?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_speech_disturbance",
+        "question": "Do you have a speech disturbance?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "have_you_experienced_loss_of_vision",
+        "question": "Have you experienced loss of vision?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "have_you_had_a_loss_of_consciousness",
+        "question": "Have you had a loss of consciousness?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "is_this_the_worst_headache_you_have_experienced_so_far",
+        "question": "Is this the worst headache you have experienced so far?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "how_many_headache_days_per_month_do_you_have_enter_a_number",
+        "question": "How many headache days per month do you have? (enter a number)",
+        "modality": "numeric",
+        "answer": 3
+      },
+      {
+        "key": "for_how_many_months_has_this_headache_pattern_been_present_enter_a_number",
+        "question": "For how many months has this headache pattern been present? (enter a number)",
+        "modality": "numeric",
+        "answer": 1
+      },
+      {
+        "key": "which_associated_symptoms_are_present_select_all_that_apply",
+        "question": "Which associated symptoms are present? Select all that apply.",
+        "modality": "multiple_category",
+        "answer": []
+      },
+      {
+        "key": "how_many_headache_days_per_month_do_you_have_enter_a_number",
+        "question": "How many headache days per month do you have? (enter a number)",
+        "modality": "numeric",
+        "answer": 5
+      },
+      {
+        "key": "on_a_scale_from_0_to_10_what_is_the_typical_pain_intensity",
+        "question": "On a scale from 0 to 10, what is the typical pain intensity?",
+        "modality": "range",
+        "answer": 6
+      },
+      {
+        "key": "which_associated_symptoms_are_present_select_all_that_apply",
+        "question": "Which associated symptoms are present? Select all that apply.",
+        "modality": "multiple_category",
+        "answer": [
+          "sensitivity_to_light",
+          "sensitivity_to_sound"
+        ]
+      },
+      {
+        "key": "what_is_the_aura_type_choose_one",
+        "question": "What is the aura type? Choose one.",
+        "modality": "category",
+        "answer": "none"
+      }
+    ],
+    "actual_followups": [
+      {
+        "key": "do_you_have_sudden_weakness",
+        "question": "Do you have sudden weakness?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_speech_disturbance",
+        "question": "Do you have a speech disturbance?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "have_you_experienced_loss_of_vision",
+        "question": "Have you experienced loss of vision?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "have_you_had_a_loss_of_consciousness",
+        "question": "Have you had a loss of consciousness?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "is_this_the_worst_headache_you_have_experienced_so_far",
+        "question": "Is this the worst headache you have experienced so far?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "how_many_headache_days_per_month_do_you_have_enter_a_number",
+        "question": "How many headache days per month do you have? (enter a number)",
+        "modality": "numeric",
+        "options": null
+      },
+      {
+        "key": "for_how_many_months_has_this_headache_pattern_been_present_enter_a_number",
+        "question": "For how many months has this headache pattern been present? (enter a number)",
+        "modality": "numeric",
+        "options": null
+      },
+      {
+        "key": "which_associated_symptoms_are_present_select_all_that_apply",
+        "question": "Which associated symptoms are present? Select all that apply.",
+        "modality": "multiple_category",
+        "options": [
+          "nausea",
+          "vomiting",
+          "sensitivity_to_light",
+          "sensitivity_to_sound",
+          "worsening_with_physical_activity"
+        ]
+      },
+      {
+        "key": "on_a_scale_from_0_to_10_what_is_the_typical_pain_intensity",
+        "question": "On a scale from 0 to 10, what is the typical pain intensity?",
+        "modality": "range",
+        "options": {
+          "min": 0,
+          "max": 10
+        }
+      },
+      {
+        "key": "what_is_the_aura_type_choose_one",
+        "question": "What is the aura type? Choose one.",
+        "modality": "category",
+        "options": [
+          "none",
+          "visual",
+          "sensory",
+          "speech",
+          "mixed"
+        ]
+      }
+    ],
+    "metrics": {
+      "query_validity": 1.0,
       "followup_recall": 1.0,
       "modality_accuracy": 1.0,
       "answer_accuracy": 0.0,
-      "efficiency_score": 0.14285714285714285,
-      "unnecessary_followups": 6
+      "efficiency_score": 1.0,
+      "unnecessary_followups": 0
     },
     "raw_result": {
-      "truth": false
+      "truth": true,
+      "Result": {
+        "verdict": "possible_migraine",
+        "aura": "none",
+        "details": {
+          "days_per_month": 3.0,
+          "associated_symptoms": [],
+          "possible_for": "episodic_migraine",
+          "pain_intensity_if_provided": 6.0
+        }
+      }
     },
-    "error": "'$c_call_prolog'/0: Domain error: `py_term' expected, found `false=\\=false'"
+    "error": null
   },
   {
-    "id": "no_diabetes",
-    "question": "Does the patient have diabetes?",
-    "source_file": "data/snippets/diabetes.txt",
-    "correct_answer": "no_diabetes",
+    "id": "possible_migraine",
+    "question": "Could this be migraine?",
+    "source_file": "data/snippets/migraine.txt",
+    "correct_answer": "possible_migraine",
     "generated_query": "diagnose(Result)",
     "query_valid": true,
     "expected_followups": [
       {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
+        "key": "do_you_have_sudden_weakness",
+        "question": "Do you have sudden weakness?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "do_you_have_a_speech_disturbance",
+        "question": "Do you have a speech disturbance?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "have_you_experienced_loss_of_vision",
+        "question": "Have you experienced loss of vision?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "have_you_had_a_loss_of_consciousness",
+        "question": "Have you had a loss of consciousness?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "is_this_the_worst_headache_you_have_experienced_so_far",
+        "question": "Is this the worst headache you have experienced so far?",
+        "modality": "boolean",
+        "answer": "no"
+      },
+      {
+        "key": "how_many_headache_days_per_month_do_you_have_enter_a_number",
+        "question": "How many headache days per month do you have? (enter a number)",
         "modality": "numeric",
-        "answer": "5.0"
+        "answer": 14
       },
       {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
-        "modality": "boolean",
-        "answer": "no"
-      },
-      {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
-        "modality": "boolean",
-        "answer": "no"
-      },
-      {
-        "key": "what_is_the_hba1c_percent_value",
-        "question": "What is the HbA1c percent value (%)?",
+        "key": "for_how_many_months_has_this_headache_pattern_been_present_enter_a_number",
+        "question": "For how many months has this headache pattern been present? (enter a number)",
         "modality": "numeric",
-        "answer": "5.5"
+        "answer": 2
       },
       {
-        "key": "was_the_plasma_sample_obtained_after_fasting_yes_if_fasting",
-        "question": "Was the plasma sample obtained after fasting? (Yes if fasting)",
-        "modality": "boolean",
-        "answer": "no"
-      },
-      {
-        "key": "please_select_all_current_symptoms_from_this_list_excessive_thirst_excessive_urination_fatigue_blurred_vision",
-        "question": "Please select all current symptoms from this list: excessive thirst, excessive urination, fatigue, blurred vision.",
+        "key": "which_associated_symptoms_are_present_select_all_that_apply",
+        "question": "Which associated symptoms are present? Select all that apply.",
         "modality": "multiple_category",
-        "answer": "[]"
+        "answer": [
+          "nausea"
+        ]
+      },
+      {
+        "key": "how_many_headache_days_per_month_do_you_have_enter_a_number",
+        "question": "How many headache days per month do you have? (enter a number)",
+        "modality": "numeric",
+        "answer": 20
+      },
+      {
+        "key": "on_a_scale_from_0_to_10_what_is_the_typical_pain_intensity",
+        "question": "On a scale from 0 to 10, what is the typical pain intensity?",
+        "modality": "range",
+        "answer": 3
+      },
+      {
+        "key": "which_associated_symptoms_are_present_select_all_that_apply",
+        "question": "Which associated symptoms are present? Select all that apply.",
+        "modality": "multiple_category",
+        "answer": [
+          "nausea",
+          "vomiting"
+        ]
+      },
+      {
+        "key": "how_many_headache_days_per_month_do_you_have_enter_a_number",
+        "question": "How many headache days per month do you have? (enter a number)",
+        "modality": "numeric",
+        "answer": 15
+      },
+      {
+        "key": "for_how_many_months_has_this_headache_pattern_been_present_enter_a_number",
+        "question": "For how many months has this headache pattern been present? (enter a number)",
+        "modality": "numeric",
+        "answer": 2
+      },
+      {
+        "key": "which_associated_symptoms_are_present_select_all_that_apply",
+        "question": "Which associated symptoms are present? Select all that apply.",
+        "modality": "multiple_category",
+        "answer": [
+          "nausea",
+          "vomiting"
+        ]
+      },
+      {
+        "key": "what_is_the_aura_type_choose_one",
+        "question": "What is the aura type? Choose one.",
+        "modality": "category",
+        "answer": "sensory"
       }
     ],
     "actual_followups": [
       {
-        "key": "what_is_the_random_plasma_glucose_in_mmol_l",
-        "question": "What is the random plasma glucose in mmol/L?",
+        "key": "do_you_have_sudden_weakness",
+        "question": "Do you have sudden weakness?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "do_you_have_a_speech_disturbance",
+        "question": "Do you have a speech disturbance?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "have_you_experienced_loss_of_vision",
+        "question": "Have you experienced loss of vision?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "have_you_had_a_loss_of_consciousness",
+        "question": "Have you had a loss of consciousness?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "is_this_the_worst_headache_you_have_experienced_so_far",
+        "question": "Is this the worst headache you have experienced so far?",
+        "modality": "boolean",
+        "options": [
+          "yes",
+          "no"
+        ]
+      },
+      {
+        "key": "how_many_headache_days_per_month_do_you_have_enter_a_number",
+        "question": "How many headache days per month do you have? (enter a number)",
         "modality": "numeric",
         "options": null
       },
       {
-        "key": "was_the_plasma_sample_obtained_after_8_to_12_hours_of_fasting",
-        "question": "Was the plasma sample obtained after 8 to 12 hours of fasting?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "was_a_2_hour_oral_glucose_tolerance_test_ogtt_performed",
-        "question": "Was a 2-hour oral glucose tolerance test (OGTT) performed?",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "what_is_the_hba1c_percent_value",
-        "question": "What is the HbA1c percent value (%)?",
+        "key": "for_how_many_months_has_this_headache_pattern_been_present_enter_a_number",
+        "question": "For how many months has this headache pattern been present? (enter a number)",
         "modality": "numeric",
         "options": null
       },
       {
-        "key": "was_the_plasma_sample_obtained_after_fasting_yes_if_fasting",
-        "question": "Was the plasma sample obtained after fasting? (Yes if fasting)",
-        "modality": "boolean",
-        "options": [
-          "yes",
-          "no"
-        ]
-      },
-      {
-        "key": "please_select_all_current_symptoms_from_this_list_excessive_thirst_excessive_urination_fatigue_blurred_vision",
-        "question": "Please select all current symptoms from this list: excessive thirst, excessive urination, fatigue, blurred vision.",
+        "key": "which_associated_symptoms_are_present_select_all_that_apply",
+        "question": "Which associated symptoms are present? Select all that apply.",
         "modality": "multiple_category",
         "options": [
-          "excessive_thirst",
-          "excessive_urination",
-          "fatigue",
-          "blurred_vision"
+          "nausea",
+          "vomiting",
+          "sensitivity_to_light",
+          "sensitivity_to_sound",
+          "worsening_with_physical_activity"
+        ]
+      },
+      {
+        "key": "on_a_scale_from_0_to_10_what_is_the_typical_pain_intensity",
+        "question": "On a scale from 0 to 10, what is the typical pain intensity?",
+        "modality": "range",
+        "options": {
+          "min": 0,
+          "max": 10
+        }
+      },
+      {
+        "key": "what_is_the_aura_type_choose_one",
+        "question": "What is the aura type? Choose one.",
+        "modality": "category",
+        "options": [
+          "none",
+          "visual",
+          "sensory",
+          "speech",
+          "mixed"
         ]
       }
     ],
@@ -733,15 +678,15 @@
       "query_validity": 1.0,
       "followup_recall": 1.0,
       "modality_accuracy": 1.0,
-      "answer_accuracy": 1.0,
-      "efficiency_score": 0.16666666666666666,
-      "unnecessary_followups": 5
+      "answer_accuracy": 0.0,
+      "efficiency_score": 1.0,
+      "unnecessary_followups": 0
     },
     "raw_result": {
       "truth": true,
       "Result": {
-        "verdict": "no_diabetes",
-        "evidence": {}
+        "verdict": "unlikely_migraine",
+        "aura": "sensory"
       }
     },
     "error": null
