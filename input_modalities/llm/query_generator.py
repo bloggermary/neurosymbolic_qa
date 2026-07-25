@@ -62,9 +62,16 @@ def generate_query(question: str, prolog_code: str) -> str:
     measurement, bind that value into the query as its own goal
     ALONGSIDE the criterion check, instead of only calling the
     criterion predicate alone - the value is already known, it
-    shouldn't be asked for again. If no concrete value is stated in
-    the question, just call the criterion or measurement predicate
-    with an unbound variable as usual.
+    shouldn't be asked for again. Concretely, this means a conjunction
+    of two goals, the measurement predicate called with the stated
+    value already filled in, followed by the criterion predicate that
+    depends on it:
+        <measurement_predicate>(<stated_value>), <criterion_predicate>
+    (both names taken from whatever the knowledge base actually
+    defines - this is a syntax pattern, not a specific predicate to
+    look for.) If no concrete value is stated in the question, just
+    call the criterion or measurement predicate with an unbound
+    variable as usual: <measurement_predicate>(Value).
 
     If the user is asking WHICH measurement or value is relevant or
     should be checked (rather than asking to evaluate a criterion),
@@ -81,15 +88,19 @@ def generate_query(question: str, prolog_code: str) -> str:
     If the question is really asking whether ONE SPECIFIC outcome would
     be reached via the general workflow, bind that outcome as the
     workflow predicate's argument instead of leaving it as a free
-    variable. Use a free variable only when the question doesn't
-    already imply which specific outcome is being asked about.
+    variable:
+        <workflow_predicate>(<specific_outcome_atom>)
+    Use a free variable, <workflow_predicate>(Result), only when the
+    question doesn't already imply which specific outcome is being
+    asked about.
 
     If the question explicitly names more than one measurement as part
     of a broader diagnostic question, make each named measurement its
     own explicit goal in the query, conjoined with whichever
     diagnostic predicate you use - even if that predicate would also
     check them internally - so the query reflects every specific
-    measurement the user named.
+    measurement the user named:
+        <measurement_predicate_1>(V1), <measurement_predicate_2>(V2), <diagnostic_predicate>(Result)
 
     NEVER call a predicate that takes 3 or more arguments directly in
     the query, and NEVER pass an anonymous variable (_) or a fresh

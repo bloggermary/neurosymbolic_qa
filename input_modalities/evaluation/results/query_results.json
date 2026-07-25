@@ -13,7 +13,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.200394875137135
+    "time": 7.263224249938503
   },
   {
     "id": "q002",
@@ -29,41 +29,41 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.777119084028527
+    "time": 5.019640916958451
   },
   {
     "id": "q003",
     "question": "A patient has fasting glucose of 135 mg/dL. Is this diagnostic for diabetes?",
-    "query": "fasting_glucose_mgdl(135), diabetes",
+    "query": "fasting_glucose_mgdl(135), diabetes_positive_by_fasting_glucose",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "diabetes_positive_by_fasting_glucose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.875,
+    "keyword_overlap_score": 1.0,
     "keyword_correct": true,
-    "correct": false,
-    "time": 11.000045916996896
+    "correct": true,
+    "time": 9.655238291947171
   },
   {
     "id": "q004",
     "question": "HbA1c is 6.9%. Can diabetes be confirmed?",
-    "query": "hba1c_percent(6.9), diabetes",
+    "query": "hba1c_percent(6.9), diabetes_positive_by_hba1c",
     "expected_predicates": [
       "hba1c_percent",
       "diabetes_positive_by_hba1c"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.875,
+    "keyword_overlap_score": 1.0,
     "keyword_correct": true,
-    "correct": false,
-    "time": 6.032841041916981
+    "correct": true,
+    "time": 11.237500875024125
   },
   {
     "id": "q005",
@@ -81,7 +81,7 @@
     "keyword_overlap_score": 0.8333333333333334,
     "keyword_correct": true,
     "correct": false,
-    "time": 10.613635332789272
+    "time": 20.21847637486644
   },
   {
     "id": "q006",
@@ -98,7 +98,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.95606404193677
+    "time": 8.401553082978353
   },
   {
     "id": "q007",
@@ -115,12 +115,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 7.1249506659805775
+    "time": 6.050380416912958
   },
   {
     "id": "q008",
     "question": "Patient has elevated HbA1c but normal fasting glucose. Can diabetes still be diagnosed?",
-    "query": "hba1c_percent(H), fasting_glucose_mgdl(F), diabetes",
+    "query": "hba1c_percent(H), fasting_glucose_mgdl(F), diagnose(diabetes)",
     "expected_predicates": [
       "hba1c_percent",
       "diabetes_positive_by_hba1c"
@@ -132,7 +132,7 @@
     "keyword_overlap_score": 0.875,
     "keyword_correct": true,
     "correct": false,
-    "time": 8.701018125051633
+    "time": 9.86209920886904
   },
   {
     "id": "q009",
@@ -148,7 +148,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 12.17543924995698
+    "time": 8.892463166965172
   },
   {
     "id": "q010",
@@ -165,7 +165,7 @@
     "keyword_overlap_score": 0.8333333333333333,
     "keyword_correct": true,
     "correct": false,
-    "time": 4.5283741671592
+    "time": 8.597583666210994
   },
   {
     "id": "q011",
@@ -181,7 +181,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.5492436250206083
+    "time": 3.155696874950081
   },
   {
     "id": "q012",
@@ -197,7 +197,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.8711694579105824
+    "time": 3.391550207976252
   },
   {
     "id": "q013",
@@ -214,7 +214,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.133573791012168
+    "time": 4.938569625141099
   },
   {
     "id": "q014",
@@ -231,12 +231,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.55238224985078
+    "time": 4.7875635421369225
   },
   {
     "id": "q015",
     "question": "A patient experiences fatigue, blurred vision, and excessive thirst. What symptoms are relevant?",
-    "query": "fatigue, blurred_vision, excessive_thirst",
+    "query": "excessive_thirst, fatigue, blurred_vision",
     "expected_predicates": [
       "fatigue",
       "blurred_vision",
@@ -249,12 +249,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.22809583414346
+    "time": 5.965970250079408
   },
   {
     "id": "q016",
     "question": "Is fasting glucose of 115 mg/dL normal?",
-    "query": "fasting_glucose_mgdl(115), diagnose(low_risk)",
+    "query": "fasting_glucose_mgdl(115), prediabetes_positive",
     "expected_predicates": [
       "fasting_glucose_mgdl"
     ],
@@ -265,12 +265,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.102231292054057
+    "time": 12.028787999879569
   },
   {
     "id": "q017",
     "question": "HbA1c is 6.3%. What does this indicate?",
-    "query": "hba1c_percent(6.3), diagnose(Result)",
+    "query": "hba1c_percent(6.3), low_risk_positive",
     "expected_predicates": [
       "hba1c_percent"
     ],
@@ -281,7 +281,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.608223750023171
+    "time": 12.565718499943614
   },
   {
     "id": "q018",
@@ -297,12 +297,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 8.559250624850392
+    "time": 6.290193167049438
   },
   {
     "id": "q019",
     "question": "Fasting glucose is normal but HbA1c is elevated. How is this interpreted?",
-    "query": "fasting_glucose_mgdl(F), hba1c_percent(H), diagnose(Result)",
+    "query": "fasting_glucose_mgdl(F), F < 100, hba1c_percent(H), H >= 5.7, diagnose(D)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -314,12 +314,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 10.590028333012015
+    "time": 21.87189675006084
   },
   {
     "id": "q020",
     "question": "Patient has borderline fasting glucose of 124 mg/dL. Is this prediabetes?",
-    "query": "fasting_glucose_mgdl(124), prediabetes",
+    "query": "fasting_glucose_mgdl(124), prediabetes_positive",
     "expected_predicates": [
       "prediabetes",
       "fasting_glucose_mgdl"
@@ -331,7 +331,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 8.971848250133917
+    "time": 8.399498416809365
   },
   {
     "id": "q021",
@@ -347,7 +347,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 12.145344624994323
+    "time": 7.407830375013873
   },
   {
     "id": "q022",
@@ -364,7 +364,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 10.840566333848983
+    "time": 10.894261792069301
   },
   {
     "id": "q023",
@@ -380,12 +380,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.756365207955241
+    "time": 7.039805833948776
   },
   {
     "id": "q024",
     "question": "Patient has fasting glucose 122 mg/dL but normal HbA1c. Is this diabetes?",
-    "query": "fasting_glucose_mgdl(122), hba1c_percent(H), diabetes",
+    "query": "fasting_glucose_mgdl(122), diabetes",
     "expected_predicates": [
       "prediabetes",
       "fasting_glucose_mgdl",
@@ -395,15 +395,15 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 0.6666666666666666,
+    "keyword_overlap_score": 0.3333333333333333,
     "keyword_correct": false,
     "correct": false,
-    "time": 11.574783582938835
+    "time": 13.023414291907102
   },
   {
     "id": "q025",
     "question": "Should lifestyle changes be recommended for fasting glucose 120 mg/dL?",
-    "query": "fasting_glucose_mgdl(120), prediabetes",
+    "query": "fasting_glucose_mgdl(120), prediabetes_positive",
     "expected_predicates": [
       "prediabetes",
       "fasting_glucose_mgdl"
@@ -415,14 +415,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.808287415886298
+    "time": 10.933702375041321
   },
   {
     "id": "q026",
     "question": "The patient reports increased urination and wants to know whether diabetes should be investigated. Which diagnostic workflow should be used?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -431,14 +431,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.466604082845151
+    "time": 3.4086646249052137
   },
   {
     "id": "q027",
     "question": "A patient wants to know if they should be evaluated for diabetes.",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -447,14 +447,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.7577112081926316
+    "time": 2.936292791971937
   },
   {
     "id": "q028",
     "question": "A patient has possible diabetes symptoms but has not been tested. What diagnostic workflow should be used?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -463,40 +463,39 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.317304000025615
+    "time": 3.696356917032972
   },
   {
     "id": "q029",
     "question": "Should diabetes be evaluated in this patient?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diabetes"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 3.0157851250842214
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.8379405830055475
   },
   {
     "id": "q030",
     "question": "The patient has possible diabetes indicators but normal glucose readings. How should diagnosis be approached?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose",
-      "fasting_glucose_mgdl"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.5,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 2.6626727499533445
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.766065124887973
   },
   {
     "id": "q031",
@@ -512,7 +511,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.5916865409817547
+    "time": 4.44070312497206
   },
   {
     "id": "q032",
@@ -528,7 +527,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 18.304934041108936
+    "time": 4.058543541934341
   },
   {
     "id": "q033",
@@ -544,7 +543,7 @@
     "keyword_overlap_score": 0.6666666666666666,
     "keyword_correct": false,
     "correct": false,
-    "time": 6.430866542039439
+    "time": 3.8324852909427136
   },
   {
     "id": "q034",
@@ -561,24 +560,23 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 7.790215665940195
+    "time": 7.340203125029802
   },
   {
     "id": "q035",
     "question": "Should multiple diabetes measurements be considered during diagnosis?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "hba1c_percent"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 3.2002328338567168
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 4.373252833029255
   },
   {
     "id": "q036",
@@ -594,15 +592,48 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 8.70799016696401
+    "time": 9.79034116701223
   },
   {
     "id": "q037",
     "question": "Can fasting glucose values between 100 and 125 mg/dL indicate prediabetes?",
-    "query": "prediabetes_positive",
+    "query": "fasting_glucose_mgdl(V), V >= 100, V =< 125, prediabetes_positive",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "prediabetes"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": true,
+    "keyword_match": true,
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 19.596952500054613
+  },
+  {
+    "id": "q038",
+    "question": "Should prediabetes be considered when fasting glucose is elevated but below diabetes range?",
+    "query": "prediabetes_positive",
+    "expected_predicates": [
+      "prediabetes"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": true,
+    "keyword_match": true,
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 7.58124095806852
+  },
+  {
+    "id": "q039",
+    "question": "Can the patient be classified as prediabetic based on fasting glucose criteria?",
+    "query": "prediabetes_positive",
+    "expected_predicates": [
+      "prediabetes",
+      "fasting_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -611,63 +642,30 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 11.176081249956042
-  },
-  {
-    "id": "q038",
-    "question": "Should prediabetes be considered when fasting glucose is elevated but below diabetes range?",
-    "query": "fasting_glucose_mgdl(Value), prediabetes",
-    "expected_predicates": [
-      "prediabetes"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": true,
-    "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 10.355500790989026
-  },
-  {
-    "id": "q039",
-    "question": "Can the patient be classified as prediabetic based on fasting glucose criteria?",
-    "query": "fasting_duration_hours(Hours), fasting_glucose_mgdl(Value), prediabetes_positive",
-    "expected_predicates": [
-      "prediabetes",
-      "fasting_glucose_mgdl"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": true,
-    "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 15.61326541681774
+    "time": 4.597598209045827
   },
   {
     "id": "q040",
     "question": "Should the patient be evaluated for prediabetes?",
-    "query": "diagnose(prediabetes)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
       "prediabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 5.3655099999159575
+    "keyword_overlap_score": 0.0,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 15.587410874897614
   },
   {
     "id": "q041",
     "question": "Which diabetes diagnosis predicate should be used?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -676,7 +674,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.7399476249702275
+    "time": 15.827338790986687
   },
   {
     "id": "q042",
@@ -692,23 +690,23 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.195822958135977
+    "time": 6.845567165873945
   },
   {
     "id": "q043",
     "question": "Can HbA1c measurement contribute to diabetes diagnosis?",
-    "query": "hba1c_percent(Value)",
+    "query": "diabetes_positive_by_hba1c",
     "expected_predicates": [
       "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 6.317501208977774
+    "keyword_overlap_score": 0.6666666666666666,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 6.3957074580248445
   },
   {
     "id": "q044",
@@ -724,7 +722,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 7.448551124893129
+    "time": 4.708784208865836
   },
   {
     "id": "q045",
@@ -740,30 +738,30 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.355821708915755
+    "time": 3.344033459201455
   },
   {
     "id": "q046",
     "question": "What predicate determines whether diabetes is present?",
-    "query": "diagnose(Result)",
+    "query": "diabetes",
     "expected_predicates": [
       "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 6.358398749958724
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 6.196858333889395
   },
   {
     "id": "q047",
     "question": "Can diabetes status be determined using the diagnostic workflow?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -772,14 +770,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.601122417021543
+    "time": 3.846500583924353
   },
   {
     "id": "q048",
     "question": "Should diabetes criteria be checked?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -788,12 +786,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.086977042024955
+    "time": 4.412913165986538
   },
   {
     "id": "q049",
     "question": "Can diabetes be ruled out if diagnostic criteria are not met?",
-    "query": "diagnose(Result)",
+    "query": "diagnose(no_risk)",
     "expected_predicates": [
       "low_risk"
     ],
@@ -801,10 +799,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
+    "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 6.292704291874543
+    "time": 18.625459207920358
   },
   {
     "id": "q050",
@@ -820,14 +818,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.985858540982008
+    "time": 5.6508472501300275
   },
   {
     "id": "q051",
     "question": "Can the patient be evaluated for diabetes?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -836,14 +834,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.790743458084762
+    "time": 4.197257874999195
   },
   {
     "id": "q052",
     "question": "Should diabetes diagnostic criteria be checked?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -852,14 +850,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.7868427911307663
+    "time": 5.076718874974176
   },
   {
     "id": "q053",
     "question": "What diagnostic procedure should be used to determine diabetes status?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -868,41 +866,39 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.4916746250819415
+    "time": 3.8224601671099663
   },
   {
     "id": "q054",
     "question": "Which diabetes criteria should be evaluated when determining diagnosis?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose",
-      "fasting_glucose_mgdl",
-      "hba1c_percent"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.3333333333333333,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 3.7228378339204937
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.184631875017658
   },
   {
     "id": "q055",
     "question": "Can diabetes status be determined using the available diagnostic rules?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diabetes"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 5.690321917179972
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 18.318459041183814
   },
   {
     "id": "q056",
@@ -918,14 +914,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.427748082904145
+    "time": 8.3703466670122
   },
   {
     "id": "q057",
     "question": "Should diabetes diagnostic tests be performed?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -934,14 +930,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.6543739170301706
+    "time": 3.9243351670447737
   },
   {
     "id": "q058",
     "question": "How can diabetes classification be determined?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -950,14 +946,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.607136999955401
+    "time": 4.470384540967643
   },
   {
     "id": "q059",
     "question": "Should diabetes criteria be evaluated even if no symptoms are present?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -966,29 +962,28 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.972288582939655
+    "time": 6.97915849997662
   },
   {
     "id": "q060",
     "question": "Can diabetes risk be evaluated using glucose measurements?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "fasting_glucose_mgdl",
-      "diabetes"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 4.016203583916649
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 10.837585625005886
   },
   {
     "id": "q061",
     "question": "What glucose measurement is used for diabetes evaluation?",
-    "query": "fasting_glucose_mgdl(Value)",
+    "query": "random_glucose_mgdl(R), fasting_glucose_mgdl(F), ogtt_2hr_mgdl(O), hba1c_percent(H)",
     "expected_predicates": [
       "fasting_glucose_mgdl"
     ],
@@ -999,7 +994,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.1523043748456985
+    "time": 13.461210916051641
   },
   {
     "id": "q062",
@@ -1015,28 +1010,28 @@
     "keyword_overlap_score": 0.6666666666666666,
     "keyword_correct": false,
     "correct": false,
-    "time": 6.633466832805425
+    "time": 5.450497166020796
   },
   {
     "id": "q063",
     "question": "Should diabetes evaluation include glucose measurements?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "fasting_glucose_mgdl"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 2.5496727919671685
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 5.161940250080079
   },
   {
     "id": "q064",
     "question": "Which laboratory values should be checked when diabetes is suspected?",
-    "query": "fasting_glucose_mgdl(FastingValue), random_glucose_mgdl(RandomValue), ogtt_2hr_mgdl(OGTTValue), hba1c_percent(Hba1cValue)",
+    "query": "random_glucose_mgdl(RG), fasting_glucose_mgdl(FG), ogtt_2hr_mgdl(OG), hba1c_percent(H)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -1048,14 +1043,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 10.940051625017077
+    "time": 14.267221667105332
   },
   {
     "id": "q065",
     "question": "How should diabetes classification be performed when test results disagree?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1064,14 +1059,30 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.9724516249261796
+    "time": 4.076502125011757
   },
   {
     "id": "q066",
     "question": "Can diabetes diagnosis be determined using the KB rules?",
-    "query": "diagnose(Result)",
+    "query": "diabetes",
     "expected_predicates": [
       "diabetes"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": true,
+    "keyword_match": true,
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 8.035058582900092
+  },
+  {
+    "id": "q067",
+    "question": "Are diagnostic criteria required to confirm diabetes?",
+    "query": "diagnose(diabetes)",
+    "expected_predicates": [
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1080,28 +1091,12 @@
     "keyword_overlap_score": 0.0,
     "keyword_correct": false,
     "correct": false,
-    "time": 3.5651207910850644
-  },
-  {
-    "id": "q067",
-    "question": "Are diagnostic criteria required to confirm diabetes?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diagnose"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": true,
-    "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 15.322678999975324
+    "time": 8.555351374903694
   },
   {
     "id": "q068",
     "question": "Can elevated HbA1c and fasting glucose confirm diabetes?",
-    "query": "hba1c_percent(H), fasting_glucose_mgdl(F), diabetes",
+    "query": "hba1c_percent(H), fasting_glucose_mgdl(F), diabetes_positive",
     "expected_predicates": [
       "hba1c_percent",
       "fasting_glucose_mgdl",
@@ -1114,50 +1109,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.837555875070393
+    "time": 11.869674040935934
   },
   {
     "id": "q069",
     "question": "Which criteria determine diabetes classification?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose",
-      "hba1c_percent",
-      "fasting_glucose_mgdl"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "keyword_overlap_score": 0.3333333333333333,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 3.312053957954049
-  },
-  {
-    "id": "q070",
-    "question": "Can diabetes diagnosis use multiple laboratory criteria?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diagnose",
-      "hba1c_percent",
-      "fasting_glucose_mgdl"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "keyword_overlap_score": 0.3333333333333333,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 5.125293333083391
-  },
-  {
-    "id": "q071",
-    "question": "Which laboratory value is used to assess diabetes?",
-    "query": "fasting_glucose_mgdl(Value)",
-    "expected_predicates": [
-      "fasting_glucose_mgdl"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1166,14 +1125,30 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.220628875074908
+    "time": 4.621678625000641
   },
   {
-    "id": "q072",
-    "question": "Can diabetes status be determined from diagnostic measurements?",
-    "query": "diagnose(Result)",
+    "id": "q070",
+    "question": "Can diabetes diagnosis use multiple laboratory criteria?",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diabetes"
+      "full_assessment"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": true,
+    "keyword_match": true,
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 11.83990512508899
+  },
+  {
+    "id": "q071",
+    "question": "Which laboratory value is used to assess diabetes?",
+    "query": "hba1c_percent(Value)",
+    "expected_predicates": [
+      "fasting_glucose_mgdl"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1182,7 +1157,23 @@
     "keyword_overlap_score": 0.0,
     "keyword_correct": false,
     "correct": false,
-    "time": 3.1580178330186754
+    "time": 6.783018582966179
+  },
+  {
+    "id": "q072",
+    "question": "Can diabetes status be determined from diagnostic measurements?",
+    "query": "full_assessment(Result)",
+    "expected_predicates": [
+      "full_assessment"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": true,
+    "keyword_match": true,
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.9382733339443803
   },
   {
     "id": "q073",
@@ -1198,12 +1189,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.558716499945149
+    "time": 5.854202500078827
   },
   {
     "id": "q074",
     "question": "Which diagnostic measurements help classify diabetes?",
-    "query": "fasting_glucose_mgdl(F), hba1c_percent(H), random_glucose_mgdl(R), ogtt_2hr_mgdl(O)",
+    "query": "random_glucose_mgdl(RandomGlucose), fasting_glucose_mgdl(FastingGlucose), ogtt_2hr_mgdl(Ogtt2hr), hba1c_percent(Hba1c)",
     "expected_predicates": [
       "diagnose",
       "fasting_glucose_mgdl",
@@ -1216,7 +1207,7 @@
     "keyword_overlap_score": 0.6666666666666666,
     "keyword_correct": false,
     "correct": false,
-    "time": 8.271828416967764
+    "time": 11.403846625005826
   },
   {
     "id": "q075",
@@ -1233,31 +1224,15 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 5.007023999933153
+    "time": 4.816813834011555
   },
   {
     "id": "q076",
     "question": "A patient has normal fasting glucose but elevated HbA1c. Can diabetes still be diagnosed?",
-    "query": "fasting_glucose_mgdl(F), hba1c_percent(H), diabetes",
+    "query": "fasting_glucose_mgdl(V1), hba1c_percent(V2), diagnose(diabetes)",
     "expected_predicates": [
       "diagnose",
       "diabetes"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "keyword_overlap_score": 0.5,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 11.16560325003229
-  },
-  {
-    "id": "q077",
-    "question": "If laboratory values are borderline, how should diabetes classification be determined?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1266,7 +1241,23 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.550086332950741
+    "time": 14.62508654105477
+  },
+  {
+    "id": "q077",
+    "question": "If laboratory values are borderline, how should diabetes classification be determined?",
+    "query": "full_assessment(Result)",
+    "expected_predicates": [
+      "full_assessment"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": true,
+    "keyword_match": true,
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 4.094696125015616
   },
   {
     "id": "q078",
@@ -1283,24 +1274,23 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 7.956648957915604
+    "time": 8.210159916896373
   },
   {
     "id": "q079",
     "question": "How should fluctuating glucose measurements be evaluated for diabetes?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose",
-      "diabetes"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.5,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 1.9975463331211358
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 2.324971458176151
   },
   {
     "id": "q080",
@@ -1317,14 +1307,14 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 5.371929000131786
+    "time": 9.025794624816626
   },
   {
     "id": "q081",
     "question": "Should diabetes screening be performed using diagnostic measurements?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1333,31 +1323,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.541682000039145
+    "time": 3.928335666889325
   },
   {
     "id": "q082",
     "question": "Can diabetes classification be determined from available diagnostic criteria?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose",
-      "diabetes"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "keyword_overlap_score": 0.5,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 3.5219960000831634
-  },
-  {
-    "id": "q083",
-    "question": "What screening workflow should be used to determine diabetes status?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1366,12 +1339,28 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.0425422079861164
+    "time": 5.832336500054225
+  },
+  {
+    "id": "q083",
+    "question": "What screening workflow should be used to determine diabetes status?",
+    "query": "full_assessment(Result)",
+    "expected_predicates": [
+      "full_assessment"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": true,
+    "keyword_match": true,
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.2218010420911014
   },
   {
     "id": "q084",
     "question": "Can prediabetes be detected using fasting glucose criteria?",
-    "query": "fasting_glucose_mgdl(Value), diagnose(prediabetes)",
+    "query": "prediabetes_positive",
     "expected_predicates": [
       "prediabetes"
     ],
@@ -1382,12 +1371,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 10.517549874959514
+    "time": 5.763062249869108
   },
   {
     "id": "q085",
     "question": "Which predicates determine whether diabetes is present?",
-    "query": "diagnose(diabetes)",
+    "query": "diabetes",
     "expected_predicates": [
       "diabetes"
     ],
@@ -1398,12 +1387,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 8.933331417152658
+    "time": 17.92831979203038
   },
   {
     "id": "q086",
     "question": "Which laboratory tests should be checked when diabetes is suspected?",
-    "query": "random_glucose_mgdl(Random), fasting_glucose_mgdl(Fasting), ogtt_2hr_mgdl(OGTT), hba1c_percent(HbA1c)",
+    "query": "random_glucose_mgdl(Random), fasting_glucose_mgdl(Fasting), ogtt_2hr_mgdl(OGTT), hba1c_percent(Hba1c)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -1415,14 +1404,14 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 12.030758082866669
+    "time": 14.62179195904173
   },
   {
     "id": "q087",
     "question": "If laboratory tests are inconsistent, what diagnostic procedure should be used?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1431,47 +1420,46 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.2607554998248816
+    "time": 4.2475806248839945
   },
   {
     "id": "q088",
     "question": "Can diabetes classification rely on diagnostic measurements?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose",
-      "diabetes"
+      "full_assessment"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
+    "predicate_match": true,
+    "keyword_match": true,
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 5.147862249985337
+  },
+  {
+    "id": "q089",
+    "question": "Are laboratory criteria required for diabetes diagnosis?",
+    "query": "full_assessment(Result)",
+    "expected_predicates": [
+      "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 0.5,
+    "keyword_overlap_score": 0.0,
     "keyword_correct": false,
     "correct": false,
-    "time": 3.018762416904792
-  },
-  {
-    "id": "q089",
-    "question": "Are laboratory criteria required for diabetes diagnosis?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diagnose"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": true,
-    "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 3.8480562078766525
+    "time": 9.49375629099086
   },
   {
     "id": "q090",
     "question": "How should follow-up diagnosis be structured when measurements are unavailable?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1480,46 +1468,45 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.3260771250352263
+    "time": 2.9730976251885295
   },
   {
     "id": "q091",
     "question": "Which measurements are important for evaluating diabetes progression?",
-    "query": "random_glucose_mgdl(RG), fasting_glucose_mgdl(FG), ogtt_2hr_mgdl(OG), hba1c_percent(HA), fasting_duration_hours(FH)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
+    "predicate_match": false,
+    "keyword_match": true,
+    "keyword_overlap_score": 0.0,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 8.512663332978263
+  },
+  {
+    "id": "q092",
+    "question": "How can diabetes classification be performed using available evidence?",
+    "query": "full_assessment(Result)",
+    "expected_predicates": [
+      "full_assessment"
+    ],
+    "expected_contains": [],
+    "must_not_contain": [],
     "predicate_match": true,
     "keyword_match": true,
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 11.540595583152026
-  },
-  {
-    "id": "q092",
-    "question": "How can diabetes classification be performed using available evidence?",
-    "query": "diagnose(Result)",
-    "expected_predicates": [
-      "diagnose",
-      "diabetes"
-    ],
-    "expected_contains": [],
-    "must_not_contain": [],
-    "predicate_match": false,
-    "keyword_match": true,
-    "keyword_overlap_score": 0.5,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 2.6496487909462303
+    "time": 4.471047332976013
   },
   {
     "id": "q093",
     "question": "Should HbA1c measurement be considered during diabetes evaluation?",
-    "query": "hba1c_percent(Value)",
+    "query": "hba1c_percent(V)",
     "expected_predicates": [
       "hba1c_percent"
     ],
@@ -1530,7 +1517,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.435798000078648
+    "time": 6.156800791854039
   },
   {
     "id": "q094",
@@ -1546,24 +1533,23 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.555856334045529
+    "time": 9.802289833081886
   },
   {
     "id": "q095",
     "question": "How should diabetes diagnosis be evaluated using multiple criteria?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose",
-      "diabetes"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.5,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 2.84555449988693
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.2110191660467535
   },
   {
     "id": "q096",
@@ -1579,7 +1565,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.521755666937679
+    "time": 4.016059834044427
   },
   {
     "id": "q097",
@@ -1595,12 +1581,12 @@
     "keyword_overlap_score": 0.0,
     "keyword_correct": false,
     "correct": false,
-    "time": 8.64836183306761
+    "time": 7.648943666135892
   },
   {
     "id": "q098",
     "question": "Can changing HbA1c values affect diabetes classification?",
-    "query": "hba1c_percent(Value), diagnose(Result)",
+    "query": "diabetes_positive_by_hba1c",
     "expected_predicates": [
       "diagnose",
       "diabetes"
@@ -1612,14 +1598,14 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 4.900591667043045
+    "time": 13.953250124817714
   },
   {
     "id": "q099",
     "question": "Can conflicting laboratory evidence require further diabetes evaluation?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
@@ -1628,23 +1614,22 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.33875812520273
+    "time": 7.87348400009796
   },
   {
     "id": "q100",
     "question": "In ambiguous cases, how should diabetes classification be decided?",
-    "query": "diagnose(Result)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
-      "diagnose",
-      "diabetes"
+      "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.5,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 2.549695709021762
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 3.9624555830378085
   }
 ]
