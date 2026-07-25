@@ -1,25 +1,47 @@
+"""
+End-to-end modality evaluator
+
+It preserves the evaluator's console format and metrics:
+- query validity
+- follow-up recall
+- modality accuracy
+- answer accuracy
+- efficiency score
+- unnecessary follow-ups
+
+"""
+
+from __future__ import annotations
+
 import argparse
 import json
 import re
 import sys
+from difflib import SequenceMatcher
 from pathlib import Path
-from typing import Literal
+from typing import Any, Literal
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 import janus_swi as janus
-import main
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from llm.client import client
 from llm.kb_generator import generate_prolog_kb
 from llm.query_generator import generate_query
+from services.interaction_service import interaction
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 TEST_PATH = BASE_DIR / "evaluation" / "test_modalities.json"
 EVAL_KB_PATH = BASE_DIR / "prolog" / "generated_kb" / "evaluation_kb.pl"
+RESULTS_DIR = BASE_DIR / "evaluation" / "results"
+RESULTS_PATH = RESULTS_DIR / "modalities_evaluation_results.json"
+SUMMARY_PATH = RESULTS_DIR / "modalities_evaluation_summary.json"
 DEFAULT_SOURCE_FILE = "data/snippets/diabetes.txt"
 TEST_GENERATOR_MODEL = "gpt-5-mini"
+MAX_REASONING_STEPS = 50
+
 
 # ================================================================
 # Structured-output schema for generated evaluation cases
@@ -32,6 +54,9 @@ Modality = Literal[
     "category",
     "range",
     "duration",
+    "multiple_category",
+    "multi_structured_input",
+    "multi_attribute_entity",
 ]
 
 class ExpectedFollowup(BaseModel):
@@ -40,13 +65,14 @@ class ExpectedFollowup(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     key: str = Field(
-        description="Stable lowercase snake_case semantic key used in ask_*()."
+        description=(
+            "Stable lowercase snake_case semantic identifier for evaluation. "
+            "The current runtime identifies cached answers by question text."
+        )
     )
-    question: str = Field(description="Expected meaning of the follow-up question.")
+    question: str = Field(description="Expected meaning/wording of the follow-up.")
     modality: Modality
-    answer: str = Field(
-        description="Simulated user answer. Numeric answers are also stored as strings."
-    )
+    answer: Any = Field(description="Simulated user answer for this follow-up.")
 
     @field_validator("key")
     @classmethod
@@ -54,6 +80,7 @@ class ExpectedFollowup(BaseModel):
         if not re.fullmatch(r"[a-z][a-z0-9_]*", value):
             raise ValueError("key must be a lowercase snake_case identifier")
         return value
+
 
 class EvaluationCase(BaseModel):
     """One end-to-end behavioural evaluation case."""
@@ -74,58 +101,50 @@ class EvaluationCase(BaseModel):
             raise ValueError("id must be a lowercase snake_case identifier")
         return value
 
-class EvaluationSuite(BaseModel):
-    """Schema returned by OpenAI Structured Outputs."""
 
+class EvaluationSuite(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
-    tests: list[EvaluationCase] = Field(min_length=9, max_length=12)
+    canonical_question: str = Field(
+        min_length=1,
+        description=(
+            "One broad end-to-end diagnosis question used for every test case."
+        ),
+    )
+
+    tests: list[EvaluationCase] = Field(
+        min_length=1,
+        description="Generated end-to-end evaluation test cases.",
+    )
 
 TEST_GENERATOR_INSTRUCTIONS = """
-You generate behavioural evaluation cases for a neurosymbolic
-medical question-answering system.
+You generate behavioural evaluation cases for a neurosymbolic medical
+question-answering system.
 
-You receive:
+You receive the medical source text and the generated SWI-Prolog knowledge
+base. The generated knowledge base is the source of truth for reachable
+ask_* calls, question wording, modalities, categories, range bounds, and
+possible execution paths.
 
-1. the original medical source text,
-2. the generated SWI-Prolog knowledge base.
-
-The generated Prolog knowledge base is the source of truth for:
-
-- available predicates,
-- ask_* calls,
-- semantic keys,
-- question modalities,
-- category values,
-- range bounds,
-- possible execution paths.
-
-CRITICAL KEY RULES:
-
-- Every expected follow-up key must exactly match a concrete key
-  appearing in an ask_* call in the provided Prolog knowledge base.
-- Copy keys character-for-character from the Prolog code.
-- Never shorten, rename, normalize, paraphrase, or invent keys.
-
-- Do not generate an expected follow-up that does not exist in the
-  provided Prolog knowledge base.
-- Do not generate a duration follow-up unless the Prolog knowledge
-  base actually calls ask_duration/3.
-- Numeric and duration answers must contain only the numeric value,
-  for example "210", "6.5", or "10".
-- Do not write units inside answer values, such as "10 hours".
-- Units belong only in the question field.
-- Generate test cases that correspond to real execution paths of
-  the provided Prolog rules.
-- For a minimal positive case, provide a value that should make the
-  earliest sufficient criterion succeed and stop further questions.
-- expected_followups must list every question that Prolog is expected
-  to ask on that execution path, and no others.
-- The question field must contain a natural user question, not a test
-  scenario description.
-- Do not reveal expected values, execution order, or the expected diagnosis
-  in the question field.  
+The current KB uses ask_* predicates whose first relevant argument is the
+natural-language question. It does NOT provide a separate semantic key.
+Therefore:
+- create a stable lowercase snake_case key from the medical meaning of each
+  expected question;
+- keep that key consistent inside the test file;
+- copy or closely preserve the actual question wording from the KB;
+- never invent a follow-up that cannot be reached in the KB;
+- expected_followups must contain every question expected on that execution
+  path and no others;
+- numeric, range, and duration answers must be numeric values without units;
+- boolean answers should be yes/no;
+- category answers must be one of the KB categories;
+- multiple_category answers must be a JSON list;
+- multi_structured_input and multi_attribute_entity answers must use the
+  JSON-safe structure expected by the corresponding ask_* call;
+- the user question must be natural and must not reveal the expected answers.
 """
+
 
 # ================================================================
 # General helpers
@@ -141,366 +160,493 @@ def load_json(path: Path):
         return json.load(file)
 
 
-def normalize(value: str) -> str:
-    return value.strip().lower()
+def save_json(path: Path, data: Any) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8") as file:
+        json.dump(data, file, ensure_ascii=False, indent=2, default=str)
+
+
+def normalize(value: Any) -> str:
+    return str(value).strip().lower()
+
+
+def normalize_question(value: Any) -> str:
+    text = normalize(value)
+    text = re.sub(r"[^a-z0-9.%]+", " ", text)
+    return re.sub(r"\s+", " ", text).strip()
+
+def question_similarity(left: str, right: str) -> float:
+    left_normalized = normalize_question(left)
+    right_normalized = normalize_question(right)
+
+    if not left_normalized or not right_normalized:
+        return 0.0
+
+    sequence_score = SequenceMatcher(
+        None,
+        left_normalized,
+        right_normalized,
+    ).ratio()
+
+    left_tokens = set(left_normalized.split())
+    right_tokens = set(right_normalized.split())
+
+    union = left_tokens | right_tokens
+
+    token_score = (
+        len(left_tokens & right_tokens) / len(union)
+        if union
+        else 0.0
+    )
+
+    return max(sequence_score, token_score)
+
+
+def semantic_slug(question: str) -> str:
+    slug = re.sub(r"[^a-z0-9]+", "_", normalize(question)).strip("_")
+    return slug[:80] or "unknown_followup"
+
+
+def normalize_generated_query(query: str | None) -> str:
+    if query is None:
+        return ""
+
+    normalized = str(query).strip()
+    normalized = normalized.replace("```prolog", "").replace("```", "").strip()
+
+    if normalized.startswith("?-"):
+        normalized = normalized[2:].strip()
+
+    return normalized.rstrip(".").strip()
+
 
 # ================================================================
-# generate test_modalities.json with Structured Outputs
+# Generate test_modalities.json with Structured Outputs
 # ================================================================
+def extract_kb_questions(prolog_code: str) -> list[str]:
+    """
+    Extract literal question strings from ask_* calls
+    in the generated Prolog knowledge base.
+    """
 
+    pattern = re.compile(
+        r"ask_(?:boolean|numeric|string|category|range|duration|"
+        r"multiple_category|multi_structured_input|multi_attribute_entity)"
+        r"\s*\(\s*'((?:[^']|'')*)'",
+        re.IGNORECASE,
+    )
+
+    questions = [
+        match.replace("''", "'")
+        for match in pattern.findall(prolog_code)
+    ]
+
+    if not questions:
+        raise RuntimeError(
+            "No literal ask_* question strings were found "
+            "in the generated KB."
+        )
+
+    return questions
+    
 def generate_testcases(
     source_file: str,
     prolog_code: str,
     output_path: Path = TEST_PATH,
 ) -> list[dict]:
-    """
-    Generate schema-valid behavioural test cases and write them directly to
-    evaluation/test_modalities.json.
-
-    This function creates test specifications only. Pass/fail decisions and
-    metrics are still computed deterministically by evaluate().
-    """
     source_path = BASE_DIR / source_file
 
     if not source_path.exists():
-        raise FileNotFoundError(f"Source file not found: {source_path}")
+        raise FileNotFoundError(
+            f"Source file not found: {source_path}"
+        )
 
     medical_text = load_text(source_path)
 
-    response = client.responses.parse(
-    model=TEST_GENERATOR_MODEL,
-    instructions=TEST_GENERATOR_INSTRUCTIONS,
-    input=(
-        f"source_file:\n{source_file}\n\n"
-        f"Medical source text:\n{medical_text}\n\n"
-        f"Generated Prolog knowledge base:\n"
-        f"{prolog_code}"
-    ),
-    text_format=EvaluationSuite,
-)
+    response = client.responses.create(
+        model=TEST_GENERATOR_MODEL,
+        instructions=(
+            TEST_GENERATOR_INSTRUCTIONS
+            + """
+Return only one valid JSON object.
 
-    suite = response.output_parsed
-    if suite is None:
-        raise RuntimeError("OpenAI returned no parsed evaluation suite.")
+Do not use Markdown.
+Do not use triple backticks.
+Do not include explanations before or after the JSON.
+Derive the key deterministically from the corresponding ask_* question.
+The key must be a lowercase snake_case identifier containing only lowercase letters, digits, and underscores.
+
+The top-level JSON structure must be:
+
+{
+  "canonical_question": "one broad diagnosis question",
+  "tests": [
+    {
+      "id": "lowercase_snake_case",
+      "question": "the canonical broad diagnosis question",
+      "source_file": "source path",
+      "expected_followups": [
+        {
+          "key": "lowercase_snake_case",
+          "question": "literal question grounded in the Prolog KB",
+          "modality": "boolean",
+          "answer": "answer encoded as a string"
+        }
+      ],
+      "max_followups": 1,
+      "correct_answer": "expected final answer"
+    }
+  ]
+}
+
+Use one broad canonical end-to-end question for every test.
+Do not generate unrelated questions unless they occur in the supplied source text and Prolog KB.
+
+Every expected follow-up question must be grounded in an ask_* call
+that actually exists in the supplied Prolog knowledge base.
+"""
+        ),
+        input=(
+            f"source_file:\n{source_file}\n\n"
+            f"Source text:\n{medical_text}\n\n"
+            f"Generated Prolog knowledge base:\n{prolog_code}"
+        ),
+    )
+
+    raw_output = response.output_text.strip()
+
+    if not raw_output:
+        raise RuntimeError(
+            "OpenAI returned an empty evaluation suite."
+        )
+
+    raw_output = re.sub(
+        r"^```(?:json)?\s*|\s*```$",
+        "",
+        raw_output,
+        flags=re.IGNORECASE,
+    ).strip()
+
+    try:
+        raw_suite = json.loads(raw_output)
+    except json.JSONDecodeError as exc:
+        raise RuntimeError(
+            "OpenAI did not return valid JSON.\n"
+            f"JSON error: {exc}\n"
+            f"Raw output:\n{raw_output}"
+        ) from exc
+
+    try:
+        suite = EvaluationSuite.model_validate(raw_suite)
+    except Exception as exc:
+        raise RuntimeError(
+            "Generated JSON does not match EvaluationSuite.\n"
+            f"Validation error: {exc}\n"
+            f"Generated JSON:\n"
+            f"{json.dumps(raw_suite, ensure_ascii=False, indent=2)}"
+        ) from exc
+
+    canonical_question = suite.canonical_question.strip()
+
+    if not canonical_question:
+        raise RuntimeError(
+            "Test generation returned an empty canonical question."
+        )
+
+    kb_questions = extract_kb_questions(prolog_code)
 
     test_cases: list[dict] = []
+    invalid_followups: list[str] = []
+
     for test in suite.tests:
         data = test.model_dump()
 
-        # The local application, not the model, controls the file path.
         data["source_file"] = source_file
+        data["question"] = canonical_question
+
+        for followup in data.get("expected_followups", []):
+            expected_question = followup.get("question", "")
+
+            best_score = max(
+                (
+                    question_similarity(
+                        expected_question,
+                        kb_question,
+                    )
+                    for kb_question in kb_questions
+                ),
+                default=0.0,
+            )
+
+            if best_score < 0.72:
+                invalid_followups.append(
+                    f"{data['id']}: "
+                    f"{expected_question!r} "
+                    f"(best KB match={best_score:.2f})"
+                )
+
         test_cases.append(data)
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    with output_path.open("w", encoding="utf-8") as file:
-        json.dump(test_cases, file, ensure_ascii=False, indent=2)
+    if invalid_followups:
+        details = "\n".join(
+            f"- {item}" for item in invalid_followups
+        )
+
+        raise RuntimeError(
+            "Generated tests contain follow-up questions that are "
+            "not grounded in the generated Prolog KB:\n"
+            f"{details}\n"
+            "The invalid test file was not saved."
+        )
+
+    save_json(output_path, test_cases)
 
     print("\n==========================")
     print("Structured test generation")
     print("==========================")
     print(f"Generated tests: {len(test_cases)}")
+    print(f"Canonical question: {canonical_question}")
     print(f"Source: {source_file}")
     print(f"Saved to: {output_path}")
 
     return test_cases
 
 # ================================================================
-# Evaluation session: supplies simulated answers to Prolog callbacks
+# Runtime adapter
 # ================================================================
+
 
 class EvalSession:
-    def __init__(self, expected_followups):
+    """
+    Connect expected JSON answers with the question-text cache.
+
+    Runtime identity: exact question string used by interaction.remember().
+    Evaluation identity: the semantic key stored in test_modalities.json.
+    """
+
+    def __init__(self, expected_followups: list[dict]):
         self.expected_followups = expected_followups
-        self.actual_followups = []
-        self.answer_cache = {}
+        self.actual_followups: list[dict] = []
+        self.used_expected_keys: set[str] = set()
 
-    def record_followup(self, followup: dict):
-        self.actual_followups.append(followup)
+    def _question_score(self, actual: str, expected: str) -> float:
+        a = normalize_question(actual)
+        e = normalize_question(expected)
 
-    def _find_expected_by_key(self, key: str):
-        key = str(key)
+        if a == e:
+            return 1.0
+        if not a or not e:
+            return 0.0
+
+        a_tokens = set(a.split())
+        e_tokens = set(e.split())
+        token_score = len(a_tokens & e_tokens) / max(1, len(a_tokens | e_tokens))
+        sequence_score = SequenceMatcher(None, a, e).ratio()
+        return max(token_score, sequence_score)
+
+    def match_expected(self, question: str, modality: str) -> dict | None:
+        candidates = []
 
         for expected in self.expected_followups:
-            if str(expected.get("key")) == key:
-                return expected
+            key = str(expected.get("key"))
+            if key in self.used_expected_keys:
+                continue
 
-        return None
+            score = self._question_score(question, expected.get("question", ""))
 
-    def ask_boolean(self, key: str, question: str) -> bool:
-        key = str(key)
+            # Prefer the same modality, but still permit a question match so
+            # a wrong predicted modality can be measured instead of hidden.
+            if expected.get("modality") == modality:
+                score += 0.15
 
-        if key in self.answer_cache:
-            return self.answer_cache[key]
+            candidates.append((score, expected))
 
-        self.record_followup({
-            "key": str(key),
-            "question": question,
-            "modality": "boolean",
-        })
+        if not candidates:
+            return None
 
-        expected = self._find_expected_by_key(key)
+        score, expected = max(candidates, key=lambda item: item[0])
+        return expected if score >= 0.45 else None
+
+    def record_pending(self, pending) -> tuple[dict, Any]:
+        question = str(pending.question)
+        modality = str(pending.modality)
+        options = pending.options
+        expected = self.match_expected(question, modality)
+
         if expected is None:
-            return False
-        else: 
-            answer = normalize(str(expected.get("answer", "no")))
-            value = answer in {"yes", "ja", "true", "1"}
-        self.answer_cache[key] = value
-        return value
-
-    def ask_numeric(self, key: str, question: str) -> float:
-        key = str(key)
-        if key in self.answer_cache:
-            return self.answer_cache[key]
-
-        self.record_followup({
-            "key": str(key),
-            "question": question,
-            "modality": "numeric",
-        })
-
-        expected = self._find_expected_by_key(key)
-        if expected is None:
-            return 0.0
+            key = semantic_slug(question)
+            answer = self.default_answer(modality, options)
         else:
-            value = float(str(expected["answer"]).replace(",", "."))
-        self.answer_cache[key] = value
-        return value
+            key = str(expected["key"])
+            self.used_expected_keys.add(key)
+            answer = self.convert_answer(expected.get("answer"), modality, options)
 
-    def ask_string(self, key: str, question: str) -> str:
-        key = str(key)
-
-        if key in self.answer_cache:
-            return self.answer_cache[key]
-
-        self.record_followup({
-            "key": str(key),
+        followup = {
+            "key": key,
             "question": question,
-            "modality": "string",
-        })
+            "modality": modality,
+            "options": options,
+        }
+        self.actual_followups.append(followup)
+        return followup, answer
 
-        expected = self._find_expected_by_key(key)
-        if expected is None:
-            value = ""
-        else:
-            value = str(expected["answer"])
-        self.answer_cache[key] = value
-        return value
+    @staticmethod
+    def _normalized_options(options: Any) -> list[str]:
+        if not isinstance(options, (list, tuple)):
+            return []
+        return [normalize(option) for option in options]
 
-    def ask_duration(self, key: str, question: str) -> int:
-        key = str(key)
+    def convert_answer(self, raw: Any, modality: str, options: Any) -> Any:
+        if modality == "boolean":
+            return normalize(raw) in {"yes", "ja", "true", "1"}
 
-        if key in self.answer_cache:
-            return self.answer_cache[key]
+        if modality in {"numeric", "duration", "range"}:
+            value = float(str(raw).replace(",", "."))
+            if modality == "range" and isinstance(options, dict):
+                lower = options.get("min", options.get("start"))
+                upper = options.get("max", options.get("stop"))
+                if lower is not None and value < float(lower):
+                    raise ValueError(f"Range answer {value} is below {lower}.")
+                if upper is not None and value > float(upper):
+                    raise ValueError(f"Range answer {value} is above {upper}.")
+            return value
 
-        self.record_followup({
-            "key": str(key),
-            "question": question,
-            "modality": "duration",
-        })
+        if modality == "category":
+            value = normalize(raw)
+            allowed = self._normalized_options(options)
+            if allowed and value not in allowed:
+                raise ValueError(f"Category answer {value!r} is not in {options!r}.")
+            return value
 
-        expected = self._find_expected_by_key(key)
-        if expected is None:
-            value = 0
-        else:
-            value = int(expected["answer"])
-        self.answer_cache[key] = value
-        return value
+        if modality == "multiple_category":
+            if isinstance(raw, list):
+                values = raw
 
-    def ask_range(self, key: str, question: str, start: int, stop: int) -> int:
-        key = str(key)
-        if key in self.answer_cache:
-            return self.answer_cache[key]
+            elif isinstance(raw, str):
+                try:
+                    values = json.loads(raw)
+                except json.JSONDecodeError as error:
+                    raise ValueError(
+                        "Multiple-category answer must be a JSON array string, "
+                        f"but received {raw!r}."
+                    ) from error
 
-        self.record_followup({
-            "key": str(key),
-            "question": question,
-            "modality": "range",
-        })
-
-        expected = self._find_expected_by_key(key)
-        if expected is None:
-            value = start
-        else:
-            answer = int(expected["answer"])
-            if not start <= answer <= stop:
+            else:
                 raise ValueError(
-                    f"Test answer {answer} for key {key!r} is outside {start}..{stop}."
+                    "Multiple-category answer must be a list "
+                    "or a JSON array string."
                 )
-            value = answer
-        self.answer_cache[key] = value
-        return value
 
-    def ask_category(self, key: str, question: str, categories: list[str]) -> str:
-        key = str(key)
-        if key in self.answer_cache:
-            return self.answer_cache[key]
+            if not isinstance(values, list):
+                raise ValueError(
+                    "Multiple-category answer must decode to a list."
+                )
 
-        self.record_followup({
-            "key": str(key),
-            "question": question,
-            "modality": "category",
-        })
+            normalized_values = [
+                normalize(value)
+                for value in values
+            ]
 
-        expected = self._find_expected_by_key(key)
-        normalized_categories = [normalize(str(category)) for category in categories]
+            allowed = self._normalized_options(options)
 
-        if expected is None:
-            value = normalized_categories[0]
-        else:
-            value = normalize(str(expected["answer"]))
+            invalid = [
+                value
+                for value in normalized_values
+                if allowed and value not in allowed
+            ]
 
-        if value not in normalized_categories:
-            raise ValueError(
-                f"Test answer {value!r} for key {key!r} is not in {categories}."
-            )
-        self.answer_cache[key] = value
-        return value
+            if invalid:
+                raise ValueError(
+                    f"Multiple-category answers {invalid!r} "
+                    f"are not in {options!r}."
+                )
 
-def patch_main_callbacks(session: EvalSession):
-    main.ask_boolean = session.ask_boolean
-    main.ask_numeric = session.ask_numeric
-    main.ask_string = session.ask_string
-    main.ask_duration = session.ask_duration
-    main.ask_range = session.ask_range
-    main.ask_category = session.ask_category
+            return normalized_values
+
+        if modality in {"multi_structured_input", "multi_attribute_entity"}:
+            if isinstance(raw, (list, dict)):
+                parsed = raw
+
+            elif isinstance(raw, str):
+                try:
+                    parsed = json.loads(raw)
+                except json.JSONDecodeError as error:
+                    raise ValueError(
+                        f"{modality} answer must be a valid JSON "
+                        f"list or object string, but received {raw!r}."
+                    ) from error
+
+            else:
+                raise ValueError(
+                    f"{modality} answer must be a JSON list or object."
+                )
+
+            if not isinstance(parsed, (list, dict)):
+                raise ValueError(
+                    f"{modality} answer must decode to a list or object."
+                )
+
+            return parsed
+
+        return str(raw)
+
+    def default_answer(self, modality: str, options: Any) -> Any:
+        if modality == "boolean":
+            return False
+        if modality in {"numeric", "duration"}:
+            return 0.0
+        if modality == "range":
+            if isinstance(options, dict):
+                return float(options.get("min", options.get("start", 0)))
+            return 0.0
+        if modality == "category":
+            return options[0] if isinstance(options, list) and options else "unknown"
+        if modality == "multiple_category":
+            return []
+        if modality == "multi_structured_input":
+            if isinstance(options, dict) and options.get("mode") == "grouping":
+                return {str(group): [] for group in options.get("groups", [])}
+            return []
+        if modality == "multi_attribute_entity":
+            entity = options.get("entity", "entity") if isinstance(options, dict) else "entity"
+            return {"entity": entity, "data": {}}
+        return ""
+
 
 # ================================================================
-# Existing end-to-end evaluation
+# End-to-end evaluation
 # ================================================================
+
 
 def generate_eval_kb(source_file: str) -> str:
     source_path = BASE_DIR / source_file
     medical_text = load_text(source_path)
-
     prolog_code = generate_prolog_kb(medical_text)
 
     EVAL_KB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with EVAL_KB_PATH.open("w", encoding="utf-8") as file:
-        file.write(prolog_code)
-
+    EVAL_KB_PATH.write_text(prolog_code, encoding="utf-8")
     return prolog_code
 
+
 def run_reasoning(query: str):
-    query = query.strip().rstrip(".")
-    return janus.query_once(query)
+    return janus.query_once(query.strip().rstrip("."))
 
-def normalize_generated_query(query: str | None) -> str:
-    """
-    Normalize an LLM-generated Prolog query.
-
-    Removes markdown fences, ?-, trailing periods, and surrounding whitespace.
-    """
-    if query is None:
-        return ""
-
-    normalized = str(query).strip()
-
-    # Remove possible markdown code fences.
-    normalized = normalized.replace("```prolog", "")
-    normalized = normalized.replace("```", "")
-    normalized = normalized.strip()
-
-    # Remove the interactive Prolog prefix.
-    if normalized.startswith("?-"):
-        normalized = normalized[2:].strip()
-
-    # Remove final period because janus.query_once expects the goal itself.
-    normalized = normalized.rstrip(".").strip()
-
-    return normalized
-
-def generate_query_with_fallback(
-    question: str,
-    prolog_code: str,
-) -> str:
-    """
-    Generate a Prolog query with a deterministic fallback.
-
-    If the LLM incorrectly returns 'fail', but the generated knowledge base
-    contains diagnose/1, use diagnose(Result). This prevents a query-generation
-    failure from blocking the whole end-to-end evaluation.
-    """
-    raw_query = generate_query(
-        question,
-        prolog_code,
-    )
-
-    query = normalize_generated_query(raw_query)
-
-    if not query or query == "fail":
-        query_valid = False
-        result = {"truth": False}
-    else:
-        query_valid = True
-        result = run_reasoning(query)
-
-    # Check whether the actual generated KB defines diagnose/1.
-    diagnose_exists = re.search(
-        r"(?m)^\s*diagnose\s*\([^)]*\)\s*(?::-|\.)",
-        prolog_code,
-    )
-
-    if diagnose_exists:
-        print(
-            "[Query fallback] LLM returned 'fail', but diagnose/1 "
-            "exists in the generated KB. Using diagnose(Result)."
-        )
-        return "diagnose(Result)"
-
-    print(
-        "[Query fallback] LLM returned 'fail' and no diagnose/1 "
-        "predicate was found in the generated KB."
-    )
-
-    return "fail"
-
-def resolve_evaluation_query(prolog_code: str) -> str:
-    """
-    Resolve the top-level diagnosis query directly from the generated KB.
-
-    For modality evaluation, the query must remain constant across test
-    scenarios. The scenario is represented by simulated follow-up answers,
-    not by changing the Prolog goal.
-    """
-
-    # Preferred top-level predicate for the current KB design.
-    diagnose_match = re.search(
-        r"(?m)^\s*diagnose\s*\([^)]*\)\s*(?::-|\.)",
-        prolog_code,
-    )
-
-    if diagnose_match:
-        return "diagnose(Result)"
-
-    # Optional fallback for KBs using diagnosis/1 instead.
-    diagnosis_match = re.search(
-        r"(?m)^\s*diagnosis\s*\([^)]*\)\s*(?::-|\.)",
-        prolog_code,
-    )
-
-    if diagnosis_match:
-        return "diagnosis(Result)"
-
-    return "fail"
 
 def evaluate_followups(expected_followups, actual_followups):
     expected_by_key = {
-        str(f["key"]): f
-        for f in expected_followups
-        if "key" in f
+        str(item["key"]): item for item in expected_followups if "key" in item
     }
-
     actual_by_key = {
-        str(f["key"]): f
-        for f in actual_followups
-        if "key" in f
+        str(item["key"]): item for item in actual_followups if "key" in item
     }
 
     expected_keys = set(expected_by_key)
     actual_keys = set(actual_by_key)
 
     if not expected_keys:
-        return 1.0, 1.0
+        followup_recall = 1.0
+        modality_accuracy = 1.0 if not actual_keys else 0.0
+        return followup_recall, modality_accuracy
 
     matched_keys = expected_keys & actual_keys
     followup_recall = len(matched_keys) / len(expected_keys)
@@ -509,17 +655,59 @@ def evaluate_followups(expected_followups, actual_followups):
         expected_by_key[key]["modality"] == actual_by_key[key]["modality"]
         for key in matched_keys
     )
-    modality_accuracy = modality_matches / len(expected_keys)
 
+    # Preserve the old evaluator's strict format: missing expected questions
+    # also lower modality accuracy. Extra questions are measured separately by
+    # unnecessary_followups.
+    modality_accuracy = modality_matches / len(expected_keys)
     return followup_recall, modality_accuracy
 
-def evaluate_answer(result: dict, correct_answer: str) -> bool:
+
+def evaluate_answer(
+    result: dict | None,
+    correct_answer: str,
+) -> bool:
+    """
+    Compare the expected answer with the verdict returned by Prolog.
+
+    Supported result examples:
+        {"truth": True, "Result": "diabetes"}
+
+        {
+            "truth": True,
+            "Result": {
+                "verdict": "diabetes",
+                "evidence": {...},
+            },
+        }
+
+        {"truth": True, "verdict": "diabetes"}
+    """
+    if not result:
+        return False
+
     expected = normalize(str(correct_answer))
 
-    if "Result" in result:
-        actual = normalize(str(result["Result"]))
-        return actual == expected
+    # Most common form:
+    # diagnose(Result) -> {"Result": ...}
+    query_result = result.get("Result")
 
+    if isinstance(query_result, dict):
+        verdict = query_result.get("verdict")
+
+        if verdict is not None:
+            return normalize(str(verdict)) == expected
+
+    elif query_result is not None:
+        return normalize(str(query_result)) == expected
+
+    # Also support verdict returned directly at top level.
+    direct_verdict = result.get("verdict")
+
+    if direct_verdict is not None:
+        return normalize(str(direct_verdict)) == expected
+
+    # Boolean-only queries.
     truth_value = result.get("truth")
 
     if expected in {"yes", "true"}:
@@ -530,61 +718,68 @@ def evaluate_answer(result: dict, correct_answer: str) -> bool:
 
     return False
 
+
 def validate_test_cases(test_cases: list[dict]) -> None:
-    """Validate loaded JSON before starting expensive KB/LLM calls."""
     if not isinstance(test_cases, list) or not test_cases:
         raise ValueError("The test file must contain a non-empty JSON list.")
 
-    required_case_fields = {
-        "id",
-        "question",
-        "source_file",
-        "expected_followups",
-        "correct_answer",
+    required = {
+        "id", "question", "source_file", "expected_followups", "correct_answer"
     }
 
     for index, case in enumerate(test_cases):
-        missing = required_case_fields - set(case)
+        missing = required - set(case)
         if missing:
-            raise ValueError(
-                f"Test case at index {index} is missing fields: {sorted(missing)}"
-            )
+            raise ValueError(f"Test case {index} is missing: {sorted(missing)}")
+
+        case.setdefault("max_followups", len(case["expected_followups"]))
 
         for followup_index, followup in enumerate(case["expected_followups"]):
-            missing_followup = {
-                "key",
-                "question",
-                "modality",
-                "answer",
-            } - set(followup)
-
+            missing_followup = {"key", "question", "modality", "answer"} - set(followup)
             if missing_followup:
                 raise ValueError(
                     f"Test {case['id']!r}, follow-up {followup_index} is missing: "
                     f"{sorted(missing_followup)}"
                 )
 
-def evaluate(
-    test_path: Path = TEST_PATH,
-    prolog_code: str | None = None,
-):
-    """
-    Execute all behavioural test cases against one fixed Prolog KB.
 
-    The evaluator uses one deterministic diagnosis query for the modality
-    evaluation. This prevents scenario descriptions in generated test
-    questions from producing overly specific queries such as
-    diagnose(no_diabetes_detected).
-    """
+def run_case(query: str, session: EvalSession) -> tuple[dict, bool, str | None]:
+    """Rerun the same query until no pending UI question remains."""
+
+    interaction.reset_all()
+    error = None
+
+    for _ in range(MAX_REASONING_STEPS):
+        try:
+            result = run_reasoning(query)
+            interaction.clear()
+            return result or {}, True, None
+
+        except Exception as exc:
+            pending = interaction.get_question()
+
+            if pending is None:
+                error = str(exc)
+                return {"truth": False}, False, error
+
+            _, answer = session.record_pending(pending)
+
+            # The current bridge checks this cache when the same Prolog query
+            # is rerun. The cache key must be the exact question string.
+            interaction.remember(str(pending.question), answer)
+            interaction.clear()
+
+    error = f"Exceeded {MAX_REASONING_STEPS} follow-up steps."
+    return {"truth": False}, False, error
+
+
+def evaluate(test_path: Path = TEST_PATH, prolog_code: str | None = None,):
     test_cases = load_json(test_path)
     validate_test_cases(test_cases)
 
     if not test_cases:
         raise ValueError("No test cases found.")
 
-    # ------------------------------------------------------------
-    # 1. All generated tests must use the same source file
-    # ------------------------------------------------------------
     source_files = {
         case["source_file"]
         for case in test_cases
@@ -598,130 +793,85 @@ def evaluate(
 
     source_file = next(iter(source_files))
 
-    # ------------------------------------------------------------
-    # 2. Generate the KB only once
-    # ------------------------------------------------------------
     if prolog_code is None:
-        prolog_code = generate_eval_kb(source_file)
+        if not EVAL_KB_PATH.exists():
+            raise FileNotFoundError(
+                f"Evaluation KB not found: {EVAL_KB_PATH}\n"
+                "Run the evaluator once with --generate-tests."
+            )
+
+        prolog_code = EVAL_KB_PATH.read_text(
+            encoding="utf-8",
+        )
+
+        print(f"Loaded existing KB: {EVAL_KB_PATH}")
 
     janus.consult(str(EVAL_KB_PATH))
 
+    totals = {
+        "query_validity": 0.0,
+        "followup_recall": 0.0,
+        "modality_accuracy": 0.0,
+        "answer_accuracy": 0.0,
+        "efficiency_score": 0.0,
+    }
+    all_results = []
 
-    total = len(test_cases)
-
-    sum_query_validity = 0.0
-    sum_followup_recall = 0.0
-    sum_modality_accuracy = 0.0
-    sum_answer_accuracy = 0.0
-    sum_efficiency = 0.0
-
-    # ------------------------------------------------------------
-    # 4. Run every test independently
-    # ------------------------------------------------------------
     for case in test_cases:
         print("\n==========================")
         print(f"Test: {case['id']}")
         print(f"Question: {case['question']}")
 
-        expected_followups = case.get(
-            "expected_followups",
-            [],
-        )
-
-        max_followups = case.get(
-            "max_followups",
-            len(expected_followups),
-        )
-
-        # Each test receives a fresh simulated answer session.
+        expected_followups = case.get("expected_followups", [])
+        max_followups = case.get("max_followups", len(expected_followups))
         session = EvalSession(expected_followups)
-        patch_main_callbacks(session)
 
-        raw_query = generate_query(
-            case["question"],
-            prolog_code,
-        )
-
+        raw_query = generate_query(case["question"], prolog_code)
         query = normalize_generated_query(raw_query)
-
         query_valid = bool(query) and query != "fail"
 
         print(f"Correct answer: {case['correct_answer']}")
         print(f"Generated query: {query}")
 
-        if not query_valid:
-            print(
-                "Query resolution failed: no executable diagnosis "
-                "predicate was found."
-            )
+        execution_error = None
+        if query_valid:
+            result, execution_ok, execution_error = run_case(query, session)
+            query_valid = query_valid and execution_ok
+        else:
             result = {"truth": False}
 
-        else:
-            try:
-                result = run_reasoning(query)
-
-            except Exception as error:
-                print(f"Prolog execution error: {error}")
-                result = {"truth": False}
-                query_valid = False
-
         actual_followups = session.actual_followups
-
         followup_recall, modality_accuracy = evaluate_followups(
-            expected_followups,
-            actual_followups,
+            expected_followups, actual_followups
         )
 
-        # Query or Prolog errors must never count as correct negatives.
-        if query_valid:
-            answer_correct = evaluate_answer(
-                result,
-                case["correct_answer"],
-            )
-        else:
-            answer_correct = False
-
-        answer_accuracy = (
-            1.0 if answer_correct else 0.0
+        answer_correct = (
+            evaluate_answer(result, case["correct_answer"]) if query_valid else False
         )
+        answer_accuracy = 1.0 if answer_correct else 0.0
 
         actual_count = len(actual_followups)
-
-        unnecessary_followups = max(
-            0,
-            actual_count - max_followups,
-        )
+        unnecessary_followups = max(0, actual_count - max_followups)
 
         if actual_count == 0:
-            efficiency_score = (
-                1.0
-                if max_followups == 0 and query_valid
-                else 0.0
-            )
+            efficiency_score = 1.0 if max_followups == 0 and query_valid else 0.0
         else:
-            efficiency_score = min(
-                1.0,
-                max_followups / actual_count,
-            )
+            efficiency_score = min(1.0, max_followups / actual_count)
 
-        query_validity = (
-            1.0 if query_valid else 0.0
-        )
+        query_validity = 1.0 if query_valid else 0.0
 
-        sum_query_validity += query_validity
-        sum_followup_recall += followup_recall
-        sum_modality_accuracy += modality_accuracy
-        sum_answer_accuracy += answer_accuracy
-        sum_efficiency += efficiency_score
+        totals["query_validity"] += query_validity
+        totals["followup_recall"] += followup_recall
+        totals["modality_accuracy"] += modality_accuracy
+        totals["answer_accuracy"] += answer_accuracy
+        totals["efficiency_score"] += efficiency_score
 
         print("\nExpected followups:")
         if expected_followups:
             for followup in expected_followups:
                 print(
-                    f"- {followup['key']}: "
-                    f"{followup['question']} "
-                    f"[{followup['modality']}] "
-                    f"-> {followup['answer']}"
+                    f"- {followup['key']}: {followup['question']} "
+                    f"[{followup['modality']}] -> {followup['answer']}"
                 )
         else:
             print("- None")
@@ -730,8 +880,7 @@ def evaluate(
         if actual_followups:
             for followup in actual_followups:
                 print(
-                    f"- {followup['key']}: "
-                    f"{followup['question']} "
+                    f"- {followup['key']}: {followup['question']} "
                     f"[{followup['modality']}]"
                 )
         else:
@@ -745,79 +894,88 @@ def evaluate(
         print(f"Efficiency score: {efficiency_score:.2f}")
         print(f"Unnecessary followups: {unnecessary_followups}")
         print(f"Raw result: {result}")
+        if execution_error:
+            print(f"Execution error: {execution_error}")
+
+        all_results.append({
+            "id": case["id"],
+            "question": case["question"],
+            "source_file": case["source_file"],
+            "correct_answer": case["correct_answer"],
+            "generated_query": query,
+            "query_valid": query_valid,
+            "expected_followups": expected_followups,
+            "actual_followups": actual_followups,
+            "metrics": {
+                "query_validity": query_validity,
+                "followup_recall": followup_recall,
+                "modality_accuracy": modality_accuracy,
+                "answer_accuracy": answer_accuracy,
+                "efficiency_score": efficiency_score,
+                "unnecessary_followups": unnecessary_followups,
+            },
+            "raw_result": result,
+            "error": execution_error,
+        })
+
+    interaction.reset_all()
+
+    total = len(test_cases)
+    summary = {
+        "total_tests": total,
+        **{name: value / total for name, value in totals.items()},
+        "total_unnecessary_followups": sum(
+            item["metrics"]["unnecessary_followups"] for item in all_results
+        ),
+    }
+
+    save_json(RESULTS_PATH, all_results)
+    save_json(SUMMARY_PATH, summary)
 
     print("\n==========================")
     print("Overall results")
     print("==========================")
-    print(
-        f"Query validity: "
-        f"{sum_query_validity / total:.2f}"
-    )
-    print(
-        f"Follow-up recall: "
-        f"{sum_followup_recall / total:.2f}"
-    )
-    print(
-        f"Modality accuracy: "
-        f"{sum_modality_accuracy / total:.2f}"
-    )
-    print(
-        f"Answer accuracy: "
-        f"{sum_answer_accuracy / total:.2f}"
-    )
-    print(
-        f"Efficiency score: "
-        f"{sum_efficiency / total:.2f}"
-    )
-    
+    print(f"Query validity: {summary['query_validity']:.2f}")
+    print(f"Follow-up recall: {summary['followup_recall']:.2f}")
+    print(f"Modality accuracy: {summary['modality_accuracy']:.2f}")
+    print(f"Answer accuracy: {summary['answer_accuracy']:.2f}")
+    print(f"Efficiency score: {summary['efficiency_score']:.2f}")
+    print(f"Results saved to: {RESULTS_PATH}")
+    print(f"Summary saved to: {SUMMARY_PATH}")
+
+    return summary, all_results
+
+
+# ================================================================
+# CLI
+# ================================================================
+
+
 def parse_args():
     parser = argparse.ArgumentParser(
         description=(
-            "Optionally generate test_modalities.json using OpenAI Structured "
-            "Outputs, then run the existing end-to-end evaluation."
+            "Optionally generate test_modalities.json, then run the end-to-end "
+            "modality evaluation against the interaction-based runtime."
         )
     )
-    parser.add_argument(
-        "--generate-tests",
-        action="store_true",
-        help="Generate and overwrite evaluation/test_modalities.json first.",
-    )
-    parser.add_argument(
-        "--source-file",
-        default=DEFAULT_SOURCE_FILE,
-        help=(
-            "Project-relative medical source file used for test generation. "
-            f"Default: {DEFAULT_SOURCE_FILE}"
-        ),
-    )
-    parser.add_argument(
-        "--generate-only",
-        action="store_true",
-        help="Generate test_modalities.json without running the evaluator.",
-    )
+    parser.add_argument("--generate-tests", action="store_true")
+    parser.add_argument("--source-file", default=DEFAULT_SOURCE_FILE)
+    parser.add_argument("--generate-only", action="store_true")
+    parser.add_argument("--test-path", default=str(TEST_PATH))
     return parser.parse_args()
+
 
 if __name__ == "__main__":
     args = parse_args()
-
-    # 이번 실행에서 사용할 동일한 Prolog KB
     prolog_code = None
 
     if args.generate_tests or args.generate_only:
-        # 1. KB를 딱 한 번 생성
-        prolog_code = generate_eval_kb(
-            args.source_file
-        )
-
-        # 2. 바로 그 동일한 KB를 바탕으로 테스트 생성
+        prolog_code = generate_eval_kb(args.source_file)
         generate_testcases(
             source_file=args.source_file,
             prolog_code=prolog_code,
+            output_path=Path(args.test_path),
         )
 
     if not args.generate_only:
-        # 3. 테스트 생성 때 사용한 동일한 KB로 평가
-        # 생성 옵션 없이 실행했다면 evaluate() 내부에서 한 번 생성
-        evaluate(
-            prolog_code=prolog_code,
-        )
+        evaluate(test_path=Path(args.test_path), prolog_code=prolog_code)

@@ -9,45 +9,33 @@ You are an expert SWI-Prolog knowledge engineer.
 Convert the following medical text into a VALID SWI-Prolog knowledge base.
 
 GENERAL REQUIREMENTS:
-- Output ONLY Prolog code.
-- Do not use markdown.
-- Do not add explanations.
-- The code must run in SWI-Prolog.
-- The code must be compatible with SWI-Prolog + Janus.
+- Return ONLY Prolog code.
+- Do not use markdown or explanations.
+- The code must run in SWI-Prolog with Janus.
+- Use only information grounded in the supplied text.
 - Use logical predicates and rules only.
 - Avoid singleton variables.
 - Do not create unnecessary predicates.
 - Ask only the minimum information necessary to reach a conclusion.
+- Stop asking follow-up questions as soon as a diagnosis, exclusion, or classification is justified.
+- Ask additional criteria only when the current evidence is insufficient.
+- Use lowercase snake_case for every generated predicate name,
+  atom identifier, dictionary key, field key, and internal identifier.
 
 REASONING REQUIREMENTS:
 - The knowledge base should support diagnosis, classification, and follow-up questioning.
 - Ask only as much as is genuinely needed to reach a confident, well-justified
-  conclusion - never ask about every symptom, measurement, or historical detail
-  the source text happens to describe just because the text mentions it. A
-  real clinical dialogue is adaptive and stops once enough evidence exists,
+  conclusion A real clinical dialogue is adaptive and stops once enough evidence exists,
   not an exhaustive questionnaire that works through everything available.
-- For the *numeric diagnostic threshold* (the single measurement that alone
-  proves the condition), stop asking further numeric criteria as soon as one
-  threshold is met - do not force every numeric criterion to be checked once
-  a conclusion is already justified. Use the simplest valid reasoning path for
-  this check.
-- Beyond that numeric threshold, diagnose/1 may also gather supporting
-  clinical evidence the source text describes - symptoms via ask_boolean,
-  categorical status or history via ask_category, bounded or temporal detail
-  via ask_range or ask_duration, and so on - but only to the extent it is
-  actually needed to reach or meaningfully strengthen the verdict, never as a
-  fixed, exhaustive checklist gone through regardless of need. If the
-  numeric/laboratory evidence alone already gives an unambiguous conclusion,
-  diagnose/1 does not have to also ask about every other symptom or category
-  described in the text. Use clinical judgment about when enough evidence has
-  been gathered and stop there - a shorter, sufficient dialogue is preferred
-  over an exhaustive one. At the same time, still make real use of whichever
-  input types the source text supports where they add genuine diagnostic
-  value (e.g. clarifying severity, risk factors, or a borderline/ambiguous
-  case) - the goal is an adaptive, clinically-motivated dialogue, not simply
-  fewer questions for their own sake. diagnose/1's own RETURN VALUE must
-  still follow the janus-safe result rule below - see JANUS RESULT SAFETY.
+- see JANUS RESULT SAFETY.
   Do not invent clinical questions that aren't grounded in the provided text.
+
+  QUESTION RULES:
+- Every question must be complete and natural language suitable for a user.
+- Ask only information needed by reachable reasoning rules.
+- Stop asking as soon as a conclusion is justified.
+- Do not ask an exhaustive checklist merely because information appears
+  in the source text.
 
 JANUS USER INTERACTION:
 
@@ -91,162 +79,106 @@ Use:
 - ask_duration for time durations
 - ask_range for bounded numeric intervals (including ratings/severity
   scores from 1-10, since those are also bounded-interval answers)
-- ask_category for fixed choices
+- ask_category for exactly one fixed choice
 - ask_string for free text
+- Use ask_multi_structured_input only for sequence, ranking, or grouped data.
+- Use ask_multi_attribute_entity only for several attributes of one entity.
+- Use structured modalities only when they are clearly supported by the text.
 
-CRITICAL - ask_numeric/ask_duration/ask_range ALWAYS RETURN A FLOAT:
-even a count or "how many" answer comes back as e.g. 1.0, never the integer 1.
-NEVER gate logic on integer(Value) for anything sourced from these - it will
-silently and always fail, even for a perfectly valid answer. Use a numeric
-comparison instead:
-    GOOD: ( Count >= 1 -> ... )
-    BAD:  ( integer(Count), Count >= 1 -> ... )   -- integer(1.0) is false, this branch never runs
+CRITICAL - NUMERIC SAFETY:
+- ask_numeric, ask_duration, and ask_range return numeric values compatible
+  with Python floats. 
+- Do not require integer(Value). 
+- Use numeric comparisons or round/truncate when an integer is genuinely required.
 If you need a whole-number count for something like "how many entries to
 collect", compare with >= /=< or convert explicitly with round/1 or
 truncate/1 - do not test the term's type.
 
-CRITICAL - NEVER PUT ==, \\=, OR CONTROL CONSTRUCTS INSIDE is/2:
-is/2's right-hand side must be a pure arithmetic expression over numbers -
-it does NOT understand atom/term comparisons like == or \\=, and it will try
-to arithmetically evaluate whatever variable you give it. Counting boolean
-flags this way is a common mistake and WILL crash:
-    BAD:  NumFlag is (SomeFlag == true -> 1.0 ; 0.0)
-          -- crashes with "Arithmetic: `true/0' is not a function", because
-          is/2 tries to evaluate the SomeFlag==true test arithmetically,
-          which means evaluating the atom `true` as a number.
-Instead, bind counts with an ordinary clause-level if-then-else (using =,
-not is), or accumulate with plain unification:
-    GOOD: ( SomeFlag == true -> NumFlag = 1 ; NumFlag = 0 )
-    GOOD: findall(1, member(true, ListOfFlags), Ones), length(Ones, Count)
-Only ever put a real arithmetic expression (numbers, +, -, *, /, round/1,
-etc. over already-numeric values) on the right of is/2 - never a boolean
-test, comparison, or atom.
-- ask_multiple_category for selecting SEVERAL applicable options in one
-  question, instead of asking one boolean per option - use this for
-  "which of the following apply?" style questions (e.g. several findings
-  from the source text at once). Answer is bound to a Prolog list of the
-  selected atoms/strings (an empty list if none apply). Categories is a
-  plain list of atoms derived from what the source text actually
-  describes - you do not need to add 'none' yourself, the UI adds it
-  automatically.
-- ask_multi_structured_input for collecting several related items at
-  once: Mode is one of sequence (ordered list), ranking (list of
-  rank-value pairs), or grouping (Groups is a list of group-name
-  atoms/strings; Answer is a top-level dict keyed by group name). Only
-  use this when the source text genuinely describes ordering, ranking,
-  or grouped multi-item data - do not force it into this domain if
-  nothing in the text calls for it.
-- ask_multi_attribute_entity for collecting ONE structured record with
-  several typed fields in a single question, instead of several
-  separate questions (e.g. a single medication's name, dose, and
-  frequency together). Fields is a list of [Key, Prompt, Type] lists
-  (Type is one of string, int, float, bool, category - each is a plain
-  3-element list, NOT a compound term, per JANUS RESULT SAFETY below).
-  Answer is a top-level dict: _{{entity: Entity, data: _{{...}}}}.
-  Only use this when the text describes multiple attributes of the
-  SAME thing that naturally belong together - do not force unrelated facts into one entity.
+PROLOG AND JANUS SAFETY:
 
-These three are OPTIONAL, more expressive alternatives to the basic
-modalities above - use them only where they are a clearly better fit
-than several separate ask_boolean/ask_category calls, grounded in what
-the source text actually describes. Do not use them just to
-demonstrate that they exist.
+1. ARITHMETIC SAFETY: with is/2
+- The right side of is/2 must contain only arithmetic expressions.
+- Never place comparisons, atoms, or control constructs such as
+  ==, \\=, ->, or ; inside is/2.
+- Use ordinary if-then-else with unification instead.
 
-QUESTION WORDING - every ask_* question string is shown DIRECTLY to a
-patient in a chat interface, so each one MUST be a complete, natural
-question, never a bare label, noun phrase, or field name:
-    GOOD: ask_boolean('Do you experience <the actual symptom/finding>?')
-    BAD:  ask_boolean('<Finding>?')
-    BAD:  ask_boolean('<Finding>')
-    GOOD: ask_numeric('What is your <measurement>, in <its actual unit>?', Value)
-    BAD:  ask_numeric('<Measurement name>', Value)
-    GOOD: ask_category('What is your current <status the text describes>?', [<the actual categories the text names>], Answer)
-    BAD:  ask_category('<Status>?', [<categories>], Answer)
-    GOOD: ask_range('<a complete, natural question about the bounded value>?', Start, Stop, Value)
-    BAD:  ask_range('<Bare label>', Start, Stop, Value)
-This applies to every single ask_* call in the file, including ones
-for symptoms, history, and measurements - none of them should read like
-a form field label. Phrase each one the way a clinician would actually
-ask the patient, grounded in the specific vocabulary the source text
-itself uses, not a generic template.
+GOOD:
+    ( Flag == true -> Count = 1 ; Count = 0 )
 
-CRITICAL - ask_boolean/1 HAS NO OUTPUT ARGUMENT:
-ask_boolean(Question) only succeeds (on "yes") or fails (on "no") - it does NOT bind
-a value anywhere. To actually capture the yes/no answer into a variable, you MUST use
-this exact if-then-else idiom:
-    ( ask_boolean('Some question?') -> Flag = true ; Flag = false )
-Writing `ask_boolean(Question), X = SomeVar` does NOT capture the answer - X/SomeVar
-stay unbound, and the whole clause simply fails whenever the user answers "no" (with
-no fallback), which breaks the entire diagnosis. Never write ask_boolean this way.
+BAD:
+    Count is (Flag == true -> 1 ; 0)
 
-NEVER add placeholder, dummy, or "ensure predicate is referenced" clauses that exist
-only to make ask_boolean/ask_numeric/etc appear used in the source. Every clause you
-write must be part of real, reachable diagnostic logic. Do not write multiple
-near-duplicate diagnose/1 clauses - write exactly ONE diagnose/1 clause that performs
-the complete workflow.
 
-JANUS RESULT SAFETY - THIS IS A HARD REQUIREMENT, NOT A STYLE PREFERENCE:
-janus can only automatically convert certain Prolog term shapes back to Python
-when they are bound to a query's free variable and returned as a result. It
-handles: atoms, numbers, strings, lists (recursively), Key-Value pairs written
-as Key-Value, and SWI-Prolog dicts (Tag{{...}} or _{{...}}) written at the TOP
-LEVEL of the returned value. It CANNOT convert a custom-named compound term
-(any Name(Arg1, Arg2, ...) you invent, e.g. diagnosis_summary(...), point(1,2),
-severity_rating(3,moderate)) - if ANY custom compound term appears ANYWHERE in the
-value bound to a query's result variable, even nested inside a list or dict,
-the whole query crashes with "Domain error: py_term expected". This happens
-AFTER the user has already answered every question, which is the worst
-possible place for a crash, so this must never happen.
-Concretely, diagnose/1's argument (and the argument of any other predicate a
-query might bind a free variable to) must be built ONLY from: atoms, numbers,
-strings, lists, Key-Value pairs, and top-level dicts whose values are
-themselves only atoms/numbers/strings/lists/pairs - never a custom compound.
-    GOOD: diagnose(<verdict atom>)   -- just the bare verdict atom
-    GOOD: diagnose(_{{verdict: <verdict atom>, evidence: <atom>, findings: [<finding>-true, <finding>-false]}})
-    BAD:  diagnose(diagnosis_summary(<verdict>, findings(true,false), ...))  -- custom compound, WILL crash
-    BAD:  X = severity_rating(6, moderate), ... , Result = summary(V, X, ...)  -- nested custom compound, WILL crash
-If you want to report a classified/severity value (e.g. a "moderate"
-rating), just use the plain atom (moderate) or a pair (finding-moderate)
-directly - never wrap it in its own named compound like
-severity_rating(6, moderate).
-This same rule applies to ask_multi_attribute_entity's Fields argument:
-each field must be a plain list [Key, Prompt, Type], never a compound term
-like field(Key, Prompt, Type) - a list of lists is janus-safe, a list of
-custom compounds is not.
+2. STRUCTURED MODALITY SAFETY:
+- ask_multiple_category is for selecting several options and returns a list.
+- ask_multi_structured_input is only for sequence, ranking, or grouped data.
+- ask_multi_attribute_entity is only for several attributes of one entity.
+- Use these modalities only when clearly supported by the source text.
+- Do not use them merely to demonstrate available modalities.
+
+For ask_multi_attribute_entity, Fields must be plain lists:
+
+    [
+        [name, 'What is the medication name?', string],
+        [dose_mg, 'What is the dose in mg?', float]
+    ]
+
+Do not use custom terms such as field(...).
+
+
+3. Boolean handling
+ask_boolean/1 succeeds for yes and fails for no. It does not return a value.
+
+To store the result, always use:
+
+    ( ask_boolean('Complete question?')
+      -> Flag = true
+      ;  Flag = false
+    )
+
+
+4. Reachable reasoning
+- Do not generate placeholder, dummy, or unreachable predicates.
+- Create exactly one diagnose/1 predicate for the complete workflow.
+- Every ask_* call must belong to real reasoning logic.
+
+
+5. Janus-safe return values
+Query result variables may contain only:
+- atoms
+- strings
+- numbers
+- lists
+- Key-Value pairs
+- SWI-Prolog dictionaries
+
+Never return custom compound terms such as:
+
+    diagnosis_summary(...)
+    symptom(...)
+    fatigue_severity(...)
+
+GOOD:
+    diagnose(diabetes)
+
+GOOD:
+    diagnose(_{{
+        verdict: diabetes,
+        evidence: random_glucose
+    }})
+
+BAD:
+    diagnose(diagnosis_summary(diabetes, random_glucose))
+
 
 PREDICATE DESIGN:
+- Create exactly one diagnose/1 predicate for the complete workflow.
+- Do not create placeholder, dummy, or unreachable predicates.
+- Create one independently callable predicate per specific criterion.
+- Each criterion predicate must ask internally for all values it needs.
+- Do not require input arguments that only diagnose/1 can prepare.
+- diagnose/1 may call criterion predicates and stop after a decisive result.
 
-Create clear public predicates.
-
-For diagnosis:
-- diagnose/1 should be the main workflow predicate.
-- diabetes/0 should answer whether diabetes is logically true.
-- prediabetes/0 should answer whether prediabetes is true.
-- low_risk/0 should answer whether criteria are not met.
-
-For specific criteria:
-Create ONE standalone, independently-callable predicate PER criterion - each
-takes NO external parameters (it asks for whatever it needs internally via
-ask_numeric/ask_range/etc, it does not require the caller to already have a
-value like FastingHours ready to pass in). This matters because a user's
-natural-language question may be translated into a query that calls one of
-these criterion predicates directly, in isolation, without going through
-diagnose/1 first - if a criterion predicate needs an external input argument
-to work correctly, calling it alone will crash with an uninstantiated-argument
-error. Each criterion predicate must gather everything it needs itself:
-
-BAD - do NOT write a single combined helper that bundles several criteria
-together and requires the caller to already supply values like FastingHours
-as an argument (e.g. combined_evidence(FastingHours, SomeOtherValue, ...)):
-this cannot be safely called except from inside diagnose/1's own exact
-sequence, so any other query that tries to use it directly will break.
-diagnose/1 may of course call each standalone criterion predicate in
-sequence itself (stopping early once one succeeds) - the requirement is
-just that each criterion ALSO works when called completely on its own.
-
-
-OUTPUT:
-Return only executable Prolog code.
 
 Medical Text:
 
