@@ -148,7 +148,7 @@ class DialogueModalityHandler:
 
         self.request_input(
             question,
-            "categorical",
+            "category",
             categories
         )
 
@@ -165,8 +165,8 @@ class DialogueModalityHandler:
             question,
             "range",
             {
-                "start": start,
-                "stop": stop,
+                "min": start,
+                "max": stop,
             }
         )
 
@@ -264,7 +264,7 @@ class DialogueModalityHandler:
             response["style"] = "explanatory"
 
 
-        elif modality == "categorical":
+        elif modality == "category":
 
             response["style"] = "label_focused"
 

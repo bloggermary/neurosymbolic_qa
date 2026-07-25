@@ -18,6 +18,8 @@ GENERAL REQUIREMENTS:
 - Avoid singleton variables.
 - Do not create unnecessary predicates.
 - Ask only the minimum information necessary to reach a conclusion.
+- Stop asking follow-up questions as soon as a diagnosis, exclusion, or classification is justified.
+- Ask additional criteria only when the current evidence is insufficient.
 
 REASONING REQUIREMENTS:
 - The knowledge base should support diagnosis, classification, and follow-up questioning.
