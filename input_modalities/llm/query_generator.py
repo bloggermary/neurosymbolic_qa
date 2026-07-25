@@ -24,13 +24,19 @@ def generate_query(question: str, prolog_code: str) -> str:
       input-collection primitives used INSIDE the knowledge base's own rules,
       not queryable facts - calling them directly passes a bare Prolog atom
       where a natural-language question string is expected, which breaks the
-      dialogue. Always call a real diagnostic/domain predicate instead (e.g.
+      dialogue. 
+      Call a public domain predicate that represents the user's intent.
+      Do not call internal input-collection or implementation-helper predicates.
+      
+- Variables must start with uppercase letters.
+
+- Do not use natural language words as variables.
+
+Always call a real diagnostic/domain predicate instead (e.g.
       diagnose/1, diabetes/0, prediabetes/0, low_risk/0, or a specific
       criterion predicate) and let that predicate call ask_* internally.
 
-    - Variables must start with uppercase letters.
 
-    - Do not use natural language words as variables.
 
     QUERY SELECTION:
 
