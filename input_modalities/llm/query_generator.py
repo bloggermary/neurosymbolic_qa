@@ -16,7 +16,11 @@ def generate_query(question: str, prolog_code: str) -> str:
 
     - The query must be valid SWI-Prolog.
 
-    - Use only predicates existing in the knowledge base.
+    - Use only predicates existing in the knowledge base below - never
+      invent a predicate name, and never assume a name or structure
+      from a different domain or a different knowledge base. Ground
+      every choice in exactly what this specific knowledge base
+      actually defines.
 
     - NEVER call ask_boolean, ask_numeric, ask_string, ask_category, ask_range,
       ask_duration, ask_multiple_category, ask_multi_structured_input,
@@ -24,97 +28,80 @@ def generate_query(question: str, prolog_code: str) -> str:
       input-collection primitives used INSIDE the knowledge base's own rules,
       not queryable facts - calling them directly passes a bare Prolog atom
       where a natural-language question string is expected, which breaks the
-      dialogue. 
-      Call a public domain predicate that represents the user's intent.
-      Do not call internal input-collection or implementation-helper predicates.
-      
-- Variables must start with uppercase letters.
+      dialogue. Always call a real diagnostic/domain predicate instead and
+      let that predicate call ask_* internally.
 
-- Do not use natural language words as variables.
+    - Variables must start with uppercase letters.
 
-Always call a real diagnostic/domain predicate instead (e.g.
-      diagnose/1, diabetes/0, prediabetes/0, low_risk/0, or a specific
-      criterion predicate) and let that predicate call ask_* internally.
-
-
+    - Do not use natural language words as variables.
 
     QUERY SELECTION:
 
-    Use diabetes/0 (or the equivalent boolean predicate for this
-    domain, e.g. prediabetes/0, low_risk/0) when the user asks a
-    DIRECT factual yes/no question about the patient's status:
-    - "Is the patient diabetic?"
-    - "Does the patient have diabetes mellitus?"
-    - "Can diabetes be diagnosed using the available criteria?"
-    These want a single true/false-style predicate, not the workflow.
+    Use the knowledge base's direct status predicate (typically a
+    0-argument predicate representing the overall condition or
+    outcome) when the user asks a DIRECT factual yes/no question about
+    the patient's status as a whole, without asking about the process
+    or naming one specific criterion. This wants a single true/false-
+    style predicate, not the full workflow.
 
-    Use diagnose/1 when the user asks about the PROCESS or WORKFLOW
-    itself, rather than a direct yes/no on one specific status:
-    - "What predicate/workflow should be used to determine diabetes?"
-    - "Should the patient be evaluated for diabetes?"
-    - "How should diabetes classification be performed?"
-    - questions explicitly mentioning "workflow", "procedure",
-      "which criteria should be evaluated", "screening"
-    diagnose/1 returns whichever of diabetes/prediabetes/low_risk
-    applies, so use it when the question doesn't commit to one of
-    those outcomes in advance.
+    Use the knowledge base's main interactive workflow predicate
+    (typically its single argument is a free variable capturing the
+    overall result) when the user asks about the PROCESS or WORKFLOW
+    itself, rather than a direct yes/no on one specific status - for
+    instance, questions asking what should be evaluated, how a
+    determination should be made, or which procedure/screening applies,
+    or that otherwise don't commit in advance to one specific outcome.
 
-    Use a specific criterion predicate (e.g.
-    diabetes_positive_by_fasting_glucose) when the user asks whether
-    ONE particular measurement or criterion is diagnostic, especially
-    when the question already states a concrete value for it.
+    Use a specific criterion predicate (however the knowledge base
+    names the predicate for one particular measurement or rule) when
+    the user asks whether ONE particular measurement or criterion is
+    diagnostic on its own, especially when the question already states
+    a concrete value for it.
 
     If the question already STATES a specific numeric value for a
-    measurement (e.g. "fasting glucose of 135 mg/dL", "HbA1c is
-    6.9%"), bind that value into the query as its own goal ALONGSIDE
-    the criterion check, instead of only calling the criterion
-    predicate alone - the value is already known, it shouldn't be
-    asked for again:
-        fasting_glucose_mgdl(135), diabetes_positive_by_fasting_glucose
-        hba1c_percent(6.9), diabetes_positive_by_hba1c
-    If no concrete value is stated in the question, just call the
-    criterion or measurement predicate with an unbound variable as
-    usual (e.g. fasting_glucose_mgdl(Value)).
+    measurement, bind that value into the query as its own goal
+    ALONGSIDE the criterion check, instead of only calling the
+    criterion predicate alone - the value is already known, it
+    shouldn't be asked for again. If no concrete value is stated in
+    the question, just call the criterion or measurement predicate
+    with an unbound variable as usual.
 
-    If the user is asking WHICH measurement/lab value is relevant or
+    If the user is asking WHICH measurement or value is relevant or
     should be checked (rather than asking to evaluate a criterion),
-    query the measurement predicate itself, e.g. fasting_glucose_mgdl(Value)
-    or hba1c_percent(Value) - not a diagnostic criterion predicate and
-    not diagnose/1.
+    query the measurement predicate itself - not a diagnostic criterion
+    predicate and not the main workflow predicate.
 
-    If the user asks about specific symptoms (thirst, urination,
-    fatigue, blurred vision, etc.), call the matching symptom
-    predicate(s) directly (e.g. excessive_thirst, or
-    excessive_thirst, excessive_urination for a question naming both)
-    rather than diagnose/1 - symptom questions aren't asking for an
-    overall diagnosis.
+    If the user asks about one or more specific symptoms or findings
+    the knowledge base represents as their own individual predicates,
+    call the matching predicate(s) directly (conjoining more than one
+    if the question names more than one) rather than the main workflow
+    predicate - a question about a specific symptom or finding isn't
+    asking for an overall diagnosis.
 
-    If the question is really asking whether ONE SPECIFIC verdict
-    (diabetes / prediabetes / low_risk) would be reached via the
-    general workflow, bind that verdict as diagnose/1's argument
-    instead of leaving it as a free variable:
-        diagnose(diabetes)
-        diagnose(prediabetes)
-    Use a free variable (diagnose(Result)) only when the question
-    doesn't already imply which specific verdict is being asked about.
+    If the question is really asking whether ONE SPECIFIC outcome would
+    be reached via the general workflow, bind that outcome as the
+    workflow predicate's argument instead of leaving it as a free
+    variable. Use a free variable only when the question doesn't
+    already imply which specific outcome is being asked about.
 
-    If the question explicitly names more than one measurement (e.g.
-    both fasting glucose AND HbA1c) as part of a broader diagnostic
-    question, make each named measurement its own explicit goal in the
-    query, conjoined with whichever diagnostic predicate you use -
-    even if that predicate would also check them internally - so the
-    query reflects every specific measurement the user named:
-        fasting_glucose_mgdl(F), hba1c_percent(H), diagnose(Result)
+    If the question explicitly names more than one measurement as part
+    of a broader diagnostic question, make each named measurement its
+    own explicit goal in the query, conjoined with whichever
+    diagnostic predicate you use - even if that predicate would also
+    check them internally - so the query reflects every specific
+    measurement the user named.
 
     NEVER call a predicate that takes 3 or more arguments directly in
     the query, and NEVER pass an anonymous variable (_) or a fresh
     unbound variable as an argument just to satisfy an arity you don't
-    have a real value for. Predicates with several arguments (e.g.
-    something like numeric_evidence(FastingHours, RandomValue, ...))
-    are internal helpers that assume earlier context already bound
-    those arguments - calling them directly from a top-level query with
-    made-up placeholders will crash with an uninstantiated-argument
-    error.
+    have a real value for. Predicates with several arguments are
+    typically internal helpers that assume earlier context already
+    bound those arguments - calling them directly from a top-level
+    query with made-up placeholders will crash with an uninstantiated-
+    argument error. If the question doesn't map cleanly onto a simple 0
+    or 1-argument predicate, fall back to the main workflow predicate
+    with a free variable rather than guessing at a complex predicate's
+    internal calling convention.
 
     Knowledge Base:
 

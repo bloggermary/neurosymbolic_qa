@@ -245,7 +245,35 @@ def query_predicate_scores(results):
 
 
 # =========================================================
-# 3. KB Generation Metrics
+# 3. Full Pipeline Metrics
+# =========================================================
+
+def pipeline_completion_rate(results):
+
+    completed = sum(
+        1
+        for r in results
+        if r.get("outcome") == "completed"
+    )
+
+    return compute_accuracy(
+        completed,
+        len(results)
+    )
+
+
+
+def pipeline_turn_distribution(results):
+
+    return [
+        r.get("turns", 0)
+        for r in results
+    ]
+
+
+
+# =========================================================
+# 4. KB Generation Metrics
 # =========================================================
 
 def kb_generation_success(results):
@@ -268,7 +296,7 @@ def kb_generation_success(results):
 
 
 # =========================================================
-# 4. Follow-up Metrics
+# 5. Follow-up Metrics
 # =========================================================
 
 def average_followups(results):

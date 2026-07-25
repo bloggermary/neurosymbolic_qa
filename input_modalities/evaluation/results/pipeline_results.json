@@ -1,0 +1,1127 @@
+[
+  {
+    "id": "q001",
+    "question": "Is the patient diabetic?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q002",
+    "question": "Does the patient have diabetes mellitus?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q003",
+    "question": "A patient has fasting glucose of 135 mg/dL. Is this diagnostic for diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 5,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q004",
+    "question": "HbA1c is 6.9%. Can diabetes be confirmed?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 4,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q005",
+    "question": "The patient has fasting glucose 128 mg/dL and HbA1c 6.6%. Is diabetes diagnosed even without symptoms?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 5,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q006",
+    "question": "Is a random glucose of 210 mg/dL sufficient for diagnosis?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q007",
+    "question": "Does a 2-hour OGTT result of 200 mg/dL indicate diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q008",
+    "question": "Patient has elevated HbA1c but normal fasting glucose. Can diabetes still be diagnosed?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 4,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q009",
+    "question": "Is fasting glucose 90 mg/dL diabetic?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 2,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q010",
+    "question": "Can HbA1c alone diagnose diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q011",
+    "question": "Does the patient have excessive thirst?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 7,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q012",
+    "question": "Is frequent urination present?",
+    "snippet": "diabetes",
+    "outcome": "error",
+    "turns": 0,
+    "error": "janus:py_call/4: Unknown procedure: excessive_urination/0",
+    "success": false
+  },
+  {
+    "id": "q013",
+    "question": "Patient reports fatigue and blurred vision. Are these diabetes symptoms?",
+    "snippet": "diabetes",
+    "outcome": "error",
+    "turns": 0,
+    "error": "'<meta-call>'/1: Unknown procedure: fatigue/0",
+    "success": false
+  },
+  {
+    "id": "q014",
+    "question": "Is constant thirst combined with urination indicative of diabetes?",
+    "snippet": "diabetes",
+    "outcome": "error",
+    "turns": 0,
+    "error": "'<meta-call>'/1: Unknown procedure: excessive_thirst/0",
+    "success": false
+  },
+  {
+    "id": "q015",
+    "question": "A patient experiences fatigue, blurred vision, and excessive thirst. What symptoms are relevant?",
+    "snippet": "diabetes",
+    "outcome": "error",
+    "turns": 0,
+    "error": "'<meta-call>'/1: Unknown procedure: excessive_thirst/0",
+    "success": false
+  },
+  {
+    "id": "q016",
+    "question": "Is fasting glucose of 115 mg/dL normal?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 0,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q017",
+    "question": "HbA1c is 6.3%. What does this indicate?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q018",
+    "question": "Random glucose is 180 mg/dL. Is this concerning?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 0,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q019",
+    "question": "Fasting glucose is normal but HbA1c is elevated. How is this interpreted?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q020",
+    "question": "Patient has borderline fasting glucose of 124 mg/dL. Is this prediabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q021",
+    "question": "Is fasting glucose 110 mg/dL prediabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q022",
+    "question": "Does fasting glucose 102 mg/dL require monitoring?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q023",
+    "question": "Can impaired fasting glucose be considered prediabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q024",
+    "question": "Patient has fasting glucose 122 mg/dL but normal HbA1c. Is this diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 5,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q025",
+    "question": "Should lifestyle changes be recommended for fasting glucose 120 mg/dL?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 7,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q026",
+    "question": "The patient reports increased urination and wants to know whether diabetes should be investigated. Which diagnostic workflow should be used?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 7,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q027",
+    "question": "A patient wants to know if they should be evaluated for diabetes.",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 8,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q028",
+    "question": "A patient has possible diabetes symptoms but has not been tested. What diagnostic workflow should be used?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q029",
+    "question": "Should diabetes be evaluated in this patient?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 11,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q030",
+    "question": "The patient has possible diabetes indicators but normal glucose readings. How should diagnosis be approached?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 7,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q031",
+    "question": "What fasting glucose value should be checked when evaluating diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 2,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q032",
+    "question": "What HbA1c value should be measured for diabetes evaluation?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q033",
+    "question": "Can HbA1c be used as a diagnostic measurement for diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q034",
+    "question": "Can fasting glucose after adequate fasting be used to diagnose diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 2,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q035",
+    "question": "Should multiple diabetes measurements be considered during diagnosis?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q036",
+    "question": "Can borderline fasting glucose indicate prediabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q037",
+    "question": "Can fasting glucose values between 100 and 125 mg/dL indicate prediabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q038",
+    "question": "Should prediabetes be considered when fasting glucose is elevated but below diabetes range?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q039",
+    "question": "Can the patient be classified as prediabetic based on fasting glucose criteria?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q040",
+    "question": "Should the patient be evaluated for prediabetes?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q041",
+    "question": "Which diabetes diagnosis predicate should be used?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q042",
+    "question": "Can diabetes diagnosis be confirmed using available criteria?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 4,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q043",
+    "question": "Can HbA1c measurement contribute to diabetes diagnosis?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q044",
+    "question": "Should fasting glucose measurement be used when diagnosing diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 7,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q045",
+    "question": "Can diabetes be diagnosed using the available diagnostic criteria?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 4,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q046",
+    "question": "What predicate determines whether diabetes is present?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q047",
+    "question": "Can diabetes status be determined using the diagnostic workflow?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 6,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q048",
+    "question": "Should diabetes criteria be checked?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q049",
+    "question": "Can diabetes be ruled out if diagnostic criteria are not met?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q050",
+    "question": "What is the final classification after applying diabetes criteria?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q051",
+    "question": "Can the patient be evaluated for diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 3,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q052",
+    "question": "Should diabetes diagnostic criteria be checked?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 3,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q053",
+    "question": "What diagnostic procedure should be used to determine diabetes status?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 8,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q054",
+    "question": "Which diabetes criteria should be evaluated when determining diagnosis?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q055",
+    "question": "Can diabetes status be determined using the available diagnostic rules?",
+    "snippet": "diabetes",
+    "outcome": "error",
+    "turns": 5,
+    "error": "'$c_call_prolog'/0: Arguments are not sufficiently instantiated",
+    "success": false
+  },
+  {
+    "id": "q056",
+    "question": "Is the patient diagnosed with diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q057",
+    "question": "Should diabetes diagnostic tests be performed?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q058",
+    "question": "How can diabetes classification be determined?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q059",
+    "question": "Should diabetes criteria be evaluated even if no symptoms are present?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q060",
+    "question": "Can diabetes risk be evaluated using glucose measurements?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 22,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q061",
+    "question": "What glucose measurement is used for diabetes evaluation?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q062",
+    "question": "Can HbA1c measurement be used for diabetes diagnosis?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q063",
+    "question": "Should diabetes evaluation include glucose measurements?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 8,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q064",
+    "question": "Which laboratory values should be checked when diabetes is suspected?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q065",
+    "question": "How should diabetes classification be performed when test results disagree?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q066",
+    "question": "Can diabetes diagnosis be determined using the KB rules?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 8,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q067",
+    "question": "Are diagnostic criteria required to confirm diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 4,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q068",
+    "question": "Can elevated HbA1c and fasting glucose confirm diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 3,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q069",
+    "question": "Which criteria determine diabetes classification?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 4,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q070",
+    "question": "Can diabetes diagnosis use multiple laboratory criteria?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q071",
+    "question": "Which laboratory value is used to assess diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 8,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q072",
+    "question": "Can diabetes status be determined from diagnostic measurements?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q073",
+    "question": "Should HbA1c be measured when evaluating diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 5,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q074",
+    "question": "Which diagnostic measurements help classify diabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 8,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q075",
+    "question": "Can prediabetes be identified using fasting glucose criteria?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q076",
+    "question": "A patient has normal fasting glucose but elevated HbA1c. Can diabetes still be diagnosed?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 5,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q077",
+    "question": "If laboratory values are borderline, how should diabetes classification be determined?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 7,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q078",
+    "question": "A patient has HbA1c below diabetes threshold and fasting glucose near the prediabetes range. Should prediabetes be considered?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q079",
+    "question": "How should fluctuating glucose measurements be evaluated for diabetes?",
+    "snippet": "diabetes",
+    "outcome": "error",
+    "turns": 5,
+    "error": "'$c_call_prolog'/0: Arguments are not sufficiently instantiated",
+    "success": false
+  },
+  {
+    "id": "q080",
+    "question": "Can an abnormal HbA1c value be used as a diabetes diagnostic criterion?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q081",
+    "question": "Should diabetes screening be performed using diagnostic measurements?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q082",
+    "question": "Can diabetes classification be determined from available diagnostic criteria?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q083",
+    "question": "What screening workflow should be used to determine diabetes status?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 31,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q084",
+    "question": "Can prediabetes be detected using fasting glucose criteria?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q085",
+    "question": "Which predicates determine whether diabetes is present?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 6,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q086",
+    "question": "Which laboratory tests should be checked when diabetes is suspected?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q087",
+    "question": "If laboratory tests are inconsistent, what diagnostic procedure should be used?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q088",
+    "question": "Can diabetes classification rely on diagnostic measurements?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q089",
+    "question": "Are laboratory criteria required for diabetes diagnosis?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q090",
+    "question": "How should follow-up diagnosis be structured when measurements are unavailable?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 8,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q091",
+    "question": "Which measurements are important for evaluating diabetes progression?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 7,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q092",
+    "question": "How can diabetes classification be performed using available evidence?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 3,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q093",
+    "question": "Should HbA1c measurement be considered during diabetes evaluation?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 8,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q094",
+    "question": "Can early glucose abnormalities be classified as prediabetes?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 6,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q095",
+    "question": "How should diabetes diagnosis be evaluated using multiple criteria?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q096",
+    "question": "Does the patient have diabetes according to the knowledge base?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 3,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q097",
+    "question": "Can diabetes be diagnosed using the available criteria?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 4,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q098",
+    "question": "Can changing HbA1c values affect diabetes classification?",
+    "snippet": "diabetes",
+    "outcome": "exceeded_max_turns",
+    "turns": 41,
+    "error": null,
+    "success": false
+  },
+  {
+    "id": "q099",
+    "question": "Can conflicting laboratory evidence require further diabetes evaluation?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 4,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "q100",
+    "question": "In ambiguous cases, how should diabetes classification be decided?",
+    "snippet": "diabetes",
+    "outcome": "completed",
+    "turns": 6,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_elderly_polypharmacy_00",
+    "question": "Does this patient have diabetes?",
+    "snippet": "diabetes_elderly_polypharmacy",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_elderly_polypharmacy_01",
+    "question": "Please run a full diagnostic workup including symptoms, severity, duration, and current medications.",
+    "snippet": "diabetes_elderly_polypharmacy",
+    "outcome": "completed",
+    "turns": 5,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_elderly_polypharmacy_02",
+    "question": "Is the patient at low risk or high risk?",
+    "snippet": "diabetes_elderly_polypharmacy",
+    "outcome": "completed",
+    "turns": 2,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_elderly_polypharmacy_03",
+    "question": "What medications is the patient currently taking?",
+    "snippet": "diabetes_elderly_polypharmacy",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_elderly_polypharmacy_04",
+    "question": "Does the patient report any symptoms?",
+    "snippet": "diabetes_elderly_polypharmacy",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_german_source_00",
+    "question": "Does this patient have diabetes?",
+    "snippet": "diabetes_german_source",
+    "outcome": "completed",
+    "turns": 6,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_german_source_01",
+    "question": "Please run a full diagnostic workup including symptoms, severity, duration, and current medications.",
+    "snippet": "diabetes_german_source",
+    "outcome": "completed",
+    "turns": 6,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_german_source_02",
+    "question": "Is the patient at low risk or high risk?",
+    "snippet": "diabetes_german_source",
+    "outcome": "completed",
+    "turns": 3,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_german_source_03",
+    "question": "What medications is the patient currently taking?",
+    "snippet": "diabetes_german_source",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_german_source_04",
+    "question": "Does the patient report any symptoms?",
+    "snippet": "diabetes_german_source",
+    "outcome": "completed",
+    "turns": 5,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_gestational_00",
+    "question": "Does this patient have diabetes?",
+    "snippet": "diabetes_gestational",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_gestational_01",
+    "question": "Please run a full diagnostic workup including symptoms, severity, duration, and current medications.",
+    "snippet": "diabetes_gestational",
+    "outcome": "completed",
+    "turns": 10,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_gestational_02",
+    "question": "Is the patient at low risk or high risk?",
+    "snippet": "diabetes_gestational",
+    "outcome": "completed",
+    "turns": 7,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_gestational_03",
+    "question": "What medications is the patient currently taking?",
+    "snippet": "diabetes_gestational",
+    "outcome": "completed",
+    "turns": 5,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_gestational_04",
+    "question": "Does the patient report any symptoms?",
+    "snippet": "diabetes_gestational",
+    "outcome": "completed",
+    "turns": 8,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type1_pediatric_00",
+    "question": "Does this patient have diabetes?",
+    "snippet": "diabetes_type1_pediatric",
+    "outcome": "completed",
+    "turns": 3,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type1_pediatric_01",
+    "question": "Please run a full diagnostic workup including symptoms, severity, duration, and current medications.",
+    "snippet": "diabetes_type1_pediatric",
+    "outcome": "completed",
+    "turns": 5,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type1_pediatric_02",
+    "question": "Is the patient at low risk or high risk?",
+    "snippet": "diabetes_type1_pediatric",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type1_pediatric_03",
+    "question": "What medications is the patient currently taking?",
+    "snippet": "diabetes_type1_pediatric",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type1_pediatric_04",
+    "question": "Does the patient report any symptoms?",
+    "snippet": "diabetes_type1_pediatric",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type2_lifestyle_00",
+    "question": "Does this patient have diabetes?",
+    "snippet": "diabetes_type2_lifestyle",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type2_lifestyle_01",
+    "question": "Please run a full diagnostic workup including symptoms, severity, duration, and current medications.",
+    "snippet": "diabetes_type2_lifestyle",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type2_lifestyle_02",
+    "question": "Is the patient at low risk or high risk?",
+    "snippet": "diabetes_type2_lifestyle",
+    "outcome": "completed",
+    "turns": 1,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type2_lifestyle_03",
+    "question": "What medications is the patient currently taking?",
+    "snippet": "diabetes_type2_lifestyle",
+    "outcome": "completed",
+    "turns": 3,
+    "error": null,
+    "success": true
+  },
+  {
+    "id": "diabetes_type2_lifestyle_04",
+    "question": "Does the patient report any symptoms?",
+    "snippet": "diabetes_type2_lifestyle",
+    "outcome": "completed",
+    "turns": 12,
+    "error": null,
+    "success": true
+  }
+]

@@ -27,117 +27,209 @@ ask_multi_structured_input(Question, Mode, Groups, Answer) :-
 ask_multi_attribute_entity(Question, Entity, Fields, Answer) :-
     py_call(prolog_bridge:ask_multi_attribute_entity(Question, Entity, Fields), Answer).
 
-/* Diagnostic criteria predicates (standalone) */
+/* Standalone numeric diagnostic threshold criteria.
+   Each predicate asks what it needs and succeeds only if the threshold is met.
+*/
 
-/* Random plasma glucose criterion: ≥ 200 mg/dL */
 random_glucose_criterion :-
     ask_numeric('What is the random plasma glucose in mg/dL?', Value),
-    ( Value >= 200.0 ).
+    ( Value >= 200.0 -> true ; fail ).
 
-/* Fasting plasma glucose criterion: ≥ 126 mg/dL */
 fasting_glucose_criterion :-
     ask_numeric('What is the fasting plasma glucose in mg/dL?', Value),
-    ( Value >= 126.0 ).
+    ( Value >= 126.0 -> true ; fail ).
 
-/* HbA1c criterion: ≥ 6.5% */
 hba1c_criterion :-
     ask_numeric('What is the HbA1c percentage?', Value),
-    ( Value >= 6.5 ).
+    ( Value >= 6.5 -> true ; fail ).
 
-/* Prediabetes fasting criterion: 100–125 mg/dL (asks minimal required) */
-fasting_prediabetes_criterion :-
-    ask_numeric('What is the fasting plasma glucose in mg/dL?', Value),
-    ( Value >= 100.0, Value < 126.0 ).
+/* Diabetic ketoacidosis (DKA) emergency symptom check.
+   Succeeds if any emergency symptom is present.
+*/
+diabetic_ketoacidosis_suspected :-
+    ask_multiple_category(
+      'Has the child experienced any of the following symptoms: nausea, vomiting, abdominal pain, or rapid breathing?',
+      [nausea, vomiting, abdominal_pain, rapid_breathing],
+      Answer),
+    ( Answer = [] -> fail ; true ).
 
-/* Prediabetes HbA1c criterion: 5.7–6.4% */
-hba1c_prediabetes_criterion :-
-    ask_numeric('What is the HbA1c percentage?', Value),
-    ( Value >= 5.7, Value < 6.5 ).
-
-/* Emergency symptoms that mandate immediate referral (any one is sufficient) */
-emergency_symptoms :-
-    ask_multiple_category('Has the child experienced any of the following emergency symptoms (select all that apply)?', [nausea, vomiting, abdominal_pain, rapid_breathing], Answers),
-    ( Answers = [] -> fail ; true ).
-
-/* When emergency symptoms present, optionally collect key DKA labs (asked only then) */
-dka_lab_values :-
-    emergency_symptoms,
-    ask_numeric('What is the venous blood pH?', PH),
-    ask_numeric('What is the serum bicarbonate in mEq/L?', Bicarbonate),
-    % succeed regardless of values; values are collected for clinician use
-    ( number(PH), number(Bicarbonate) ).
-
-/* Classic symptom triad: polyuria, polydipsia, unexplained weight loss (all three) */
-triad_symptoms :-
-    ask_multiple_category('Which of these classic symptoms does the child have? (select all that apply)', [polyuria, polydipsia, unexplained_weight_loss], Answers),
-    member(polyuria, Answers),
-    member(polydipsia, Answers),
-    member(unexplained_weight_loss, Answers).
-
-/* Rapid onset in days: characteristic if less than 14 days */
-symptom_duration_short :-
-    ask_duration('How many days have the symptoms been present?', Days),
-    ( Days < 14.0 ).
-
-/* Dehydration severity rating 1–10 (optional supplementary detail) */
-dehydration_severity :-
-    ask_range('On a scale of 1 (mild) to 10 (severe shock), how severe is the dehydration?', 1, 10, _Severity).
-
-/* Autoantibody results collection (GAD65, IA-2, ZnT8) */
-autoantibody_results :-
+/* Autoantibody testing status. Asks results for three antibodies and succeeds if any is positive. */
+autoantibodies_positive :-
     Fields = [
-      ['gad65', 'GAD65 antibody result (positive / negative / not_tested)', category],
-      ['ia2', 'IA-2 antibody result (positive / negative / not_tested)', category],
-      ['znt8', 'ZnT8 antibody result (positive / negative / not_tested)', category]
+      [gad65, 'Result for GAD65 antibody (positive/negative/not_tested)?', category],
+      [ia2,   'Result for IA-2 antibody (positive/negative/not_tested)?', category],
+      [znt8,  'Result for ZnT8 antibody (positive/negative/not_tested)?', category]
     ],
-    ask_multi_attribute_entity('Please provide autoantibody test results for GAD65, IA-2, and ZnT8.', autoantibodies, Fields, _Answer).
+    ask_multi_attribute_entity('Please provide antibody test results for the child', antibodies, Fields, Resp),
+    Data = Resp.data,
+    ( Data.gad65 == positive ; Data.ia2 == positive ; Data.znt8 == positive ).
 
-/* Medication status (none / insulin / unknown) */
+/* Classic symptom triad (polyuria, polydipsia, unexplained weight loss).
+   Succeeds only if all three are reported. */
+classic_symptom_triad :-
+    ask_multiple_category(
+      'Which of these classic symptoms does the child have: polyuria, polydipsia, unexplained weight loss?',
+      [polyuria, polydipsia, unexplained_weight_loss],
+      Answer),
+    member(polyuria, Answer),
+    member(polydipsia, Answer),
+    member(unexplained_weight_loss, Answer).
+
+/* Additional boolean symptoms that may be checked individually. */
+nocturnal_bedwetting_present :-
+    ( ask_boolean('Has the child had nocturnal bedwetting despite previous toilet training?') -> true ; fail ).
+
+lethargy_present :-
+    ( ask_boolean('Has the child been unusually lethargic or drowsy?') -> true ; fail ).
+
+/* Severity of dehydration on a 1-10 scale. Standalone asks and succeeds (value not returned). */
+dehydration_severity_reported :-
+    ask_range('On a scale of 1 to 10, how severe is the child''s dehydration (1 = mild, 10 = severe shock)?', 1.0, 10.0, _).
+
+/* Family history and medication status as categorical standalone checks. */
+family_history_status(Status) :-
+    ask_category('Does the child have a family history of type 1 diabetes?', [none, first_degree, second_degree], Status).
+
 medication_status(Status) :-
-    ask_category('What is the child''s current diabetes medication status?', [none, insulin, unknown], Status).
+    ask_category('What is the child''s diabetes medication status?', [none, insulin, unknown], Status).
 
-/* Public diagnostic predicates */
+/* Weight loss amount over preceding month (asked only when helpful). */
+weight_loss_amount_reported :-
+    ask_numeric('How many kilograms of unexplained weight loss have occurred over the preceding month?', _).
 
-/* Diabetes is true if any core glycemic threshold is met */
-diabetes :-
-    random_glucose_criterion
-    ;
-    fasting_glucose_criterion
-    ;
-    hba1c_criterion.
-
-/* Prediabetes based on commonly used ranges (asks minimal required data) */
+/* Prediabetes standalone check (uses commonly accepted thresholds; asked only if invoked). */
 prediabetes :-
-    fasting_prediabetes_criterion
-    ;
-    hba1c_prediabetes_criterion.
+    ( ask_numeric('What is the fasting plasma glucose in mg/dL?', Fasting),
+      Fasting >= 100.0, Fasting < 126.0 -> true
+    ; ask_numeric('What is the HbA1c percentage?', HbA1c),
+      HbA1c >= 5.7, HbA1c < 6.5 -> true
+    ; ask_numeric('What is the random plasma glucose in mg/dL?', Random),
+      Random >= 140.0, Random < 200.0 -> true
+    ).
 
-/* Low risk when neither diabetes nor prediabetes nor emergency features are present */
+/* Low risk: neither diabetes nor prediabetes and no acute/emergency picture.
+   This asks only what's necessary to exclude the others. */
+low_risk :-
+    \+ random_glucose_criterion,
+    \+ fasting_glucose_criterion,
+    \+ hba1c_criterion,
+    \+ diabetic_ketoacidosis_suspected,
+    \+ classic_symptom_triad,
+    \+ prediabetes.
+
+/* Main diagnostic workflow.
+   Returns a janus-safe result (atom or top-level dict built from atoms/numbers/lists/pairs).
+   The dialogue is adaptive: it asks emergency symptoms first, then the simplest numeric thresholds
+   in sequence and stops as soon as a decisive threshold is met. Only when numeric criteria are
+   not diagnostic does it ask for symptom-based supporting information.
+*/
+diagnose(Result) :-
+    /* 1) Emergency check for DKA signs - immediate referral if present. */
+    ask_multiple_category(
+      'Has the child experienced any of the following symptoms: nausea, vomiting, abdominal pain, or rapid breathing?',
+      [nausea, vomiting, abdominal_pain, rapid_breathing],
+      EmergencySymptoms),
+    ( EmergencySymptoms \= [] ->
+        /* Ask DKA grading labs only when emergency symptoms are present. */
+        ask_numeric('If available, what is the child''s venous blood pH?', PH),
+        ask_numeric('If available, what is the child''s serum bicarbonate in mEq/L?', Bicarb),
+        Result = _{verdict: dka_suspected,
+                   immediate_referral: true,
+                   emergency_symptoms: EmergencySymptoms,
+                   venous_pH: PH,
+                   serum_bicarbonate_mEq_per_L: Bicarb}
+    ;
+        /* 2) Sequential numeric diagnostic thresholds (stop when one proves diagnosis). */
+        ( ask_numeric('What is the random plasma glucose in mg/dL?', Random) ,
+          ( Random >= 200.0 ->
+                Result = _{verdict: diabetes, evidence: [random_plasma_glucose]}
+          ;
+                /* Only ask fasting if random not diagnostic. */
+                ask_numeric('What is the fasting plasma glucose in mg/dL?', Fasting),
+                ( Fasting >= 126.0 ->
+                      Result = _{verdict: diabetes, evidence: [fasting_plasma_glucose]}
+                ;
+                      /* Only ask HbA1c if fasting not diagnostic. */
+                      ask_numeric('What is the HbA1c percentage?', HbA1c),
+                      ( HbA1c >= 6.5 ->
+                            Result = _{verdict: diabetes, evidence: [hba1c]}
+                      ;
+                            /* 3) Numeric thresholds not met — gather targeted supporting evidence adaptively. */
+                            /* Check classic triad and duration (rapid onset <2 weeks supports type 1). */
+                            ( ask_multiple_category(
+                                'Which of these classic symptoms does the child have: polyuria, polydipsia, unexplained weight loss?',
+                                [polyuria, polydipsia, unexplained_weight_loss],
+                                TriadAns),
+                              member(polyuria, TriadAns),
+                              member(polydipsia, TriadAns),
+                              member(unexplained_weight_loss, TriadAns) ->
+                                  /* Ask duration in days to assess rapid onset. */
+                                  ask_duration('How many days have these symptoms been present?', Days),
+                                  ( Days < 14.0 ->
+                                        Result = _{verdict: probable_type1, evidence: [classic_triads, rapid_onset]}
+                                  ;
+                                        /* If triad present but not rapid, check autoantibodies as supporting evidence. */
+                                        ( autoantibodies_positive ->
+                                              Result = _{verdict: probable_type1, evidence: [classic_triads, autoantibodies_positive]}
+                                        ;
+                                              /* Ask for weight loss amount as additional supporting data. */
+                                              ask_boolean('Has there been unexplained weight loss noted by caregivers?') ->
+                                                  ask_numeric('How many kilograms of unexplained weight loss have occurred over the preceding month?', WL),
+                                                  ( WL > 0.0 ->
+                                                        Result = _{verdict: possible_type1, evidence: [classic_triads, weight_loss]}
+                                                  ;
+                                                        Result = _{verdict: unclear, evidence: [classic_triads]}
+                                                  )
+                                              ;
+                                                  Result = _{verdict: unclear, evidence: [classic_triads]}
+                                        )
+                                  )
+                              ;
+                                  /* No triad — consider prediabetes, otherwise low risk. */
+                                  ( preding_check(Result) )
+                            )
+                      )
+                )
+          )
+        )
+    ).
+
+/* Helper used only inside diagnose/1 when numeric thresholds and classic triad checks are negative.
+   It determines prediabetes or low risk adaptively and produces a janus-safe Result dict. */
+preding_check(Result) :-
+    /* Ask only what is necessary to evaluate prediabetes: fasting then HbA1c then random. */
+    ( ask_numeric('What is the fasting plasma glucose in mg/dL?', Fasting) ,
+      Fasting >= 100.0, Fasting < 126.0 ->
+          Result = _{verdict: prediabetes, evidence: [fasting_plasma_glucose]}
+    ; ask_numeric('What is the HbA1c percentage?', HbA1c),
+      HbA1c >= 5.7, HbA1c < 6.5 ->
+          Result = _{verdict: prediabetes, evidence: [hba1c]}
+    ; ask_numeric('What is the random plasma glucose in mg/dL?', Random),
+      Random >= 140.0, Random < 200.0 ->
+          Result = _{verdict: prediabetes, evidence: [random_plasma_glucose]}
+    ;
+      /* If none of the above, classify as low risk for diabetes on current information. */
+      Result = _{verdict: low_risk}
+    ).
+
+/* Convenience wrapper predicates for external queries as requested. */
+diabetes :-
+    ( random_glucose_criterion ; fasting_glucose_criterion ; hba1c_criterion ).
+
+prediabetes_check :-
+    predip_helper.
+
+predip_helper :-
+    ( ask_numeric('What is the fasting plasma glucose in mg/dL?', Fasting),
+      Fasting >= 100.0, Fasting < 126.0 -> true
+    ; ask_numeric('What is the HbA1c percentage?', HbA1c),
+      HbA1c >= 5.7, HbA1c < 6.5 -> true
+    ; ask_numeric('What is the random plasma glucose in mg/dL?', Random),
+      Random >= 140.0, Random < 200.0 -> true
+    ; fail ).
+
+/* low_risk/0 public predicate */
 low_risk :-
     \+ diabetes,
-    \+ prediabetes,
-    ask_multiple_category('Has the child experienced any of the following emergency symptoms (select all that apply)?', [nausea, vomiting, abdominal_pain, rapid_breathing], Answers),
-    Answers = [].
-
-/* Main workflow: adaptive questioning and conclusions.
-   Returns a janus-safe top-level dict describing the result. */
-diagnose(Result) :-
-    (  emergency_symptoms ->
-          % Immediate referral required; collect labs for grading if available
-          dka_lab_values,
-          Result = _{verdict: dka_emergency, action: 'Immediate referral required'}
-    ;  random_glucose_criterion ->
-          Result = _{verdict: diabetes, evidence: random_plasma_glucose}
-    ;  fasting_glucose_criterion ->
-          Result = _{verdict: diabetes, evidence: fasting_plasma_glucose}
-    ;  hba1c_criterion ->
-          Result = _{verdict: diabetes, evidence: hba1c}
-    ;  triad_symptoms, symptom_duration_short ->
-          Result = _{verdict: suspected_type1, evidence: symptoms, rapid_onset: true, recommended: 'Obtain confirmatory glycemic testing (fasting/random glucose or HbA1c) and consider autoantibody testing'}
-    ;  triad_symptoms ->
-          Result = _{verdict: suspected_type1, evidence: symptoms, rapid_onset: false, recommended: 'Obtain confirmatory glycemic testing'}
-    ;  prediabetes ->
-          Result = _{verdict: prediabetes}
-    ;  low_risk ->
-          Result = _{verdict: low_risk}
-    ).
+    \+ predip_helper,
+    \+ diabetic_ketoacidosis_suspected.

@@ -1,0 +1,30 @@
+{
+  "total_questions": 125,
+  "completed": 93,
+  "exceeded_max_turns": 26,
+  "failed": 6,
+  "success_rate": 0.744,
+  "modality_coverage": 0.8888888888888888,
+  "overall_success": 0.744,
+  "snippets_tested": [
+    "diabetes",
+    "diabetes_elderly_polypharmacy",
+    "diabetes_german_source",
+    "diabetes_gestational",
+    "diabetes_type1_pediatric",
+    "diabetes_type2_lifestyle"
+  ],
+  "modalities_exercised": [
+    "boolean",
+    "category",
+    "duration",
+    "multi_attribute_entity",
+    "multi_structured_input",
+    "multiple_category",
+    "numeric",
+    "range"
+  ],
+  "modalities_never_exercised": [
+    "string"
+  ]
+}
