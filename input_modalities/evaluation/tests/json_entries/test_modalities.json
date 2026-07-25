@@ -27,18 +27,28 @@
   },
   {
     "id": "m004",
-    "question": "Do you have a family history of diabetes?",
-    "expected_modality": "family_history",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "which_relative", "modality": "categorical" }
+    "question": "Which medications do you take in the morning, afternoon, and evening?",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "sequence",
+    "expected_structure": [
+      "morning",
+      "afternoon",
+      "evening"
     ],
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m005",
-    "question": "How often do you feel fatigued?",
-    "expected_modality": "frequency",
+    "question": "List the symptoms you experienced in the order in which they first appeared.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "sequence",
+    "expected_structure": [
+      "first",
+      "second",
+      "third"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -46,43 +56,63 @@
   {
     "id": "m006",
     "question": "Which symptoms do you experience: thirst, fatigue, blurred vision?",
-    "expected_modality": "multiple_choice",
+    "expected_modality": "multiple_category",
+    "expected_options": [
+      "thirst",
+      "fatigue",
+      "blurred_vision"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m007",
-    "question": "Rate your physical activity from 1 to 10",
-    "expected_modality": "scale",
+    "question": "Describe your symptoms at each stage of the illness",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "sequence",
+    "expected_structure": [
+      "initial",
+      "intermediate",
+      "current"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m008",
-    "question": "Are you currently taking insulin?",
-    "expected_modality": "medication",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "dosage", "modality": "numeric" }
+    "question": "Rank your symptoms from the most to the least severe",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "ranking",
+    "expected_structure": [
+      "1.",
+      "2.",
+      "3.",
+      "4."
     ],
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m009",
-    "question": "Describe your medical history",
-    "expected_modality": "medical_history",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "previous_diagnoses", "modality": "categorical" }
+    "question": "Group your allergies.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "grouping",
+    "expected_structure": [
+      "medications",
+      "foods",
+      "environmental"
     ],
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m010",
     "question": "Do you prefer diet control or medication?",
-    "expected_modality": "categorical",
+    "expected_modality": "category",
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -90,7 +120,7 @@
   {
     "id": "m011",
     "question": "Is your blood sugar stable or fluctuating?",
-    "expected_modality": "categorical",
+    "expected_modality": "category",
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -121,8 +151,14 @@
   },
   {
     "id": "m015",
-    "question": "How many times do you exercise per week?",
-    "expected_modality": "frequency",
+    "question": "Group your symptoms by affected body area.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "grouping",
+    "expected_structure": [
+      "head",
+      "digestive_system",
+      "respiratory_system"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -130,39 +166,68 @@
   {
     "id": "m016",
     "question": "Which symptoms apply to you?",
-    "expected_modality": "multiple_choice",
+    "expected_modality": "multiple_category",
+    "expected_options": [
+      "headache",
+      "dizziness",
+      "nausea"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m017",
-    "question": "Rate fatigue severity 1–5",
-    "expected_modality": "scale",
+    "question": "Group your medications by their purpose.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "grouping",
+    "expected_structure": [
+      "diabetes_treatment",
+      "blood_pressure_control",
+      "pain_relief"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m018",
-    "question": "Are you on glucose-lowering medication?",
-    "expected_modality": "medication",
-    "followup_expected": true,
+    "question": "Group the conditions that run in your family.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "grouping",
+    "expected_structure": [
+      "diabetes",
+      "hypertension",
+      "heart_disease"
+    ],
+    "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m019",
-    "question": "Does your family have diabetes?",
-    "expected_modality": "family_history",
-    "followup_expected": true,
+    "question": "Group your medical history.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "grouping",
+    "expected_structure": [
+      "chronic_conditions",
+      "previous_illnesses",
+      "surgeries"
+    ],
+    "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m020",
-    "question": "Describe your diet",
-    "expected_modality": "medical_history",
+    "question": "Group your medical tests.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "grouping",
+    "expected_structure": [
+      "already_completed",
+      "scheduled",
+      "not_yet_discussed"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -201,8 +266,14 @@
   },
   {
     "id": "m025",
-    "question": "How often do you feel dizzy?",
-    "expected_modality": "frequency",
+    "question": "Record your blood glucose measurements in chroological order.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "sequence",
+    "expected_structure": [
+      "first_measurement",
+      "second_measurement",
+      "third_measurement"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -219,11 +290,17 @@
   },
   {
     "id": "m027",
-    "question": "How severe is your thirst on a daily basis?",
-    "expected_modality": "scale",
+    "question": "Describe the steps you followed after noticing your first symptoms.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "sequence",
+    "expected_structure": [
+      "first_step",
+      "second_step",
+      "third_step"
+    ],
     "followup_expected": false,
     "expected_followups": [],
-    "must_not_contain_followups": ["insulin"]
+    "must_not_contain_followups": []
   },
   {
     "id": "m028",
@@ -237,18 +314,29 @@
   },
   {
     "id": "m029",
-    "question": "What medications are you currently taking?",
-    "expected_modality": "medical_history",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "medication_name", "modality": "categorical" }
+    "question": "Rank your daily activities according to how difficult they are when you experience your symptoms.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "ranking",
+    "expected_structure": [
+      "1.",
+      "2.",
+      "3."
     ],
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m030",
-    "question": "How often do you experience blurred vision after meals?",
-    "expected_modality": "frequency",
+    "question": "Rank the complications you are most concerned about.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "ranking",
+    "expected_structure": [
+      "1.",
+      "2.",
+      "3.",
+      "4."
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -272,28 +360,41 @@
   },
   {
     "id": "m033",
-    "question": "Describe your daily physical activity pattern",
-    "expected_modality": "medical_history",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "activity_type", "modality": "categorical" }
+    "question": "Rank your treatment goals from most important to least important.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "ranking",
+    "expected_structure": [
+      "1.",
+      "2.",
+      "3."
     ],
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m034",
-    "question": "Do you have a family history of metabolic disorders?",
-    "expected_modality": "family_history",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "which_condition", "modality": "categorical" }
+    "question": "Rank the the factors that make it difficult for you to follow your treatment plan.",
+    "expected_modality": "multi_structured_input",
+    "expected_mode": "ranking",
+    "expected_structure": [
+      "1.",
+      "2."
     ],
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m035",
-    "question": "Rate your stress level from 1 to 10",
-    "expected_modality": "scale",
+    "question": "Please provide the name, dosage, and frequency of your current medication.",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "medication",
+    "expected_fields": [
+      "name",
+      "dosage",
+      "frequency"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -318,7 +419,7 @@
   {
     "id": "m038",
     "question": "Which type of diet do you follow?",
-    "expected_modality": "categorical",
+    "expected_modality": "category",
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -352,26 +453,43 @@
   },
   {
     "id": "m042",
-    "question": "Do you take insulin injections daily?",
-    "expected_modality": "medication",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "insulin_dosage", "modality": "numeric" }
+    "question": "Please provide the name, severity, and duration of your symptom.",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "symptom",
+    "expected_fields": [
+      "name",
+      "severity",
+      "duration"
     ],
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m043",
-    "question": "Have you ever been diagnosed with diabetes?",
-    "expected_modality": "medical_history",
+    "question": "Please provide the name, result and date of the laboratory test.",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "laboratory_test",
+    "expected_fields": [
+      "name",
+      "result",
+      "string"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m044",
-    "question": "How frequently do you eat high-carb meals?",
-    "expected_modality": "frequency",
+    "question": "Please describe your allergy",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "allergy",
+    "expected_fields": [
+      "name_of_the_allergen",
+      "reaction",
+      "severity",
+      "first_occurence"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -395,35 +513,56 @@
   },
   {
     "id": "m047",
-    "question": "Do you follow any medical treatment currently?",
-    "expected_modality": "medical_history",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "treatment_type", "modality": "categorical" }
+    "question": "Describe your implanted device",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "implanted_device",
+    "expected_fields": [
+      "name_of_the_device",
+      "name_of_manufacturer",
+      "implant_year"
     ],
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m048",
-    "question": "How often do you feel weak or tired?",
-    "expected_modality": "frequency",
+    "question": "Please provide the name, type, and date of your previous surgery.",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "surgery",
+    "expected_fields": [
+      "name",
+      "type",
+      "date"
+    ],
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m049",
-    "question": "Do you have relatives with chronic diseases?",
-    "expected_modality": "family_history",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "disease_type", "modality": "categorical" }
+    "question": "Please provide the relationship, medical condition, and current status of a family member with a relevant medical history.",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "family_history",
+    "expected_fields": [
+      "relationship",
+      "medical_condition",
+      "current_status"
     ],
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m050",
-    "question": "Rate your daily energy level",
-    "expected_modality": "scale",
+    "question": "Please provide the name of the previous illness, when you had it, and whether you have recovered.",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "medical_history",
+    "expected_fields": [
+      "illness",
+      "date",
+      "recovered"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -468,7 +607,7 @@
     "expected_modality": "medication",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "medication_name", "modality": "categorical" }
+      { "question": "medication_name", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -486,7 +625,7 @@
     "expected_modality": "family_history",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "which_condition", "modality": "categorical" }
+      { "question": "which_condition", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -503,7 +642,7 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "diet_type", "modality": "categorical" }
+      { "question": "diet_type", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -527,17 +666,33 @@
   },
   {
     "id": "m062",
-    "question": "What is your current insulin dosage if applicable?",
-    "expected_modality": "medication",
+    "question": "Which chronic conditions have you been diagnosed with?",
+    "expected_modality": "multiple_category",
+    "expected_options": [
+      "diabetes",
+      "hypertension",
+      "asthma",
+      "heart_disease",
+      "kidney_disease"
+    ],
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m063",
-    "question": "How frequently do you monitor your blood sugar levels?",
-    "expected_modality": "frequency",
+    "question": "Which medications are you currently taking?",
+    "expected_modality": "multiple_category",
+    "expected_options": [
+      "insulin",
+      "metformin",
+      "blood_pressure_medication",
+      "cholesterol_medication",
+      "pain_medication"
+    ],
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m064",
@@ -556,20 +711,34 @@
 
   {
     "id": "m066",
-    "question": "Do you have a history of high blood sugar in your family?",
-    "expected_modality": "family_history",
+    "question": "Which types of allergies do you have?",
+    "expected_modality": "multiple_category",
+    "expected_options": [
+      "medication",
+      "food",
+      "pollen",
+      "dust"
+    ],
     "followup_expected": true,
     "expected_followups": [
-      { "question": "affected_member", "modality": "categorical" }
+      { "question": "Which medication are you allergic to?", "modality": "string" }
     ],
     "must_not_contain_followups": []
   },
   {
     "id": "m067",
-    "question": "Rate your daily stress level from 1 to 5",
-    "expected_modality": "scale",
+    "question": "Which of the following tests have you had in the past?",
+    "expected_modality": "multiple_category",
+    "expected_options": [
+      "blood_test",
+      "urine_test",
+      "x_ray",
+      "ct_scan",
+      "mri"
+    ],
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m068",
@@ -599,7 +768,7 @@
   {
     "id": "m071",
     "question": "What type of diet do you usually follow?",
-    "expected_modality": "categorical",
+    "expected_modality": "category",
     "followup_expected": false,
     "expected_followups": []
   },
@@ -612,8 +781,15 @@
   },
   {
     "id": "m073",
-    "question": "How often do you eat high carbohydrate meals per week?",
-    "expected_modality": "frequency",
+    "question": "Which of the following risk factos for diabetes apply to you?",
+    "expected_modality": "multiple_category",
+    "expected_options": [
+      "family_history",
+      "obesity",
+      "physical_inactivity",
+      "high_blood_pressure",
+      "high_cholesterol"
+    ],
     "followup_expected": false,
     "expected_followups": []
   },
@@ -671,7 +847,7 @@
     "expected_modality": "medication",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "medication_type", "modality": "categorical" }
+      { "question": "medication_type", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -689,7 +865,7 @@
     "expected_modality": "family_history",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "which_disease", "modality": "categorical" }
+      { "question": "which_disease", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -706,7 +882,7 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "diet_type", "modality": "categorical" }
+      { "question": "diet_type", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -770,7 +946,7 @@
   {
     "id": "m092",
     "question": "What is your typical diet composition?",
-    "expected_modality": "categorical",
+    "expected_modality": "category",
     "followup_expected": false,
     "expected_followups": []
   },
@@ -794,7 +970,7 @@
     "expected_modality": "family_history",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "which_disorder", "modality": "categorical" }
+      { "question": "which_disorder", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
