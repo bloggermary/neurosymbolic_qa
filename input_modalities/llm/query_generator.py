@@ -114,11 +114,7 @@ Always call a real diagnostic/domain predicate instead (e.g.
     are internal helpers that assume earlier context already bound
     those arguments - calling them directly from a top-level query with
     made-up placeholders will crash with an uninstantiated-argument
-    error. If the question doesn't map cleanly onto a simple 0 or
-    1-argument predicate (diagnose/1, diabetes/0, a criterion predicate,
-    or a single measurement predicate), fall back to diagnose(Result)
-    with a free variable rather than guessing at a complex predicate's
-    internal calling convention.
+    error.
 
     Knowledge Base:
 
