@@ -8,7 +8,7 @@ class MultiAttributeEntityHandler:
         self,
         question: str,
         entity: str,
-        fields: list[str]
+        fields: list[list[str]]
     ) -> dict:
 
         return {
