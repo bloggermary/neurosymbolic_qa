@@ -198,11 +198,12 @@ def ask_multiple_category(question: str, categories):
 
 
 
-def ask_multi_structured_input(question: str, mode: str, groups=None):
+def ask_multi_structured_input(question: str, mode: str, structure: list[str]):
     """
     Collect ordered (mode="sequence"), ranked (mode="ranking"), or
-    grouped (mode="grouping", using `groups` as the group labels)
-    multi-item input. Returns a Prolog list (sequence/ranking) or a
+    grouped (mode="grouping") multi-item input, using `structure` to 
+    define the predefined labels, positions, or groups.
+    Returns a Prolog list (sequence/ranking) or a
     top-level dict keyed by group name (grouping).
     """
 
@@ -210,7 +211,7 @@ def ask_multi_structured_input(question: str, mode: str, groups=None):
     if cached is not NO_ANSWER:
         return cached
 
-    options = {"mode": mode, "groups": groups or []}
+    options = {"mode": mode, "structure": structure}
 
     interaction.request(
         question=question,
@@ -226,7 +227,7 @@ def ask_multi_structured_input(question: str, mode: str, groups=None):
 
 
 
-def ask_multi_attribute_entity(question: str, entity: str, fields):
+def ask_multi_attribute_entity(question: str, entity: str, fields: list[list[str]]):
     """
     Collect one structured record with several typed fields in a
     single turn (e.g. a medication's name/dose/frequency), instead of
