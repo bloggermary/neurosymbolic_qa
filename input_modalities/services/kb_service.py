@@ -41,7 +41,7 @@ class KnowledgeBaseService:
     def __init__(
         self,
         snippets_directory: str = "data/snippets",
-        generated_directory: str = "prolog/generated_kbs",
+        generated_directory: str = "prolog/generated_kb",
     ) -> None:
 
         self.snippets_directory = Path(
