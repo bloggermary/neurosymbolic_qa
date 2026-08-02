@@ -19,23 +19,19 @@ def main():
 
     run_query()
 
-    print("\n[3] Full pipeline")
-
-    run_pipeline()
-
-    print("\n[4] Follow-up evaluation")
+    print("\n[3] Follow-up evaluation")
 
     run_followups()
 
-    print("\n[5] KB generation")
+    print("\n[4] KB generation")
 
     run_kb_generation()
 
-    print("\n[6] Diagnostic accuracy")
+    print("\n[5] Diagnostic accuracy")
 
     run_diagnostic_accuracy()
 
-    print("\n[7] Generating plots")
+    print("\n[6] Generating plots")
 
     plots.plot_modality_accuracy()
     plots.plot_modality_distribution()
@@ -44,9 +40,6 @@ def main():
     plots.plot_query_accuracy()
     plots.plot_query_recall()
     plots.plot_query_complexity()
-
-    plots.plot_pipeline_success()
-    plots.plot_pipeline_turns()
 
     plots.plot_kb_generation()
 
