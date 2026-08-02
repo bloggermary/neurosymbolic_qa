@@ -185,38 +185,43 @@ class MedicalPipeline:
 
 
 
-        print(f"Building knowledge base for '{snippet_name}'...")
-
-
-        snippet_path = self.SNIPPETS_DIR / f"{snippet_name}.txt"
-
-        with open(
-            snippet_path,
-            encoding="utf-8"
-        ) as file:
-
-            medical_text = file.read()
-
-
-
-        kb_code = generate_prolog_kb(
-            medical_text
-        )
-
-
-
         kb_path = self.kb_path_for(snippet_name)
 
-        kb_path.parent.mkdir(
-            parents=True,
-            exist_ok=True
-        )
+        if kb_path.exists():
+
+            print(f"Reusing existing knowledge base for '{snippet_name}'...")
+
+        else:
+
+            print(f"Building knowledge base for '{snippet_name}'...")
 
 
-        kb_path.write_text(
-            kb_code,
-            encoding="utf-8"
-        )
+            snippet_path = self.SNIPPETS_DIR / f"{snippet_name}.txt"
+
+            with open(
+                snippet_path,
+                encoding="utf-8"
+            ) as file:
+
+                medical_text = file.read()
+
+
+
+            kb_code = generate_prolog_kb(
+                medical_text
+            )
+
+
+            kb_path.parent.mkdir(
+                parents=True,
+                exist_ok=True
+            )
+
+
+            kb_path.write_text(
+                kb_code,
+                encoding="utf-8"
+            )
 
 
 

@@ -1,0 +1,1233 @@
+[
+  {
+    "id": "diabetes_by_random_glucose_250",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 250.0
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_random_glucose_exact_200",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 200.0
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_fasting_hours_10_fasting_130",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 180.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 10.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 130.0
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_fasting_hours_boundary_8_fasting_126",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 150.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 8.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 126.0
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_ogtt_210_after_hours_7",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 170.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 7.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 210.0
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_ogtt_exact_200_after_hours_9_fasting_125",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 160.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 9.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 125.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 200.0
+      }
+    ],
+    "max_followups": 4,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_hba1c_exact_6_5_after_non_diagnostic_ogtt",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 140.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 4.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 150.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 6.5
+      }
+    ],
+    "max_followups": 4,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_by_hba1c_high_7_2",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 185.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 0.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 190.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 7.2
+      }
+    ],
+    "max_followups": 4,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "prediabetes_fasting_110_hours_6",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 155.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 6.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 110.0
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "prediabetes"
+  },
+  {
+    "id": "prediabetes_fasting_125_hours_10",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 140.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 10.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 125.0
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "prediabetes"
+  },
+  {
+    "id": "prediabetes_fasting_100_hours_3",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 130.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 3.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 100.0
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "prediabetes"
+  },
+  {
+    "id": "no_definitive_laboratory_diagnosis_symptoms_strong_with_medication_1",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 120.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 5.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 140.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.8
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "excessive_thirst",
+          "excessive_urination"
+        ]
+      },
+      {
+        "key": "how_would_you_describe_the_thirst_severity",
+        "question": "How would you describe the thirst severity?",
+        "modality": "category",
+        "answer": "moderate"
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 5.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "how_many_diabetes_medications_would_you_like_to_record",
+        "question": "How many diabetes medications would you like to record?",
+        "modality": "numeric",
+        "answer": 1.0
+      },
+      {
+        "key": "please_enter_medication_details",
+        "question": "Please enter medication details",
+        "modality": "multi_attribute_entity",
+        "answer": {
+          "name": "Metformin",
+          "dose_mg": 500.0,
+          "times_per_day": 2.0
+        }
+      }
+    ],
+    "max_followups": 10,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "no_definitive_laboratory_diagnosis_partial_thirst_and_fatigue_no_med",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 130.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 2.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 160.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.9
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "excessive_thirst",
+          "fatigue"
+        ]
+      },
+      {
+        "key": "on_a_scale_of_1_to_10_what_is_the_fatigue_severity",
+        "question": "On a scale of 1 to 10, what is the fatigue severity?",
+        "modality": "range",
+        "answer": 5.0
+      },
+      {
+        "key": "how_would_you_describe_the_thirst_severity",
+        "question": "How would you describe the thirst severity?",
+        "modality": "category",
+        "answer": "mild"
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 15.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "no"
+      }
+    ],
+    "max_followups": 9,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "no_definitive_laboratory_diagnosis_minimal_support_non_core_symptom_longterm",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 110.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 1.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 120.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.4
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "unexplained_weight_loss"
+        ]
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 45.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "no"
+      }
+    ],
+    "max_followups": 7,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "no_definitive_evidence_no_symptoms_no_labs",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 110.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 2.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 120.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.2
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": []
+      }
+    ],
+    "max_followups": 5,
+    "correct_answer": "no_definitive_evidence"
+  },
+  {
+    "id": "diabetes_random_just_above_200_200_1",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 200.1
+      }
+    ],
+    "max_followups": 1,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_fasting_hours_12_fasting_126",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 170.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 12.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 126.0
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "diabetes_hba1c_with_hours_below_8_and_ogtt_below",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 190.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 7.9
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 199.9
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 6.6
+      }
+    ],
+    "max_followups": 4,
+    "correct_answer": "diabetes"
+  },
+  {
+    "id": "below_prediabetes_99_9_no_symptoms",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 140.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 10.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 99.9
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 130.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.3
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": []
+      }
+    ],
+    "max_followups": 6,
+    "correct_answer": "no_definitive_evidence"
+  },
+  {
+    "id": "borderline_fasting_125_9_with_partial_symptom_urination",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 148.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 11.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 125.9
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 150.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.6
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "excessive_urination"
+        ]
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 12.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "no"
+      }
+    ],
+    "max_followups": 8,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "symptom_support_fatigue_only_severity_1",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 130.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 2.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 120.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.1
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "fatigue"
+        ]
+      },
+      {
+        "key": "on_a_scale_of_1_to_10_what_is_the_fatigue_severity",
+        "question": "On a scale of 1 to 10, what is the fatigue severity?",
+        "modality": "range",
+        "answer": 1.0
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 20.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "no"
+      }
+    ],
+    "max_followups": 8,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "symptom_support_strong_longterm_med_yes_1",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 135.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 0.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 130.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.7
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "excessive_thirst",
+          "excessive_urination",
+          "blurred_vision"
+        ]
+      },
+      {
+        "key": "how_would_you_describe_the_thirst_severity",
+        "question": "How would you describe the thirst severity?",
+        "modality": "category",
+        "answer": "severe"
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 60.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "how_many_diabetes_medications_would_you_like_to_record",
+        "question": "How many diabetes medications would you like to record?",
+        "modality": "numeric",
+        "answer": 1.0
+      },
+      {
+        "key": "please_enter_medication_details",
+        "question": "Please enter medication details",
+        "modality": "multi_attribute_entity",
+        "answer": {
+          "name": "Insulin",
+          "dose_mg": 10.0,
+          "times_per_day": 1.0
+        }
+      }
+    ],
+    "max_followups": 10,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "symptom_support_thirst_only_recent_severe_no_med",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 145.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 4.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 135.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.8
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "excessive_thirst"
+        ]
+      },
+      {
+        "key": "how_would_you_describe_the_thirst_severity",
+        "question": "How would you describe the thirst severity?",
+        "modality": "category",
+        "answer": "severe"
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 3.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "no"
+      }
+    ],
+    "max_followups": 8,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "medications_yes_but_zero_count",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 140.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 6.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 125.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.5
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "fatigue",
+          "blurred_vision"
+        ]
+      },
+      {
+        "key": "on_a_scale_of_1_to_10_what_is_the_fatigue_severity",
+        "question": "On a scale of 1 to 10, what is the fatigue severity?",
+        "modality": "range",
+        "answer": 4.0
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 8.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "yes"
+      },
+      {
+        "key": "how_many_diabetes_medications_would_you_like_to_record",
+        "question": "How many diabetes medications would you like to record?",
+        "modality": "numeric",
+        "answer": 0.0
+      }
+    ],
+    "max_followups": 9,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "prediabetes_fasting_125_with_hours_12",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 150.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 12.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 125.0
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "prediabetes"
+  },
+  {
+    "id": "symptoms_non_core_blurred_and_tingling_minimal_support",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 135.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 2.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 140.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.6
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "blurred_vision",
+          "tingling_numbness"
+        ]
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 31.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "no"
+      }
+    ],
+    "max_followups": 7,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "symptom_urination_only_partial_with_fatigue_severe",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 142.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 3.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 138.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.9
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "excessive_urination",
+          "fatigue"
+        ]
+      },
+      {
+        "key": "on_a_scale_of_1_to_10_what_is_the_fatigue_severity",
+        "question": "On a scale of 1 to 10, what is the fatigue severity?",
+        "modality": "range",
+        "answer": 9.0
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 9.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "no"
+      }
+    ],
+    "max_followups": 8,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "ogtt_just_below_200_then_no_definitive_evidence",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 120.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 2.0
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 199.99
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 5.4
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": []
+      }
+    ],
+    "max_followups": 5,
+    "correct_answer": "no_definitive_evidence"
+  },
+  {
+    "id": "fasting_just_below_diabetes_125_9_then_predicate_to_symptoms_partial",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 145.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 9.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 125.9
+      },
+      {
+        "key": "what_is_the_2_hour_plasma_glucose_during_the_oral_glucose_tolerance_test_mg_dl",
+        "question": "What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?",
+        "modality": "numeric",
+        "answer": 170.0
+      },
+      {
+        "key": "what_is_the_hba1c_percent",
+        "question": "What is the HbA1c percent (%)?",
+        "modality": "numeric",
+        "answer": 6.0
+      },
+      {
+        "key": "please_select_the_symptoms_that_currently_apply_select_all_that_apply_excessive_thirst_excessive_urination_fatigue_and_blurred_vision_are_core_options",
+        "question": "Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.",
+        "modality": "multiple_category",
+        "answer": [
+          "excessive_urination"
+        ]
+      },
+      {
+        "key": "for_how_many_days_have_these_symptoms_been_present",
+        "question": "For how many days have these symptoms been present?",
+        "modality": "duration",
+        "answer": 2.0
+      },
+      {
+        "key": "is_the_patient_currently_taking_any_diabetes_medication",
+        "question": "Is the patient currently taking any diabetes medication?",
+        "modality": "boolean",
+        "answer": "no"
+      }
+    ],
+    "max_followups": 8,
+    "correct_answer": "no_definitive_laboratory_diagnosis"
+  },
+  {
+    "id": "prediabetes_at_lower_boundary_100_after_non_diagnostic_prior_checks",
+    "question": "What is the patient's diabetes diagnostic classification based on the available evidence?",
+    "source_file": "data/snippets/diabetes.txt",
+    "expected_followups": [
+      {
+        "key": "what_is_the_random_plasma_glucose_in_mg_dl",
+        "question": "What is the random plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 139.0
+      },
+      {
+        "key": "how_many_hours_fasting_before_the_plasma_glucose_sample",
+        "question": "How many hours fasting before the plasma glucose sample?",
+        "modality": "numeric",
+        "answer": 11.0
+      },
+      {
+        "key": "what_is_the_fasting_plasma_glucose_in_mg_dl",
+        "question": "What is the fasting plasma glucose in mg/dL?",
+        "modality": "numeric",
+        "answer": 100.0
+      }
+    ],
+    "max_followups": 3,
+    "correct_answer": "prediabetes"
+  }
+]

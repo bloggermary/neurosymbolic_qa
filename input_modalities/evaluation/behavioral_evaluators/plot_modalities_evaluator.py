@@ -1,4 +1,4 @@
-"""Create presentation-ready diagrams from modalities_evaluator_mariam.py output."""
+"""Create presentation-ready diagrams from modalities_evaluator.py output."""
 
 from __future__ import annotations
 
@@ -9,9 +9,9 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 
-BASE_DIR = Path(__file__).resolve().parent.parent
-RESULTS_DIR = BASE_DIR / "evaluation" / "results"
-PLOT_DIR = RESULTS_DIR / "plots" / "modalities"
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+RESULTS_DIR = BASE_DIR / "evaluation" / "behavioral_evaluators" / "results"
+PLOT_DIR = RESULTS_DIR / "plots"
 RESULTS_PATH = RESULTS_DIR / "modalities_evaluation_results.json"
 SUMMARY_PATH = RESULTS_DIR / "modalities_evaluation_summary.json"
 
@@ -193,9 +193,37 @@ def plot_followup_modality_confusion(results: list[dict]) -> None:
 
 
 def main() -> None:
+    import argparse
+
+    parser = argparse.ArgumentParser(
+        description="Plot modalities_evaluator.py output for one source file's run."
+    )
+    parser.add_argument(
+        "--tag",
+        default="",
+        help=(
+            "Suffix matching the one used when running modalities_evaluator.py "
+            "for a non-default source file, e.g. '_diabetes_german_source'. "
+            "Leave empty for the default diabetes.txt run."
+        ),
+    )
+    args = parser.parse_args()
+
+    global PLOT_DIR, RESULTS_PATH, SUMMARY_PATH
+
+    tag = args.tag
+    if tag and not tag.startswith("_"):
+        tag = "_" + tag
+
+    RESULTS_PATH = RESULTS_DIR / f"modalities_evaluation_results{tag}.json"
+    SUMMARY_PATH = RESULTS_DIR / f"modalities_evaluation_summary{tag}.json"
+    PLOT_DIR = RESULTS_DIR / "plots" if not tag else (
+        RESULTS_DIR / "plots" / tag.lstrip("_")
+    )
+
     if not RESULTS_PATH.exists() or not SUMMARY_PATH.exists():
         raise FileNotFoundError(
-            "Run modalities_evaluator_mariam.py first. Expected files:\n"
+            "Run modalities_evaluator.py first. Expected files:\n"
             f"- {RESULTS_PATH}\n- {SUMMARY_PATH}"
         )
 

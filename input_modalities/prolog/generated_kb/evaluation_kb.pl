@@ -21,117 +21,119 @@ ask_duration(Question, Value) :-
 ask_multiple_category(Question, Categories, Answer) :-
     py_call(prolog_bridge:ask_multiple_category(Question, Categories), Answer).
 
-ask_multi_structured_input(Question, Mode, Groups, Answer) :-
-    py_call(prolog_bridge:ask_multi_structured_input(Question, Mode, Groups), Answer).
+ask_multi_structured_input(Question, Mode, Structure, Answer) :-
+    py_call(prolog_bridge:ask_multi_structured_input(Question, Mode, Structure), Answer).
 
 ask_multi_attribute_entity(Question, Entity, Fields, Answer) :-
     py_call(prolog_bridge:ask_multi_attribute_entity(Question, Entity, Fields), Answer).
 
-% Criterion: random plasma glucose >= 11.1 mmol/L (200 mg/dL)
-random_plasma_glucose_diabetes(Evidence) :-
-    ask_numeric('What is the random plasma glucose in mmol/L?', GlucoseMmol),
-    GlucoseMmol >= 11.1,
-    Evidence = _{criterion: random_plasma_glucose, value_mmol_per_l: GlucoseMmol}.
-
-% Criterion: fasting plasma glucose >= 7.0 mmol/L (126 mg/dL) after 8-12 hours fasting
-fasting_plasma_glucose_diabetes(Evidence) :-
-    ( ask_boolean('Was the plasma sample obtained after 8 to 12 hours of fasting?')
-      -> Fasting_ok = true
-      ;  Fasting_ok = false
-    ),
-    Fasting_ok == true,
-    ask_category('Which units will you provide for the fasting plasma glucose?', ['mmol_per_l','mg_per_dl'], Unit),
-    ( Unit = mmol_per_l ->
-        ask_numeric('What is the fasting plasma glucose in mmol/L?', ValueMmol),
-        ValueMmol >= 7.0,
-        Evidence = _{criterion: fasting_plasma_glucose, value_mmol_per_l: ValueMmol}
-    ; Unit = mg_per_dl ->
-        ask_numeric('What is the fasting plasma glucose in mg/dL?', ValueMg),
-        ValueMg >= 126,
-        Evidence = _{criterion: fasting_plasma_glucose, value_mg_per_dl: ValueMg}
-    ).
-
-% Criterion: 2-hour plasma glucose during OGTT >= 11.1 mmol/L (200 mg/dL)
-ogtt_2h_diabetes(Evidence) :-
-    ( ask_boolean('Was a 2-hour oral glucose tolerance test (OGTT) performed?')
-      -> Ogtt_done = true
-      ;  Ogtt_done = false
-    ),
-    Ogtt_done == true,
-    ask_numeric('What is the 2-hour plasma glucose during the OGTT in mmol/L?', ValueMmol),
-    ValueMmol >= 11.1,
-    Evidence = _{criterion: ogtt_2h_plasma_glucose, value_mmol_per_l: ValueMmol}.
-
-% Criterion: HbA1c >= 6.5% (48 mmol/mol)
-hba1c_diabetes(Evidence) :-
-    ask_numeric('What is the HbA1c percent value (%)?', HbA1cPercent),
-    HbA1cPercent >= 6.5,
-    Evidence = _{criterion: hba1c, value_percent: HbA1cPercent}.
-
-% Prediabetes: fasting plasma glucose between 100 and 125 mg/dL (requires fasting)
-prediabetes_fasting(Evidence) :-
-    ( ask_boolean('Was the plasma sample obtained after fasting? (Yes if fasting)')
-      -> Fast_ok = true
-      ;  Fast_ok = false
-    ),
-    Fast_ok == true,
-    ask_category('Which units will you provide for the fasting plasma glucose?', ['mmol_per_l','mg_per_dl'], Unit),
-    Unit = mg_per_dl,
-    ask_numeric('What is the fasting plasma glucose in mg/dL?', ValueMg),
-    ValueMg >= 100,
-    ValueMg =< 125,
-    Evidence = _{classification: prediabetes, criterion: fasting_plasma_glucose, value_mg_per_dl: ValueMg}.
-
-% Symptom support assessment (supportive but not diagnostic)
-symptom_support(Evidence) :-
-    ask_multiple_category(
-        'Please select all current symptoms from this list: excessive thirst, excessive urination, fatigue, blurred vision.',
-        ['excessive_thirst','excessive_urination','fatigue','blurred_vision'],
-        Symptoms),
-    Symptoms \= [],
-    ( member(fatigue, Symptoms) ->
-        ask_range('On a scale from 1 to 10, how severe is the fatigue (whole number)?', 1, 10, FatigueScore),
-        ( FatigueScore >= 7 -> FatigueSeverity = severe
-        ; FatigueScore >= 4 -> FatigueSeverity = moderate
-        ; FatigueScore >= 1 -> FatigueSeverity = mild
-        ; FatigueSeverity = none
-        )
-    ; FatigueSeverity = not_reported,
-      FatigueScore = false
-    ),
-    ask_duration('For how many days have the symptoms been present?', DurationDays),
-    ( DurationDays < 7 -> DurationCategory = recent
-    ; DurationDays =< 30 -> DurationCategory = persistent
-    ; DurationCategory = long_term
-    ),
-    ( member(excessive_thirst, Symptoms), member(excessive_urination, Symptoms) -> SupportLevel = strong
-    ; SupportLevel = partial
-    ),
-    length(Symptoms, SymptomCount),
-    Evidence = _{
-        evidence_type: symptom_assessment,
-        symptoms: Symptoms,
-        symptom_count: SymptomCount,
-        fatigue_reported: (FatigueScore =\= false),
-        fatigue_severity: FatigueSeverity,
-        duration_days: DurationDays,
-        duration_category: DurationCategory,
-        support_level: SupportLevel
-    }.
-
-% Main entry: diagnose/1 returns a dictionary with verdict and evidence
+/* Diagnostic entry point. Returns a dictionary with a verdict and supporting evidence.
+   Possible verdicts:
+     - diabetes
+     - prediabetes
+     - no_definitive_laboratory_diagnosis  (when symptoms provide support but labs do not)
+     - no_definitive_evidence
+*/
 diagnose(Result) :-
-    ( random_plasma_glucose_diabetes(E1)
-      -> Result = _{verdict: diabetes, evidence: E1}
-    ; fasting_plasma_glucose_diabetes(E2)
-      -> Result = _{verdict: diabetes, evidence: E2}
-    ; ogtt_2h_diabetes(E3)
-      -> Result = _{verdict: diabetes, evidence: E3}
-    ; hba1c_diabetes(E4)
-      -> Result = _{verdict: diabetes, evidence: E4}
-    ; prediabetes_fasting(E5)
-      -> Result = _{verdict: prediabetes, evidence: E5}
-    ; symptom_support(E6)
-      -> Result = _{verdict: symptom_supporting_diabetes, evidence: E6}
-    ; Result = _{verdict: no_diabetes, evidence: _{}}
+    ( criterion_random_glucose(Ev)
+      -> Result = _{verdict: diabetes, evidence: [Ev]}
+    ; criterion_fasting_diabetes(EvF)
+      -> Result = _{verdict: diabetes, evidence: [EvF]}
+    ; criterion_ogtt_2hr(EvO)
+      -> Result = _{verdict: diabetes, evidence: [EvO]}
+    ; criterion_hba1c(EvH)
+      -> Result = _{verdict: diabetes, evidence: [EvH]}
+    ; criterion_prediabetes_fasting(EvP)
+      -> Result = _{verdict: prediabetes, evidence: [EvP]}
+    ; symptom_support(EvS)
+      -> Result = _{verdict: no_definitive_laboratory_diagnosis, symptom_support: EvS}
+    ; Result = _{verdict: no_definitive_evidence, evidence: []}
     ).
+
+/* Criterion: random plasma glucose >= 200 mg/dL */
+criterion_random_glucose(Evidence) :-
+    ask_numeric('What is the random plasma glucose in mg/dL?', Value),
+    Value >= 200.0,
+    Evidence = _{criterion: random_plasma_glucose, value_mg_dl: Value}.
+
+/* Criterion: fasting plasma glucose after 8-12 hours >= 126 mg/dL */
+criterion_fasting_diabetes(Evidence) :-
+    ask_numeric('How many hours fasting before the plasma glucose sample?', HoursRaw),
+    HoursRaw >= 8.0,
+    HoursRaw =< 12.0,
+    ask_numeric('What is the fasting plasma glucose in mg/dL?', FastingValue),
+    FastingValue >= 126.0,
+    Evidence = _{criterion: fasting_plasma_glucose_diabetes, hours_fasted: HoursRaw, value_mg_dl: FastingValue}.
+
+/* Criterion: 2-hour plasma glucose during OGTT >= 200 mg/dL */
+criterion_ogtt_2hr(Evidence) :-
+    ask_numeric('What is the 2-hour plasma glucose during the oral glucose tolerance test (mg/dL)?', OgttValue),
+    OgttValue >= 200.0,
+    Evidence = _{criterion: ogtt_2hr_plasma_glucose, value_mg_dl: OgttValue}.
+
+/* Criterion: HbA1c >= 6.5% */
+criterion_hba1c(Evidence) :-
+    ask_numeric('What is the HbA1c percent (%)?', Hba1cValue),
+    Hba1cValue >= 6.5,
+    Evidence = _{criterion: hba1c, value_percent: Hba1cValue}.
+
+/* Prediabetes: fasting plasma glucose 100-125 mg/dL after any fasting (text implies fasting context) */
+criterion_prediabetes_fasting(Evidence) :-
+    ask_numeric('How many hours fasting before the plasma glucose sample?', HoursFRaw),
+    % Accept any fasting duration; the diagnostic note for diabetes requires 8-12 hours,
+    % but prediabetes range is defined for fasting plasma glucose in mg/dL.
+    ask_numeric('What is the fasting plasma glucose in mg/dL?', FastingValP),
+    FastingValP >= 100.0,
+    FastingValP =< 125.0,
+    Evidence = _{criterion: prediabetes_fasting_plasma_glucose, hours_fasted: HoursFRaw, value_mg_dl: FastingValP}.
+
+/* Symptom-based support when laboratory criteria are not decisive.
+   Asks only if needed. Returns a dictionary describing symptom presence and support strength.
+*/
+symptom_support(Evidence) :-
+    SymptomsOptions = [excessive_thirst, excessive_urination, fatigue, blurred_vision, unexplained_weight_loss, increased_hunger, slow_healing_wounds, frequent_infections, tingling_numbness],
+    ask_multiple_category('Please select the symptoms that currently apply (select all that apply): excessive thirst, excessive urination, fatigue, and blurred vision are core options.', SymptomsOptions, Selected),
+    Selected \= [],
+    ( member(excessive_thirst, Selected), member(excessive_urination, Selected)
+      -> Support = strong
+      ; ( member(excessive_thirst, Selected) ; member(excessive_urination, Selected) )
+        -> Support = partial
+        ; Support = minimal
+    ),
+    ( member(fatigue, Selected)
+      -> ask_range('On a scale of 1 to 10, what is the fatigue severity?', 1, 10, FatigueSeverity)
+      ; FatigueSeverity = null
+    ),
+    ( member(excessive_thirst, Selected)
+      -> ask_category('How would you describe the thirst severity?', [none, mild, moderate, severe], ThirstSeverity)
+      ; ThirstSeverity = null
+    ),
+    ask_duration('For how many days have these symptoms been present?', DaysRaw),
+    ( DaysRaw < 7.0
+      -> DurationClass = recent
+      ; DaysRaw =< 30.0
+        -> DurationClass = persistent
+        ; DurationClass = long_term
+    ),
+    % Optional medication recording if the user indicates current diabetes medication.
+    ( ask_boolean('Is the patient currently taking any diabetes medication?')
+      -> ( ask_numeric('How many diabetes medications would you like to record?', MedCountRaw),
+           MedCountInt is round(MedCountRaw),
+           collect_meds(MedCountInt, MedsList)
+         )
+      ; MedsList = []
+    ),
+    Evidence = _{symptoms: Selected, support_strength: Support, duration_days: DaysRaw, duration_class: DurationClass, thirst_severity: ThirstSeverity, fatigue_severity: FatigueSeverity, medications: MedsList}.
+
+/* Collect N medication entries using ask_multi_attribute_entity. */
+collect_meds(0, []) :- !.
+collect_meds(N, [Med|Rest]) :-
+    N > 0,
+    Fields = [
+      [name, 'What is the medication name?', string],
+      [dose_mg, 'What is the dose in mg?', float],
+      [times_per_day, 'How many times per day is it taken?', float]
+    ],
+    ask_multi_attribute_entity('Please enter medication details', medication, Fields, Med),
+    N1 is N - 1,
+    collect_meds(N1, Rest).

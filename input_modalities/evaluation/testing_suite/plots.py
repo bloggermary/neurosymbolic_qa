@@ -432,6 +432,22 @@ def plot_overview():
     """
     One chart summarizing every eval's headline accuracy, for a
     quick at-a-glance comparison across all test suites.
+
+    Diagnostic accuracy is deliberately excluded here: it measures
+    internal consistency between reference_kb.pl and the Python
+    verdict() function that labels its own scenarios (see its
+    scope_caveat in diagnostic_accuracy.json), not an independently
+    verified result the way the other bars are - averaging it in
+    would misrepresent what this chart is comparing. It still has
+    its own dedicated plots (plot_diagnostic_accuracy,
+    plot_diagnostic_by_category).
+
+    Full pipeline completion is excluded for the same reason: its
+    synthetic answers are randomized (see test_pipeline.py), so the
+    number reflects how far random inputs happen to carry the
+    dialogue rather than a fixed, comparable pass/fail check like the
+    other bars. It still has its own dedicated plots
+    (plot_pipeline_success, plot_pipeline_turns).
     """
 
     bars = []
@@ -444,16 +460,6 @@ def plot_overview():
     try:
         bars.append(("Query gen\n(strict)", load("query_accuracy.json")["strict_accuracy"]))
         bars.append(("Query gen\n(keyword)", load("query_accuracy.json")["keyword_accuracy"]))
-    except FileNotFoundError:
-        pass
-
-    try:
-        bars.append(("Full pipeline\ncompletion", load("pipeline_success.json")["success_rate"]))
-    except FileNotFoundError:
-        pass
-
-    try:
-        bars.append(("Diagnostic\naccuracy", load("diagnostic_accuracy.json")["accuracy"]))
     except FileNotFoundError:
         pass
 

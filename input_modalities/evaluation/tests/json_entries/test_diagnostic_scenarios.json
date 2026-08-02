@@ -18,8 +18,8 @@
         "blurred_vision"
       ],
       "What is your current diabetes medication status?": "none",
-      "Is there anything else about your symptoms or history you would like to add?": "Patient reports increased stress at work recently.",
-      "Over how many days have these symptoms been present?": 325.7,
+      "Are there any symptoms you would like to add?": "Patient reports increased stress at work recently.",
+      "Over how many days have these symptoms been present?": 10,
       "Please list the symptoms in the order they first appeared, from earliest to most recent.": [
         "blurred_vision",
         "fatigue",

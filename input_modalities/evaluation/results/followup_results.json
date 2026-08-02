@@ -671,13 +671,13 @@
       "sleep_quality"
     ],
     "predicted": [
-      "sleep_quality_range"
+      "sleep_quality"
     ],
-    "strict_correct": false,
+    "strict_correct": true,
     "decision_correct": true,
     "followups": [
       {
-        "question": "sleep_quality_range",
+        "question": "sleep_quality",
         "modality": "range",
         "topic": "sleep quality"
       }

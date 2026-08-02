@@ -152,7 +152,7 @@
         "fatigue"
       ],
       "What is your current diabetes medication status?": "insulin",
-      "Is there anything else about your symptoms or history you would like to add?": "Patient mentions occasional dizziness in the mornings.",
+      "Is there anything else about your symptoms or history you would like to add?": "Occasional dizzines",
       "Over how many days have these symptoms been present?": 260.2,
       "Please provide the medication name, dose in milligrams, and frequency per day.": {
         "entity": "medication",
