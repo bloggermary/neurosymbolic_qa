@@ -4,699 +4,699 @@
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 3.2265463749936316
+    "time": 2.4559011249948526
   },
   {
     "question": "How many hours do you fast before a blood test?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 2.2437512500036974
+    "time": 2.247767458000453
   },
   {
     "question": "What is your fasting glucose level?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.8462494169943966
+    "time": 1.7400702079903567
   },
   {
     "question": "Which medications do you take in the morning, afternoon, and evening?",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 2.3956931669963524
+    "time": 2.7650953749980545
   },
   {
     "question": "List the symptoms you experienced in the order in which they first appeared.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 2.2631494169909274
+    "time": 3.4811205830046674
   },
   {
     "question": "Which symptoms do you experience: thirst, fatigue, blurred vision?",
     "expected": "multiple_category",
     "predicted": "multiple_category",
     "correct": true,
-    "time": 1.8913654159987345
+    "time": 3.686166458996013
   },
   {
     "question": "Describe your symptoms at each stage of the illness",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 2.543862958002137
+    "time": 3.9931146669987356
   },
   {
     "question": "Rank your symptoms from the most to the least severe",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 1.961898958994425
+    "time": 2.1525565420015482
   },
   {
     "question": "Group your allergies.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 2.9691762500006007
+    "time": 8.395326332989498
   },
   {
     "question": "Do you prefer diet control or medication?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 2.457779832999222
+    "time": 2.0482624580035917
   },
   {
     "question": "Is your blood sugar stable or fluctuating?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.8444086669915123
+    "time": 1.8995544589997735
   },
   {
     "question": "What is your HbA1c value?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.4179058329900727
+    "time": 1.8055212079925695
   },
   {
     "question": "How long have symptoms lasted?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.6543451249890495
+    "time": 2.54153766699892
   },
   {
-    "question": "Do you feel hungry often?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "How would you rate your nausea on a scale of 1 to 10?",
+    "expected": "range",
+    "predicted": "range",
     "correct": true,
-    "time": 1.4469618750008522
+    "time": 2.261404417004087
   },
   {
     "question": "Group your symptoms by affected body area.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 2.2375829170050565
+    "time": 2.655943666002713
   },
   {
     "question": "Which symptoms apply to you?",
     "expected": "multiple_category",
     "predicted": "multiple_category",
     "correct": true,
-    "time": 1.7410763329971815
+    "time": 1.8402872500009835
   },
   {
     "question": "Group your medications by their purpose.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 2.9695520829991437
+    "time": 3.6872612920124084
   },
   {
     "question": "Group the conditions that run in your family.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 5.427221291989554
+    "time": 6.962892875002581
   },
   {
     "question": "Group your medical history.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 3.891318374997354
+    "time": 5.956128957986948
   },
   {
     "question": "Group your medical tests.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 3.993531707994407
+    "time": 4.016506167012267
   },
   {
-    "question": "Do you experience blurred vision?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "Rate your current level of fatigue from 1 to 5.",
+    "expected": "range",
+    "predicted": "range",
     "correct": true,
-    "time": 1.228714167009457
+    "time": 1.740174249993288
   },
   {
-    "question": "How many liters of water do you drink daily?",
-    "expected": "numeric",
-    "predicted": "numeric",
+    "question": "Which medical tests have you completed recently?",
+    "expected": "multiple_category",
+    "predicted": "multiple_category",
     "correct": true,
-    "time": 1.8438209999876563
+    "time": 3.204955458990298
   },
   {
     "question": "How long do symptoms last?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.5646670419955626
+    "time": 2.3947466669924324
   },
   {
-    "question": "Do you follow a low-carb diet?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "How would you describe your physical activity level?",
+    "expected": "category",
+    "predicted": "category",
     "correct": true,
-    "time": 1.3035064580035396
+    "time": 2.227015999989817
   },
   {
     "question": "Record your blood glucose measurements in chroological order.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 1.8419981249899138
+    "time": 1.7398162499885075
   },
   {
     "question": "Do you wake up at night to urinate frequently?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.5373616249999031
+    "time": 1.5009080000018002
   },
   {
     "question": "Describe the steps you followed after noticing your first symptoms.",
     "expected": "multi_structured_input",
     "predicted": "string",
     "correct": false,
-    "time": 2.097349417002988
+    "time": 2.4109031669941032
   },
   {
     "question": "Have you noticed unexplained weight loss recently?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.5873904159961967
+    "time": 1.3300755839882186
   },
   {
     "question": "Rank your daily activities according to how difficult they are when you experience your symptoms.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 1.8434443329897476
+    "time": 1.843334417004371
   },
   {
     "question": "Rank the complications you are most concerned about.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 1.4339997089991812
+    "time": 2.048466959007783
   },
   {
-    "question": "Do you feel excessively hungry even after eating?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "Please explain how your symptoms affect your daily life.",
+    "expected": "string",
+    "predicted": "string",
     "correct": true,
-    "time": 1.330816458008485
+    "time": 1.3315711670002202
   },
   {
     "question": "How many hours do you sleep per night?",
     "expected": "numeric",
     "predicted": "duration",
     "correct": false,
-    "time": 2.151110916995094
+    "time": 1.7402343329886207
   },
   {
     "question": "Rank your treatment goals from most important to least important.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 1.842523416999029
+    "time": 1.9524022080004215
   },
   {
     "question": "Rank the the factors that make it difficult for you to follow your treatment plan.",
     "expected": "multi_structured_input",
     "predicted": "multi_structured_input",
     "correct": true,
-    "time": 1.8432772500091232
+    "time": 2.2480877919879276
   },
   {
     "question": "Please provide the name, dosage, and frequency of your current medication.",
     "expected": "multi_attribute_entity",
     "predicted": "multi_attribute_entity",
     "correct": true,
-    "time": 1.5364201249904
+    "time": 1.6369982500036713
   },
   {
     "question": "Do you experience dizziness during the day?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.3075345830002334
+    "time": 1.6379632909956854
   },
   {
     "question": "How many sugary drinks do you consume daily?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.4931500000093365
+    "time": 1.434072832998936
   },
   {
     "question": "Which type of diet do you follow?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.9091087079868885
+    "time": 2.3546277080022264
   },
   {
     "question": "How long have you had increased thirst?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.6387717909965431
+    "time": 1.9460087920015212
   },
   {
     "question": "Do you monitor your blood sugar regularly?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.3310465419926913
+    "time": 1.6384280829952331
   },
   {
     "question": "What is your typical fasting glucose range?",
     "expected": "numeric",
     "predicted": "range",
     "correct": false,
-    "time": 1.6384090000065044
+    "time": 1.5358703749952838
   },
   {
     "question": "Please provide the name, severity, and duration of your symptom.",
     "expected": "multi_attribute_entity",
     "predicted": "multi_attribute_entity",
     "correct": true,
-    "time": 1.7413090409972938
+    "time": 1.7409386670042295
   },
   {
     "question": "Please provide the name, result and date of the laboratory test.",
     "expected": "multi_attribute_entity",
     "predicted": "multi_attribute_entity",
     "correct": true,
-    "time": 2.047791250006412
+    "time": 2.6627431250090012
   },
   {
     "question": "Please describe your allergy",
     "expected": "multi_attribute_entity",
     "predicted": "string",
     "correct": false,
-    "time": 1.3334002080082428
+    "time": 1.332441332997405
   },
   {
     "question": "Do you experience fatigue after meals?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.2269577080005547
+    "time": 1.3289847499981988
   },
   {
     "question": "How many meals do you eat per day?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.4332877080014441
+    "time": 1.330860957998084
   },
   {
     "question": "Describe your implanted device",
     "expected": "multi_attribute_entity",
     "predicted": "string",
     "correct": false,
-    "time": 1.4331719580077333
+    "time": 1.3258501670061378
   },
   {
     "question": "Please provide the name, type, and date of your previous surgery.",
     "expected": "multi_attribute_entity",
     "predicted": "multi_attribute_entity",
     "correct": true,
-    "time": 1.652389666007366
+    "time": 1.7472030839999206
   },
   {
     "question": "Please provide the relationship, medical condition, and current status of a family member with a relevant medical history.",
     "expected": "multi_attribute_entity",
     "predicted": "multi_attribute_entity",
     "correct": true,
-    "time": 1.7285376250074478
+    "time": 2.0469946669909405
   },
   {
     "question": "Please provide the name of the previous illness, when you had it, and whether you have recovered.",
     "expected": "multi_attribute_entity",
     "predicted": "multi_attribute_entity",
     "correct": true,
-    "time": 1.9448103330068989
+    "time": 2.189696792003815
   },
   {
     "question": "Do you often feel thirsty even after drinking enough water?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.126870041989605
+    "time": 1.2953819170070346
   },
   {
     "question": "How long does your fatigue usually last during the day?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.7403095409972593
+    "time": 1.3286729169922182
   },
   {
     "question": "Do you experience blurred vision when your blood sugar is high?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.1260781250020955
+    "time": 2.5596175409882562
   },
   {
     "question": "What is your usual fasting glucose range in the morning?",
     "expected": "numeric",
     "predicted": "range",
     "correct": false,
-    "time": 1.7453226250072476
+    "time": 2.151322874997277
   },
   {
     "question": "Do you take any medication to control your blood sugar?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.2246351249923464
+    "time": 2.354424958000891
   },
   {
     "question": "Please describe your current medical concerns.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.5362812919920543
+    "time": 4.1979814160004025
   },
   {
     "question": "In your own words, describe the symptoms you are experiencing.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.5337194580060896
+    "time": 1.3327019999996992
   },
   {
     "question": "Rate how often you consume sugary foods from 1 to 10",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 2.460159875001409
+    "time": 1.740692167004454
   },
   {
     "question": "Do you follow any specific diet plan for health reasons?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.4325887500017416
+    "time": 1.6378859169926727
   },
   {
     "question": "How many hours per day do you feel energetic?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.9419296249980107
+    "time": 1.4343824589886935
   },
   {
     "question": "Do you experience frequent urination during the night?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.2341262080008164
+    "time": 1.3307857920008246
   },
   {
     "question": "Which chronic conditions have you been diagnosed with?",
     "expected": "multiple_category",
     "predicted": "multiple_category",
     "correct": true,
-    "time": 1.5349741249956423
+    "time": 1.433587958003045
   },
   {
     "question": "Which medications are you currently taking?",
     "expected": "multiple_category",
-    "predicted": "multiple_category",
-    "correct": true,
-    "time": 2.867186125004082
+    "predicted": "string",
+    "correct": false,
+    "time": 4.238755332989967
   },
   {
-    "question": "Do you feel weak when your glucose levels drop?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "Describe your previous diagnosis. Provide the diagnosis name, date of diagnosis, and current status.",
+    "expected": "multi_attribute_entity",
+    "predicted": "multi_attribute_entity",
     "correct": true,
-    "time": 1.330477458992391
+    "time": 1.7183951670012902
   },
   {
     "question": "How many liters of fluids do you consume per day?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.342539958000998
+    "time": 1.634230916009983
   },
   {
     "question": "Which types of allergies do you have?",
     "expected": "multiple_category",
     "predicted": "multiple_category",
     "correct": true,
-    "time": 1.4224320409994107
+    "time": 2.5457701249979436
   },
   {
     "question": "Which of the following tests have you had in the past?",
     "expected": "multiple_category",
     "predicted": "multiple_category",
     "correct": true,
-    "time": 1.5364107089990284
+    "time": 4.097226582991425
   },
   {
-    "question": "Do you feel dizzy after skipping meals?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "Please describe your recent medical test. Provide the test name, result, and date performed.",
+    "expected": "multi_attribute_entity",
+    "predicted": "multi_attribute_entity",
     "correct": true,
-    "time": 1.0261863750056364
+    "time": 1.842746124995756
   },
   {
     "question": "How long have you been on your current medication?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.5339326670073206
+    "time": 1.536033291995409
   },
   {
     "question": "Do you experience blurred vision during the day?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.0237630829942646
+    "time": 1.4337136249960167
   },
   {
     "question": "How would you describe the patient's current overall health?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.945953707996523
+    "time": 1.9460596249991795
   },
   {
-    "question": "Do you feel hungry even after eating meals?",
-    "expected": "boolean",
-    "predicted": "boolean",
-    "correct": true,
-    "time": 1.0563331250014016
-  },
-  {
-    "question": "Which of the following risk factos for diabetes apply to you?",
+    "question": "Which of the following symptoms are you currently experiencing?",
     "expected": "multiple_category",
     "predicted": "multiple_category",
     "correct": true,
-    "time": 1.707541374998982
+    "time": 1.63948666700162
+  },
+  {
+    "question": "Which of the following risk factors for diabetes apply to you?",
+    "expected": "multiple_category",
+    "predicted": "multiple_category",
+    "correct": true,
+    "time": 1.7390647090069251
   },
   {
     "question": "Do you take insulin injections regularly?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.1269530830031727
+    "time": 1.3307891660078894
   },
   {
-    "question": "How severe is your fatigue on average?",
+    "question": "Rate how difficult it is for you to perform your daily activities from 0 to 10.",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.5151049590058392
+    "time": 2.458978582988493
   },
   {
     "question": "Do you experience excessive thirst even when your fluid intake is sufficient?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.0753458330000285
+    "time": 1.4320770839985926
   },
   {
     "question": "How often do you wake up at night to urinate?",
     "expected": "category",
     "predicted": "numeric",
     "correct": false,
-    "time": 2.222440999990795
+    "time": 2.253834167000605
   },
   {
-    "question": "Do you feel fatigued after normal daily activities?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "On a scale from 0 to 10, how severe is your abdominal pain?",
+    "expected": "range",
+    "predicted": "range",
     "correct": true,
-    "time": 1.3334396249993006
+    "time": 2.2524778340011835
   },
   {
     "question": "What is your average fasting blood glucose level?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.4326561249908991
+    "time": 1.4336061670037452
   },
   {
     "question": "Please provide any additional information about your health that you think is relevant.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.3299079999997048
+    "time": 1.4338408749899827
   },
   {
     "question": "How long have you been experiencing increased thirst and fatigue?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.4172959170100512
+    "time": 1.6382593750022352
   },
   {
     "question": "Describe your current health condition in your own words.",
     "expected": "string",
     "predicted": "string",
     "correct": true,
-    "time": 1.2455137499928242
+    "time": 1.8336462920124177
   },
   {
     "question": "Rate your daily energy levels from 1 to 10",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.6383402089995798
+    "time": 1.5454508340044413
   },
   {
     "question": "Do you follow a structured diet plan?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.3308275419985875
+    "time": 1.6386214170051971
   },
   {
     "question": "How frequently do you experience dizziness during the week?",
     "expected": "category",
     "predicted": "numeric",
     "correct": false,
-    "time": 2.2533208329987247
+    "time": 2.2530455839878414
   },
   {
     "question": "Do you experience blurred vision when your blood sugar fluctuates?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.2279653750010766
+    "time": 1.8422653329907916
   },
   {
     "question": "How many hours per night do you usually sleep?",
     "expected": "numeric",
     "predicted": "duration",
     "correct": false,
-    "time": 2.868833166998229
+    "time": 1.6435756669961847
   },
   {
     "question": "Do you take insulin injections regularly?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.3296877499960829
+    "time": 1.7596984580013668
   },
   {
     "question": "Have you ever been diagnosed with prediabetes or diabetes?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.1272009999956936
+    "time": 1.7172158339963062
   },
   {
     "question": "How often do you consume sugary beverages?",
     "expected": "category",
     "predicted": "category",
     "correct": true,
-    "time": 1.6393620419985382
+    "time": 3.7911960829951568
   },
   {
-    "question": "Do you feel increased hunger even after meals?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "Please provide any additional information about your health that you think is relevant.",
+    "expected": "string",
+    "predicted": "string",
     "correct": true,
-    "time": 1.1259551249968354
+    "time": 1.4292663750093197
   },
   {
     "question": "What is your typical diet composition?",
     "expected": "string",
-    "predicted": "multi_attribute_entity",
-    "correct": false,
-    "time": 4.197051832990837
+    "predicted": "string",
+    "correct": true,
+    "time": 3.468885708003654
   },
   {
-    "question": "Do you experience fatigue more than usual in recent weeks?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "Please indicate your stress level on a scale from 1 to 7.",
+    "expected": "range",
+    "predicted": "range",
     "correct": true,
-    "time": 1.2300729590060655
+    "time": 1.8580685410124715
   },
   {
     "question": "How long have you been on your current diabetes treatment plan?",
     "expected": "duration",
     "predicted": "duration",
     "correct": true,
-    "time": 1.3316543749970151
+    "time": 1.8435710839985404
   },
   {
     "question": "Do you have a family history of metabolic disorders?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 0.9214097500080243
+    "time": 1.5095380419952562
   },
   {
     "question": "Rate your stress level from 1 to 10",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.4336732079973444
+    "time": 1.6330333329970017
   },
   {
-    "question": "Do you experience dizziness after skipping meals?",
-    "expected": "boolean",
-    "predicted": "boolean",
+    "question": "How severe is your shortness of breath on a scale from 1 to 10?",
+    "expected": "range",
+    "predicted": "range",
     "correct": true,
-    "time": 1.1248285829933593
+    "time": 1.6689846670051338
   },
   {
     "question": "How many liters of water do you drink daily?",
     "expected": "numeric",
     "predicted": "numeric",
     "correct": true,
-    "time": 1.1820761249982752
+    "time": 1.6818569169990951
   },
   {
     "question": "Do you feel excessive thirst despite adequate hydration?",
     "expected": "boolean",
     "predicted": "boolean",
     "correct": true,
-    "time": 1.1743857499968726
+    "time": 1.595871958998032
   },
   {
     "question": "How severe is your fatigue on average throughout the day?",
     "expected": "range",
     "predicted": "range",
     "correct": true,
-    "time": 1.7404796249902574
+    "time": 2.251844667000114
   }
 ]
