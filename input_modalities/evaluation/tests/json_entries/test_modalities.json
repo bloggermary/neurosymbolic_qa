@@ -151,8 +151,12 @@
   },
   {
     "id": "m014",
-    "question": "Do you feel hungry often?",
-    "expected_modality": "boolean",
+    "question": "How would you rate your nausea on a scale of 1 to 10?",
+    "expected_modality": "range",
+    "expected_range": {
+      "min": 1,
+      "max": 10
+    },
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -242,16 +246,28 @@
   },
   {
     "id": "m021",
-    "question": "Do you experience blurred vision?",
-    "expected_modality": "boolean",
+    "question": "Rate your current level of fatigue from 1 to 5.",
+    "expected_modality": "range",
+    "expected_range": {
+      "min": 1,
+      "max": 5
+    },
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m022",
-    "question": "How many liters of water do you drink daily?",
-    "expected_modality": "numeric",
+    "question": "Which medical tests have you completed recently?",
+    "expected_modality": "multiple_category",
+    "expected_categories": [
+      "blood test",
+      "urine test",
+      "HbA1c test",
+      "oral glucose tolerance test",
+      "blood pressure measurement",
+      "none"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -266,8 +282,13 @@
   },
   {
     "id": "m024",
-    "question": "Do you follow a low-carb diet?",
-    "expected_modality": "boolean",
+    "question": "How would you describe your physical activity level?",
+    "expected_modality": "category",
+    "expected_categories": [
+      "low",
+      "moderate",
+      "high"
+    ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -352,8 +373,8 @@
 
   {
     "id": "m031",
-    "question": "Do you feel excessively hungry even after eating?",
-    "expected_modality": "boolean",
+    "question": "Please explain how your symptoms affect your daily life.",
+    "expected_modality": "string",
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -649,7 +670,8 @@
     "question": "Rate how often you consume sugary foods from 1 to 10",
     "expected_modality": "range",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m059",
@@ -666,7 +688,8 @@
     "question": "How many hours per day do you feel energetic?",
     "expected_modality": "duration",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
 
   {
@@ -711,17 +734,25 @@
   },
   {
     "id": "m064",
-    "question": "Do you feel weak when your glucose levels drop?",
-    "expected_modality": "boolean",
+    "question": "Describe your previous diagnosis. Provide the diagnosis name, date of diagnosis, and current status.",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "diagnosis",
+    "expected_fields": [
+      "name",
+      "date",
+      "status"
+    ],
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m065",
     "question": "How many liters of fluids do you consume per day?",
     "expected_modality": "numeric",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
 
   {
@@ -735,9 +766,7 @@
       "dust"
     ],
     "followup_expected": true,
-    "expected_followups": [
-      { "question": "Which medication are you allergic to?", "modality": "string" }
-    ],
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
@@ -757,10 +786,17 @@
   },
   {
     "id": "m068",
-    "question": "Do you feel dizzy after skipping meals?",
-    "expected_modality": "boolean",
+    "question": "Please describe your recent medical test. Provide the test name, result, and date performed.",
+    "expected_modality": "multi_attribute_entity",
+    "expected_entity": "medical_test",
+    "expected_fields": [
+      "name",
+      "result",
+      "date"
+    ],
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m069",
@@ -795,14 +831,22 @@
   },
   {
     "id": "m072",
-    "question": "Do you feel hungry even after eating meals?",
-    "expected_modality": "boolean",
+    "question": "Which of the following symptoms are you currently experiencing?",
+    "expected_modality": "multiple_category",
+    "expected_categories": [
+      "excessive thirst",
+      "frequent urination",
+      "fatigue",
+      "blurred vision",
+      "unexplained weight loss"
+    ],
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m073",
-    "question": "Which of the following risk factos for diabetes apply to you?",
+    "question": "Which of the following risk factors for diabetes apply to you?",
     "expected_modality": "multiple_category",
     "expected_options": [
       "family_history",
@@ -827,10 +871,15 @@
   },
   {
     "id": "m075",
-    "question": "How severe is your fatigue on average?",
+    "question": "Rate how difficult it is for you to perform your daily activities from 0 to 10.",
     "expected_modality": "range",
+    "expected_range": {
+      "min": 0,
+      "max": 10
+    },
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m076",
@@ -857,17 +906,23 @@
   },
   {
     "id": "m078",
-    "question": "Do you feel fatigued after normal daily activities?",
-    "expected_modality": "boolean",
+    "question": "On a scale from 0 to 10, how severe is your abdominal pain?",
+    "expected_modality": "range",
+    "expected_range": {
+      "min": 0,
+      "max": 10
+    },
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m079",
     "question": "What is your average fasting blood glucose level?",
     "expected_modality": "numeric",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m080",
@@ -940,7 +995,8 @@
     "question": "How many hours per night do you usually sleep?",
     "expected_modality": "numeric",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m088",
@@ -979,13 +1035,13 @@
     "followup_expected": false,
     "expected_followups": []
   },
-
   {
     "id": "m091",
-    "question": "Do you feel increased hunger even after meals?",
-    "expected_modality": "boolean",
+    "question": "Please provide any additional information about your health that you think is relevant.",
+    "expected_modality": "string",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m092",
@@ -996,17 +1052,23 @@
   },
   {
     "id": "m093",
-    "question": "Do you experience fatigue more than usual in recent weeks?",
-    "expected_modality": "boolean",
+     "question": "Please indicate your stress level on a scale from 1 to 7.",
+    "expected_modality": "range",
+    "expected_range": {
+      "min": 1,
+      "max": 7
+    },
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m094",
     "question": "How long have you been on your current diabetes treatment plan?",
     "expected_modality": "duration",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m095",
@@ -1024,14 +1086,20 @@
     "question": "Rate your stress level from 1 to 10",
     "expected_modality": "range",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m097",
-    "question": "Do you experience dizziness after skipping meals?",
-    "expected_modality": "boolean",
+    "question": "How severe is your shortness of breath on a scale from 1 to 10?",
+    "expected_modality": "range",
+    "expected_range": {
+      "min": 1,
+      "max": 10
+    },
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m098",
@@ -1055,7 +1123,7 @@
     "question": "How severe is your fatigue on average throughout the day?",
     "expected_modality": "range",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   }
-
 ]
