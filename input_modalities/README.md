@@ -16,6 +16,21 @@ multi-modal diagnostic dialogue and reach a verifiable, rule-grounded verdict.
 > independently, quantitatively evaluated, including a full, live
 > end-to-end run of the real interactive dialogue, not just its isolated
 > components.
+>
+> ## Project Overview
+
+The project separates language processing from symbolic reasoning:
+
+- **The language model** converts source text into Prolog rules, maps
+  natural-language questions to Prolog queries, classifies expected answer
+  formats, and translates technical results into readable text.
+- **SWI-Prolog** applies the generated rules and determines which information
+  is still required.
+- **Janus** connects Prolog with Python through `py_call`.
+- **Python** manages application state, cached answers, and communication
+  between Prolog and the user interface.
+- **Streamlit** renders the chat interface and the input widget required for
+  each follow-up question.
 
 ## Table of Contents
 
@@ -439,18 +454,24 @@ OPENAI_API_KEY=sk-...
 
 ## 7. Usage
 
+### 7.1 Run the Interactive Web Application
 **Interactive web app (recommended):**
 ```bash
 streamlit run app.py
 ```
-Pick a medical text from the sidebar's Knowledge Base dropdown, then ask a
-question, e.g. *"What is your assessment of whether I meet the diagnostic
-criteria for diabetes, based on my lab results?"*
-
 **Legacy CLI:**
 ```bash
 python main.py
 ```
+
+### 7.2 Use the Application
+1. Pick a medical text from the sidebar's Knowledge Base dropdown
+2. Enter a question in natural language, for example:
+    >*"What is your assessment of whether I meet the diagnostic criteria for diabetes, based on my lab results?"*
+3. Submit the question
+4. Answer the follow-up questions displayed by the interface
+5. continue until the system produces a final result
+6. read the final result translated into natural language
 
 ## 8. Evaluation Results
 
