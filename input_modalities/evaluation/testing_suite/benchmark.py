@@ -1,7 +1,6 @@
 
 from evaluation.tests.test_modality_detection import run as run_modality
 from evaluation.tests.test_query_generation import run as run_query
-from evaluation.tests.test_pipeline import run as run_pipeline
 from evaluation.tests.test_followups import run as run_followups
 from evaluation.tests.test_kb_generation import run as run_kb_generation
 from evaluation.tests.test_diagnostic_accuracy import run as run_diagnostic_accuracy

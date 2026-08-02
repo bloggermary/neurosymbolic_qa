@@ -1,13 +1,13 @@
 {
   "diabetic_scenario_correct": true,
   "prediabetic_scenario_correct": true,
-  "normal_scenario_correct": true,
+  "normal_scenario_correct": false,
   "diabetic_outcome": "completed",
   "prediabetic_outcome": "completed",
   "normal_outcome": "completed",
-  "diabetic_answer": "The available data meet diagnostic criteria for diabetes based on an elevated random plasma glucose measurement; correlate clinically by assessing for classic hyperglycemia symptoms (polyuria, polydipsia, nocturia, unexplained weight loss) and screen for acute complications (dehydration, ketosis/DKA). Determine severity and chronicity with quantitative glucose values, HbA1c, fasting plasma glucose, and review for end-organ effects (retinopathy, nephropathy, neuropathy) and cardiovascular risk factors. No antihyperglycemic medications are listed; confirm diagnosis promptly and initiate appropriate baseline labs (electrolytes, renal function, liver tests, lipids, urine ketones) and treatment planning.",
-  "prediabetic_answer": "Findings indicate prediabetes manifested by impaired fasting glucose (fasting‑prediabetes); patients are often asymptomatic or have nonspecific symptoms and this represents increased cardiometabolic risk rather than overt diabetes. Duration is indeterminate and should be clarified with repeat fasting glucose, HbA1c or a 2‑hour OGTT; no glucose‑lowering medications are currently reported, so initial management centers on lifestyle modification and serial monitoring.",
-  "normal_answer": "Assessment: The patient is assessed as low risk with no reported symptoms (including no fatigue or excessive thirst), no noted symptom duration, and no current medications or supporting clinical findings. Recommend routine monitoring and prompt reassessment if new symptoms, persistent concerns, or risk factors emerge.",
+  "diabetic_answer": "Fasting plasma glucose 300 mg/dL is diagnostic of diabetes mellitus and represents marked hyperglycemia. Clinically this commonly presents with polyuria, polydipsia, nocturia, weight loss and fatigue and confers high risk for acute metabolic complications (DKA/HHS), so urgent assessment with serum electrolytes, renal function, venous blood gas/ketones and prompt glycemic control is indicated. Onset/duration of symptoms and current medications were not documented—obtain a detailed symptom timeline, medication reconciliation, and HbA1c to gauge chronicity and guide initiation or escalation of therapy (often insulin at this glucose level).",
+  "prediabetic_answer": "A fasting plasma glucose of 112 mg/dL falls in the impaired fasting glucose range consistent with prediabetes (ADA 100–125 mg/dL); this is generally a mild abnormality that is often asymptomatic, and a single measurement cannot define duration. Current medications were not provided — recommended next steps are repeat confirmatory testing (repeat fasting glucose and/or HbA1c or OGTT), lifestyle intervention and risk‑factor optimization, and consideration of metformin for patients with additional risk factors.",
+  "normal_answer": "A definitive diagnosis cannot be made from the current information. Please provide a detailed list of presenting symptoms with onset and duration, severity (e.g., pain scores, functional impact), current medications with doses, vital signs/exam findings, and any prior test results so a full diagnostic workup can be performed.",
   "diabetic_error": null,
   "prediabetic_error": null,
   "normal_error": null

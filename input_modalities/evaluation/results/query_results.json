@@ -13,7 +13,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 7.263224249938503
+    "time": 5.526374457869679
   },
   {
     "id": "q002",
@@ -29,7 +29,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.019640916958451
+    "time": 5.973951500141993
   },
   {
     "id": "q003",
@@ -46,7 +46,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.655238291947171
+    "time": 10.284770667087287
   },
   {
     "id": "q004",
@@ -63,7 +63,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 11.237500875024125
+    "time": 10.634056041948497
   },
   {
     "id": "q005",
@@ -81,7 +81,7 @@
     "keyword_overlap_score": 0.8333333333333334,
     "keyword_correct": true,
     "correct": false,
-    "time": 20.21847637486644
+    "time": 16.425213583977893
   },
   {
     "id": "q006",
@@ -98,7 +98,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 8.401553082978353
+    "time": 11.049693166045472
   },
   {
     "id": "q007",
@@ -115,24 +115,24 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.050380416912958
+    "time": 11.067990083945915
   },
   {
     "id": "q008",
     "question": "Patient has elevated HbA1c but normal fasting glucose. Can diabetes still be diagnosed?",
-    "query": "hba1c_percent(H), fasting_glucose_mgdl(F), diagnose(diabetes)",
+    "query": "hba1c_percent(H), fasting_glucose_mgdl(FG), diabetes_positive_by_hba1c",
     "expected_predicates": [
       "hba1c_percent",
       "diabetes_positive_by_hba1c"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.875,
+    "keyword_overlap_score": 1.0,
     "keyword_correct": true,
-    "correct": false,
-    "time": 9.86209920886904
+    "correct": true,
+    "time": 18.163589208154008
   },
   {
     "id": "q009",
@@ -148,7 +148,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 8.892463166965172
+    "time": 6.885017791064456
   },
   {
     "id": "q010",
@@ -165,7 +165,7 @@
     "keyword_overlap_score": 0.8333333333333333,
     "keyword_correct": true,
     "correct": false,
-    "time": 8.597583666210994
+    "time": 5.513262166874483
   },
   {
     "id": "q011",
@@ -181,7 +181,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.155696874950081
+    "time": 3.858036666875705
   },
   {
     "id": "q012",
@@ -197,7 +197,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.391550207976252
+    "time": 3.685860250145197
   },
   {
     "id": "q013",
@@ -214,12 +214,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.938569625141099
+    "time": 4.281004834221676
   },
   {
     "id": "q014",
     "question": "Is constant thirst combined with urination indicative of diabetes?",
-    "query": "excessive_thirst, excessive_urination",
+    "query": "excessive_thirst, excessive_urination, diagnose(diabetes)",
     "expected_predicates": [
       "excessive_thirst",
       "excessive_urination"
@@ -231,12 +231,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.7875635421369225
+    "time": 7.4638564579654485
   },
   {
     "id": "q015",
     "question": "A patient experiences fatigue, blurred vision, and excessive thirst. What symptoms are relevant?",
-    "query": "excessive_thirst, fatigue, blurred_vision",
+    "query": "fatigue, blurred_vision, excessive_thirst",
     "expected_predicates": [
       "fatigue",
       "blurred_vision",
@@ -249,7 +249,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.965970250079408
+    "time": 8.888015791075304
   },
   {
     "id": "q016",
@@ -265,7 +265,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 12.028787999879569
+    "time": 10.175053917104378
   },
   {
     "id": "q017",
@@ -281,7 +281,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 12.565718499943614
+    "time": 12.886703459080309
   },
   {
     "id": "q018",
@@ -297,12 +297,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.290193167049438
+    "time": 10.340166124980897
   },
   {
     "id": "q019",
     "question": "Fasting glucose is normal but HbA1c is elevated. How is this interpreted?",
-    "query": "fasting_glucose_mgdl(F), F < 100, hba1c_percent(H), H >= 5.7, diagnose(D)",
+    "query": "fasting_glucose_mgdl(Value), Value < 100, hba1c_percent(H), H >= 5.7, diagnose(Result)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -314,7 +314,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 21.87189675006084
+    "time": 24.451179458992556
   },
   {
     "id": "q020",
@@ -331,7 +331,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 8.399498416809365
+    "time": 7.631482083117589
   },
   {
     "id": "q021",
@@ -347,7 +347,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 7.407830375013873
+    "time": 8.411852625198662
   },
   {
     "id": "q022",
@@ -364,12 +364,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 10.894261792069301
+    "time": 8.674775208113715
   },
   {
     "id": "q023",
     "question": "Can impaired fasting glucose be considered prediabetes?",
-    "query": "prediabetes",
+    "query": "prediabetes_positive",
     "expected_predicates": [
       "prediabetes"
     ],
@@ -380,7 +380,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 7.039805833948776
+    "time": 4.827543792081997
   },
   {
     "id": "q024",
@@ -398,7 +398,7 @@
     "keyword_overlap_score": 0.3333333333333333,
     "keyword_correct": false,
     "correct": false,
-    "time": 13.023414291907102
+    "time": 20.164841583929956
   },
   {
     "id": "q025",
@@ -415,12 +415,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 10.933702375041321
+    "time": 9.652991084149107
   },
   {
     "id": "q026",
     "question": "The patient reports increased urination and wants to know whether diabetes should be investigated. Which diagnostic workflow should be used?",
-    "query": "full_assessment(Result)",
+    "query": "excessive_urination, full_assessment(Result)",
     "expected_predicates": [
       "full_assessment"
     ],
@@ -431,7 +431,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.4086646249052137
+    "time": 8.147992750164121
   },
   {
     "id": "q027",
@@ -447,7 +447,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.936292791971937
+    "time": 4.327508541056886
   },
   {
     "id": "q028",
@@ -463,7 +463,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.696356917032972
+    "time": 3.131362416082993
   },
   {
     "id": "q029",
@@ -479,7 +479,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.8379405830055475
+    "time": 4.428124666912481
   },
   {
     "id": "q030",
@@ -495,7 +495,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.766065124887973
+    "time": 3.2068538330495358
   },
   {
     "id": "q031",
@@ -511,7 +511,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.44070312497206
+    "time": 4.335732124978676
   },
   {
     "id": "q032",
@@ -527,7 +527,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.058543541934341
+    "time": 4.181644625030458
   },
   {
     "id": "q033",
@@ -543,7 +543,7 @@
     "keyword_overlap_score": 0.6666666666666666,
     "keyword_correct": false,
     "correct": false,
-    "time": 3.8324852909427136
+    "time": 5.65325141698122
   },
   {
     "id": "q034",
@@ -560,7 +560,7 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 7.340203125029802
+    "time": 6.726766500156373
   },
   {
     "id": "q035",
@@ -576,7 +576,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.373252833029255
+    "time": 3.523685500025749
   },
   {
     "id": "q036",
@@ -592,24 +592,24 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.79034116701223
+    "time": 6.521709624910727
   },
   {
     "id": "q037",
     "question": "Can fasting glucose values between 100 and 125 mg/dL indicate prediabetes?",
-    "query": "fasting_glucose_mgdl(V), V >= 100, V =< 125, prediabetes_positive",
+    "query": "prediabetes_positive",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "prediabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 19.596952500054613
+    "keyword_overlap_score": 0.5,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 18.872160374885425
   },
   {
     "id": "q038",
@@ -625,7 +625,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 7.58124095806852
+    "time": 6.881683124927804
   },
   {
     "id": "q039",
@@ -642,7 +642,7 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 4.597598209045827
+    "time": 6.402724249986932
   },
   {
     "id": "q040",
@@ -658,23 +658,23 @@
     "keyword_overlap_score": 0.0,
     "keyword_correct": false,
     "correct": false,
-    "time": 15.587410874897614
+    "time": 4.777584583032876
   },
   {
     "id": "q041",
     "question": "Which diabetes diagnosis predicate should be used?",
-    "query": "full_assessment(Result)",
+    "query": "diagnose(Result)",
     "expected_predicates": [
       "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 15.827338790986687
+    "keyword_overlap_score": 0.0,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 17.74299741606228
   },
   {
     "id": "q042",
@@ -690,7 +690,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.845567165873945
+    "time": 6.718743750127032
   },
   {
     "id": "q043",
@@ -706,7 +706,7 @@
     "keyword_overlap_score": 0.6666666666666666,
     "keyword_correct": false,
     "correct": false,
-    "time": 6.3957074580248445
+    "time": 5.622569375205785
   },
   {
     "id": "q044",
@@ -722,7 +722,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.708784208865836
+    "time": 4.702128333970904
   },
   {
     "id": "q045",
@@ -738,7 +738,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.344033459201455
+    "time": 6.932014417136088
   },
   {
     "id": "q046",
@@ -754,7 +754,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.196858333889395
+    "time": 5.578188375104219
   },
   {
     "id": "q047",
@@ -770,7 +770,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.846500583924353
+    "time": 3.4666691669262946
   },
   {
     "id": "q048",
@@ -786,12 +786,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.412913165986538
+    "time": 5.663995208917186
   },
   {
     "id": "q049",
     "question": "Can diabetes be ruled out if diagnostic criteria are not met?",
-    "query": "diagnose(no_risk)",
+    "query": "\\+ diabetes",
     "expected_predicates": [
       "low_risk"
     ],
@@ -799,10 +799,10 @@
     "must_not_contain": [],
     "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 0.5,
+    "keyword_overlap_score": 0.0,
     "keyword_correct": false,
     "correct": false,
-    "time": 18.625459207920358
+    "time": 14.928079042118043
   },
   {
     "id": "q050",
@@ -818,7 +818,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.6508472501300275
+    "time": 5.197960207937285
   },
   {
     "id": "q051",
@@ -834,7 +834,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.197257874999195
+    "time": 3.3134997920133173
   },
   {
     "id": "q052",
@@ -850,7 +850,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.076718874974176
+    "time": 2.9792040828615427
   },
   {
     "id": "q053",
@@ -866,7 +866,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.8224601671099663
+    "time": 3.3907665831502527
   },
   {
     "id": "q054",
@@ -882,7 +882,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.184631875017658
+    "time": 3.5937840840779245
   },
   {
     "id": "q055",
@@ -898,7 +898,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 18.318459041183814
+    "time": 3.817204042105004
   },
   {
     "id": "q056",
@@ -914,7 +914,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 8.3703466670122
+    "time": 3.921686999965459
   },
   {
     "id": "q057",
@@ -930,7 +930,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.9243351670447737
+    "time": 3.824462166056037
   },
   {
     "id": "q058",
@@ -946,7 +946,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.470384540967643
+    "time": 2.5648742499761283
   },
   {
     "id": "q059",
@@ -962,28 +962,28 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.97915849997662
+    "time": 3.4382035408634692
   },
   {
     "id": "q060",
     "question": "Can diabetes risk be evaluated using glucose measurements?",
-    "query": "full_assessment(Result)",
+    "query": "prediabetes_positive",
     "expected_predicates": [
       "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 10.837585625005886
+    "keyword_overlap_score": 0.0,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 15.82788766687736
   },
   {
     "id": "q061",
     "question": "What glucose measurement is used for diabetes evaluation?",
-    "query": "random_glucose_mgdl(R), fasting_glucose_mgdl(F), ogtt_2hr_mgdl(O), hba1c_percent(H)",
+    "query": "fasting_glucose_mgdl(Value)",
     "expected_predicates": [
       "fasting_glucose_mgdl"
     ],
@@ -994,7 +994,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 13.461210916051641
+    "time": 11.916614375077188
   },
   {
     "id": "q062",
@@ -1010,7 +1010,7 @@
     "keyword_overlap_score": 0.6666666666666666,
     "keyword_correct": false,
     "correct": false,
-    "time": 5.450497166020796
+    "time": 7.587749875150621
   },
   {
     "id": "q063",
@@ -1026,12 +1026,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.161940250080079
+    "time": 3.997361290967092
   },
   {
     "id": "q064",
     "question": "Which laboratory values should be checked when diabetes is suspected?",
-    "query": "random_glucose_mgdl(RG), fasting_glucose_mgdl(FG), ogtt_2hr_mgdl(OG), hba1c_percent(H)",
+    "query": "random_glucose_mgdl(VRandom), fasting_glucose_mgdl(VFasting), ogtt_2hr_mgdl(VOGTT2hr), hba1c_percent(VHba1c)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -1043,7 +1043,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 14.267221667105332
+    "time": 9.382988417055458
   },
   {
     "id": "q065",
@@ -1059,7 +1059,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.076502125011757
+    "time": 5.06293183285743
   },
   {
     "id": "q066",
@@ -1075,23 +1075,23 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 8.035058582900092
+    "time": 6.438229500083253
   },
   {
     "id": "q067",
     "question": "Are diagnostic criteria required to confirm diabetes?",
-    "query": "diagnose(diabetes)",
+    "query": "full_assessment(Result)",
     "expected_predicates": [
       "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 8.555351374903694
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 11.903080125106499
   },
   {
     "id": "q068",
@@ -1109,7 +1109,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 11.869674040935934
+    "time": 10.66482475004159
   },
   {
     "id": "q069",
@@ -1125,7 +1125,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.621678625000641
+    "time": 4.704755707876757
   },
   {
     "id": "q070",
@@ -1141,7 +1141,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 11.83990512508899
+    "time": 6.457138916943222
   },
   {
     "id": "q071",
@@ -1157,23 +1157,23 @@
     "keyword_overlap_score": 0.0,
     "keyword_correct": false,
     "correct": false,
-    "time": 6.783018582966179
+    "time": 7.754679291043431
   },
   {
     "id": "q072",
     "question": "Can diabetes status be determined from diagnostic measurements?",
-    "query": "full_assessment(Result)",
+    "query": "diabetes",
     "expected_predicates": [
       "full_assessment"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 3.9382733339443803
+    "keyword_overlap_score": 0.0,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 7.443386750062928
   },
   {
     "id": "q073",
@@ -1189,12 +1189,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.854202500078827
+    "time": 4.024260625010356
   },
   {
     "id": "q074",
     "question": "Which diagnostic measurements help classify diabetes?",
-    "query": "random_glucose_mgdl(RandomGlucose), fasting_glucose_mgdl(FastingGlucose), ogtt_2hr_mgdl(Ogtt2hr), hba1c_percent(Hba1c)",
+    "query": "random_glucose_mgdl(RG), fasting_duration_hours(FastingHours), fasting_glucose_mgdl(FG), ogtt_2hr_mgdl(OGTT), hba1c_percent(HbA1c)",
     "expected_predicates": [
       "diagnose",
       "fasting_glucose_mgdl",
@@ -1207,7 +1207,7 @@
     "keyword_overlap_score": 0.6666666666666666,
     "keyword_correct": false,
     "correct": false,
-    "time": 11.403846625005826
+    "time": 10.183406291063875
   },
   {
     "id": "q075",
@@ -1224,24 +1224,24 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 4.816813834011555
+    "time": 4.728265957906842
   },
   {
     "id": "q076",
     "question": "A patient has normal fasting glucose but elevated HbA1c. Can diabetes still be diagnosed?",
-    "query": "fasting_glucose_mgdl(V1), hba1c_percent(V2), diagnose(diabetes)",
+    "query": "fasting_glucose_mgdl(FVal), hba1c_percent(HVal), diabetes_positive_by_hba1c",
     "expected_predicates": [
       "diagnose",
       "diabetes"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": true,
+    "predicate_match": false,
     "keyword_match": true,
-    "keyword_overlap_score": 1.0,
-    "keyword_correct": true,
-    "correct": true,
-    "time": 14.62508654105477
+    "keyword_overlap_score": 0.5,
+    "keyword_correct": false,
+    "correct": false,
+    "time": 10.81452045799233
   },
   {
     "id": "q077",
@@ -1257,7 +1257,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.094696125015616
+    "time": 3.2414797921665013
   },
   {
     "id": "q078",
@@ -1274,7 +1274,7 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 8.210159916896373
+    "time": 5.943424707977101
   },
   {
     "id": "q079",
@@ -1290,7 +1290,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.324971458176151
+    "time": 3.018255124799907
   },
   {
     "id": "q080",
@@ -1307,7 +1307,7 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 9.025794624816626
+    "time": 6.089765209006146
   },
   {
     "id": "q081",
@@ -1323,7 +1323,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.928335666889325
+    "time": 3.763522957917303
   },
   {
     "id": "q082",
@@ -1339,7 +1339,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.832336500054225
+    "time": 6.514795457944274
   },
   {
     "id": "q083",
@@ -1355,7 +1355,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.2218010420911014
+    "time": 2.6357833750080317
   },
   {
     "id": "q084",
@@ -1371,7 +1371,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.763062249869108
+    "time": 4.901001041987911
   },
   {
     "id": "q085",
@@ -1387,12 +1387,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 17.92831979203038
+    "time": 8.131258750101551
   },
   {
     "id": "q086",
     "question": "Which laboratory tests should be checked when diabetes is suspected?",
-    "query": "random_glucose_mgdl(Random), fasting_glucose_mgdl(Fasting), ogtt_2hr_mgdl(OGTT), hba1c_percent(Hba1c)",
+    "query": "random_glucose_mgdl(RG), fasting_glucose_mgdl(FG), ogtt_2hr_mgdl(OG), hba1c_percent(H)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
@@ -1404,7 +1404,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 14.62179195904173
+    "time": 7.81297850003466
   },
   {
     "id": "q087",
@@ -1420,7 +1420,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.2475806248839945
+    "time": 4.125656292075291
   },
   {
     "id": "q088",
@@ -1436,23 +1436,23 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 5.147862249985337
+    "time": 6.25494895898737
   },
   {
     "id": "q089",
     "question": "Are laboratory criteria required for diabetes diagnosis?",
-    "query": "full_assessment(Result)",
+    "query": "diagnose(Result)",
     "expected_predicates": [
       "diagnose"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 9.49375629099086
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 9.4059750828892
   },
   {
     "id": "q090",
@@ -1468,24 +1468,24 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 2.9730976251885295
+    "time": 2.150019417051226
   },
   {
     "id": "q091",
     "question": "Which measurements are important for evaluating diabetes progression?",
-    "query": "full_assessment(Result)",
+    "query": "hba1c_percent(H), fasting_glucose_mgdl(F), random_glucose_mgdl(R), ogtt_2hr_mgdl(O), fasting_duration_hours(Hours)",
     "expected_predicates": [
       "fasting_glucose_mgdl",
       "hba1c_percent"
     ],
     "expected_contains": [],
     "must_not_contain": [],
-    "predicate_match": false,
+    "predicate_match": true,
     "keyword_match": true,
-    "keyword_overlap_score": 0.0,
-    "keyword_correct": false,
-    "correct": false,
-    "time": 8.512663332978263
+    "keyword_overlap_score": 1.0,
+    "keyword_correct": true,
+    "correct": true,
+    "time": 7.922718458110467
   },
   {
     "id": "q092",
@@ -1501,12 +1501,12 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.471047332976013
+    "time": 2.2425965410657227
   },
   {
     "id": "q093",
     "question": "Should HbA1c measurement be considered during diabetes evaluation?",
-    "query": "hba1c_percent(V)",
+    "query": "hba1c_percent(Value)",
     "expected_predicates": [
       "hba1c_percent"
     ],
@@ -1517,7 +1517,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 6.156800791854039
+    "time": 2.834447250002995
   },
   {
     "id": "q094",
@@ -1533,7 +1533,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 9.802289833081886
+    "time": 3.9695512088947
   },
   {
     "id": "q095",
@@ -1549,7 +1549,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.2110191660467535
+    "time": 2.635222499957308
   },
   {
     "id": "q096",
@@ -1565,7 +1565,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 4.016059834044427
+    "time": 2.8034359589219093
   },
   {
     "id": "q097",
@@ -1581,7 +1581,7 @@
     "keyword_overlap_score": 0.0,
     "keyword_correct": false,
     "correct": false,
-    "time": 7.648943666135892
+    "time": 4.12305025011301
   },
   {
     "id": "q098",
@@ -1598,7 +1598,7 @@
     "keyword_overlap_score": 0.5,
     "keyword_correct": false,
     "correct": false,
-    "time": 13.953250124817714
+    "time": 8.384108832804486
   },
   {
     "id": "q099",
@@ -1614,7 +1614,7 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 7.87348400009796
+    "time": 3.843638707883656
   },
   {
     "id": "q100",
@@ -1630,6 +1630,6 @@
     "keyword_overlap_score": 1.0,
     "keyword_correct": true,
     "correct": true,
-    "time": 3.9624555830378085
+    "time": 4.3755590410437435
   }
 ]
