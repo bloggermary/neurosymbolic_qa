@@ -16,8 +16,8 @@ multi-modal diagnostic dialogue and reach a verifiable, rule-grounded verdict.
 > independently, quantitatively evaluated, including a full, live
 > end-to-end run of the real interactive dialogue, not just its isolated
 > components.
->
-> ## Project Overview
+
+## Project Overview
 
 The project separates language processing from symbolic reasoning:
 
