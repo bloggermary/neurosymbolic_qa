@@ -13,7 +13,7 @@ multi-modal diagnostic dialogue and reach a verifiable, rule-grounded verdict.
 > sequence/ranking/grouping input, or a multi-field entity form. Once enough
 > evidence is gathered, Prolog reaches a deterministic, explainable verdict,
 > which an LLM translates back into plain language. Every pipeline stage is
-> independently, quantitatively evaluated — including a full, live
+> independently, quantitatively evaluated, including a full, live
 > end-to-end run of the real interactive dialogue, not just its isolated
 > components.
 
@@ -245,8 +245,7 @@ continuity across turns without leaking between browser tabs:
 ## `modalities/` — legacy CLI handlers
 
 The original input-handling module from before the Streamlit UI existed,
-used only by `main.py`'s CLI path. Not part of the live app's dialogue flow
-— the equivalent live functionality is `dialogue/modality_handler.py` plus
+used only by `main.py`'s CLI path. Not part of the live app's dialogue flow, the equivalent live functionality is `dialogue/modality_handler.py` plus
 `services/interaction_service.py`.
 
 ## `evaluation/` — two structurally separate groups
@@ -258,9 +257,9 @@ another:
 ### `evaluation/tests/` + `evaluation/testing_suite/` + `evaluation/results/` — Unit Tests
 
 Five scripts, each isolating exactly one pipeline component against its own
-fixed, independent, known-correct fixture in `tests/json_entries/`. None of
-these ever sees another component's real output — that's what makes them
-fast and cheap to run at 100+ cases each.
+fixed, independent, known-correct fixture in `tests/json_entries/`. Please note that Claude helped generate 'test_modalities.json' and 'test_questions.json' None of
+these ever sees another component's real output, that's what makes them
+fast and cheap to run at 100+ cases each. 
 
 - `test_kb_generation.py`, `test_query_generation.py`,
   `test_modality_detection.py`, `test_followups.py`,
@@ -276,7 +275,7 @@ Two evaluators that test *chained, live* system behavior rather than one
 component in isolation, kept in their own directory with their own fixtures
 and results so they can never be confused with the unit tests above (an
 earlier layout had both groups' `test_modalities.json`-named fixtures living
-side by side, which was genuinely confusing — this reorg exists specifically
+side by side, which was genuinely confusing, this reorg exists specifically
 to fix that):
 
 - **`modalities_evaluator.py`** : generates a fresh knowledge base from real
@@ -318,7 +317,7 @@ Two failure modes motivate this architecture:
 
 The hybrid approach here lets an LLM do what LLMs are good at (language) and
 lets Prolog do what symbolic logic is good at (verifiable, deterministic
-reasoning) — while keeping the diagnostic *decision* entirely inside the
+reasoning), while keeping the diagnostic *decision* entirely inside the
 auditable symbolic layer.
 
 ## 2. Goals
