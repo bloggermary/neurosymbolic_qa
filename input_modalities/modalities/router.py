@@ -131,7 +131,7 @@ class ModalityRouter:
         self,
         question: str,
         entity: str,
-        fields: list[str]
+        fields: list[list[str]]
     ) -> dict:
 
         return self.multi_attribute_entity_handler.handle(
@@ -241,7 +241,7 @@ def route_multi_structured_input(
 def route_multi_attribute_entity(
     question: str,
     entity: str,
-    fields: list[str]
+    fields: list[list[str]]
 ) -> dict:
 
     return router.route_multi_attribute_entity(

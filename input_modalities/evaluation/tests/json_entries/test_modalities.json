@@ -5,7 +5,7 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "thirst_severity", "modality": "scale" }
+      { "question": "thirst_severity", "modality": "category" }
     ],
     "must_not_contain_followups": ["insulin"]
   },
@@ -113,6 +113,10 @@
     "id": "m010",
     "question": "Do you prefer diet control or medication?",
     "expected_modality": "category",
+    "expected_options": [
+      "diet_control",
+      "medication"
+  ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -121,6 +125,10 @@
     "id": "m011",
     "question": "Is your blood sugar stable or fluctuating?",
     "expected_modality": "category",
+    "expected_options": [
+    "stable",
+    "fluctuating"
+  ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -226,7 +234,7 @@
     "expected_structure": [
       "already_completed",
       "scheduled",
-      "not_yet_discussed"
+      "not_yet_scheduled"
     ],
     "followup_expected": false,
     "expected_followups": [],
@@ -284,7 +292,7 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "nocturia_frequency", "modality": "frequency" }
+      { "question": "nocturia_frequency", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -420,6 +428,13 @@
     "id": "m038",
     "question": "Which type of diet do you follow?",
     "expected_modality": "category",
+    "expected_options": [
+      "low-carb",
+      "vegetarian",
+      "vegan",
+      "Mediterranean",
+      "other"
+  ],
     "followup_expected": false,
     "expected_followups": [],
     "must_not_contain_followups": []
@@ -438,7 +453,7 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "monitoring_frequency", "modality": "frequency" }
+      { "question": "monitoring_frequency", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -473,7 +488,7 @@
     "expected_fields": [
       "name",
       "result",
-      "string"
+      "date"
     ],
     "followup_expected": false,
     "expected_followups": [],
@@ -488,7 +503,7 @@
       "name_of_the_allergen",
       "reaction",
       "severity",
-      "first_occurence"
+      "first_occurrence"
     ],
     "followup_expected": false,
     "expected_followups": [],
@@ -573,7 +588,7 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "thirst_frequency", "modality": "frequency" }
+      { "question": "thirst_frequency", "modality": "numeric" }
     ],
     "must_not_contain_followups": []
   },
@@ -582,7 +597,8 @@
     "question": "How long does your fatigue usually last during the day?",
     "expected_modality": "duration",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m053",
@@ -590,7 +606,7 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "blurred_vision_frequency", "modality": "frequency" }
+      { "question": "blurred_vision_frequency", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -604,35 +620,34 @@
   {
     "id": "m055",
     "question": "Do you take any medication to control your blood sugar?",
-    "expected_modality": "medication",
+    "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "medication_name", "modality": "category" }
+      { "question": "medication_name", "modality": "string" }
     ],
     "must_not_contain_followups": []
   },
 
   {
     "id": "m056",
-    "question": "How often do you feel tired after meals?",
-    "expected_modality": "frequency",
+    "question": "Please describe your current medical concerns.",
+    "expected_modality": "string",
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m057",
-    "question": "Do you have a family history of diabetes or heart disease?",
-    "expected_modality": "family_history",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "which_condition", "modality": "category" }
-    ],
+    "question": "In your own words, describe the symptoms you are experiencing.",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m058",
     "question": "Rate how often you consume sugary foods from 1 to 10",
-    "expected_modality": "scale",
+    "expected_modality": "range",
     "followup_expected": false,
     "expected_followups": []
   },
@@ -660,7 +675,7 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "nocturia_frequency", "modality": "frequency" }
+      { "question": "nocturia_frequency", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -760,15 +775,21 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "blurred_vision_frequency", "modality": "frequency" }
+      { "question": "blurred_vision_frequency", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
 
   {
     "id": "m071",
-    "question": "What type of diet do you usually follow?",
+    "question": "How would you describe the patient's current overall health?",
     "expected_modality": "category",
+    "expected_categories": [
+      "excellent",
+      "good",
+      "fair",
+      "poor"
+    ],
     "followup_expected": false,
     "expected_followups": []
   },
@@ -791,22 +812,23 @@
       "high_cholesterol"
     ],
     "followup_expected": false,
-    "expected_followups": []
+    "expected_followups": [],
+    "must_not_contain_followups": []
   },
   {
     "id": "m074",
     "question": "Do you take insulin injections regularly?",
-    "expected_modality": "medication",
+    "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "injection_frequency", "modality": "frequency" }
+      { "question": "injection_frequency", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
   {
     "id": "m075",
     "question": "How severe is your fatigue on average?",
-    "expected_modality": "scale",
+    "expected_modality": "range",
     "followup_expected": false,
     "expected_followups": []
   },
@@ -816,14 +838,20 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "thirst_frequency", "modality": "frequency" }
+      { "question": "thirst_frequency", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
   {
     "id": "m077",
     "question": "How often do you wake up at night to urinate?",
-    "expected_modality": "frequency",
+    "expected_modality": "category",
+    "expected_options": [
+      "never",
+      "once_per_night",
+      "two_to_three_times_per_night",
+      "more_than_three_times_per_night"
+    ],
     "followup_expected": false,
     "expected_followups": []
   },
@@ -843,12 +871,10 @@
   },
   {
     "id": "m080",
-    "question": "Do you currently use any medication for chronic conditions?",
-    "expected_modality": "medication",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "medication_type", "modality": "category" }
-    ],
+    "question": "Please provide any additional information about your health that you think is relevant.",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
 
@@ -861,18 +887,16 @@
   },
   {
     "id": "m082",
-    "question": "Do you have relatives diagnosed with diabetes or hypertension?",
-    "expected_modality": "family_history",
-    "followup_expected": true,
-    "expected_followups": [
-      { "question": "which_disease", "modality": "category" }
-    ],
+    "question": "Describe your current health condition in your own words.",
+    "expected_modality": "string",
+    "followup_expected": false,
+    "expected_followups": [],
     "must_not_contain_followups": []
   },
   {
     "id": "m083",
     "question": "Rate your daily energy levels from 1 to 10",
-    "expected_modality": "scale",
+    "expected_modality": "range",
     "followup_expected": false,
     "expected_followups": []
   },
@@ -889,7 +913,14 @@
   {
     "id": "m085",
     "question": "How frequently do you experience dizziness during the week?",
-    "expected_modality": "frequency",
+    "expected_modality": "category",
+    "expected_options": [
+      "never",
+      "rarely",
+      "sometimes",
+      "often",
+      "daily"
+  ],
     "followup_expected": false,
     "expected_followups": []
   },
@@ -900,7 +931,7 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "blurred_vision_frequency", "modality": "frequency" }
+      { "question": "blurred_vision_frequency", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
@@ -914,7 +945,7 @@
   {
     "id": "m088",
     "question": "Do you take insulin injections regularly?",
-    "expected_modality": "medication",
+    "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
       { "question": "insulin_dosage", "modality": "numeric" }
@@ -924,14 +955,27 @@
   {
     "id": "m089",
     "question": "Have you ever been diagnosed with prediabetes or diabetes?",
-    "expected_modality": "medical_history",
-    "followup_expected": false,
-    "expected_followups": []
+    "expected_modality": "boolean",
+    "followup_expected": true,
+    "expected_followups": [
+      {
+        "question": "Which condition were you diagnosed with?",
+        "modality": "category"
+      }
+    ],
+    "must_not_contain_followups": []
   },
   {
     "id": "m090",
     "question": "How often do you consume sugary beverages?",
-    "expected_modality": "frequency",
+    "expected_modality": "category",
+    "expected_options": [
+      "never",
+      "rarely",
+      "sometimes",
+      "often",
+      "daily"
+  ],
     "followup_expected": false,
     "expected_followups": []
   },
@@ -946,7 +990,7 @@
   {
     "id": "m092",
     "question": "What is your typical diet composition?",
-    "expected_modality": "category",
+    "expected_modality": "string",
     "followup_expected": false,
     "expected_followups": []
   },
@@ -967,7 +1011,7 @@
   {
     "id": "m095",
     "question": "Do you have a family history of metabolic disorders?",
-    "expected_modality": "family_history",
+    "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
       { "question": "which_disorder", "modality": "category" }
@@ -978,7 +1022,7 @@
   {
     "id": "m096",
     "question": "Rate your stress level from 1 to 10",
-    "expected_modality": "scale",
+    "expected_modality": "range",
     "followup_expected": false,
     "expected_followups": []
   },
@@ -1002,14 +1046,14 @@
     "expected_modality": "boolean",
     "followup_expected": true,
     "expected_followups": [
-      { "question": "thirst_frequency", "modality": "frequency" }
+      { "question": "thirst_frequency", "modality": "category" }
     ],
     "must_not_contain_followups": []
   },
   {
     "id": "m100",
     "question": "How severe is your fatigue on average throughout the day?",
-    "expected_modality": "scale",
+    "expected_modality": "range",
     "followup_expected": false,
     "expected_followups": []
   }

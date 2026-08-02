@@ -203,7 +203,7 @@ class DialogueModalityHandler:
         self,
         question: str,
         mode: str,
-        groups: list[str] | None = None
+        structure: list[str] 
     ) -> None:
 
         self.request_input(
@@ -211,7 +211,7 @@ class DialogueModalityHandler:
             "multi_structured_input",
             {
                 "mode": mode,
-                "groups": groups or [],
+                "structure": structure,
             }
         )
 
@@ -221,7 +221,7 @@ class DialogueModalityHandler:
         self,
         question: str,
         entity: str,
-        fields: list[tuple[str, str, str]]
+        fields: list[list[str]]
     ) -> None:
 
         self.request_input(
@@ -254,7 +254,7 @@ class DialogueModalityHandler:
             response["style"] = "short"
 
 
-        elif modality == "multiple_choice":
+        elif modality == "multiple_category":
 
             response["style"] = "interactive"
 

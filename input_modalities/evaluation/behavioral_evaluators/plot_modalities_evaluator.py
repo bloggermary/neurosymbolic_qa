@@ -9,9 +9,15 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 
 
+<<<<<<<< HEAD:input_modalities/evaluation/behavioral_evaluators/plot_modalities_evaluator.py
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 RESULTS_DIR = BASE_DIR / "evaluation" / "behavioral_evaluators" / "results"
 PLOT_DIR = RESULTS_DIR / "plots"
+========
+BASE_DIR = Path(__file__).resolve().parent.parent
+RESULTS_DIR = BASE_DIR / "results"
+PLOT_DIR = RESULTS_DIR / "plots" / "modalities"
+>>>>>>>> f3cbd11a36b6e8d6cd9236fe170417ba1d74c41f:input_modalities/evaluation/testing_suite/plot_modalities_evaluation.py
 RESULTS_PATH = RESULTS_DIR / "modalities_evaluation_results.json"
 SUMMARY_PATH = RESULTS_DIR / "modalities_evaluation_summary.json"
 

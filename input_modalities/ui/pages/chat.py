@@ -191,52 +191,70 @@ def render_pending_question():
         elif pending.modality == "multi_structured_input":
 
             mode = pending.options["mode"]
-            groups = pending.options.get("groups") or []
+            structure = pending.options["structure"]
 
             if mode == "grouping":
 
-                group_answers = {}
+                group_answers = []
 
-                for group in groups:
+                for group in structure:
 
                     text = st.text_area(
                         group,
                         key=f"multi_structured_group_{group}",
                     )
 
-                    group_answers[group] = [
+                    group_answers.append([
                         line.strip()
                         for line in text.splitlines()
                         if line.strip()
-                    ]
+                    ])
 
                 answer = group_answers
 
-            else:
+            elif mode == "sequence":
 
-                text = st.text_area(
-                    pending.question,
-                    key="multi_structured_input",
-                    help="Enter one item per line, in order.",
-                    label_visibility="collapsed",
-                )
+                sequence_answers = []
 
-                items = [
-                    line.strip()
-                    for line in text.splitlines()
-                    if line.strip()
-                ]
+                for label in structure:
 
-                if mode == "ranking":
+                    text = st.text_area(
+                        label,
+                        key=f"multi_structured_sequence_{label}",
+                    )
 
-                    answer = [
-                        {"rank": index + 1, "value": item}
-                        for index, item in enumerate(items)
+                    values = [
+                        item.strip()
+                        for item in text.split(",")
+                        if item.strip()
                     ]
 
-                else:
+                    sequence_answers.append(values)
 
-                    answer = items
+                answer = sequence_answers
+
+            elif mode == "ranking":
+
+                ranking_answers = []
+
+                for rank in structure:
+
+                    value = st.text_input(
+                        rank,
+                        key=f"multi_structured_ranking_{rank}",
+                    )
+
+                    ranking_answers.append(value)
+
+                answer = ranking_answers
+
+            else:
+
+                st.error(
+                    f"Unsupported multi-structured input mode: {mode}"
+                )
+
+                answer = None
 
 
         elif pending.modality == "multi_attribute_entity":

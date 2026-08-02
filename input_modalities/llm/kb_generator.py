@@ -116,6 +116,15 @@ BAD:
 - Use these modalities only when clearly supported by the source text.
 - Do not use them merely to demonstrate available modalities.
 
+For ask_multi_structured_input:
+- Structure contains predefined labels, positions, or groups supplied by the system.
+- The user provides only the values/items associated with them, not the labels themselves.
+
+Modes:
+- sequence: Structure defines predefined chronological or sequential labels, steps, or time points; the user provides one value for each position in the given order.
+- ranking: Structure defines the ranking positions (e.g. ['1.', '2.', '3.']); the system provides the ranking positions and the user provides the ranked items.
+- grouping: Structure defines predefined group labels; the user assigns zero, one, or multiple items to each group.
+
 For ask_multi_attribute_entity, Fields must be plain lists:
 
     [
