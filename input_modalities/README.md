@@ -375,7 +375,13 @@ The complete pipeline consists of three main stages:
 3. **Response translation:** the symbolic Prolog result is translated into a
    readable natural-language answer.
 
-Diagramm
+<p align="center">
+  <img
+    src="docs/images/system_architecture_overview.png"
+    alt="System Architecture Overview"
+    width="100%"
+  >
+</p>
 
 The LLM is responsible for transformations involving natural language, while
 Prolog performs the actual rule-based reasoning. Python coordinates the
@@ -387,7 +393,13 @@ that is not yet available. In that case, Prolog invokes a Python callback
 through Janus. Python registers the missing-information request, and the
 Streamlit interface renders a widget matching the required input modality.
 
-Diagramm
+<p align="center">
+  <img
+    src="docs/images/interactive_reasoning_pipeline.png"
+    alt="Interactive Reasoning Pipeline"
+    width="100%"
+  >
+</p>
 
 The submitted answer is stored in a session-level cache. The same Prolog query
 is then executed again. Previously answered questions are resolved from the
