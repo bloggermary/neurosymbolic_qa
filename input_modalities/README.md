@@ -419,9 +419,7 @@ Nine distinct answer types, each mapped to its own Streamlit widget:
 | `multiple_category` | "Which symptoms currently apply?" | Multi-select checklist |
 | `range` | "Rate your fatigue from 1 to 10." | Slider |
 | `duration` | "How many days have your symptoms been present?" | Number input |
-| `multi_structured_input` | "List your symptoms in the order they first appeared." / 
-"Rank your current symptoms from most severe (1) to least severe (3)." / 
-"Group the patient's medical tests by status: 'already completed', 'scheduled', and 'not yet scheduled'." | Sequence/Ranking/Grouping; text fields |
+| `multi_structured_input` | "List your symptoms in the order they first appeared." / "Rank your current symptoms from most severe (1) to least severe (3)." / "Group the patient's medical tests by status: 'already completed', 'scheduled', and 'not yet scheduled'." | Sequence/Ranking/Grouping; text fields |
 | `multi_attribute_entity` | "Enter the medication's name, dose, and frequency." | Multi-field form |
 
 In practice, `boolean` and `numeric` dominate by a wide margin — over 70% of
