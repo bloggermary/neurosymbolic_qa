@@ -55,16 +55,18 @@ The project separates language processing from symbolic reasoning:
     - [Janus Callback Implementation](#133-janus-callback-implementation)
 14. [The Diabetes Domain](#14-the-diabetes-domain)
 15. [Input Modalities](#15-input-modalities)
-16. [Setup & Installation](#16-setup--installation)
-17. [Usage](#17-usage)
-18. [Evaluation Results](#18-evaluation-results)
-    - [Unit tests (one component at a time)](#unit-tests-one-component-at-a-time)
-    - [Behavioral evaluators (live, chained system)](#behavioral-evaluators-live-chained-system)
-    - [Diagnostic accuracy](#diagnostic-accuracy)
-    - [Worked End-to-End Example](#worked-end-to-end-example)
-19. [Engineering Lessons Learned](#19-engineering-lessons-learned)
-20. [Known Limitations](#20-known-limitations)
-21. [Future Work](#21-future-work)
+16. [Worked End-to-End Example](#16-worked-end-to-end-example)
+17. [Setup & Installation](#17-setup--installation)
+18. [Usage](#18-usage)
+    - [Run the Interactive Web Application](#181-run-the-interactive-web-application)
+    - [Use the Application](#182-use-the-application)
+19. [Evaluation Results](#19-evaluation-results)
+    - [Unit tests (one component at a time)](#191-unit-tests-one-component-at-a-time)
+    - [Behavioral evaluators (live, chained system)](#192-behavioral-evaluators-live-chained-system)
+    - [Diagnostic accuracy](#193-diagnostic-accuracy)
+20. [Engineering Lessons Learned](#20-engineering-lessons-learned)
+21. [Known Limitations](#21-known-limitations)
+22. [Future Work](#22-future-work)
 
 ---
 
@@ -480,98 +482,7 @@ exercised far less often, and information gathered through them isn't always
 guaranteed to feed back into the generated KB's own reasoning (see
 [Known Limitations](#known-limitations)).
 
-## 16. Setup & Installation
-
-### Prerequisites
-- **Python 3.13**
-- **[SWI-Prolog](https://www.swi-prolog.org/) 9.1+** (Janus is built in)
-- An **OpenAI API key**
-
-```bash
-# macOS
-brew install swi-prolog
-swipl --version   # must be 9.1+
-
-cd input_modalities
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
-
-Create a `.env` file in `input_modalities/` (already git-ignored):
-```
-OPENAI_API_KEY=sk-...
-```
-
-## 17. Usage
-
-### 17.1 Run the Interactive Web Application
-**Interactive web app (recommended):**
-```bash
-streamlit run app.py
-```
-**Legacy CLI:**
-```bash
-python main.py
-```
-
-### 17.2 Use the Application
-1. Pick a medical text from the sidebar's Knowledge Base dropdown
-2. Enter a question in natural language, for example:
-    >*"What is your assessment of whether I meet the diagnostic criteria for diabetes, based on my lab results?"*
-3. Submit the question
-4. Answer the follow-up questions displayed by the interface
-5. continue until the system produces a final result
-6. read the final result translated into natural language
-
-## 18. Evaluation Results
-
-### Unit tests (one component at a time)
-
-| Eval | What it measures | Result |
-|---|---|---|
-| KB generation | Structurally valid, consultable KB per text | **100%** (6/6 texts) |
-| Query generation | Right predicate named for a question | **79%** strict / **82%** keyword-overlap (100 questions) |
-| Modality detection | Right input type predicted | **91%** (100 questions) |
-| Follow-up suggestion | Right decision + modality | **71.5%** strict / **80%** decision (100 questions) |
-
-Strict query accuracy requires the expected predicate formulation to appear in
-the generated query. Keyword-overlap accuracy is more permissive and gives
-credit when the generated predicate uses a differently worded but
-semantically similar identifier.
-
-The same distinction applies to follow-up evaluation. Strict accuracy compares
-the complete expected result, whereas decision accuracy focuses on whether the
-system correctly decided that a follow-up was needed and selected the correct
-input modality.
-
-### Behavioral evaluators (live, chained system)
-
-| Source text | n | Query validity | Follow-up recall | Modality accuracy | Answer accuracy | Efficiency |
-|---|---|---|---|---|---|---|
-| `diabetes.txt` (general) | 30 | 100% | 100% | 100% | **93.3%** (28/30) | 88.3% |
-| `diabetes_german_source.txt` | 30 | 100% | 100% | 100% | **96.7%** (29/30) | 100% |
-
-### Diagnostic accuracy
-
-| Check | Data | Result |
-|---|---|---|
-| Main check | 200 scenarios (50 each: diabetes, prediabetes, low_risk, no_risk), including exact-threshold boundaries, against a hand-written reference KB | **100%** (200/200) |
-| Fresh-generation check | 3 distinct scenarios against a KB generated fresh from real source text | **3/3 correct** |
-
-**Why three tests, not one or two:** unit tests never check the final
-diagnosis at all, they check whether one isolated component did its own
-job. The behavioral evaluator does check the final diagnosis, but because
-every scenario needs the full, expensive live chain (real query generation,
-real Prolog execution), it can only afford a small number of cases — and if
-one comes back wrong, that alone can't say whether the query generator or
-the reasoning logic caused it. Diagnostic accuracy removes the query-writing
-step entirely, feeding patient answers directly into the reasoning, which is
-exactly what lets it scale to 200 cases including exact boundary values a
-small live sample would rarely hit by chance, and any failure there is
-unambiguously a logic bug, not a misread question.
-
-### Worked End-to-End Example
+## 16. Worked End-to-End Example
 
 The following representative case illustrates the intermediate outputs of the
 system.
@@ -709,7 +620,99 @@ Prolog verdict
 Evaluation metrics and user-facing response
 ```
 
-## 19. Engineering Lessons Learned
+## 17. Setup & Installation
+
+### Prerequisites
+- **Python 3.13**
+- **[SWI-Prolog](https://www.swi-prolog.org/) 9.1+** (Janus is built in)
+- An **OpenAI API key**
+
+```bash
+# macOS
+brew install swi-prolog
+swipl --version   # must be 9.1+
+
+cd input_modalities
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+Create a `.env` file in `input_modalities/` (already git-ignored):
+```
+OPENAI_API_KEY=sk-...
+```
+
+## 18. Usage
+
+### 18.1 Run the Interactive Web Application
+**Interactive web app (recommended):**
+```bash
+streamlit run app.py
+```
+**Legacy CLI:**
+```bash
+python main.py
+```
+
+### 18.2 Use the Application
+1. Pick a medical text from the sidebar's Knowledge Base dropdown
+2. Enter a question in natural language, for example:
+    >*"What is your assessment of whether I meet the diagnostic criteria for diabetes, based on my lab results?"*
+3. Submit the question
+4. Answer the follow-up questions displayed by the interface
+5. continue until the system produces a final result
+6. read the final result translated into natural language
+
+## 19. Evaluation Results
+
+### 19.1 Unit tests (one component at a time)
+
+| Eval | What it measures | Result |
+|---|---|---|
+| KB generation | Structurally valid, consultable KB per text | **100%** (6/6 texts) |
+| Query generation | Right predicate named for a question | **79%** strict / **82%** keyword-overlap (100 questions) |
+| Modality detection | Right input type predicted | **91%** (100 questions) |
+| Follow-up suggestion | Right decision + modality | **71.5%** strict / **80%** decision (100 questions) |
+
+Strict query accuracy requires the expected predicate formulation to appear in
+the generated query. Keyword-overlap accuracy is more permissive and gives
+credit when the generated predicate uses a differently worded but
+semantically similar identifier.
+
+The same distinction applies to follow-up evaluation. Strict accuracy compares
+the complete expected result, whereas decision accuracy focuses on whether the
+system correctly decided that a follow-up was needed and selected the correct
+input modality.
+
+### 19.2 Behavioral evaluators (live, chained system)
+
+| Source text | n | Query validity | Follow-up recall | Modality accuracy | Answer accuracy | Efficiency |
+|---|---|---|---|---|---|---|
+| `diabetes.txt` (general) | 30 | 100% | 100% | 100% | **93.3%** (28/30) | 88.3% |
+| `diabetes_german_source.txt` | 30 | 100% | 100% | 100% | **96.7%** (29/30) | 100% |
+
+### 19.3 Diagnostic accuracy
+
+| Check | Data | Result |
+|---|---|---|
+| Main check | 200 scenarios (50 each: diabetes, prediabetes, low_risk, no_risk), including exact-threshold boundaries, against a hand-written reference KB | **100%** (200/200) |
+| Fresh-generation check | 3 distinct scenarios against a KB generated fresh from real source text | **3/3 correct** |
+
+**Why three tests, not one or two:** unit tests never check the final
+diagnosis at all, they check whether one isolated component did its own
+job. The behavioral evaluator does check the final diagnosis, but because
+every scenario needs the full, expensive live chain (real query generation,
+real Prolog execution), it can only afford a small number of cases — and if
+one comes back wrong, that alone can't say whether the query generator or
+the reasoning logic caused it. Diagnostic accuracy removes the query-writing
+step entirely, feeding patient answers directly into the reasoning, which is
+exactly what lets it scale to 200 cases including exact boundary values a
+small live sample would rarely hit by chance, and any failure there is
+unambiguously a logic bug, not a misread question.
+
+
+## 20. Engineering Lessons Learned
 
 - **Janus's Python conversion is narrower than it looks.** Only atoms,
   numbers, strings, lists, `Key-Value` pairs, and top-level dicts convert
@@ -741,7 +744,7 @@ Evaluation metrics and user-facing response
   several modalities at all. Randomizing answers and tracking modality
   coverage explicitly surfaced genuine gaps.
 
-## 20. Known Limitations
+## 21. Known Limitations
 
 - **One Prolog engine per process** : safe for one active user at a time,
   not for concurrent users querying different texts simultaneously.
@@ -759,7 +762,7 @@ Evaluation metrics and user-facing response
   this modality may vary across different executions. Sometimes a single text field
   is displayed, while in other cases, multiple input fields are provided.
 
-## 21. Future Work
+## 22. Future Work
 
 - Extend the behavioral evaluator's scripted-scenario generation to more of
   the six source texts, for comparable answer-accuracy numbers everywhere,
