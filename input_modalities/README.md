@@ -403,8 +403,8 @@ Nine distinct answer types, each mapped to its own Streamlit widget:
 | `multiple_category` | "Which symptoms currently apply?" | Multi-select checklist |
 | `range` | "Rate your fatigue from 1 to 10." | Slider |
 | `duration` | "How many days have your symptoms been present?" | Number input |
-| `multi_structured_input` | "List your symptoms in the order they appeared." | Sequence/ranking/grouping |
-| `multi_attribute_entity` | "Enter each medication's name, dose, and frequency." | Multi-field form |
+| `multi_structured_input` | "List your symptoms in the order they first appeared." / "Rank your current symptoms from most severe (1) to least severe (3)." / "Group the patient's medical tests by status: 'already completed', 'scheduled', and 'not yet scheduled'." | Sequence/Ranking/Grouping; text fields |
+| `multi_attribute_entity` | "Enter the medication's name, dose, and frequency." | Multi-field form |
 
 In practice, `boolean` and `numeric` dominate by a wide margin — over 70% of
 follow-up questions in one end-to-end run were numeric alone — because most
@@ -460,7 +460,7 @@ python main.py
 |---|---|---|
 | KB generation | Structurally valid, consultable KB per text | **100%** (6/6 texts) |
 | Query generation | Right predicate named for a question | **79%** strict / **82%** keyword-overlap (100 questions) |
-| Modality detection | Right input type predicted | **97%** (100 questions) |
+| Modality detection | Right input type predicted | **91%** (100 questions) |
 | Follow-up suggestion | Right decision + modality | **71.5%** strict / **80%** decision (100 questions) |
 
 ### Behavioral evaluators (live, chained system)
@@ -535,6 +535,8 @@ unambiguously a logic bug, not a misread question.
 - **Cross-language generalization is a single data point** : the German
   result is genuine evidence the architecture isn't hardcoded to English,
   but one additional language isn't a general claim.
+- **Inconsistency of 'multi_structured_input'** : the presentation of this
+  modality is not uniform across different executions. Sometimes a single text field is displayed, while in other cases, multiple input fields are provided.
 
 ## 11. Future Work
 
@@ -546,4 +548,7 @@ unambiguously a logic bug, not a misread question.
 - Per-session Prolog engines for genuinely concurrent multi-user usage.
 - Close the gap where richer-modality answers can fail to reach the
   generated KB's own reasoning.
+- Complex modalities like 'multi_structured_input' require further development and
+  refinement to improve their functionality, reliability and integration into the reasoning process, enabling them to be used more effectively and more frequently.
 - Extend modality/domain coverage to conditions beyond diabetes.
+- Improve the handling of incomplete, invalid or unrealistic user inputs.
