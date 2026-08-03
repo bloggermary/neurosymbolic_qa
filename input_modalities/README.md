@@ -319,7 +319,7 @@ python -m evaluation.behavioral_evaluators.plot_modalities_evaluator
 
 ---
 
-## 1. Motivation
+## 11. Motivation
 
 Two failure modes motivate this architecture:
 
@@ -336,7 +336,7 @@ lets Prolog do what symbolic logic is good at (verifiable, deterministic
 reasoning), while keeping the diagnostic *decision* entirely inside the
 auditable symbolic layer.
 
-## 2. Goals
+## 12. Goals
 
 1. **End-to-end pipeline**: unstructured medical text → symbolic knowledge
    base → interactive multi-modal dialogue → verdict → natural-language
@@ -354,7 +354,7 @@ auditable symbolic layer.
 6. **A usable interface**: a real, interactive chat UI suitable for live
    demonstration.
 
-## 3. The Neurosymbolic Design & Prolog ⇄ Python Integration
+## 13. The Neurosymbolic Design & Prolog ⇄ Python Integration
 
 For each medical text, `llm/kb_generator.py` produces a self-contained
 SWI-Prolog file exposing `diagnose/1` (the main interactive workflow) plus
@@ -388,7 +388,7 @@ Because a Prolog query cannot be paused mid-execution, answering a question
 already answered resolves instantly, and reasoning transparently continues
 past it.
 
-## 4. The Diabetes Domain
+## 14. The Diabetes Domain
 
 Diabetes was chosen because its diagnostic criteria are internationally
 standardized (ADA guidelines):
@@ -406,7 +406,7 @@ The diagnostic-accuracy reference KB additionally models secondary,
 ≥ 45, a first-degree relative with diabetes, systolic BP ≥ 130 mmHg — used to
 distinguish a **low-risk** verdict from a clean **no-risk** one.
 
-## 5. Input Modalities
+## 15. Input Modalities
 
 Nine distinct answer types, each mapped to its own Streamlit widget:
 
@@ -430,7 +430,7 @@ exercised far less often, and information gathered through them isn't always
 guaranteed to feed back into the generated KB's own reasoning (see
 [Known Limitations](#known-limitations)).
 
-## 6. Setup & Installation
+## 16. Setup & Installation
 
 ### Prerequisites
 - **Python 3.13**
@@ -453,9 +453,9 @@ Create a `.env` file in `input_modalities/` (already git-ignored):
 OPENAI_API_KEY=sk-...
 ```
 
-## 7. Usage
+## 17. Usage
 
-### 7.1 Run the Interactive Web Application
+### 17.1 Run the Interactive Web Application
 **Interactive web app (recommended):**
 ```bash
 streamlit run app.py
@@ -465,7 +465,7 @@ streamlit run app.py
 python main.py
 ```
 
-### 7.2 Use the Application
+### 17.2 Use the Application
 1. Pick a medical text from the sidebar's Knowledge Base dropdown
 2. Enter a question in natural language, for example:
     >*"What is your assessment of whether I meet the diagnostic criteria for diabetes, based on my lab results?"*
@@ -474,7 +474,7 @@ python main.py
 5. continue until the system produces a final result
 6. read the final result translated into natural language
 
-## 8. Evaluation Results
+## 18. Evaluation Results
 
 ### Unit tests (one component at a time)
 
@@ -511,7 +511,7 @@ exactly what lets it scale to 200 cases including exact boundary values a
 small live sample would rarely hit by chance, and any failure there is
 unambiguously a logic bug, not a misread question.
 
-## 9. Engineering Lessons Learned
+## 19. Engineering Lessons Learned
 
 - **Janus's Python conversion is narrower than it looks.** Only atoms,
   numbers, strings, lists, `Key-Value` pairs, and top-level dicts convert
@@ -543,7 +543,7 @@ unambiguously a logic bug, not a misread question.
   several modalities at all. Randomizing answers and tracking modality
   coverage explicitly surfaced genuine gaps.
 
-## 10. Known Limitations
+## 20. Known Limitations
 
 - **One Prolog engine per process** : safe for one active user at a time,
   not for concurrent users querying different texts simultaneously.
@@ -561,7 +561,7 @@ unambiguously a logic bug, not a misread question.
   this modality may vary across different executions. Sometimes a single text field
   is displayed, while in other cases, multiple input fields are provided.
 
-## 11. Future Work
+## 21. Future Work
 
 - Extend the behavioral evaluator's scripted-scenario generation to more of
   the six source texts, for comparable answer-accuracy numbers everywhere,
