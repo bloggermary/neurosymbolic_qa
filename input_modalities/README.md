@@ -674,7 +674,6 @@ A representative Janus result is:
       "modality": "numeric"
     }
   ]
-  }
 }
 ```
 
