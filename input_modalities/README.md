@@ -473,7 +473,6 @@ python main.py
 4. Answer the follow-up questions displayed by the interface
 5. continue until the system produces a final result
 6. read the final result translated into natural language
-```
 
 ## 8. Evaluation Results
 
