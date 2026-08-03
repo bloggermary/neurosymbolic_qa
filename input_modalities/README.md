@@ -47,20 +47,23 @@ The project separates language processing from symbolic reasoning:
 10. [`evaluation/` — two structurally separate groups](#evaluation--two-structurally-separate-groups)
     - [Unit Tests](#evaluationtests--evaluationtesting_suite--evaluationresults--unit-tests)
     - [Behavioral Evaluators](#evaluationbehavioral_evaluators--behavioral-evaluators)
-11. [Motivation](#1-motivation)
-12. [Goals](#2-goals)
-13. [The Neurosymbolic Design & Prolog ⇄ Python Integration](#3-the-neurosymbolic-design--prolog--python-integration)
-14. [The Diabetes Domain](#4-the-diabetes-domain)
-15. [Input Modalities](#5-input-modalities)
-16. [Setup & Installation](#6-setup--installation)
-17. [Usage](#7-usage)
-18. [Evaluation Results](#8-evaluation-results)
-    - [Unit tests (one component at a time)](#unit-tests-one-component-at-a-time)
-    - [Behavioral evaluators (live, chained system)](#behavioral-evaluators-live-chained-system)
-    - [Diagnostic accuracy](#diagnostic-accuracy)
-19. [Engineering Lessons Learned](#9-engineering-lessons-learned)
-20. [Known Limitations](#10-known-limitations)
-21. [Future Work](#11-future-work)
+11. [Motivation](#11-motivation)
+12. [Goals](#12-goals)
+13. [The Neurosymbolic Design & Prolog ⇄ Python Integration](#13-the-neurosymbolic-design--prolog--python-integration)
+    - [System Architecture Overview](#131-system-architecture-overview)
+    - [Interactive Reasoning Pipeline](#132-interactive-reasoning-pipeline)
+    - [Janus Callback Implementation](#133-janus-callback-implementation)
+14. [The Diabetes Domain](#14-the-diabetes-domain)
+15. [Input Modalities](#15-input-modalities)
+16. [Setup & Installation](#16-setup--installation)
+17. [Usage](#17-usage)
+18. [Evaluation Results](#18-evaluation-results)
+    - [Unit tests (one component at a time)](#181unit-tests-one-component-at-a-time)
+    - [Behavioral evaluators (live, chained system)](#182behavioral-evaluators-live-chained-system)
+    - [Diagnostic accuracy](#183diagnostic-accuracy)
+19. [Engineering Lessons Learned](#19-engineering-lessons-learned)
+20. [Known Limitations](#20-known-limitations)
+21. [Future Work](#21-future-work)
 
 ---
 
@@ -361,6 +364,37 @@ SWI-Prolog file exposing `diagnose/1` (the main interactive workflow) plus
 one standalone predicate per diagnostic criterion, each fully self-contained
 so it can be called in isolation without depending on external state.
 
+### 13.1 System Architecture Overview
+The complete pipeline consists of three main stages:
+
+1. **Knowledge-base construction:** an LLM transforms unstructured medical
+   source text into a reusable Prolog knowledge base.
+2. **Query generation and execution:** the user's natural-language question is
+   converted into an executable Prolog query and evaluated by the symbolic
+   reasoning engine.
+3. **Response translation:** the symbolic Prolog result is translated into a
+   readable natural-language answer.
+
+Diagramm
+
+The LLM is responsible for transformations involving natural language, while
+Prolog performs the actual rule-based reasoning. Python coordinates the
+application flow, and Streamlit provides the interactive user interface.
+
+### 13.2 Interactive Reasoning Pipeline
+The reasoning process becomes interactive whenever Prolog requires information
+that is not yet available. In that case, Prolog invokes a Python callback
+through Janus. Python registers the missing-information request, and the
+Streamlit interface renders a widget matching the required input modality.
+
+Diagramm
+
+The submitted answer is stored in a session-level cache. The same Prolog query
+is then executed again. Previously answered questions are resolved from the
+cache, while Prolog continues until either another value is required or a final
+result can be derived.
+
+### 13.3 Janus Callback Implementation
 The two layers communicate through
 [SWI-Prolog's Janus library](https://www.swi-prolog.org/pldoc/man?section=janus):
 
@@ -387,6 +421,9 @@ Because a Prolog query cannot be paused mid-execution, answering a question
 **re-runs the entire query from scratch** — the answer cache means anything
 already answered resolves instantly, and reasoning transparently continues
 past it.
+This division of responsibilities allows Prolog to determine **what information
+is required**, while Python and Streamlit determine **how that information is
+collected, validated, cached, and displayed**.
 
 ## 14. The Diabetes Domain
 
