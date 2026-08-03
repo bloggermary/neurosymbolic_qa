@@ -395,7 +395,7 @@ Streamlit interface renders a widget matching the required input modality.
 
 <p align="center">
   <img
-    src="docs/images/interactive_reasoning_pipeline.png"
+    src="docs/images/reasoning_pipeline.png"
     alt="Interactive Reasoning Pipeline"
     width="100%"
   >
