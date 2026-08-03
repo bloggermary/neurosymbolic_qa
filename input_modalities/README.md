@@ -58,9 +58,10 @@ The project separates language processing from symbolic reasoning:
 16. [Setup & Installation](#16-setup--installation)
 17. [Usage](#17-usage)
 18. [Evaluation Results](#18-evaluation-results)
-    - [Unit tests (one component at a time)](#181unit-tests-one-component-at-a-time)
-    - [Behavioral evaluators (live, chained system)](#182behavioral-evaluators-live-chained-system)
-    - [Diagnostic accuracy](#183diagnostic-accuracy)
+    - [Unit tests (one component at a time)](#unit-tests-one-component-at-a-time)
+    - [Behavioral evaluators (live, chained system)](#behavioral-evaluators-live-chained-system)
+    - [Diagnostic accuracy](#diagnostic-accuracy)
+    - [Worked End-to-End Example](#worked-end-to-end-example)
 19. [Engineering Lessons Learned](#19-engineering-lessons-learned)
 20. [Known Limitations](#20-known-limitations)
 21. [Future Work](#21-future-work)
@@ -534,6 +535,16 @@ python main.py
 | Modality detection | Right input type predicted | **91%** (100 questions) |
 | Follow-up suggestion | Right decision + modality | **71.5%** strict / **80%** decision (100 questions) |
 
+Strict query accuracy requires the expected predicate formulation to appear in
+the generated query. Keyword-overlap accuracy is more permissive and gives
+credit when the generated predicate uses a differently worded but
+semantically similar identifier.
+
+The same distinction applies to follow-up evaluation. Strict accuracy compares
+the complete expected result, whereas decision accuracy focuses on whether the
+system correctly decided that a follow-up was needed and selected the correct
+input modality.
+
 ### Behavioral evaluators (live, chained system)
 
 | Source text | n | Query validity | Follow-up recall | Modality accuracy | Answer accuracy | Efficiency |
@@ -559,6 +570,145 @@ step entirely, feeding patient answers directly into the reasoning, which is
 exactly what lets it scale to 200 cases including exact boundary values a
 small live sample would rarely hit by chance, and any failure there is
 unambiguously a logic bug, not a misread question.
+
+### Worked End-to-End Example
+
+The following representative case illustrates the intermediate outputs of the
+system.
+
+The exact wording of generated predicates and follow-up questions may differ
+between generated knowledge bases, but the processing stages remain the same.
+
+### Step 1 — Source text
+
+The source document contains a diagnostic statement such as:
+
+```text
+A random plasma glucose value of at least 200 mg/dL satisfies a diagnostic
+criterion for diabetes.
+```
+
+### Step 2 — Generated Prolog rule
+
+The knowledge-base generator converts the source statement into an executable
+rule:
+
+```prolog
+random_glucose_criterion :-
+    ask_numeric(
+        'What is the random plasma glucose in mg/dL?',
+        Value
+    ),
+    Value >= 200.0.
+```
+
+The follow-up question is embedded in the rule because the glucose value is
+not yet available when reasoning begins.
+
+### Step 3 — User question
+
+```text
+What is the patient's diabetes diagnostic classification?
+```
+
+### Step 4 — Prolog query
+
+The question is mapped to the main workflow predicate:
+
+```prolog
+diagnose(Result)
+```
+
+### Step 5 — Live follow-up request
+
+During query execution, Prolog reaches the random-glucose criterion and calls
+Python through Janus:
+
+```prolog
+ask_numeric(
+    'What is the random plasma glucose in mg/dL?',
+    Value
+).
+```
+
+The Python interaction service registers the pending question with the
+`numeric` modality.
+
+### Step 6 — Scenario answer
+
+```text
+250 mg/dL
+```
+
+The answer is stored in the interaction cache. The Prolog query is executed
+again, and the previously answered question is resolved from the cache.
+
+### Step 7 — Symbolic result
+
+A representative Janus result is:
+
+```python
+{
+    "Result": {
+        "verdict": "diabetes",
+        "criterion": "random_plasma_glucose"
+    }
+}
+```
+
+### Step 8 — Evaluation record
+
+```json
+{
+  "query_valid": true,
+  "expected_followups": [
+    {
+      "question": "What is the random plasma glucose in mg/dL?",
+      "modality": "numeric",
+      "answer": 250
+    }
+  ],
+  "actual_followups": [
+    {
+      "question": "What is the random plasma glucose in mg/dL?",
+      "modality": "numeric"
+    }
+  ]
+  }
+}
+```
+
+### Step 9 — User-facing answer
+
+The evaluator checks the symbolic verdict. In the interactive application, the
+symbolic result can additionally be translated into a readable answer:
+
+```text
+The supplied random plasma glucose value meets the diagnostic threshold for
+diabetes represented in the knowledge base.
+```
+
+This example demonstrates the complete information flow:
+
+```text
+Source text
+    ↓
+Generated Prolog knowledge base
+    ↓
+Natural-language user question
+    ↓
+Prolog query
+    ↓
+Live Janus follow-up
+    ↓
+User or scripted answer
+    ↓
+Repeated symbolic reasoning
+    ↓
+Prolog verdict
+    ↓
+Evaluation metrics and user-facing response
+```
 
 ## 19. Engineering Lessons Learned
 
