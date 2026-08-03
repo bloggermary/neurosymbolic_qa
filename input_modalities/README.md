@@ -558,8 +558,8 @@ unambiguously a logic bug, not a misread question.
 - **Cross-language generalization is a single data point** : the German
   result is genuine evidence the architecture isn't hardcoded to English,
   but one additional language isn't a general claim.
-- **Inconsistency of 'multi_structured_input'** : the presentation of this modality 
-  is not uniform across different executions. Sometimes a single text field
+- **Potential inconsistency of 'multi_structured_input'** : the representation of 
+  this modality may vary across different executions. Sometimes a single text field
   is displayed, while in other cases, multiple input fields are provided.
 
 ## 11. Future Work
@@ -572,8 +572,8 @@ unambiguously a logic bug, not a misread question.
 - Per-session Prolog engines for genuinely concurrent multi-user usage.
 - Close the gap where richer-modality answers can fail to reach the
   generated KB's own reasoning.
-- Complex modalities like 'multi_structured_input' require further development and
-  refinement to improve their functionality, reliability and integration into the
+- More complex modalities like 'multi_structured_input' require further development 
+  and refinement to improve their functionality, reliability and integration into the
   reasoning process, enabling them to be used more effectively, frequently, and 
   more broadly.
 - Extend modality/domain coverage to conditions beyond diabetes.
