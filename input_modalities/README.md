@@ -35,18 +35,18 @@ The project separates language processing from symbolic reasoning:
 
 ## Table of Contents
 
-1. [Repository Structure](#repository-structure)
-2. [`app.py` / `main.py` / `config.py` / `prolog_bridge.py`](#apppy--mainpy--configpy--prolog_bridgepy)
-3. [`data/snippets/`](#datasnippets)
-4. [`prolog/generated_kb/`](#prologgenerated_kb)
-5. [`llm/` — the five LLM touchpoints](#llm--the-five-llm-touchpoints)
-6. [`services/` — orchestration layer](#services--orchestration-layer)
-7. [`dialogue/` — conversational memory](#dialogue--conversational-memory)
-8. [`ui/` — the Streamlit interface](#ui--the-streamlit-interface)
-9. [`modalities/` — legacy CLI handlers](#modalities--legacy-cli-handlers)
-10. [`evaluation/` — two structurally separate groups](#evaluation--two-structurally-separate-groups)
-    - [Unit Tests](#evaluationtests--evaluationtesting_suite--evaluationresults--unit-tests)
-    - [Behavioral Evaluators](#evaluationbehavioral_evaluators--behavioral-evaluators)
+1. [Repository Structure](#1-repository-structure)
+2. [`app.py` / `main.py` / `config.py` / `prolog_bridge.py`](#2-apppy--mainpy--configpy--prolog_bridgepy)
+3. [`data/snippets/`](#3-datasnippets)
+4. [`prolog/generated_kb/`](#4-prologgenerated_kb)
+5. [`llm/` — the five LLM touchpoints](#5-llm--the-five-llm-touchpoints)
+6. [`services/` — orchestration layer](#6-services--orchestration-layer)
+7. [`dialogue/` — conversational memory](#7-dialogue--conversational-memory)
+8. [`ui/` — the Streamlit interface](#8-ui--the-streamlit-interface)
+9. [`modalities/` — legacy CLI handlers](#9-modalities--legacy-cli-handlers)
+10. [`evaluation/` — two structurally separate groups](#10-evaluation--two-structurally-separate-groups)
+    - [Unit Tests](#101-evaluationtests--evaluationtesting_suite--evaluationresults--unit-tests)
+    - [Behavioral Evaluators](#102-evaluationbehavioral_evaluators--behavioral-evaluators)
 11. [Motivation](#11-motivation)
 12. [Goals](#12-goals)
 13. [The Neurosymbolic Design & Prolog ⇄ Python Integration](#13-the-neurosymbolic-design--prolog--python-integration)
@@ -70,7 +70,7 @@ The project separates language processing from symbolic reasoning:
 
 ---
 
-## Repository Structure
+## 1. Repository Structure
 
 ```
 input_modalities/
@@ -135,7 +135,7 @@ setup, usage, evaluation results, engineering lessons, and known limitations.
 
 ---
 
-## `app.py` / `main.py` / `config.py` / `prolog_bridge.py`
+## 2. `app.py` / `main.py` / `config.py` / `prolog_bridge.py`
 
 - **`app.py`** : the Streamlit entry point. It does almost nothing itself: it
   calls `render_chat()` from `ui/pages/chat.py`. All real application
@@ -155,7 +155,7 @@ setup, usage, evaluation results, engineering lessons, and known limitations.
   this file right is what makes a real multi-turn conversation possible,
   rather than only ever answering one fully-specified query.
 
-## `data/snippets/`
+## 3. `data/snippets/`
 
 Six deliberately distinct medical texts, so KB generation can be tested for
 genuine generalization rather than memorization of one document:
@@ -172,7 +172,7 @@ genuine generalization rather than memorization of one document:
 New texts can be added at runtime through the UI's "Add new medical text"
 panel — no code changes required.
 
-## `prolog/generated_kb/`
+## 4. `prolog/generated_kb/`
 
 Nothing here is hand-written for the live app. Every `.pl` file is produced
 at runtime by `llm/kb_generator.py` from the matching text in
@@ -182,7 +182,7 @@ generation). `evaluation_kb.pl` is the exception, it's written and consulted
 only by `evaluation/behavioral_evaluators/modalities_evaluator.py`, kept
 separate from the app's own per-snippet KBs.
 
-## `llm/` — the five LLM touchpoints
+## 5. `llm/` — the five LLM touchpoints
 
 Every module here is deliberately narrow-scoped, so the model's freedom
 never leaks into the diagnostic decision itself:
@@ -210,7 +210,7 @@ placeholder-based templates, a specific requirement so the same prompts
 generalize across arbitrary medical texts rather than anchoring to the
 vocabulary of whichever text they were developed against.
 
-## `services/` — orchestration layer
+## 6. `services/` — orchestration layer
 
 - **`pipeline.py`** : the heart of the app. Its `ask()`/`resume()` methods
   implement *resume-by-recompute*: since a Prolog query can't be paused
@@ -233,7 +233,7 @@ vocabulary of whichever text they were developed against.
   scaffolding for a feature that was started but never wired in, not as
   evidence of retrieval happening today.
 
-## `dialogue/` — conversational memory
+## 7. `dialogue/` — conversational memory
 
 Everything here is `st.session_state`-scoped, so it gives the assistant
 continuity across turns without leaking between browser tabs:
@@ -251,7 +251,7 @@ continuity across turns without leaking between browser tabs:
   wrappers around every `ask_*` primitive, plus response-style adjustment
   based on modality.
 
-## `ui/` — the Streamlit interface
+## 8. `ui/` — the Streamlit interface
 
 - **`pages/chat.py`, `components/chat_window.py`, `components/message.py`**
   : the main conversational interface; renders whichever widget a pending
@@ -264,19 +264,19 @@ continuity across turns without leaking between browser tabs:
 - **`components/source_cards.py`** : renders the "Sources" card described
   above under `services/rag_service.py`.
 
-## `modalities/` — legacy CLI handlers
+## 9. `modalities/` — legacy CLI handlers
 
 The original input-handling module from before the Streamlit UI existed,
 used only by `main.py`'s CLI path. Not part of the live app's dialogue flow, the equivalent live functionality is `dialogue/modality_handler.py` plus
 `services/interaction_service.py`.
 
-## `evaluation/` — two structurally separate groups
+## 10. `evaluation/` — two structurally separate groups
 
 This project evaluates the system three ways, and the folder layout mirrors
 that split directly, so nothing from one kind of test is mixed in with
 another:
 
-### `evaluation/tests/` + `evaluation/testing_suite/` + `evaluation/results/` — Unit Tests
+### 10.1 `evaluation/tests/` + `evaluation/testing_suite/` + `evaluation/results/` — Unit Tests
 
 Five scripts, each isolating exactly one pipeline component against its own
 fixed, independent, known-correct fixture in `tests/json_entries/`. Please note that Claude helped generate 'test_modalities.json' and 'test_questions.json' None of
@@ -291,7 +291,7 @@ fast and cheap to run at 100+ cases each.
   library underneath. Results land in `evaluation/results/`, one JSON per
   eval, plus every chart in `evaluation/results/plots/`.
 
-### `evaluation/behavioral_evaluators/` — Behavioral Evaluators
+### 10.2 `evaluation/behavioral_evaluators/` — Behavioral Evaluators
 
 Two evaluators that test *chained, live* system behavior rather than one
 component in isolation, kept in their own directory with their own fixtures
