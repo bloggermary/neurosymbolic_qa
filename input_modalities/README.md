@@ -419,7 +419,9 @@ Nine distinct answer types, each mapped to its own Streamlit widget:
 | `multiple_category` | "Which symptoms currently apply?" | Multi-select checklist |
 | `range` | "Rate your fatigue from 1 to 10." | Slider |
 | `duration` | "How many days have your symptoms been present?" | Number input |
-| `multi_structured_input` | "List your symptoms in the order they first appeared." / "Rank your current symptoms from most severe (1) to least severe (3)." / "Group the patient's medical tests by status: 'already completed', 'scheduled', and 'not yet scheduled'." | Sequence/Ranking/Grouping; text fields |
+| `multi_structured_input` | "List your symptoms in the order they first appeared." / 
+"Rank your current symptoms from most severe (1) to least severe (3)." / 
+"Group the patient's medical tests by status: 'already completed', 'scheduled', and 'not yet scheduled'." | Sequence/Ranking/Grouping; text fields |
 | `multi_attribute_entity` | "Enter the medication's name, dose, and frequency." | Multi-field form |
 
 In practice, `boolean` and `numeric` dominate by a wide margin — over 70% of
@@ -558,8 +560,9 @@ unambiguously a logic bug, not a misread question.
 - **Cross-language generalization is a single data point** : the German
   result is genuine evidence the architecture isn't hardcoded to English,
   but one additional language isn't a general claim.
-- **Inconsistency of 'multi_structured_input'** : the presentation of this
-  modality is not uniform across different executions. Sometimes a single text field is displayed, while in other cases, multiple input fields are provided.
+- **Inconsistency of 'multi_structured_input'** : the presentation of this modality 
+  is not uniform across different executions. Sometimes a single text field
+  is displayed, while in other cases, multiple input fields are provided.
 
 ## 11. Future Work
 
@@ -572,6 +575,8 @@ unambiguously a logic bug, not a misread question.
 - Close the gap where richer-modality answers can fail to reach the
   generated KB's own reasoning.
 - Complex modalities like 'multi_structured_input' require further development and
-  refinement to improve their functionality, reliability and integration into the reasoning process, enabling them to be used more effectively and more frequently.
+  refinement to improve their functionality, reliability and integration into the
+  reasoning process, enabling them to be used more effectively, frequently, and 
+  more broadly.
 - Extend modality/domain coverage to conditions beyond diabetes.
 - Improve the handling of incomplete, invalid or unrealistic user inputs.
