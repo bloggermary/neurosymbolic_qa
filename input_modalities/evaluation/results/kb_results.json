@@ -46,5 +46,13 @@
     "consults_cleanly": true,
     "consult_error": "",
     "success": true
+  },
+  {
+    "snippet": "migraine",
+    "missing_predicates": [],
+    "forbidden_patterns_found": [],
+    "consults_cleanly": true,
+    "consult_error": "",
+    "success": true
   }
 ]

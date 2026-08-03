@@ -7,8 +7,13 @@ themselves ARE the input domain this generator has to handle) and
 checks two kinds of properties:
 
 1. Universal structural requirements every generated KB must satisfy
-   regardless of domain (diagnose/1 and the three verdict predicates
-   are defined, it's valid enough Prolog to consult).
+   regardless of domain (diagnose/1 is defined, it's valid enough
+   Prolog to consult). Domain-specific verdict predicate names (e.g.
+   a bare "diabetes" predicate) are deliberately NOT required here -
+   the generation prompt was rewritten to drop domain-specific
+   requirements so it generalizes across arbitrary medical texts, and
+   a text about an unrelated condition (see migraine.txt) has no
+   reason to define a "diabetes" predicate at all.
 2. Regressions against specific bug classes seen before (orphaned
    "ask_" prefixed fact predicates, placeholder/dummy clauses).
 """
@@ -24,7 +29,7 @@ from evaluation.testing_suite.metrics import save_json, compute_accuracy
 
 SNIPPETS_DIR = Path("data/snippets")
 
-REQUIRED_PREDICATES = ["diagnose", "diabetes", "prediabetes", "low_risk"]
+REQUIRED_PREDICATES = ["diagnose"]
 
 FORBIDDEN_PATTERNS = [
     "ensure predicate",
