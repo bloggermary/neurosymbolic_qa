@@ -10,7 +10,10 @@ from modalities.router import (
     route_string,
     route_category,
     route_range,
-    route_duration
+    route_duration,
+    route_multiple_category,
+    route_multi_structured_input,
+    route_multi_attribute_entity
 )
 
 
@@ -59,12 +62,20 @@ def ask_range(question, start: int, stop: int):
     return route_range(question, start, stop)
 
 
-def ask_category_multiple(question: str, categories: str, num_answers: int):
-    pass
-
-
 def ask_duration(question: str) -> int:
     return route_duration(question)
+
+
+def ask_multiple_category(question: str, categories: list[str]) -> dict:
+    return route_multiple_category(question, categories)
+
+
+def ask_multi_structured_input(question: str, mode: str, structure: list[str]) -> dict:
+    return route_multi_structured_input(question, mode, structure)
+
+
+def ask_multi_attribute_entity(question: str, entity: str, fields: list[list[str]]) -> dict:
+    return route_multi_attribute_entity(question, entity, fields)
 
 
 
