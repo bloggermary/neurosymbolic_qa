@@ -743,6 +743,10 @@ unambiguously a logic bug, not a misread question.
   answers every time, reporting 100% completion while never exercising
   several modalities at all. Randomizing answers and tracking modality
   coverage explicitly surfaced genuine gaps.
+- **Multiple modalities may be suitable for the same type of information.**
+  Depending on how a question is phrased or how the information is represented, the same information may be collected using different modalities.
+- **The frequency with which a modality is used does not necessarily indicate its
+  effectiveness.** The use of different modalities depends on multiple factors, such as the source text, the information provided and required, the user's question, and the application domain.
 
 ## 21. Known Limitations
 
@@ -758,9 +762,9 @@ unambiguously a logic bug, not a misread question.
 - **Cross-language generalization is a single data point** : the German
   result is genuine evidence the architecture isn't hardcoded to English,
   but one additional language isn't a general claim.
-- **Potential inconsistency of 'multi_structured_input'** : the representation of 
-  this modality may vary across different executions. Sometimes a single text field
-  is displayed, while in other cases, multiple input fields are provided.
+- **Potentially inconsistent modality selection** : similarities between modalities,
+  as well as between the modes of 'multi_structured_input', may lead to confusion and
+  inconsistent modality selection.
 
 ## 22. Future Work
 
@@ -772,9 +776,7 @@ unambiguously a logic bug, not a misread question.
 - Per-session Prolog engines for genuinely concurrent multi-user usage.
 - Close the gap where richer-modality answers can fail to reach the
   generated KB's own reasoning.
-- More complex modalities like 'multi_structured_input' require further development 
-  and refinement to improve their functionality, reliability and integration into the
-  reasoning process, enabling them to be used more effectively, frequently, and 
-  more broadly.
+- More complex modalities require further development and refinement to improve their 
+  functionality, reliability and integration into the reasoning process, enabling them to be used more effectively, frequently, and more broadly.
 - Extend modality/domain coverage to conditions beyond diabetes.
 - Improve the handling of incomplete, invalid or unrealistic user inputs.
