@@ -55,7 +55,7 @@ The project separates language processing from symbolic reasoning:
     - [Janus Callback Implementation](#133-janus-callback-implementation)
 14. [The Diabetes Domain](#14-the-diabetes-domain)
 15. [Input Modalities](#15-input-modalities)
-16. [Worked End-to-End Example](#16-worked-end-to-end-example)
+16. [End-to-End Diagnostic Workflow Example](#16-end-to-end-diagnostic-workflow-example)
 17. [Setup & Installation](#17-setup--installation)
 18. [Usage](#18-usage)
     - [Run the Interactive Web Application](#181-run-the-interactive-web-application)
@@ -482,7 +482,7 @@ exercised far less often, and information gathered through them isn't always
 guaranteed to feed back into the generated KB's own reasoning (see
 [Known Limitations](#known-limitations)).
 
-## 16. Worked End-to-End Example
+## 16. End-to-End Diagnostic Workflow Example
 
 The following representative case illustrates the intermediate outputs of the
 system.
