@@ -24,212 +24,172 @@ ask_multiple_category(Question, Categories, Answer) :-
 ask_multi_structured_input(Question, Mode, Structure, Answer) :-
     py_call(prolog_bridge:ask_multi_structured_input(Question, Mode, Structure), Answer).
 
-/*
-  diagnose/1
-  Returns a dictionary with keys:
-    verdict: one of {diabetes, possible_drug_induced_hyperglycemia, no_diabetes, inconclusive_need_glucose_tests}
-    evidence: list of atoms describing decisive findings
-    next_steps: list of recommended next steps (may be empty)
+ask_multi_attribute_entity(Question, Entity, Fields, Answer) :-
+    py_call(prolog_bridge:ask_multi_attribute_entity(Question, Entity, Fields), Answer).
+
+/* Criterion predicates: each asks internally for needed values and returns one of:
+   positive_reliable, positive_unreliable, negative, unknown
 */
-diagnose(Result) :-
-    criterion_test_results(Test_dict),
-    criterion_hba1c_unreliable(Hba_unreliable),
-    criterion_medication_list(Med_list),
-    ( Med_list \= [] -> ( exclude(==(none), Med_list, Meds_filtered), Meds_filtered \= [] -> criterion_medication_grouping(Med_groups) ; Med_groups = _{morning:[],afternoon:[],evening:[],bedtime:[]} ) ; Med_groups = _{morning:[],afternoon:[],evening:[],bedtime:[]} ),
-    criterion_symptoms(Symptoms),
-    criterion_egfr(Egfr),
-    criterion_chronic_conditions_count(Comorbidity_count),
-    criterion_cognitive_function(Cognitive_score),
-    criterion_years_known_abnormality(Years_known),
-    evaluate_tests_and_classify(Test_dict, Hba_unreliable, Med_list, Symptoms, Egfr, Comorbidity_count, Cognitive_score, Years_known, Med_groups, Result).
 
-/* ---------- Criterion: which diagnostic tests are available and their numeric values ---------- */
-
-criterion_test_results(Test_dict) :-
-    ask_multiple_category('Which diagnostic test results are available? Select all that apply.', [fasting, random, ogtt, hba1c, none], Selected),
-    ( Selected = [] -> Selected2 = [none] ; Selected2 = Selected ),
-    ( member(none, Selected2) ->
-        Test_dict = _{ }
-    ;
-        build_test_values(Selected2, Test_dict)
+fasting_criterion(Result) :-
+    ( ask_boolean('Is a fasting plasma glucose result available? (yes/no)')
+      -> Has = true
+      ;  Has = false
+    ),
+    ( Has == true ->
+        ask_numeric('Enter fasting plasma glucose (mg/dL):', Value),
+        ( Value >= 126.0 -> Result = positive_reliable ; Result = negative )
+    ; Result = unknown
     ).
 
-build_test_values(Selected, Test_dict) :-
-    ( member(fasting, Selected) ->
-        ask_numeric('Enter fasting plasma glucose in mg/dL', Fasting)
-    ;
-        Fasting = none
+random_criterion(Result) :-
+    ( ask_boolean('Is a random plasma glucose result available? (yes/no)')
+      -> Has = true
+      ;  Has = false
     ),
-    ( member(random, Selected) ->
-        ask_numeric('Enter random (any time) plasma glucose in mg/dL', Random)
-    ;
-        Random = none
-    ),
-    ( member(ogtt, Selected) ->
-        ask_numeric('Enter 2-hour oral glucose tolerance test (OGTT) plasma glucose in mg/dL', Ogtt)
-    ;
-        Ogtt = none
-    ),
-    ( member(hba1c, Selected) ->
-        ask_numeric('Enter HbA1c in percent (e.g. 6.5)', Hba1c)
-    ;
-        Hba1c = none
-    ),
-    Test_dict = _{ fasting: Fasting, random: Random, ogtt: Ogtt, hba1c: Hba1c }.
-
-/* ---------- Criterion: is HbA1c unreliable because of CKD or anemia? ---------- */
-
-criterion_hba1c_unreliable(Unreliable) :-
-    ( ask_boolean('Does the patient have chronic kidney disease or anemia (this makes HbA1c potentially unreliable)?') ->
-        Unreliable = true
-    ;
-        Unreliable = false
+    ( Has == true ->
+        ask_numeric('Enter random plasma glucose (mg/dL):', Value),
+        ( Value >= 200.0 -> Result = positive_reliable ; Result = negative )
+    ; Result = unknown
     ).
 
-/* ---------- Criterion: medication list (multiple choice of glucose-raising meds) ---------- */
-
-criterion_medication_list(Med_list) :-
-    ask_multiple_category('Select ALL of the following that currently apply (medications that can raise blood glucose).', [corticosteroids, thiazide_diuretics, atypical_antipsychotics, none], Meds),
-    ( Meds = [] -> Med_list = [none] ; Med_list = Meds ).
-
-/* ---------- Criterion: group current medications by time of day (only asked if relevant meds present) ---------- */
-
-criterion_medication_grouping(Med_groups) :-
-    Structure = [
-        [morning, 'List medications taken in the morning (comma-separated)', string],
-        [afternoon, 'List medications taken in the afternoon (comma-separated)', string],
-        [evening, 'List medications taken in the evening (comma-separated)', string],
-        [bedtime, 'List medications taken at bedtime (comma-separated)', string]
-    ],
-    ask_multi_structured_input('Group your current medications by when they are taken (morning/afternoon/evening/bedtime).', group, Structure, Groups),
-    % Groups is expected to be a list of key-value pairs matching Structure; normalize to dict
-    ( is_dict(Groups) ->
-        Med_groups = Groups
-    ;
-        ( Groups = [_|_] ->
-            list_to_med_groups(Groups, Med_groups)
-        ;
-            Med_groups = _{morning:'',afternoon:'',evening:'',bedtime:''}
-        )
+ogtt_criterion(Result) :-
+    ( ask_boolean('Is a 2-hour OGTT (oral glucose tolerance test) result available? (yes/no)')
+      -> Has = true
+      ;  Has = false
+    ),
+    ( Has == true ->
+        ask_numeric('Enter 2-hour OGTT plasma glucose (mg/dL):', Value),
+        ( Value >= 200.0 -> Result = positive_reliable ; Result = negative )
+    ; Result = unknown
     ).
 
-list_to_med_groups(Pairs, Dict) :-
-    pair_list_to_dict(Pairs, Dict).
-
-pair_list_to_dict([], _{morning:'',afternoon:'',evening:'',bedtime:''}).
-pair_list_to_dict(Pairs, Dict) :-
-    foldl(pair_to_kv, Pairs, _{morning:'',afternoon:'',evening:'',bedtime:''}, Dict).
-
-pair_to_kv([Key, ValueString], Acc, NewAcc) :-
-    put_dict(Key, Acc, ValueString, NewAcc).
-pair_to_kv(_Other, Acc, Acc).
-
-/* ---------- Criterion: classic symptoms (ask each as yes/no) ---------- */
-
-criterion_symptoms(Symptoms) :-
-    ( ask_boolean('Does the patient have excessive thirst (yes/no)?') -> Thirst = true ; Thirst = false ),
-    ( ask_boolean('Does the patient have frequent urination (yes/no)?') -> Polyuria = true ; Polyuria = false ),
-    ( ask_boolean('Does the patient have fatigue (yes/no)?') -> Fatigue = true ; Fatigue = false ),
-    ( ask_boolean('Does the patient have blurred vision (yes/no)?') -> Blurred = true ; Blurred = false ),
-    Symptoms = _{ thirst: Thirst, polyuria: Polyuria, fatigue: Fatigue, blurred_vision: Blurred }.
-
-/* ---------- Criterion: renal function (eGFR numeric) ---------- */
-
-criterion_egfr(Egfr) :-
-    ask_numeric('Enter estimated glomerular filtration rate (eGFR) in mL/min/1.73m2', Egfr).
-
-/* ---------- Criterion: number of distinct chronic conditions (count numeric) ---------- */
-
-criterion_chronic_conditions_count(Count) :-
-    ask_numeric('How many distinct chronic conditions does the patient have (plain count)?', Count).
-
-/* ---------- Criterion: cognitive and functional status (1-10) ---------- */
-
-criterion_cognitive_function(Score) :-
-    ask_range('Rate cognitive/functional status from 1 (fully independent) to 10 (fully dependent)', 1, 10, Score).
-
-/* ---------- Criterion: years with any known glucose abnormality (numeric, if applicable) ---------- */
-
-criterion_years_known_abnormality(Years) :-
-    ask_numeric('How many years has the patient had any known glucose abnormality (enter 0 if none or unknown)?', Years).
-
-/* ---------- Optional criterion for additional vitals when inconclusive ---------- */
-
-criterion_additional_vitals(Systolic_bp, Weight_loss) :-
-    ask_numeric('Enter systolic blood pressure in mmHg', Systolic_bp),
-    ask_numeric('Enter unintentional weight loss over the past 6 months in kg', Weight_loss).
-
-/* ---------- Evaluation logic and classification ---------- */
-
-evaluate_tests_and_classify(Test_dict, Hba_unreliable, Med_list, Symptoms, _Egfr, _Comorbidity_count, _Cognitive_score, _Years_known, _Med_groups, Result) :-
-    % Extract values if present
-    ( get_dict(fasting, Test_dict, F) -> true ; F = none ),
-    ( get_dict(random, Test_dict, R) -> true ; R = none ),
-    ( get_dict(ogtt, Test_dict, O) -> true ; O = none ),
-    ( get_dict(hba1c, Test_dict, H) -> true ; H = none ),
-    % thresholds
-    ( is_number_and_ge(F, 126.0) -> Test_pos = [fasting] ; Test_pos = [] ),
-    ( is_number_and_ge(R, 200.0) -> append(Test_pos, [random], Test_pos2) ; Test_pos2 = Test_pos ),
-    ( is_number_and_ge(O, 200.0) -> append(Test_pos2, [ogtt], Test_pos3) ; Test_pos3 = Test_pos2 ),
-    ( Test_pos3 \= [] ->
-        % definite glucose test positive
-        ( meds_may_raise_glucose(Med_list) ->
-            Result = _{ verdict: possible_drug_induced_hyperglycemia, evidence: Test_pos3, next_steps: ['Consider repeating glucose testing off offending medications if possible; assess medication timing and grouping.'] }
-        ;
-            collect_symptom_support(Symptoms, SymList),
-            Result = _{ verdict: diabetes, evidence: Test_pos3, next_steps: ( SymList = [] -> ['Proceed with diabetes management tailored to older adult with comorbidity.'] ; ['Symptoms support diagnosis: ' | [] ] ) }
-        )
-    ;
-        % No fasting/random/ogtt meeting thresholds
-        ( is_number_and_ge(H, 6.5) ->
-            ( Hba_unreliable = true ->
-                % HbA1c elevated but unreliable -> need glucose confirmation
-                ask_for_confirmatory_glucose(Test_dict, NewTest_dict, New_pos),
-                ( New_pos \= [] ->
-                    ( meds_may_raise_glucose(Med_list) ->
-                        Result = _{ verdict: possible_drug_induced_hyperglycemia, evidence: New_pos, next_steps: ['Consider medication effects and repeat confirmatory testing.'] }
-                    ;
-                        Result = _{ verdict: diabetes, evidence: New_pos, next_steps: ['HbA1c unreliable; diagnosis confirmed by glucose test.'] }
-                    )
-                ;
-                    % still inconclusive after seeking glucose tests
-                    criterion_additional_vitals(SBP, WeightLoss),
-                    Result = _{ verdict: inconclusive_need_glucose_tests, evidence: [hba1c_unreliable, hba1c_value-H], next_steps: ['Obtain fasting or 2-hour OGTT; consider weight loss and blood pressure in further assessment', systolic_bp-SBP, weight_loss_kg-WeightLoss] }
-                )
-            ;
-                % HbA1c elevated and reliable
-                ( meds_may_raise_glucose(Med_list) ->
-                    Result = _{ verdict: possible_drug_induced_hyperglycemia, evidence: [hba1c], next_steps: ['Consider medication effects; correlate with glucose testing.'] }
-                ;
-                    Result = _{ verdict: diabetes, evidence: [hba1c], next_steps: ['HbA1c >= 6.5% meets diagnostic threshold; proceed with management appropriate for older adults.'] }
-                )
+hba1c_criterion(Result) :-
+    ( ask_boolean('Is an HbA1c result available? (yes/no)')
+      -> Has = true
+      ;  Has = false
+    ),
+    ( Has == true ->
+        ask_numeric('Enter HbA1c (%):', Value),
+        ( ( Value >= 6.5 ) ->
+            ( ( ask_boolean('Does the patient have chronic kidney disease? (yes/no)') -> CKD = true ; CKD = false ),
+              ( ask_boolean('Does the patient have anemia? (yes/no)') -> Anemia = true ; Anemia = false ),
+              ( (CKD == true ; Anemia == true) -> Result = positive_unreliable ; Result = positive_reliable )
             )
-        ;
-            % No tests meet thresholds and HbA1c not elevated
-            Result = _{ verdict: no_diabetes, evidence: [], next_steps: ['No diagnostic criteria met based on provided results; if clinical suspicion remains consider repeat testing or OGTT.'] }
-        )
+        ; Result = negative )
+    ; Result = unknown
     ).
 
-is_number_and_ge(Value, Threshold) :-
-    number(Value),
-    Value >= Threshold.
+/* Medication selection and grouping */
+medication_selection(Meds) :-
+    ask_multiple_category('Select all current contributors that apply (choose all that apply):', ['corticosteroids','thiazide_diuretics','atypical_antipsychotics','none'], Meds).
 
-meds_may_raise_glucose(Med_list) :-
-    Med_list \= [],
-    exclude(==(none), Med_list, Filtered),
-    Filtered \= [].
+medication_timing_grouping(Grouping) :-
+    ask_multi_structured_input('Group current medications by when they are taken (provide medication names for each group):', grouping, ['morning','afternoon','evening','bedtime'], Grouping).
 
-ask_for_confirmatory_glucose(Orig_dict, New_dict, Positive_tests) :-
-    % ask for fasting/random/ogtt if not already present or if user can provide now
-    ( get_dict(fasting, Orig_dict, F0), number(F0) -> F = F0 ; ( ask_boolean('Do you have a fasting plasma glucose value to provide now?') -> ask_numeric('Enter fasting plasma glucose in mg/dL', F) ; F = none ) ),
-    ( get_dict(random, Orig_dict, R0), number(R0) -> R = R0 ; ( ask_boolean('Do you have a random plasma glucose value to provide now?') -> ask_numeric('Enter random plasma glucose in mg/dL', R) ; R = none ) ),
-    ( get_dict(ogtt, Orig_dict, O0), number(O0) -> O = O0 ; ( ask_boolean('Do you have a 2-hour OGTT glucose value to provide now?') -> ask_numeric('Enter 2-hour OGTT plasma glucose in mg/dL', O) ; O = none ) ),
-    New_dict = _{ fasting: F, random: R, ogtt: O },
-    find_positive_tests(F, R, O, Positive_tests).
+/* Additional routinely captured items */
+capture_egfr(EGFR) :-
+    ask_numeric('Enter estimated glomerular filtration rate (eGFR) in mL/min/1.73m2:', EGFR).
 
-find_positive_tests(F, R, O, Pos) :-
-    findall(Test, (
-        ( number(F), F >= 126.0, Test = fasting ) ;
-        ( number(R), R >= 200.0, Test = random ) ;
-        ( number(O), O >= 200.0, Test = ogtt )
-    ), Pos).
+capture_chronic_conditions_count(Count) :-
+    ask_numeric('How many distinct chronic conditions does the patient have? (plain count):', Count).
+
+capture_cognitive_function(Status) :-
+    ask_range('Rate overall cognitive/functional status on a scale 1 (fully independent) to 10 (fully dependent):', 1.0, 10.0, Status).
+
+capture_classic_symptoms(Symptoms) :-
+    ( ask_boolean('Excessive thirst? (yes/no)') -> Thirst = true ; Thirst = false ),
+    ( ask_boolean('Frequent urination? (yes/no)') -> Polyuria = true ; Polyuria = false ),
+    ( ask_boolean('Fatigue? (yes/no)') -> Fatigue = true ; Fatigue = false ),
+    ( ask_boolean('Blurred vision? (yes/no)') -> Blurred = true ; Blurred = false ),
+    Symptoms = _{thirst:Thirst, frequent_urination:Polyuria, fatigue:Fatigue, blurred_vision:Blurred}.
+
+/* Optional history of prior glucose abnormality */
+known_glucose_abnormality_years(Years) :-
+    ( ask_boolean('Has the patient had any known glucose abnormality previously? (yes/no)') -> Has = true ; Has = false ),
+    ( Has == true ->
+        ask_numeric('How many years has the patient had any known glucose abnormality?', Years)
+    ; Years = 0.0
+    ).
+
+/* Additional numeric checks when evidence is inconclusive */
+inconclusive_followup(Assessment) :-
+    ask_numeric('Enter systolic blood pressure (mmHg):', Systolic),
+    ask_numeric('Enter unintentional weight loss over past 6 months (kg):', WeightLoss),
+    Assessment = _{systolic_mmHg:Systolic, weight_loss_kg:WeightLoss}.
+
+/* Helper to determine final decision from criterion results */
+any_positive([H|_]) :-
+    H = positive_reliable.
+any_positive([H|T]) :-
+    H \= positive_reliable,
+    any_positive(T).
+
+all_known_and_negative([]) :- false.
+all_known_and_negative(List) :-
+    List \= [],
+    forall(member(X, List), X == negative).
+
+/* The single entrypoint for the workflow */
+diagnose(Result) :-
+    /* capture routine baseline items */
+    capture_egfr(EGFR),
+    capture_chronic_conditions_count(ChronicCount),
+    capture_cognitive_function(CognitiveStatus),
+    capture_classic_symptoms(Symptoms),
+    known_glucose_abnormality_years(YearsKnown),
+
+    /* evaluate diagnostic criteria */
+    fasting_criterion(FastingR),
+    random_criterion(RandomR),
+    ogtt_criterion(OGTTR),
+    hba1c_criterion(HbA1cR),
+
+    Criteria = [FastingR, RandomR, OGTTR, HbA1cR],
+
+    ( % any definitive non-HbA1c glucose test positive -> provisional diagnosis
+      ( member(positive_reliable, [FastingR, RandomR, OGTTR]) ) ->
+        Provisional = diabetes_by_glucose_test,
+        Evidence = [fasting:FastingR, random:RandomR, ogtt:OGTTR, hba1c:HbA1cR]
+    ; % HbA1c reliable positive
+      HbA1cR == positive_reliable ->
+        Provisional = diabetes_by_hba1c,
+        Evidence = [fasting:FastingR, random:RandomR, ogtt:OGTTR, hba1c:HbA1cR]
+    ; % HbA1c positive but unreliable because of CKD or anemia
+      HbA1cR == positive_unreliable ->
+        Provisional = inconclusive_hba1c_unreliable,
+        Evidence = [fasting:FastingR, random:RandomR, ogtt:OGTTR, hba1c:HbA1cR]
+    ; % no available positive results but at least one known negative -> likely no diabetes
+      all_known_and_negative([FastingR, RandomR, OGTTR, HbA1cR]) ->
+        Provisional = no_diabetes,
+        Evidence = [fasting:FastingR, random:RandomR, ogtt:OGTTR, hba1c:HbA1cR]
+    ; % insufficient data
+        Provisional = insufficient_data,
+        Evidence = [fasting:FastingR, random:RandomR, ogtt:OGTTR, hba1c:HbA1cR]
+    ),
+
+    /* If provisional diagnosis suggests diabetes, check medication confounders */
+    ( (Provisional == diabetes_by_glucose_test ; Provisional == diabetes_by_hba1c) ->
+        medication_selection(MedsSelected),
+        ( member(none, MedsSelected) , length(MedsSelected, L), L =:= 1 ->
+            % no confounding medications reported -> final diagnosis diabetes
+            Result = _{verdict:diabetes, reason:Provisional, evidence:Evidence, egfr:EGFR, chronic_conditions:ChronicCount, cognitive_status:CognitiveStatus, symptoms:Symptoms, years_known:YearsKnown}
+        ; % one or more potential glucose-raising medications reported -> grouping and inconclusive result
+            ( MedsSelected = [] ->
+                % defensive: treat as no meds
+                Result = _{verdict:diabetes, reason:Provisional, evidence:Evidence, egfr:EGFR, chronic_conditions:ChronicCount, cognitive_status:CognitiveStatus, symptoms:Symptoms, years_known:YearsKnown}
+            ; medication_timing_grouping(MedTiming),
+              Result = _{verdict:inconclusive_due_to_medication, reason:Provisional, medications:MedSelectList, medication_timing:MedTiming, evidence:Evidence, egfr:EGFR, chronic_conditions:ChronicCount, cognitive_status:CognitiveStatus, symptoms:Symptoms, years_known:YearsKnown},
+              ( MedSelectList = MedsSelected -> true ; true )
+            )
+        )
+    ; Provisional == inconclusive_hba1c_unreliable ->
+        inconclusive_followup(Followup),
+        Result = _{verdict:inconclusive_hba1c_unreliable, reason:Provisional, followup:Followup, evidence:Evidence, egfr:EGFR, chronic_conditions:ChronicCount, cognitive_status:CognitiveStatus, symptoms:Symptoms, years_known:YearsKnown}
+    ; Provisional == no_diabetes ->
+        Result = _{verdict:no_diabetes, reason:Provisional, evidence:Evidence, egfr:EGFR, chronic_conditions:ChronicCount, cognitive_status:CognitiveStatus, symptoms:Symptoms, years_known:YearsKnown}
+    ; Provisional == insufficient_data ->
+        % when insufficient, ask optional additional checks per guidance
+        inconclusive_followup(Followup2),
+        Result = _{verdict:insufficient_data, reason:Provisional, followup:Followup2, evidence:Evidence, egfr:EGFR, chronic_conditions:ChronicCount, cognitive_status:CognitiveStatus, symptoms:Symptoms, years_known:YearsKnown}
+    ).

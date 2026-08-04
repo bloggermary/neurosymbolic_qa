@@ -21,140 +21,199 @@ ask_duration(Question, Value) :-
 ask_multiple_category(Question, Categories, Answer) :-
     py_call(prolog_bridge:ask_multiple_category(Question, Categories), Answer).
 
-ask_multi_structured_input(Question, Mode, Groups, Answer) :-
-    py_call(prolog_bridge:ask_multi_structured_input(Question, Mode, Groups), Answer).
+ask_multi_structured_input(Question, Mode, Structure, Answer) :-
+    py_call(prolog_bridge:ask_multi_structured_input(Question, Mode, Structure), Answer).
 
 ask_multi_attribute_entity(Question, Entity, Fields, Answer) :-
     py_call(prolog_bridge:ask_multi_attribute_entity(Question, Entity, Fields), Answer).
 
+/*
+  Criterion: lab-based diagnosis.
+  Asks which lab is available, then its numeric value, and returns a dict:
+    _{verdict: positive|negative|unknown, method: AtomOrNone, value: NumberOrNone}
+*/
+criterion_lab(Result) :-
+    ask_category('Which lab result is available?', ['fasting_plasma_glucose','random_glucose','hba1c','none'], LabType),
+    ( LabType = fasting_plasma_glucose ->
+        ask_numeric('Fasting plasma glucose (mg/dL)?', F),
+        ( F >= 126.0 ->
+            Result = _{verdict: positive, method: fasting_plasma_glucose, value: F}
+        ;
+            Result = _{verdict: negative, method: fasting_plasma_glucose, value: F}
+        )
+    ; LabType = random_glucose ->
+        ask_numeric('Random plasma glucose (mg/dL)?', R),
+        ( R >= 200.0 ->
+            Result = _{verdict: positive, method: random_glucose, value: R}
+        ;
+            Result = _{verdict: negative, method: random_glucose, value: R}
+        )
+    ; LabType = hba1c ->
+        ask_numeric('Hemoglobin A1c (%)?', H),
+        ( H >= 6.5 ->
+            Result = _{verdict: positive, method: hba1c, value: H}
+        ;
+            Result = _{verdict: negative, method: hba1c, value: H}
+        )
+    ; % none
+        Result = _{verdict: unknown, method: none, value: none}
+    ).
 
-/* Standalone numeric diagnostic criteria (each asks what it needs itself) */
+/*
+  Criterion: prediabetes history (yes/no)
+*/
+criterion_prediabetes(Result) :-
+    ( ask_boolean('Have you ever been told you have prediabetes or "borderline" blood sugar?') ->
+        Result = _{prediabetes: true}
+    ;
+        Result = _{prediabetes: false}
+    ).
 
-fasting_glucose_criterion :-
-    ask_numeric('What is your fasting plasma glucose in mg/dL?', Fasting),
-    ( Fasting >= 126.0 ).
+/*
+  Criterion: symptom duration and related symptoms.
+  Asks weeks of increased thirst/urination, fatigue, blurred vision.
+  Returns: _{duration_weeks: Num, gradual: true|false, fatigue: true|false, blurred_vision: true|false}
+  (Using 12 weeks as the threshold for "gradual" consistent with "months".)
+*/
+criterion_symptoms(Result) :-
+    ask_duration('How long have you noticed increased thirst or urination, in weeks?', Weeks),
+    ( Weeks >= 12.0 ->
+        Gradual = true
+    ;
+        Gradual = false
+    ),
+    ( ask_boolean('Do you have increased fatigue (yes/no)?') ->
+        Fatigue = true
+    ;
+        Fatigue = false
+    ),
+    ( ask_boolean('Do you have blurred vision (yes/no)?') ->
+        Blurred = true
+    ;
+        Blurred = false
+    ),
+    Result = _{duration_weeks: Weeks, gradual: Gradual, fatigue: Fatigue, blurred_vision: Blurred}.
 
-random_glucose_criterion :-
-    ask_numeric('What is a recent random (non-fasting) plasma glucose in mg/dL?', Random),
-    ( Random >= 200.0 ).
-
-hba1c_criterion :-
-    ask_numeric('What is your hemoglobin A1c (HbA1c) percentage?', A1c),
-    ( A1c >= 6.5 ).
-
-/* Standalone prediabetes criteria */
-
-fasting_prediabetes_criterion :-
-    ask_numeric('What is your fasting plasma glucose in mg/dL?', Fasting),
-    ( Fasting >= 100.0, Fasting =< 125.0 ).
-
-hba1c_prediabetes_criterion :-
-    ask_numeric('What is your hemoglobin A1c (HbA1c) percentage?', A1c),
-    ( A1c >= 5.7, A1c < 6.5 ).
-
-/* Clinical (lifestyle + symptoms + family history) probability assessment.
-   This collects a compact set of high-yield questions and computes a simple
-   score. It returns true if the aggregated picture strongly suggests diabetes.
-   It asks extra items (blood pressure, sleep) only when the initial score is borderline. */
-
-clinical_probable_diabetes :-
-    ask_numeric('What is your body mass index (BMI)?', BMI),
-    ask_numeric('What is your waist circumference in centimeters?', Waist),
+/*
+  Criterion: lifestyle and basic anthropometrics.
+  Asks BMI, waist circumference (cm), minutes of moderate activity per week,
+  diet category, current smoking (yes/no), typical alcoholic drinks per week,
+  and motivation (1-10).
+  Returns a dict with raw values and a computed flag activity_insufficient (true if <150).
+*/
+criterion_lifestyle(Result) :-
+    ask_numeric('What is your body mass index (BMI)?', Bmi),
+    ask_numeric('What is your waist circumference (cm)?', WaistCm),
     ask_numeric('How many minutes of moderate physical activity do you get in a typical week?', ActivityMin),
-    ask_category('How would you describe your usual diet quality?', [mostly_whole_foods, mixed, mostly_processed, unknown], DietQuality),
-    ( ask_boolean('Do you currently smoke?') -> Smoker = true ; Smoker = false ),
-    ask_numeric('How many alcoholic drinks do you have in a typical week?', AlcoholDrinks),
-    ask_duration('How many weeks have you noticed increased thirst or urination?', SymptomWeeks),
-    ( ask_boolean('Do you feel unusually fatigued recently?') -> Fatigue = true ; Fatigue = false ),
-    ( ask_boolean('Have you had episodes of blurred vision recently?') -> Blurred = true ; Blurred = false ),
-    ask_category('Has a parent or sibling been diagnosed with type 2 diabetes?', [none, one_relative, multiple_relatives], FamilyHistory),
-    ( ask_boolean('Have you ever been told you have prediabetes or borderline blood sugar?') -> PriorPrediabetes = true ; PriorPrediabetes = false ),
-    % motivation is collected for context but not used in scoring
-    ask_range('On a scale from 1 to 10, how motivated are you to make dietary and activity changes?', 1, 10, _Motivation),
-    % compute score from the gathered items
-    Score0 = 0,
-    ( BMI >= 30.0 -> Score1 is Score0 + 1 ; Score1 is Score0 ),
-    ( Waist >= 100.0 -> Score2 is Score1 + 1 ; Score2 is Score1 ),
-    ( ActivityMin < 150.0 -> Score3 is Score2 + 1 ; Score3 is Score2 ),
-    ( DietQuality == mostly_processed -> Score4 is Score3 + 1 ; Score4 is Score3 ),
-    ( Smoker == true -> Score5 is Score4 + 1 ; Score5 is Score4 ),
-    ( AlcoholDrinks >= 14.0 -> Score6 is Score5 + 1 ; Score6 is Score5 ),
-    ( FamilyHistory == one_relative -> Score7 is Score6 + 1 ; ( FamilyHistory == multiple_relatives -> Score7 is Score6 + 2 ; Score7 is Score6 ) ),
-    ( PriorPrediabetes == true -> Score8 is Score7 + 1 ; Score8 is Score7 ),
-    ( SymptomWeeks >= 12.0 -> Score9 is Score8 + 1 ; Score9 is Score8 ),
-    ( Fatigue == true -> Score10 is Score9 + 1 ; Score10 is Score9 ),
-    ( Blurred == true -> Score11 is Score10 + 1 ; Score11 is Score10 ),
-    % If score is clearly high, conclude probable diabetes.
-    ( Score11 >= 4.0 ->
-        true
+    ( ActivityMin < 150.0 ->
+        ActivityInsufficient = true
     ;
-        % borderline zone: ask resting systolic BP and sleep duration to refine
-        ( Score11 >= 2.0 ->
-            ask_numeric('What is your typical resting systolic blood pressure in mmHg?', Systolic),
-            ask_numeric('How many hours of sleep do you typically get per night?', SleepHours),
-            ( Systolic >= 140.0 -> Score12 is Score11 + 1 ; Score12 is Score11 ),
-            ( SleepHours < 6.0 -> Score13 is Score12 + 1 ; Score13 is Score12 ),
-            ( Score13 >= 4.0 )
-        ;
-            % low score -> not probable
-            fail
-        )
-    ).
+        ActivityInsufficient = false
+    ),
+    ask_category('How would you describe your diet quality?', ['mostly_whole_foods','mixed','mostly_processed','unknown'], Diet),
+    ( ask_boolean('Do you currently smoke (yes/no)?') ->
+        Smoking = true
+    ;
+        Smoking = false
+    ),
+    ask_numeric('How many alcoholic drinks do you have in a typical week?', DrinksPerWeek),
+    ask_range('On a scale from 1 to 10, how motivated are you to make dietary and activity changes?', 1.0, 10.0, Motivation),
+    Result = _{
+        bmi: Bmi,
+        waist_cm: WaistCm,
+        activity_min_per_week: ActivityMin,
+        activity_insufficient: ActivityInsufficient,
+        diet: Diet,
+        smoking: Smoking,
+        alcohol_drinks_per_week: DrinksPerWeek,
+        motivation: Motivation
+    }.
 
-/* Public predicates that can be called directly */
+/*
+  Criterion: family history of type 2 diabetes.
+  Categories: none, one_relative, multiple_relatives
+*/
+criterion_family_history(Result) :-
+    ask_category('Does a parent or sibling have type 2 diabetes?', ['none','one_relative','multiple_relatives'], FH),
+    Result = _{family_history: FH}.
 
-diabetes :-
-    ( fasting_glucose_criterion -> true
-    ; random_glucose_criterion -> true
-    ; hba1c_criterion -> true
-    ; clinical_probable_diabetes
-    ).
+/*
+  Optional: blood pressure and sleep asked only when prior evidence leaves uncertainty.
+  Returns _{systolic_mmHg: Num, sleep_hours: Num}
+*/
+criterion_bp_sleep(Result) :-
+    ask_numeric('What is your resting systolic blood pressure (mmHg)?', Systolic),
+    ask_numeric('How many hours of sleep do you typically get per night?', SleepHours),
+    Result = _{systolic_mmHg: Systolic, sleep_hours: SleepHours}.
 
-prediabetes :-
-    ( fasting_prediabetes_criterion -> true
-    ; hba1c_prediabetes_criterion -> true
-    ).
+/*
+  Helper: count lifestyle risk features used in secondary decision rules.
+  We consider these as risk items grounded in the text:
+    - activity_insufficient true
+    - diet mostly_processed
+    - smoking true
+    - family_history not none
+  Returns integer count (as a number).
+*/
+count_risk_features(Lifestyle, FamilyHistory, Count) :-
+    get_dict(activity_insufficient, Lifestyle, ActIns),
+    ( ActIns = true -> A = 1.0 ; A = 0.0 ),
+    get_dict(diet, Lifestyle, Diet),
+    ( Diet = mostly_processed -> D = 1.0 ; D = 0.0 ),
+    get_dict(smoking, Lifestyle, SmokingFlag),
+    ( SmokingFlag = true -> S = 1.0 ; S = 0.0 ),
+    ( FamilyHistory = none -> F = 0.0 ; F = 1.0 ),
+    Sum is A + D + S + F,
+    Count = Sum.
 
-low_risk :-
-    \+ diabetes,
-    \+ prediabetes.
-
-/* Main workflow: ask only as much as needed, stop as soon as a decisive threshold is met.
-   Returns a janus-safe dict with verdict and brief evidence tags. */
-
+/*
+  Main diagnose/1 predicate.
+  Returns a dictionary with:
+    verdict: one of type_2_diabetes | probable_type_2_diabetes | possible_type_2_diabetes | no_type_2_diabetes | uncertain
+    evidence: list of criteria dicts collected
+*/
 diagnose(Result) :-
-    % Check fasting glucose first (numeric diagnostic threshold). If met, stop.
-    ( ( ask_numeric('What is your fasting plasma glucose in mg/dL?', FastingVal),
-        FastingVal >= 126.0 ) ->
-        Result = _{verdict: diabetes, evidence: [fasting_glucose]}
+    % 1) Check labs first (decisive if positive)
+    criterion_lab(Lab),
+    ( get_dict(verdict, Lab, positive) ->
+        Result = _{verdict: type_2_diabetes, evidence: [lab-Lab]}
     ;
-      % Fasting not diagnostic: check random glucose next.
-      ( ask_numeric('What is a recent random (non-fasting) plasma glucose in mg/dL?', RandomVal),
-        RandomVal >= 200.0 ) ->
-        Result = _{verdict: diabetes, evidence: [random_glucose]}
-    ;
-      % Random not diagnostic: check HbA1c.
-      ( ask_numeric('What is your hemoglobin A1c (HbA1c) percentage?', A1cVal),
-        A1cVal >= 6.5 ) ->
-        Result = _{verdict: diabetes, evidence: [hba1c]}
-    ;
-      % No definitive lab diagnosis from single numeric thresholds. Check for prediabetes.
-      ( % Check fasting prediabetes range
-        ( ask_numeric('What is your fasting plasma glucose in mg/dL?', FastingVal2),
-          FastingVal2 >= 100.0, FastingVal2 =< 125.0 ) ->
-          Result = _{verdict: prediabetes, evidence: [fasting_prediabetes]}
-      ;
-        % Check HbA1c prediabetes range
-        ( ask_numeric('What is your hemoglobin A1c (HbA1c) percentage?', A1cVal2),
-          A1cVal2 >= 5.7, A1cVal2 < 6.5 ) ->
-          Result = _{verdict: prediabetes, evidence: [hba1c_prediabetes]}
-      ;
-        % Labs inconclusive for prediabetes/diabetes: use clinical picture.
-        ( clinical_probable_diabetes ->
-            Result = _{verdict: diabetes, evidence: [clinical_risk_profile]}
+        % 2) Gather targeted history/lifestyle to decide if probable/possible
+        criterion_prediabetes(Prediabetes),
+        criterion_symptoms(Symptoms),
+        criterion_lifestyle(Lifestyle),
+        criterion_family_history(Family),
+        % Count risk features
+        get_dict(prediabetes, Prediabetes, PredFlag),
+        get_dict(gradual, Symptoms, GradualFlag),
+        get_dict(family_history, Family, FamilyHist),
+        count_risk_features(Lifestyle, FamilyHist, RiskCount),
+        ( PredFlag = true, GradualFlag = true, RiskCount >= 2.0 ->
+            Result = _{
+                verdict: probable_type_2_diabetes,
+                evidence: [lab-Lab, prediabetes-Prediabetes, symptoms-Symptoms, lifestyle-Lifestyle, family_history-Family]
+            }
+        ; PredFlag = true, GradualFlag = true, (FamilyHist = multiple_relatives) ->
+            Result = _{
+                verdict: probable_type_2_diabetes,
+                evidence: [lab-Lab, prediabetes-Prediabetes, symptoms-Symptoms, lifestyle-Lifestyle, family_history-Family]
+            }
+        ; GradualFlag = true, RiskCount >= 1.0 ->
+            Result = _{
+                verdict: possible_type_2_diabetes,
+                evidence: [lab-Lab, prediabetes-Prediabetes, symptoms-Symptoms, lifestyle-Lifestyle, family_history-Family]
+            }
+        ; PredFlag = false, GradualFlag = false, RiskCount =:= 0.0 ->
+            Result = _{
+                verdict: no_type_2_diabetes,
+                evidence: [lab-Lab, prediabetes-Prediabetes, symptoms-Symptoms, lifestyle-Lifestyle, family_history-Family]
+            }
         ;
-            % If neither lab nor clinical picture suggests disease, label low risk.
-            Result = _{verdict: low_risk, evidence: []}
+            % Remaining uncertainty: ask BP and sleep for additional context, but do not force a definitive diagnosis
+            criterion_bp_sleep(BpSleep),
+            Result = _{
+                verdict: uncertain,
+                evidence: [lab-Lab, prediabetes-Prediabetes, symptoms-Symptoms, lifestyle-Lifestyle, family_history-Family, bp_sleep-BpSleep]
+            }
         )
-      )
     ).
