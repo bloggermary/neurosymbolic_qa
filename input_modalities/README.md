@@ -751,6 +751,20 @@ The second chart is the live-run evidence behind the claim in
 dominate real usage: this is a direct count of what the live, chained
 dialogue actually asked, not a theoretical estimate.
 
+<p align="center">
+  <img
+    src="evaluation/behavioral_evaluators/results/plots/expected_vs_actual_followups.png"
+    alt="Expected vs actual follow-up questions per scenario"
+    width="90%"
+  >
+</p>
+
+This breaks the same run down per scenario instead of aggregating across
+all of them: for each scripted patient, how many follow-up questions the
+scenario was expected to need versus how many the live dialogue actually
+asked, which is what the efficiency score in the table above is actually
+measuring.
+
 ### 19.3 Diagnostic accuracy
 
 | Check | Data | Result |
